@@ -84,7 +84,7 @@ public class Main {
         incomes.add(securities_451);
         incomes.add(securities_452);
 
-        var currencyLiabilities = new Currency_Liabilities()'
+        var currencyLiabilities = new Currency_Liabilities();
         
         incomes.add(currencyLiabilities);
 
