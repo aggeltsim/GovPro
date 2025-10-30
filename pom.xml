@@ -37,7 +37,28 @@
                     <target>17</target>
                 </configuration>
             </plugin>
+             <plugin>
+    <groupId>org.jacoco</groupId>
+    <artifactId>jacoco-maven-plugin</artifactId>
+    <version>0.8.12</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>prepare-agent</goal> <!-- Προετοιμάζει τον agent για συλλογή δεδομένων -->
+            </goals>
+        </execution>
+             <execution>
+            <id>report</id>
+            <phase>verify</phase> <!-- Τρέχει μετά τα tests -->
+            <goals>
+                <goal>report</goal> <!-- Δημιουργεί την αναφορά -->
+            </goals>
+            </execution>
+            </executions>
+          </plugin>
+
         </plugins>
     </build>
 
 </project>
+ 
