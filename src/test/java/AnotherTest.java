@@ -7,6 +7,7 @@ public class AnotherTest {
 
     public static void main(String[] args) {
       getText(text);
+      System.out.println("Completed another change but only in my branch.");//in dimitras branch
     }
 
 }
