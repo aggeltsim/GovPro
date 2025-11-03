@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*Core structure of the main method for the GovPro project.
 *Parameter values and implementation details will be added later.
  */
@@ -8,27 +7,13 @@ public class Main {
     public static void main(String args[]) {
         // Incomes List
         ArrayList <Income> incomes = new ArrayList<>();
-        
-=======
-import java.util.ArrayList;
 
-public class Main {
-  
-    public static void main(String args[]) {
-        //Incomes List
-        ArrayList <Income> incomes = new ArrayList<>();
-
->>>>>>> dccc106de6837cb11c10311f573c881fa9fb2135
         var taxes_111 = new Taxes();  //Taxes on goods and services
         var taxes_112 = new Taxes();  //Taxes and duties on imports
         var taxes_113 = new Taxes();  //Property taxes
         var taxes_114 = new Taxes();  //Other taxes on production
         var taxes_115 = new Taxes();  //Income taxes
-<<<<<<< HEAD
         var taxes_116 = new Taxes();  //Capital taxes
-=======
-        var taxes_116 = new Taxes();  //Capital Taxes
->>>>>>> dccc106de6837cb11c10311f573c881fa9fb2135
         var taxes_119 = new Taxes();  //Other current taxes
 
         incomes.add(taxes_111);
@@ -44,17 +29,10 @@ public class Main {
         incomes.add(socialcontr_122);
 
         var transfers_131 = new Transfers();  //Current Internal transfers
-<<<<<<< HEAD
         var transfers_132 = new Transfers();  //Current transfers from organizations and member states of EE
         var transfers_133 = new Transfers();  //Current transfers from foreign entities
         var transfers_134 = new Transfers();  //Internal Investments Grants
         var transfers_135 = new Transfers();  //Investments Grants of EE
-=======
-        var transfers_132 = new Transfers();  //Current transfers from organizations and states of EE
-        var transfers_133 = new Transfers();  //Current transfers from foreign entities 
-        var transfers_134 = new Transfers();  //Internal Investments Grants
-        var transfers_135 = new Transfers();  //Investements Grants of EE
->>>>>>> dccc106de6837cb11c10311f573c881fa9fb2135
         var transfers_139 = new Transfers();  //Other capital transfers
 
         incomes.add(transfers_131);
@@ -63,21 +41,13 @@ public class Main {
         incomes.add(transfers_134);
         incomes.add(transfers_135);
         incomes.add(transfers_139);
-<<<<<<< HEAD
+
 
         var sales_141 = new Sales();  //Goods Sales
         var sales_142 = new Sales();  //Sales from services
         var sales_143 = new Sales();  //Rents
         var sales_144 = new Sales();  //Supplies 
         var sales_145 = new Sales();  //Directors fees
-=======
-        
-        var sales_141 = new Sales();  //Goods Sales
-        var sales_142 = new Sales();  //Sales from services
-        var sales_143 = new Sales();  //Rents
-        var sales_144 = new Sales();  //Supplies
-        var sales_145 = new Sales();  //Director's fees
->>>>>>> dccc106de6837cb11c10311f573c881fa9fb2135
         var sales_149 = new Sales();  //Other sales
 
         incomes.add(sales_141);
@@ -89,11 +59,7 @@ public class Main {
 
         var other_151 = new Other_Current();  //Incomes from interests
         var other_152 = new Other_Current();  //Distributed corporate income
-<<<<<<< HEAD
         var other_153 = new Other_Current();  //Incomes from Natural resource rents
-=======
-        var other_153 = new Other_Current();  //Incomes from natural resource rents
->>>>>>> dccc106de6837cb11c10311f573c881fa9fb2135
         var other_156 = new Other_Current();  //Incomes from fines, penalties and attributions
         var other_159 = new Other_Current();  //Incomes from expense reimbursements
 
@@ -111,11 +77,7 @@ public class Main {
 
         incomes.add(deptSecurities_432);
 
-<<<<<<< HEAD
         var loans_442 = new Loans();  //Incomes from long-term loans from Recovery Fund resources
-=======
-        var loans_442 = new Loans();  //Incomes from long-term loans from Recovery Funds
->>>>>>> dccc106de6837cb11c10311f573c881fa9fb2135
 
         incomes.add(loans_442);
 
@@ -126,28 +88,16 @@ public class Main {
         incomes.add(securities_452);
 
         var currencyLiabilities = new Currency_Liabilities();
-<<<<<<< HEAD
          
         incomes.add(currencyLiabilities);
 
         var deptSecurities_531 = new Dept_Securities_L();
         var deptSecurities_532 = new Dept_Securities_L();
-=======
-        
-        incomes.add(currencyLiabilities);
-
-        var deptSecurities_531 = new Dept_Securities(); 
-        var deptSecurities_532 = new Dept_Securities();
->>>>>>> dccc106de6837cb11c10311f573c881fa9fb2135
 
         incomes.add(deptSecurities_531);
         incomes.add(deptSecurities_532);
 
-<<<<<<< HEAD
         var loans_541 = new Loans();  //Incomes form short-term internal loans
-=======
-        var loans_541 = new Loans();  //Incomes from short-term internal loans
->>>>>>> dccc106de6837cb11c10311f573c881fa9fb2135
         var loans_542 = new Loans();  //Incomes from long-term external loans
 
         incomes.add(loans_541);
@@ -156,11 +106,8 @@ public class Main {
         var derivatives_571 = new Derivatives();
 
         incomes.add(derivatives_571);
-<<<<<<< HEAD
         
-=======
 
->>>>>>> dccc106de6837cb11c10311f573c881fa9fb2135
         //End of Incomes List
 
         //Expenses List
@@ -178,11 +125,8 @@ public class Main {
         expenses.add(new Valuables());
         expenses.add(new Loans_44());
         expenses.add(new Securities());
-<<<<<<< HEAD
         expenses.add(new Dept_Securties());
-=======
         expenses.add(new Dept_Securities());
->>>>>>> dccc106de6837cb11c10311f573c881fa9fb2135
         expenses.add(new Loans_54());
 
         //End of Expenses List
@@ -208,11 +152,8 @@ public class Main {
         entities.add(new Ministry_Infrastructure());
         entities.add(new Ministry_Shipping());
         entities.add(new Ministry_Tourism());
-<<<<<<< HEAD
         entities.add(new Ministry_Digital());
-=======
-        entiites.add(new Ministry_Digital());
->>>>>>> dccc106de6837cb11c10311f573c881fa9fb2135
+        entities.add(new Ministry_Digital());
         entities.add(new Ministry_Immigration());
         entities.add(new Ministry_Civil());
         entities.add(new Ministry_Climate());
@@ -231,13 +172,10 @@ public class Main {
 
 
 
-<<<<<<< HEAD
 
     }
 
     
-=======
     }
->>>>>>> dccc106de6837cb11c10311f573c881fa9fb2135
     
 }
