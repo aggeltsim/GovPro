@@ -1,3 +1,6 @@
+/*Core structure of the main method for the GovPro project.
+*Parameter values and implementation details will be added later.
+ */
 import java.util.ArrayList;
 
 public class Main {
