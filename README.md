@@ -1,5 +1,5 @@
 #GovPro 
 <p style="font-family:Georgia; font-size:20px;">
-Data from the state, <b>insights for all</b>
+<b>Data from the state, insights for all</b>
 </p>
 
