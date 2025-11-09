@@ -23,6 +23,12 @@
             <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
+        <!-- Apache Commons CSV για να διιαβασει το budget2025 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.10.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -37,7 +43,28 @@
                     <target>17</target>
                 </configuration>
             </plugin>
+             <plugin>
+    <groupId>org.jacoco</groupId>
+    <artifactId>jacoco-maven-plugin</artifactId>
+    <version>0.8.12</version>
+    <executions>
+        <execution>
+            <goals>
+                <goal>prepare-agent</goal> <!-- Προετοιμάζει τον agent για συλλογή δεδομένων -->
+            </goals>
+        </execution>
+             <execution>
+            <id>report</id>
+            <phase>verify</phase> <!-- Τρέχει μετά τα tests -->
+            <goals>
+                <goal>report</goal> <!-- Δημιουργεί την αναφορά -->
+            </goals>
+            </execution>
+            </executions>
+          </plugin>
+
         </plugins>
     </build>
 
 </project>
+ 

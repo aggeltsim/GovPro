@@ -8,3 +8,7 @@ public abstract class DeptSecurLiabil extends Income {
     public abstract String toString();
 
 }
+
+public class DeptSecurLiabil extends Income {
+    
+}
