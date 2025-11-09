@@ -1,0 +1,33 @@
+public class DslLongTerm extends DeptSecurLiabil {
+    
+    public DslLongTerm(String code, String name, double amount, String form) {
+        super(code, name, amount, form);
+    }
+
+    //Getters & Setters
+    public String getCode() {
+        return code;
+    }
+    public String getName() {
+        return name;
+    }
+    public double getAmount() {
+        return amount;
+    }
+    public String getForm() {
+        return form;
+    }
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    @Override
+    public String toExplain() {
+        return getName() + " are a form of Dept Securities (Liabilities). Specifically, they are Long-term debt securities are government-issued financial instruments with a maturity of more than one year, used to finance the long-term borrowing needs of the Greek state.";
+    }
+    @Override
+    public String toString() {
+        return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
+    }
+
+}
