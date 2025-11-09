@@ -73,16 +73,16 @@ public class Main {
 
         incomes.add(fixedAssets_311);
 
-        var deptSecurities_432 = new Dept_Securities();  //Incomes from long-term debt securities
+        var deptSecurities = new DeptSecurities();  //Incomes from long-term debt securities
 
-        incomes.add(deptSecurities_432);
+        incomes.add(deptSecurities);
 
-        var loans_442 = new Loans();  //Incomes from long-term loans from Recovery Fund resources
+        var loans_442 = new LLongTerm1();  //Incomes from long-term loans from Recovery Fund resources
 
         incomes.add(loans_442);
 
-        var securities_451 = new Securities();  //Incomes from listed shares
-        var securities_452 = new Securities();  //Incomes from unlisted shares
+        var securities_451 = new SsListed();  //Incomes from listed shares
+        var securities_452 = new SsUnlisted();  //Incomes from unlisted shares
 
         incomes.add(securities_451);
         incomes.add(securities_452);
@@ -91,14 +91,14 @@ public class Main {
          
         incomes.add(currencyLiabilities);
 
-        var deptSecurities_531 = new Dept_Securities_L();
-        var deptSecurities_532 = new Dept_Securities_L();
+        var deptSecurities_531 = new DeptSecurLiabil();
+        var deptSecurities_532 = new DeptSecurLiabil();
 
         incomes.add(deptSecurities_531);
         incomes.add(deptSecurities_532);
 
-        var loans_541 = new Loans();  //Incomes form short-term internal loans
-        var loans_542 = new Loans();  //Incomes from long-term external loans
+        var loans_541 = new LShortTerm();  //Incomes form short-term internal loans
+        var loans_542 = new LLongTerm2();  //Incomes from long-term external loans
 
         incomes.add(loans_541);
         incomes.add(loans_542);
