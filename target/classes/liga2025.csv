@@ -1,4 +1,5 @@
-Κωδικός,Ονομασία,Ποσό11,Taxes,62.055.000.000
+Κωδικός,Ονομασία,Ποσό
+11,Taxes,62.055.000.000
 111,Taxes on Services and Products,33.667.000.000
 112,Taxes and Duties on Imports,362.000.000
 113,Regular Property Taxes,2.353.000.000
@@ -89,4 +90,5 @@
 1904,Decentralized Administration of Peloponnese -,14.918.000
 1905,Decentralized Administration of the Aegean,6.188.000
 1906,Decentralized Administration of Crete,6.497.000
+
 1907,Decentralized Administration of Macedonia - Thrace,18.376.000
