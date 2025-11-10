@@ -1,5 +1,5 @@
-public class OtherExpenses extends Expenses {
-    public OtherExpenses(String code,String name,double amount,String form) {
+public class FixedAssetsExp extends Expenses {
+    public FixedAssetsExp(String code,String name,double amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -27,7 +27,7 @@ public class OtherExpenses extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "includes minor expenses such as office supplies,minor repairs,references etc ";
+        return getName() +" includes the expense for governmental real estate(land and buildings),machinery and cultural/historical assets(museums, archaeological sites etc) ";
     }
     
 }

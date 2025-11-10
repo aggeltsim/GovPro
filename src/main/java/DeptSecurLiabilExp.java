@@ -1,5 +1,5 @@
-public class OtherExpenses extends Expenses {
-    public OtherExpenses(String code,String name,double amount,String form) {
+public class DeptSecurLiabilExp extends Expenses {
+    public DeptSecurLiabilExp(String code,String name,double amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -27,7 +27,7 @@ public class OtherExpenses extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "includes minor expenses such as office supplies,minor repairs,references etc ";
+        return getName() + "are government bonds or bills. Paying them back is shown as an expense in the budget because cash goes out.";
     }
     
 }

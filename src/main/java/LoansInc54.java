@@ -1,10 +1,6 @@
-package incomes;
-
-import java.math.BigDecimal;
-
-public class LiabilitiesCurrenDepos extends Income{
-
-    public LiabilitiesCurrenDepos(String code, String name, BigDecimal amount, String form) {
+public class LoansInc54 extends Income{
+    
+    public LoansInc54(String code, String name, double amount, String form) {
         super(code, name, amount, form);
     }
 
@@ -15,22 +11,22 @@ public class LiabilitiesCurrenDepos extends Income{
     public String getName() {
         return name;
     }
-    public BigDecimal getAmount() {
+    public double getAmount() {
         return amount;
     }
     public String getForm() {
         return form;
     }
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
     public String toExplain() {
-        return getName() + " are the government’s obligations arising from the issuance of currency and the holding of deposits by other sectors.";
+        return getName() + " are financial liabilities arising from borrowing agreements where the government receives funds that must be repaid with interest over time.";
     }
 
     public String toString() {
         return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
     }
-
+    
 }
