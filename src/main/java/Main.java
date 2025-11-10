@@ -77,7 +77,7 @@ public class Main {
 
         incomes.add(deptSecurities);
 
-        var loans_442 = new LLongTerm1();  //Incomes from long-term loans from Recovery Fund resources
+        var loans_442 = new LoansInc44();  //Incomes from long-term loans from Recovery Fund resources
 
         incomes.add(loans_442);
 
