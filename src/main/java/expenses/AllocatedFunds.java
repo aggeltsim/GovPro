@@ -1,5 +1,7 @@
-public class TransfersExp extends Expenses {
-    public TransfersExp(String code,String name,double amount,String form) {
+package expenses;
+
+public class AllocatedFunds extends Expenses {
+    public AllocatedFunds(String code,String name,double amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -27,7 +29,7 @@ public class TransfersExp extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "includes the payments the government makes which do not produce something directly, i.g. expenditures for the protection of the environment or for information campaigns. ";
+        return getName() + "are budgeted funds committed by the government but not yet spent at a specific programs, recorded as future expenditure.";
     }
     
 }

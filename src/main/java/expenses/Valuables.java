@@ -1,3 +1,5 @@
+package expenses;
+
 public class Valuables extends Expenses {
     public Valuables(String code,String name,double amount,String form) {
         super(code, name, amount, form);

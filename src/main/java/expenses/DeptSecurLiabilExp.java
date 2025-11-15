@@ -1,5 +1,7 @@
-public class LoansExp54 extends Expenses {
-    public LoansExp54(String code,String name,double amount,String form) {
+package expenses;
+
+public class DeptSecurLiabilExp extends Expenses {
+    public DeptSecurLiabilExp(String code,String name,double amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -27,7 +29,7 @@ public class LoansExp54 extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "includes the outflow for paying off short-term loans.";
+        return getName() + "are government bonds or bills. Paying them back is shown as an expense in the budget because cash goes out.";
     }
     
 }

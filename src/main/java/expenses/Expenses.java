@@ -1,3 +1,5 @@
+package expenses;
+
 public abstract class Expenses {
     protected String code;
     protected String name;

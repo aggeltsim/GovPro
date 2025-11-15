@@ -1,5 +1,7 @@
-public class LoansExp44 extends Expenses {
-    public LoansExp44(String code,String name,double amount,String form) {
+package expenses;
+
+public class Subsidies extends Expenses {
+    public Subsidies(String code,String name,double amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -27,7 +29,7 @@ public class LoansExp44 extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "includes the outflow for paying off long-term loans.";
+        return getName() + "is an expense account that includes aid for families,farmers,students,businesses and more";
     }
     
 }

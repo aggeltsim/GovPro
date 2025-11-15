@@ -1,5 +1,7 @@
-public class Interests extends Expenses {
-    public Interests(String code,String name,double amount,String form) {
+package expenses;
+
+public class SocialBenefits extends Expenses {
+    public SocialBenefits(String code,String name,double amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -27,7 +29,7 @@ public class Interests extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "is the cost that the government has to pay to the lenders ,anually,when it borrows money.";
+        return getName() + "is an expense that includes support for problems such as poverty, illiteracy, unemployment and natural disasters";
     }
     
 }

@@ -1,5 +1,7 @@
-public class OtherExpenses extends Expenses {
-    public OtherExpenses(String code,String name,double amount,String form) {
+package expenses;
+
+public class TransfersExp extends Expenses {
+    public TransfersExp(String code,String name,double amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -27,7 +29,7 @@ public class OtherExpenses extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "includes minor expenses such as office supplies,minor repairs,references etc ";
+        return getName() + "includes the payments the government makes which do not produce something directly, i.g. expenditures for the protection of the environment or for information campaigns. ";
     }
     
 }

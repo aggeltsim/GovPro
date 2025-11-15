@@ -1,5 +1,7 @@
-public class Purchases extends Expenses {
-    public Purchases(String code,String name,double amount,String form) {
+package expenses;
+
+public class LoansExp54 extends Expenses {
+    public LoansExp54(String code,String name,double amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -27,7 +29,7 @@ public class Purchases extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "is an expense account that includes whatever the government buys, like computers,books or IT support,cleaning services etc";
+        return getName() + "includes the outflow for paying off short-term loans.";
     }
     
 }

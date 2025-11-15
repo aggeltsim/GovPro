@@ -1,5 +1,7 @@
-public class Subsidies extends Expenses {
-    public Subsidies(String code,String name,double amount,String form) {
+package expenses;
+
+public class SecuritySharesExp extends Expenses {
+    public SecuritySharesExp(String code,String name,double amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -27,7 +29,7 @@ public class Subsidies extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "is an expense account that includes aid for families,farmers,students,businesses and more";
+        return getName() + "includes expenditures of the government for investing purposes, like purchasing equity shares or investment fund units";
     }
     
 }

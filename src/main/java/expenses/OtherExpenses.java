@@ -1,5 +1,7 @@
-public class SecuritySharesExp extends Expenses {
-    public SecuritySharesExp(String code,String name,double amount,String form) {
+package expenses;
+
+public class OtherExpenses extends Expenses {
+    public OtherExpenses(String code,String name,double amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -27,7 +29,7 @@ public class SecuritySharesExp extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "includes expenditures of the government for investing purposes, like purchasing equity shares or investment fund units";
+        return getName() + "includes minor expenses such as office supplies,minor repairs,references etc ";
     }
     
 }

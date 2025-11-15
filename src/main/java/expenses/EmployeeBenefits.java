@@ -1,5 +1,7 @@
-public class FixedAssetsExp extends Expenses {
-    public FixedAssetsExp(String code,String name,double amount,String form) {
+package expenses;
+
+public class EmployeeBenefits extends Expenses {
+    public EmployeeBenefits(String code,String name,double amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -27,7 +29,7 @@ public class FixedAssetsExp extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() +" includes the expense for governmental real estate(land and buildings),machinery and cultural/historical assets(museums, archaeological sites etc) ";
+        return getName() + "is an expense that includes salaries,bonuses,health insurance,food support and paid leaves for the employees";
     }
     
 }
