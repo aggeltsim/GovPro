@@ -1,7 +1,9 @@
 package expenses;
 
+import java.math.BigDecimal;
+
 public class DeptSecurLiabilExp extends Expenses {
-    public DeptSecurLiabilExp(String code,String name,double amount,String form) {
+    public DeptSecurLiabilExp(String code,String name,BigDecimal amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -14,13 +16,13 @@ public class DeptSecurLiabilExp extends Expenses {
     public void setName(String name) {
         this.name=name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount=amount;
     }
-    public  String getForm() {
+    public String getForm() {
         return form;
     }
     @Override 
@@ -29,7 +31,9 @@ public class DeptSecurLiabilExp extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "are government bonds or bills. Paying them back is shown as an expense in the budget because cash goes out.";
+        return getName() + " are government bonds or bills. Paying "
+        + "them back is shown as an expense in the budget because"
+        + "cash goes out.";
     }
     
 }

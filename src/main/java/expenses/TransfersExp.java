@@ -1,7 +1,9 @@
 package expenses;
 
+import java.math.BigDecimal;
+
 public class TransfersExp extends Expenses {
-    public TransfersExp(String code,String name,double amount,String form) {
+    public TransfersExp(String code,String name,BigDecimal amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -14,10 +16,10 @@ public class TransfersExp extends Expenses {
     public void setName(String name) {
         this.name=name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount=amount;
     }
     public  String getForm() {
@@ -29,7 +31,10 @@ public class TransfersExp extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "includes the payments the government makes which do not produce something directly, i.g. expenditures for the protection of the environment or for information campaigns. ";
+        return getName() + " includes the payments the government" 
+        + "makes which do not produce something directly" 
+        + " i.g. expenditures for the protection of the environment" 
+        + "or for information campaigns. ";
     }
     
 }

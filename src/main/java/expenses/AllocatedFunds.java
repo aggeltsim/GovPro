@@ -1,7 +1,9 @@
 package expenses;
 
+import java.math.BigDecimal;
+
 public class AllocatedFunds extends Expenses {
-    public AllocatedFunds(String code,String name,double amount,String form) {
+    public AllocatedFunds(String code,String name,BigDecimal amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -14,10 +16,10 @@ public class AllocatedFunds extends Expenses {
     public void setName(String name) {
         this.name=name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount=amount;
     }
     public  String getForm() {
@@ -29,7 +31,9 @@ public class AllocatedFunds extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "are budgeted funds committed by the government but not yet spent at a specific programs, recorded as future expenditure.";
+        return getName() + " are budgeted funds committed by the "
+        + "government but not yet spent" 
+        + " at a specific programs, recorded as future expenditure.";
     }
     
 }

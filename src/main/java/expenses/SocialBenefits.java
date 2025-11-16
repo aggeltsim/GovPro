@@ -1,7 +1,9 @@
 package expenses;
 
+import java.math.BigDecimal;
+
 public class SocialBenefits extends Expenses {
-    public SocialBenefits(String code,String name,double amount,String form) {
+    public SocialBenefits(String code,String name,BigDecimal amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -14,10 +16,10 @@ public class SocialBenefits extends Expenses {
     public void setName(String name) {
         this.name=name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount=amount;
     }
     public  String getForm() {
@@ -29,7 +31,9 @@ public class SocialBenefits extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "is an expense that includes support for problems such as poverty, illiteracy, unemployment and natural disasters";
+        return getName() + " is an expense that includes support for" 
+        + " problems such as poverty, illiteracy, "
+        + "unemployment and natural disasters";
     }
     
 }
