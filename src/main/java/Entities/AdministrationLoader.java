@@ -1,8 +1,9 @@
 package Entities;
 
-import com.opencsv.CSVReader;
+import org.apache.commons.csv.*;
 import java.io.InputStreamReader;
 import java.io.InputStream;
+import java.io.Reader;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,32 +19,42 @@ public class AdministrationLoader {
             throw new RuntimeException("Δεν βρέθηκε το αρχείο liga2025.csv στα resources!");
         }
 
-        try (CSVReader reader = new CSVReader(new InputStreamReader(is))) {
-            String[] line;
-            reader.readNext(); // παράλειψη επικεφαλίδας, αν υπάρχει
+       try (Reader reader = new InputStreamReader(is)) {
 
-            while ((line = reader.readNext()) != null) {
-                String idStr = line[0].trim();
-                String name = line[1].trim();
-                String amountStr = line[2].trim();
+            Iterable<CSVRecord> records = CSVFormat.DEFAULT.builder()
+                    .setDelimiter(',')       // Χωρισμός με κόμμα
+                    .setIgnoreSurroundingSpaces(true)               // Trim στα πεδία
+                    .build()
+                    .parse(reader);
 
-                // Έλεγχος: ξεκινά ο κωδικός με "19";
+            for (CSVRecord record : records) {
+
+                if (record.size() < 3) {
+                    continue; // γραμμή με λιγότερα πεδία, την παρακάμπτουμε
+                }
+
+                String idStr = record.get(0).trim();
+                String name = record.get(1).trim();
+                String amountStr = record.get(2).trim();
+
+                // Ελεγχος: ο κωδικός πρέπει να ξεκινάει με "19"
                 if (idStr.startsWith("19")) {
                     try {
                         int id = Integer.parseInt(idStr);
 
-                        // Καθαρισμός του amount για BigDecimal
-                        String cleanedAmount = amountStr.replace(",", ""); // αφαιρεί κόμματα
+                        // Καθαρισμός ποσού
+                        String cleanedAmount = amountStr.replace(".", "").replace(",", "");
                         if (cleanedAmount.isEmpty()) {
-                            cleanedAmount = "0"; // fallback σε 0 αν είναι κενό
+                            cleanedAmount = "0";
                         }
 
                         BigDecimal amount = new BigDecimal(cleanedAmount);
+
                         Administrations admin = new Administrations(id, name, amount);
                         administrations.add(admin);
+
                     } catch (NumberFormatException e) {
-                        // Εκτυπώνουμε ποια γραμμή είχε πρόβλημα για debug
-                        System.out.println("⚠️ Invalid number format for line: " + String.join(", ", line));
+                        System.out.println("⚠️ Invalid number format for line: " + record.toString());
                     }
                 }
             }

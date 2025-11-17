@@ -5,12 +5,12 @@ import java.util.*;
 import org.apache.commons.csv.*;
 import java.math.BigDecimal;
 
-public class Main {
+public class Loader {
     public static void main(String[] args) {
         List<Entity> entities = new ArrayList<>();
 
         try (Reader reader = new InputStreamReader(
-                Main.class.getResourceAsStream("/liga2025.csv"), StandardCharsets.UTF_8)) {
+                Loader.class.getResourceAsStream("/liga2025.csv"), StandardCharsets.UTF_8)) {
 
             Iterable<CSVRecord> records = CSVFormat.DEFAULT.builder()
                     .setHeader("id", "name", "amount")
@@ -19,7 +19,7 @@ public class Main {
                     .parse(reader);
 
             for (CSVRecord record : records) {
-                int id = Integer.parseInt(record.get("id"));
+                String code = record.get("code");
                 String name = record.get("name");
                 String amountString = record.get("amount");
                 String amount2 = amountString.replace(",",".");
@@ -27,7 +27,7 @@ public class Main {
 
 
                 // create an Entity from the CSV row and add it to the list
-                entities.add(new Ministry(id, name, amount));
+                entities.add(new Ministry(code, name, amount));
             }
             
 

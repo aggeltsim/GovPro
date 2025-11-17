@@ -4,28 +4,25 @@ package Entities;
 import java.math.BigDecimal;
 
 public abstract class Entity {
-    private final int id;
-    private String name;
-    private BigDecimal amount;
+    protected String code;
+    protected String name;
+    protected BigDecimal amount;
 
-    public Entity(int id, String name, BigDecimal amount) {
-        this.id = id;
+    public Entity(String code, String name, BigDecimal amount) {
+        this.code = code;
         this.name = name;
         this.amount = amount;
     }
    
-    public int getId() { return id; }
+    public String getCode() { return code; }
     public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
     
     //getters and setters for amount
     public BigDecimal getAmount() { return amount; }
     public void setAmount(BigDecimal amount) { this.amount = amount; }
 
     // different entities will have different explanations
-    public abstract String explain();
-
-    @Override
-    public String toString() {
-        return String.format("[%d] %s - Amount: %.2f", id, name, amount.doubleValue());
-    }
+    public abstract String toExplain();
+    public abstract String toString(); 
 }

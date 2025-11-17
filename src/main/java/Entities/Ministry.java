@@ -3,12 +3,17 @@ package Entities;
 import java.math.BigDecimal;
 
 public class Ministry extends Entity {
-    public Ministry(int id, String name, BigDecimal amount) {
-        super(id, name, amount);
+    public Ministry(String code, String name, BigDecimal amount) {
+        super(code, name, amount);
     }
 
     @Override
-    public String explain() {
+    public String toExplain() {
         return "";
+    }
+
+    @Override
+    public String toString() {
+        return toExplain();
     }
 }
