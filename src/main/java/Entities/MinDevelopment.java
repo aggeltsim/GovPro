@@ -1,4 +1,14 @@
 package Entities;
-public class MinDevelopment {
 
+import java.math.BigDecimal;
+
+public class MinDevelopment extends Entity {
+    public MinDevelopment(String code, String name, java.math.BigDecimal amount) {
+        super(code, name, amount);
+    }
+
+    @Override
+    public String toExplain() {
+        return "Responsible for national defense, military forces, and defense policy.";
+    }
 }

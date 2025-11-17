@@ -1,5 +1,14 @@
 package Entities;
 
-public class MinClimateCrisis {
+import java.math.BigDecimal;
 
+public class MinClimateCrisis extends Entity {
+    public MinClimateCrisis(String code, String name, java.math.BigDecimal amount) {
+        super(code, name, amount);
+    }
+
+    @Override
+    public String toExplain() {
+        return "Responsible for national defense, military forces, and defense policy.";
+    }
 }

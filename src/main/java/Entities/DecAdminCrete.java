@@ -1,5 +1,14 @@
 package Entities;
 
-public class DecAdminCrete {
+import java.math.BigDecimal;
 
+public class DecAdminCrete extends Entity {
+    public DecAdminCrete(String code, String name, java.math.BigDecimal amount) {
+        super(code, name, amount);
+    }
+
+    @Override
+    public String toExplain() {
+        return "Responsible for national defense, military forces, and defense policy.";
+    }
 }
