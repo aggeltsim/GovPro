@@ -27,12 +27,13 @@ public class TaxCapital extends Taxes {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Taxes. Specifically, a capital tax is a tax the government charges on wealth or on gains from selling assets like stocks, property, or businesses.";
+        return getName() + " is a form of  Taxes. Specifically,"
+        + " a capital tax is a tax the government charges on wealth or"
+        + " on gains from selling assets like stocks, property, or businesses.";
     }
 
     @Override
     public String toString() {
-        return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
-
 }

@@ -27,13 +27,14 @@ public class ScOther extends SocialContributions {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Social Contributions. Specifically, other social contributions are payments made by workers or employers to support social programs like pensions, unemployment benefits, or healthcare.";
+        return getName() + " is a form of Social Contributions."
+        + " Specifically, other social contributions are payments"
+        + " made by workers or employers to support social programs"
+        + " like pensions, unemployment benefits, or healthcare.";
     }
 
     @Override
     public String toString() {
-        return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
-
 }
-

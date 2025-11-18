@@ -27,12 +27,14 @@ public class DslShortTerm extends DeptSecurLiabil {
    
     @Override
     public String toExplain() {
-        return getName() + " are a form of Dept Securities (Liabilities). Specifically, they are government-issued financial instruments with a maturity of up to one year, used to cover temporary financing needs of the Greek state.";
+        return getName() + " are a form of Dept Securities (Liabilities)."
+        + " Specifically, they are government-issued financial"
+        + " instruments with a maturity of up to one year, used to"
+        + " cover temporary financing needs of the Greek state.";
     }
 
     @Override
     public String toString() {
-        return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
-
 }

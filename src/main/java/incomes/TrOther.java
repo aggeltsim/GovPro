@@ -27,13 +27,14 @@ public class TrOther extends Transfers {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Transfers. Specifically, money the government receives from any pther sources not covered by domestic,EU, or foreign transfers, like miscellaneous fees or donations. ";
+        return getName() + " is a form of  Transfers. Specifically,"
+        + " money the government receives from any other sources not"
+        + " covered by domestic,EU, or foreign transfers, like"
+        + " miscellaneous fees or donations. ";
     }
 
     @Override
     public String toString() {
-        return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
-
 }
-

@@ -27,12 +27,13 @@ public class TrForeignEntities extends Transfers {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Transfers. Specifically, money the government receives from other countries or international organizations, like aid, loans, or grants.";
+        return getName() + " is a form of  Transfers. Specifically,"
+        + " money the government receives from other countries or"
+        + " international organizations, like aid, loans, or grants.";
     }
 
     @Override
     public String toString() {
-        return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
-
 }

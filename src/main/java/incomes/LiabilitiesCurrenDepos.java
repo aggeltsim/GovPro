@@ -25,12 +25,15 @@ public class LiabilitiesCurrenDepos extends Income{
         this.amount = amount;
     }
 
+    @Override
     public String toExplain() {
-        return getName() + " are the government’s obligations arising from the issuance of currency and the holding of deposits by other sectors.";
+        return getName() + " are the government's obligations arising"
+        + " from the issuance of currency and the holding of deposits"
+        + " by other sectors.";
     }
 
+    @Override
     public String toString() {
-        return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
-
 }

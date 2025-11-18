@@ -27,14 +27,14 @@ public class TrEUInvestGrants extends Transfers {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Transfers. Specifically, money the government receives from the European Union specifically to support investments in projects, businesses, or infrastructure.";
+        return getName() + " is a form of  Transfers. Specifically,"
+        + " money the government receives from the European Union"
+        + " specifically to support investments in"
+        + " projects, businesses, or infrastructure.";
     }
 
     @Override
     public String toString() {
-        return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
-
 }
-
-

@@ -27,12 +27,14 @@ public class TaxRegularRealEstate extends Taxes {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Taxes. Specifically, property tax on real estate is a tax homeowners pay based on the value of their land and buildings, which helps fund local services like schools and roads.";
+        return getName() + " is a form of  Taxes. Specifically,"
+        + " property tax on real estate is a tax homeowners pay based"
+        + " on the value of their land and buildings, which helps fund"
+        + " local services like schools and roads.";
     }
 
     @Override
     public String toString() {
-        return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
-
 }

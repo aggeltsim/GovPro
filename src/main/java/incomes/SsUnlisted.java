@@ -24,16 +24,17 @@ public class SsUnlisted extends SecuritiesShares {
     public String getForm() {
         return form;
     }
+    
     @Override
     public String toExplain() {
-        return getName() + "are a form of Securities Shares. Specifically, they are shares of companies that the government owns that are not on the stock market and cannot be easily sold. ";
-
+        return getName() + "are a form of Securities Shares."
+        + " Specifically, they are shares of companies that the"
+        + " government owns that are not on the stock market and"
+        + " can not be easily sold. ";
     }
+
     @Override
     public String toString() {
         return "Account : " + getName() + "\n" + "Amount : " + getAmount();
     }
-
-
-
 } 

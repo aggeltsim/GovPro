@@ -27,12 +27,13 @@ public class TrCurrentDomestic extends Transfers {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Transfers. Specifically, money the government receives from within the country, such as fines, fees, or repayments from public institutions.";
+        return getName() + " is a form of  Transfers. Specifically,"
+        + " money the government receives from within the country,"
+        + " such as fines, fees, or repayments from public institutions.";
     }
 
     @Override
     public String toString() {
-        return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
-
 }
