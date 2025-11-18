@@ -1,9 +1,15 @@
-import Entities.*;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-import org.apache.commons.csv.*;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
+
+import entities.Entity;
+import entities.Ministry;
 
 public class Loader {
     public static void main(String[] args) {
