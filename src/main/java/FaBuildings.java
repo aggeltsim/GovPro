@@ -1,6 +1,10 @@
+package incomes;
+
+import java.math.BigDecimal;
+
 public class FaBuildings extends FixedAssets {
 
-    public FaBuildings(String code, String name, double amount, String form) {
+    public FaBuildings(String code, String name, BigDecimal amount, String form) {
         super(code, name, amount, form);
     }
 
@@ -11,20 +15,24 @@ public class FaBuildings extends FixedAssets {
     public String getName() {
         return name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
     public String getForm() {
         return form;
     }
-    public void setAmmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
     
+    @Override
     public String toExplain() {
-        return getName() + "is money the government earns from renting, selling, or otherwise using public buildings and facilities.  ";
+        return getName() + " This is the money the government receives when"
+        + " it sells, grants, or otherwise allows the use of its"
+        + "  real estate assets.";
     }
 
+    @Override
     public String toString() {
         return "Account : " + getName() + "\n" + "Amount : " + getAmount();
     }

@@ -1,6 +1,9 @@
+package incomes;
+
+import java.math.BigDecimal;
 public class SalGoods extends Sales {
 
-    public SalGoods(String code, String name, double amount, String form) {
+    public SalGoods(String code, String name, BigDecimal amount, String form) {
         super(code, name, amount, form);
     }
 
@@ -12,20 +15,24 @@ public class SalGoods extends Sales {
     public String getName() {
         return name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
     public String getForm() {
         return form;
     }
 
-    public void setAmmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+
+    @Override
     public String toExplain() {
-        return getName() + " is revenue the state receives when it sells physical goods, such as products or items."
+        return getName() + " is revenue the state receives when it sells"
+        + "  physical goods, such as products or items.";
     }
 
+    @Override
     public String toString() {
         return "Account : " + getName() + "\n" + "Amount : " + getAmount();
     }   

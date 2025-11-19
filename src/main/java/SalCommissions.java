@@ -1,6 +1,10 @@
+package incomes;
+
+import java.math.BigDecimal;
+
 public class SalCommissions extends Sales {
 
-    public SalCommissions(String code, String name, double amount, String form) {
+    public SalCommissions(String code, String name, BigDecimal amount, String form) {
         super(code, name, amount, form);
     }
 
@@ -11,20 +15,23 @@ public class SalCommissions extends Sales {
     public String getName() {
         return name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
     public String getForm() {
         return form;
     }
-    public void setAmmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
+    @Override
     public String toExplain() {
-        return getName() + " is revenue the state collects from small fees or percentage charges on transactions or services."
+        return getName() + " is revenue the state collects from"
+        + " small fees or percentage charges on transactions or services.";
     }
 
+    @Override
     public String toString() {
         return "Account : " + getName() + "\n" + "Amount : " + getAmount();
     }

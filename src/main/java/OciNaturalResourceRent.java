@@ -1,6 +1,10 @@
+package incomes;
+
+import java.math.BigDecimal;
+
 public class OciNaturalResourceRent extends OtherCurIncome {
 
-    public OciNaturalResourceRent(String code, String name, double amount, String form) {
+    public OciNaturalResourceRent(String code, String name, BigDecimal amount, String form) {
         super(code, name, amount, form);
     }
 
@@ -11,20 +15,23 @@ public class OciNaturalResourceRent extends OtherCurIncome {
     public String getName() {
         return name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
     public String getForm() {
         return form;
     }
-    public void setAmmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
+    @Override
     public String toExplain() {
-        return getName() + " are payments for the use of natural resources owned by the government like land, oil, or minerals.";
+        return getName() + " are payments for the use of natural"
+        + " resources owned by the government like land, oil, or minerals.";
     }
 
+    @Override
     public String toString() {
         return "Account : " + getName() + "\n" + "Amount : " + getAmount();
     }

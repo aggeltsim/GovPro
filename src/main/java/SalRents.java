@@ -1,6 +1,9 @@
+package incomes;
+
+import java.math.BigDecimal;
 public class SalRents extends Sales {
 
-    public SalRents(String code, String name, double amount, String form) {
+    public SalRents(String code, String name, BigDecimal amount, String form) {
         super(code, name, amount, form);
     }
 
@@ -11,20 +14,23 @@ public class SalRents extends Sales {
     public String getName() {
         return name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
     public String getForm() {
         return form;
     }
-    public void setAmmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
+    @Override
     public String toExplain() {
-        return getName() + " is money the state earns by renting out public buildings, spaces, or equipment."
+        return getName() + " is money the state earns by renting"
+        + " out public buildings, spaces, or equipment.";
     }
 
+    @Override
     public String toString() {
         return "Account : " + getName() + "\n" + "Amount : " + getAmount();
     }

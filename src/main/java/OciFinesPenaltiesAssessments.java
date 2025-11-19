@@ -1,6 +1,10 @@
+package incomes;
+
+import java.math.BigDecimal;
+
 public class OciFinesPenaltiesAssessments extends OtherCurIncome {
 
-    public OciFinesPenaltiesAssessments(String code, String name, double amount, String form) {
+    public OciFinesPenaltiesAssessments(String code, String name, BigDecimal amount, String form) {
         super(code, name, amount, form);
     }
 
@@ -11,22 +15,26 @@ public class OciFinesPenaltiesAssessments extends OtherCurIncome {
     public String getName() {
         return name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
     public String getForm() {
         return form;
     }
-    public void setAmmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
+    @Override
     public String toExplain() {
-        return getName() + "Money that the government earns from penalties imposed on individuals or organizations that violate laws or regulations.";
+        return getName() + "Money that the government earns from"
+        + " penalties imposed on individuals or organizations"
+        + "  that violate laws or regulations.";
     }
 
+    @Override
     public String toString() {
         return "Account : " + getName() + "\n" + "Amount : " + getAmount();
     }
     
-}
+    }
