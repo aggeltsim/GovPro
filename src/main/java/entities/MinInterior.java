@@ -2,10 +2,14 @@ package entities;
 
 import java.math.BigDecimal;
 
-public class MinEducatReligSports extends Entity {
-    public MinEducatReligSports(String code, String name, BigDecimal amount) {
+public class MinInterior extends Entity{
+    
+
+    public MinInterior(String code, String name, BigDecimal amount) {
         super(code, name, amount);
     }
+
+    //Getters and Setters
     public String getCode() { return code; }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -16,10 +20,11 @@ public class MinEducatReligSports extends Entity {
 
     @Override
     public String toExplain() {
-        return "Responsible for schools, universities, research, and education policy.";
+        return "Responsible for national defense, military forces, and defense policy.";
     }
+
     @Override
     public String toString() {
-         return "Account: " + getName() + "\n" + "Amount: " + getAmount();
-     }
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
+    }
 }
