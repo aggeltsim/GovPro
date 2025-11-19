@@ -1,14 +1,14 @@
 package incomes;
 
 import java.math.BigDecimal;
+public class SalGoods extends Sales {
 
-public class LiabilitiesCurrenDepos extends Income{
-
-    public LiabilitiesCurrenDepos(String code, String name, BigDecimal amount, String form) {
+    public SalGoods(String code, String name, BigDecimal amount, String form) {
         super(code, name, amount, form);
     }
 
-    //Getters & Setters
+    //getters and setters
+
     public String getCode() {
         return code;
     }
@@ -21,19 +21,19 @@ public class LiabilitiesCurrenDepos extends Income{
     public String getForm() {
         return form;
     }
+
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
     @Override
     public String toExplain() {
-        return getName() + " are the government's obligations arising"
-        + " from the issuance of currency and the holding of deposits"
-        + " by other sectors.";
+        return getName() + " is revenue the state receives when it sells"
+        + "  physical goods, such as products or items.";
     }
 
     @Override
     public String toString() {
-        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
-    }
+        return "Account : " + getName() + "\n" + "Amount : " + getAmount();
+    }   
 }

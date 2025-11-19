@@ -2,13 +2,13 @@ package incomes;
 
 import java.math.BigDecimal;
 
-public class LiabilitiesCurrenDepos extends Income{
+public class OciReimbursements extends OtherCurIncome {
 
-    public LiabilitiesCurrenDepos(String code, String name, BigDecimal amount, String form) {
+    public OciReimbursements(String code, String name, BigDecimal amount, String form) {
         super(code, name, amount, form);
     }
 
-    //Getters & Setters
+    //getters and setters
     public String getCode() {
         return code;
     }
@@ -27,13 +27,15 @@ public class LiabilitiesCurrenDepos extends Income{
 
     @Override
     public String toExplain() {
-        return getName() + " are the government's obligations arising"
-        + " from the issuance of currency and the holding of deposits"
-        + " by other sectors.";
+        return getName() + "when the government receives back"
+        + " money it had previously paid for certain activities"
+        + " or projects, usually because the expenses were not needed"
+        + " or were overestimated. ";
     }
 
     @Override
     public String toString() {
-        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
+        return "Account : " + getName() + "\n" + "Amount : " + getAmount();
     }
+    
 }
