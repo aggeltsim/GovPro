@@ -3,6 +3,8 @@
  */
 import java.util.ArrayList;
 
+import com.sun.net.httpserver.Headers;
+
 import incomes.*;
 import expenses.*;
 import entities.*;
@@ -73,7 +75,7 @@ public class Main {
         inc.add(oFines);
         inc.add(oReimb);
 
-        var faBuildings = new FixedAssets();  //Incomes from buildings
+        var faBuildings = new FaBuildings();  //Incomes from buildings
 
         inc.add(faBuildings);
 
@@ -152,38 +154,71 @@ public class Main {
         //End of Expenses List
 
         //Entities List
-        ArrayList <Entities> entities = new ArrayList<>();
+        ArrayList <Entitiy> ent = new ArrayList<>();
+        // Objects of each Entity class
+        var decAdmAegean = new DecAdminAegean();
+        var decAdmAttica = new DecAdminAttica();
+        var decAdmCrete = new DecAdminCrete();
+        var decAdmEpirWestMac= new DecAdminEpirWMaced();
+        var decAdmMacedThr=new DecAdminMacedThr();
+        var decAdminPelopWestGreeceIonio = new DecAdminPelopWGrIon();
+        var decAdminThesCenGr = new DecAdminThesCenGr();
+        var govPre = new GovernPresidency();
+        var helPar = new HellenicParliament();
+        var minCivilProtect = new MinCivilProtection();
+        var minClimaCrisis = new MinClimateCrisis();
+        var minCulture = new MinCulture();
+        var minDefense = new MinDefense();
+        var minDevelopment = new MinDevelopment();
+        var minDigitalGov = new MinDigitalGovern();
+        var minEconomy = new MinEconomy();
+        var minEducatReligSports = new MinEducatReligSports();
+        var minEnvirEnergy = new MinEnvirEnergy();
+        var minForeign = new MinForeign();
+        var minHealth = new MinHealth();
+        var minImmigrAsylum = new MinImmigrAsylum();
+        var minInfrTransp = new MinInfrastTransport();
+        var minInterior = new MinInterior();
+        var minJustice = new MinJustice();
+        var minLaborSocSecurity = new MinLaborSocSecurity();
+        var minRuralDevelFood = new MinRuralDevelFood();
+        var minSocCohesionFam = new MinSocCohesFam();
+        var minShipIslandPolicy = new MinShipIslandPolicy();
+        var minTourism = new MinTourism();
+        var repPresidency = new RepublicPresidency();
 
-        entities.add(new Republic());
-        entities.add(new Parliament());
-        entities.add(new Ministry_Interior());
-        entities.add(new Ministry_Foreign());
-        entities.add(new Ministry_Defense());
-        entities.add(new Ministry_Health());
-        entities.add(new Ministry_Justice());
-        entities.add(new Ministry_Education());
-        entities.add(new Ministry_Culture());
-        entities.add(new Ministry_Economy());
-        entities.add(new Ministry_Rural());
-        entities.add(new Ministry_Environment());
-        entities.add(new Ministry_Labor());
-        entities.add(new Ministry_Social());
-        entities.add(new Ministry_Development());
-        entities.add(new Ministry_Infrastructure());
-        entities.add(new Ministry_Shipping());
-        entities.add(new Ministry_Tourism());
-        entities.add(new Ministry_Digital());
-        entities.add(new Ministry_Digital());
-        entities.add(new Ministry_Immigration());
-        entities.add(new Ministry_Civil());
-        entities.add(new Ministry_Climate());
-        entities.add(new DA_Attica());
-        entities.add(new DA_CentralGR());
-        entities.add(new DA_Epirus());
-        entities.add(new DA_Peloponnese());
-        entities.add(new DA_Aegean());
-        entities.add(new DA_Crete());
-        entities.add(new DA_Macedonia());
+
+
+        ent.add(repPresidency);
+        ent.add(helPar);
+        ent.add(minCivilProtect);
+        ent.add(minClimaCrisis);
+        ent.add(minCulture);
+        ent.add(minDefense);
+        ent.add(minDevelopment);
+        ent.add(minDigitalGov);
+        ent.add(minEconomy);
+        ent.add(minEducatReligSports);
+        ent.add(minEnvirEnergy);
+        ent.add(minForeign);
+        ent.add(minHealth);
+        ent.add(minImmigrAsylum);
+        ent.add(minInfrTransp);
+        ent.add(minInterior);
+        ent.add(minJustice);
+        ent.add(minLaborSocSecurity);
+        ent.add(minRuralDevelFood);
+        ent.add(minShipIslandPolicy);
+        ent.add(minSocCohesionFam);
+        ent.add(minTourism);
+        ent.add(decAdmAegean);
+        ent.add(decAdmAttica);
+        ent.add(decAdmCrete);
+        ent.add(decAdmEpirWestMac);
+        ent.add(decAdmMacedThr);
+        ent.add(decAdminPelopWestGreeceIonio);
+        ent.add(decAdminThesCenGr);
+        ent.add(govPre);
 
         //End of Entities List
 
