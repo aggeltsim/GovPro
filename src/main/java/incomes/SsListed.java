@@ -24,14 +24,16 @@ public class SsListed extends SecuritiesShares {
     public String getForm() {
         return form;
     }
+    
     @Override
     public String toExplain() {
-        return getName() + " are a form of Securities Shares. Specifically, they are shares of companies that the government owns and can be sold to make money. ";
-
+        return getName() + " are a form of Securities Shares."
+        + " Specifically, they are shares of companies that the"
+        + " government owns and can be sold to make money. ";
     }
+
     @Override
     public String toString() {
         return "Account : " + getName() + "\n" + "Amount : " + getAmount(); 
     }
-    
 }

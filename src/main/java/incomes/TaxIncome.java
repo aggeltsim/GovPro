@@ -27,12 +27,13 @@ public class TaxIncome extends Taxes {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Taxes. Specifically, an income tax is money people and businesses pay to the government based on the money they earn.";
+        return getName() + " is a form of  Taxes. Specifically, an"
+        + " income tax is money people and businesses pay to the"
+        + " government based on the money they earn.";
     }
 
     @Override
     public String toString() {
-        return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
-
 }

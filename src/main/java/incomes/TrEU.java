@@ -27,13 +27,13 @@ public class TrEU extends Transfers {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Transfers. Specifically, money the government receives from the European Union, such as grants, subsidies, or financial support.";
+        return getName() + " is a form of  Transfers. Specifically,"
+        + " money the government receives from the European Union,"
+        + " such as grants, subsidies, or financial support.";
     }
 
     @Override
     public String toString() {
-        return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
-
 }
-

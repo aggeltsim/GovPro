@@ -1,5 +1,9 @@
-public class LoansExp44 extends Expenses {
-    public LoansExp44(String code,String name,double amount,String form) {
+package expenses;
+
+import java.math.BigDecimal;
+
+public class OtherExpenses extends Expenses {
+    public OtherExpenses(String code,String name,BigDecimal amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -12,10 +16,10 @@ public class LoansExp44 extends Expenses {
     public void setName(String name) {
         this.name=name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount=amount;
     }
     public  String getForm() {
@@ -27,7 +31,8 @@ public class LoansExp44 extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "includes the outflow for paying off long-term loans.";
+        return getName() + " includes minor expenses such as" + 
+        " office supplies,minor repairs,references etc ";
     }
     
 }

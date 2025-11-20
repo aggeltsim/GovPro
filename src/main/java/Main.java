@@ -3,131 +3,151 @@
  */
 import java.util.ArrayList;
 
+import incomes.*;
+import expenses.*;
+import entities.*;
+
 public class Main {
     public static void main(String args[]) {
         // Incomes List
-        ArrayList <Income> incomes = new ArrayList<>();
+        ArrayList <Income> inc = new ArrayList<>();
 
-        var taxes_111 = new Taxes();  //Taxes on goods and services
-        var taxes_112 = new Taxes();  //Taxes and duties on imports
-        var taxes_113 = new Taxes();  //Property taxes
-        var taxes_114 = new Taxes();  //Other taxes on production
-        var taxes_115 = new Taxes();  //Income taxes
-        var taxes_116 = new Taxes();  //Capital taxes
-        var taxes_119 = new Taxes();  //Other current taxes
+        var tGoods = new TaxGoodsServices();  //Taxes on goods and services
+        var tDuties = new TaxDutiesOnImports();  //Taxes and duties on imports
+        var tRegular = new TaxRegularRealEstate();  //Property taxes
+        var tProduction = new TaxProduction();  //Other taxes on production
+        var tIncome = new TaxIncome();  //Income taxes
+        var tCapital = new TaxCapital();  //Capital taxes
+        var tOther = new TaxOther();  //Other current taxes
 
-        incomes.add(taxes_111);
-        incomes.add(taxes_112);
-        incomes.add(taxes_113);
-        incomes.add(taxes_114);
-        incomes.add(taxes_115);
-        incomes.add(taxes_116);
-        incomes.add(taxes_119);
+        inc.add(tGoods);
+        inc.add(tDuties);
+        inc.add(tRegular);
+        inc.add(tProduction);
+        inc.add(tIncome);
+        inc.add(tCapital);
+        inc.add(tOther);
 
-        var socialcontr_122 = new Social_Contr();  //Other social contributions
+        var socContr = new SocialContributions();  //Other social contributions
 
-        incomes.add(socialcontr_122);
+        inc.add(socContr);
 
-        var transfers_131 = new Transfers();  //Current Internal transfers
-        var transfers_132 = new Transfers();  //Current transfers from organizations and member states of EE
-        var transfers_133 = new Transfers();  //Current transfers from foreign entities
-        var transfers_134 = new Transfers();  //Internal Investments Grants
-        var transfers_135 = new Transfers();  //Investments Grants of EE
-        var transfers_139 = new Transfers();  //Other capital transfers
+        var trCurrent = new TrCurrentDomestic();  //Current Internal transfers
+        var trEU = new TrEU();  //Current transfers from organizations and member states of EE
+        var trForeign = new TrForeignEntities();  //Current transfers from foreign entities
+        var trDomInvest = new TrDomesInvestGrants();  //Internal Investments Grants
+        var trEUInvest = new TrEUInvestGrants();  //Investments Grants of EE
+        var trOther = new TrOther();  //Other capital transfers
 
-        incomes.add(transfers_131);
-        incomes.add(transfers_132);
-        incomes.add(transfers_133);
-        incomes.add(transfers_134);
-        incomes.add(transfers_135);
-        incomes.add(transfers_139);
+        inc.add(trCurrent);
+        inc.add(trEU);
+        inc.add(trForeign);
+        inc.add(trDomInvest);
+        inc.add(trEUInvest);
+        inc.add(trOther);
 
 
-        var sales_141 = new Sales();  //Goods Sales
-        var sales_142 = new Sales();  //Sales from services
-        var sales_143 = new Sales();  //Rents
-        var sales_144 = new Sales();  //Supplies 
-        var sales_145 = new Sales();  //Directors fees
-        var sales_149 = new Sales();  //Other sales
+        var sGoods = new SalGoods();  //Goods Sales
+        var sServices= new SalServices();  //Sales from services
+        var sRents = new SalRents();  //Rents
+        var sCommissions = new SalCommissions();  //Supplies 
+        var sAdmin = new SalAdministFees();  //Directors fees
+        var sOther = new SalOther();  //Other sales
 
-        incomes.add(sales_141);
-        incomes.add(sales_142);
-        incomes.add(sales_143);
-        incomes.add(sales_144);
-        incomes.add(sales_145);
-        incomes.add(sales_149);
+        inc.add(sGoods);
+        inc.add(sServices);
+        inc.add(sRents);
+        inc.add(sCommissions);
+        inc.add(sAdmin);
+        inc.add(sOther);
 
-        var other_151 = new Other_Current();  //Incomes from interests
-        var other_152 = new Other_Current();  //Distributed corporate income
-        var other_153 = new Other_Current();  //Incomes from Natural resource rents
-        var other_156 = new Other_Current();  //Incomes from fines, penalties and attributions
-        var other_159 = new Other_Current();  //Incomes from expense reimbursements
+        var oInterest = new OciInterest();  //Incomes from interests
+        var oCorpInc = new OciCorporateDistribInc();  //Distributed corporate income
+        var oNatRent = new OciNaturalResourceRent();  //Incomes from Natural resource rents
+        var oFines = new OciFinesPenaltiesAssessments();  //Incomes from fines, penalties and attributions
+        var oReimb = new OciReimbursements();  //Incomes from expense reimbursements
 
-        incomes.add(other_151);
-        incomes.add(other_152);
-        incomes.add(other_153);
-        incomes.add(other_156);
-        incomes.add(other_159);
+        inc.add(oInterest);
+        inc.add(oCorpInc);
+        inc.add(oNatRent);
+        inc.add(oFines);
+        inc.add(oReimb);
 
-        var fixedAssets_311 = new Fixed_Assets();  //Incomes from buildings
+        var faBuildings = new FixedAssets();  //Incomes from buildings
 
-        incomes.add(fixedAssets_311);
+        inc.add(faBuildings);
 
-        var deptSecurities = new DeptSecurities();  //Incomes from long-term debt securities
+        var dsLongTerm = new DeptSecurities();  //Incomes from long-term debt securities
 
-        incomes.add(deptSecurities);
+        inc.add(dsLongTerm);
 
-        var loans_442 = new LoansInc44();  //Incomes from long-term loans from Recovery Fund resources
+        var lLongTerm1 = new LoansInc44();  //Incomes from long-term loans from Recovery Fund resources
 
-        incomes.add(loans_442);
+        inc.add(lLongTerm1);
 
-        var securities_451 = new SsListed();  //Incomes from listed shares
-        var securities_452 = new SsUnlisted();  //Incomes from unlisted shares
+        var secListed = new SsListed();  //Incomes from listed shares
+        var secUnlisted = new SsUnlisted();  //Incomes from unlisted shares
 
-        incomes.add(securities_451);
-        incomes.add(securities_452);
+        inc.add(secListed);
+        inc.add(secUnlisted);
 
-        var currencyLiabilities = new Currency_Liabilities();
+        var lcdInCirculation = new LiabilitiesCurrenDepos();
          
-        incomes.add(currencyLiabilities);
+        inc.add(lcdInCirculation);
 
-        var deptSecurities_531 = new DeptSecurLiabil();
-        var deptSecurities_532 = new DeptSecurLiabil();
+        var dsShort = new DslShortTerm();
+        var dsLong = new DslLongTerm();
 
-        incomes.add(deptSecurities_531);
-        incomes.add(deptSecurities_532);
+        inc.add(dsShort);
+        inc.add(dsLong);
 
-        var loans_541 = new LShortTerm();  //Incomes form short-term internal loans
-        var loans_542 = new LLongTerm2();  //Incomes from long-term external loans
+        var lShort = new LShortTerm();  //Incomes form short-term internal loans
+        var lLong = new LLongTermL2();  //Incomes from long-term external loans
 
-        incomes.add(loans_541);
-        incomes.add(loans_542);
+        inc.add(lShort);
+        inc.add(lLong);
 
-        var derivatives_571 = new Derivatives();
+        var finDerivatives = new FinancDerivatives();
 
-        incomes.add(derivatives_571);
+        inc.add(finDerivatives);
         
 
         //End of Incomes List
 
         //Expenses List
-        ArrayList <Expenses> expenses = new ArrayList<>();
+        ArrayList <Expenses> exp = new ArrayList<>();
 
-        expenses.add(new Employee_B());
-        expenses.add(new Social_B());
-        expenses.add(new Transfers());
-        expenses.add(new Purchases());
-        expenses.add(new Subsidies());
-        expenses.add(new Interest());
-        expenses.add(new Others());
-        expenses.add(new Credits());
-        expenses.add(new Fixed_Assets());
-        expenses.add(new Valuables());
-        expenses.add(new Loans_44());
-        expenses.add(new Securities());
-        expenses.add(new Dept_Securties());
-        expenses.add(new Dept_Securities());
-        expenses.add(new Loans_54());
+        var empBenefits = new EmployeeBenefits();
+        var sBenefits = new SocialBenefits();
+        var transfers = new TransfersExp();
+        var purchases = new Purchases();
+        var subsidies = new Subsidies();
+        var interests = new Interests();
+        var othExpenses = new OtherExpenses();
+        var aFunds = new AllocatedFunds();
+        var fixAssets = new FixedAssetsExp();
+        var valuables = new Valuables();
+        var lExp44 = new LoansExp44();
+        var sShares = new SecuritySharesExp();
+        var dSecurLiabil = new DeptSecurLiabilExp();
+        var lExp54 = new LoansExp54();
+
+        exp.add(empBenefits);
+        exp.add(sBenefits);
+        exp.add(transfers);
+        exp.add(purchases);
+        exp.add(subsidies);
+        exp.add(interests);
+        exp.add(othExpenses);
+        exp.add(aFunds);
+        exp.add(fixAssets);
+        exp.add(valuables);
+        exp.add(lExp44);
+        exp.add(sShares);
+        exp.add(dSecurLiabil);
+        exp.add(lExp54);
+
+ 
 
         //End of Expenses List
 

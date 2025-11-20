@@ -24,14 +24,17 @@ public class LShortTerm extends LoansInc54 {
     public String getForm() {
         return form;
     }
+    
     @Override
     public String toExplain() {
-        return getName() + " are a form of loans. Specifically, the government uses these loans to pay for immediate expenses like salaries, bills, or other urgent needs, and then repays them quickly. ";
-
+        return getName() + " are a form of loans. Specifically, the"
+        + " government uses these loans to pay for immediate expenses"
+        + " like salaries, bills, or other urgent needs, and then"
+        + " repays them quickly. ";
     }
+
     @Override
     public String toString() {
         return "Account : " + getName() + "\n" + "Amount : " + getAmount();
     }
-    
 }

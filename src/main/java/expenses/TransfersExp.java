@@ -1,5 +1,9 @@
-public class FixedAssetsExp extends Expenses {
-    public FixedAssetsExp(String code,String name,double amount,String form) {
+package expenses;
+
+import java.math.BigDecimal;
+
+public class TransfersExp extends Expenses {
+    public TransfersExp(String code,String name,BigDecimal amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -12,10 +16,10 @@ public class FixedAssetsExp extends Expenses {
     public void setName(String name) {
         this.name=name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount=amount;
     }
     public  String getForm() {
@@ -27,7 +31,10 @@ public class FixedAssetsExp extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() +" includes the expense for governmental real estate(land and buildings),machinery and cultural/historical assets(museums, archaeological sites etc) ";
+        return getName() + " includes the payments the government" 
+        + "makes which do not produce something directly" 
+        + " i.g. expenditures for the protection of the environment" 
+        + "or for information campaigns. ";
     }
     
 }

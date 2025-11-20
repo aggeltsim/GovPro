@@ -1,5 +1,9 @@
-public class SecuritySharesExp extends Expenses {
-    public SecuritySharesExp(String code,String name,double amount,String form) {
+package expenses;
+
+import java.math.BigDecimal;
+
+public class LoansExp44 extends Expenses {
+    public LoansExp44(String code,String name,BigDecimal amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -12,10 +16,10 @@ public class SecuritySharesExp extends Expenses {
     public void setName(String name) {
         this.name=name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount=amount;
     }
     public  String getForm() {
@@ -27,7 +31,8 @@ public class SecuritySharesExp extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "includes expenditures of the government for investing purposes, like purchasing equity shares or investment fund units";
+        return getName() + " includes the outflow for paying off" +
+        "long-term loans.";
     }
     
 }

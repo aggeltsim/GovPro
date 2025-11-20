@@ -1,10 +1,15 @@
+package expenses;
+
+import java.math.BigDecimal;
+
 public abstract class Expenses {
     protected String code;
     protected String name;
-    protected double amount;
+    protected BigDecimal amount;
     protected String form;
     
-    public Expenses(String code, String name, double amount, String form) {
+    public Expenses(String code, String name, BigDecimal amount, 
+    String form) {
         this.code = code;
         this.name = name;
         this.amount = amount;

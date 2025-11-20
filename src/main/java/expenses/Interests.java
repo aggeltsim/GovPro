@@ -1,5 +1,9 @@
+package expenses;
+
+import java.math.BigDecimal;
+
 public class Interests extends Expenses {
-    public Interests(String code,String name,double amount,String form) {
+    public Interests(String code,String name,BigDecimal amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -12,10 +16,10 @@ public class Interests extends Expenses {
     public void setName(String name) {
         this.name=name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount=amount;
     }
     public  String getForm() {
@@ -27,7 +31,8 @@ public class Interests extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "is the cost that the government has to pay to the lenders ,anually,when it borrows money.";
+        return getName() + " is the cost that the government has " + 
+        "to pay to the lenders ,anually,when it borrows money.";
     }
     
 }

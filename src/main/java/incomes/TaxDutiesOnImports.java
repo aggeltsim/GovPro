@@ -27,12 +27,14 @@ public class TaxDutiesOnImports extends Taxes {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Taxes. Specifically, import duties are taxes charged on goods brought into a country, added to their cost to protect local industries and raise money for the government.";
+        return getName() + " is a form of  Taxes. Specifically, import"
+        + " duties are taxes charged on goods brought into a country," 
+        + " added to their cost to protect local industries and raise"
+        + " money for the government.";
     }
 
     @Override
     public String toString() {
-        return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
-
 }

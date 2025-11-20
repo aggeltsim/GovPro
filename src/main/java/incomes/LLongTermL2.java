@@ -24,16 +24,17 @@ public class LLongTermL2 extends LoansInc54 {
     public String getForm() {
         return form;
     }
+    
     @Override
     public String toExplain() {
-        return getName() + " are a form of loans. Specifically, these loans are usually used to finance big investments or projects like building roads, schools, hospitals and are repaid gradually over many years. ";
-
+        return getName() + " are a form of loans. Specifically, these" 
+        + " loans are usually used to finance big investments or"
+        + " projects like building roads, schools, hospitals and are"
+        + " repaid gradually over many years. ";
     }
+    
     @Override
     public String toString() {
         return "Account : " + getName() + "\n" + "Amount : " + getAmount();
     }
-
-
-    
 }

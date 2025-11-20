@@ -1,5 +1,9 @@
+package expenses;
+
+import java.math.BigDecimal;
+
 public class Purchases extends Expenses {
-    public Purchases(String code,String name,double amount,String form) {
+    public Purchases(String code,String name,BigDecimal amount,String form) {
         super(code, name, amount, form);
     }
     //Getters and Setters
@@ -12,10 +16,10 @@ public class Purchases extends Expenses {
     public void setName(String name) {
         this.name=name;
     }
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount=amount;
     }
     public  String getForm() {
@@ -27,7 +31,9 @@ public class Purchases extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + "is an expense account that includes whatever the government buys, like computers,books or IT support,cleaning services etc";
+        return getName() + " is an expense account that includes " 
+        + "whatever the government buys, like computers,books or "
+        +"IT support,cleaning services etc";
     }
     
 }

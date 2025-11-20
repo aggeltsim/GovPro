@@ -25,12 +25,16 @@ public class FinancDerivatives extends Income {
         this.amount = amount;
     }
 
+    @Override
     public String toExplain() {
-        return getName() + " are contracts whose value depends on the price of an underlying asset, interest rate, or index, used by the government for hedging or investment purposes.";
+        return getName() + " are contracts whose value depends on"
+        + " the price of an underlying asset, interest rate, or"
+        + " index, used by the government for hedging or"
+        + " investment purposes.";
     }
 
+    @Override
     public String toString() {
-        return "Acoount: " + getName() + "\n" + "Amount: " + getAmount();
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
-    
 }

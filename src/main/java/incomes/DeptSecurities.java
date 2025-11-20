@@ -9,7 +9,8 @@ public class DeptSecurities extends Income {
         super(code,name,amount, form);
 
     }
-//Getters and setters
+
+    //Getters and setters
     public String getCode() {
         return code;
     }
@@ -25,21 +26,17 @@ public class DeptSecurities extends Income {
     public String getForm() {
         return form;
     }
+    
     @Override
     public String toExplain() {
-        return getName() + "are a form of Income. Specifically, when the government can't pay for everything it plans (services, investments, running costs), it issues these debt securities to raise funds.";
-
- 
+        return getName() + "are a form of Income. Specifically, when"
+        + " the government can't pay for everything it plans"
+        + " (services, investments, running costs), it issues these debt"
+        + " securities to raise funds.";
     }
+    
     @Override 
     public String toString() {
         return "Account : " + getName() + "\n" + "Amount : " + getAmount(); 
     }
-
-
-
-
-
-
-    
 }
