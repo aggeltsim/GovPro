@@ -7,23 +7,23 @@
 
 GovPro allows users to compare income and expenses across different ministries, offering insights into how public funds are allocated and managed.
 
-### Regional Statistical Analysis
+## Regional Statistical Analysis
 
 The application supports comparisons between different regions of Greece, using various statistical indicators to reveal differences and economic trends.
 
-#### Budget History and Forecasting
+## Budget History and Forecasting
 
 Users can explore data from past state budgets and view forecasts for upcoming fiscal years, helping them understand long-term financial patterns.
 
-##### Data Visualization
+## Data Visualization
 
 To help users interpret information quickly, GovPro provides visual representations.
 
-###### **Motto**
+### **Motto**
 
 "Data from the state, insights for all."
 
-###### **Goal**
+### **Goal**
 
 GovPro is built with the mission of delivering public financial information in the simplest and most transparent form possible—so every citizen, student, researcher, or professional can easily understand how national resources are used.
 </b>
