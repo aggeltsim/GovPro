@@ -33,18 +33,14 @@ public class RepublicPresidency extends Entity {
     }
 
     @Override
-    public String toExplain() {
-        return "Responsible for national defense, military forces, and defense policy.";
-    }
-
-    @Override
     public String toString() {
         return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
 
+    @Override
     public String toExplain() {
         return getName() + "The President of Greece, who represents the country and performs important ceremonial duties.";
-    
+
     }
 
 }
