@@ -2,7 +2,6 @@ package entities;
 
 import java.math.BigDecimal;
 
-import javax.swing.text.html.parser.Entity;
 
 public class MinDigitalGovern extends Entity {
 
