@@ -4,6 +4,8 @@
 import java.util.ArrayList;
 
 import com.sun.net.httpserver.Headers;
+import java.math.BigDecimal;
+
 
 import incomes.*;
 import expenses.*;
@@ -13,6 +15,7 @@ public class Main {
     public static void main(String args[]) {
         // Incomes List
         ArrayList <Income> inc = new ArrayList<>();
+        
 
         var tGoods = new TaxGoodsServices();  //Taxes on goods and services
         var tDuties = new TaxDutiesOnImports();  //Taxes and duties on imports
