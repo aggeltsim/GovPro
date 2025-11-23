@@ -2,6 +2,8 @@
 target/
 build/
 out/
+# Java compiled files
+*.class
 
 #IDE files
 .idea/
