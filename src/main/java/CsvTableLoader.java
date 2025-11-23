@@ -133,49 +133,111 @@ public class CsvTableLoader {
         (String) data[6][1],      // Ονομασία
         (BigDecimal) data[6][2],  // Ποσό
         "2025"); //Έτος      //Income taxes
-    var tCapital = new TaxCapital((String) data[7][0],      // Κωδικός
+    var tCapital = new TaxCapital(
+        (String) data[7][0],      // Κωδικός
         (String) data[7][1],      // Ονομασία
         (BigDecimal) data[7][2],  // Ποσό
         "2025");  //Capital taxes
-    var tOther = new TaxOther((String) data[8][0],      // Κωδικός
+    var tOther = new TaxOther(
+        (String) data[8][0],      // Κωδικός
         (String) data[8][1],      // Ονομασία
         (BigDecimal) data[8][2],  // Ποσό
         "2025");  //Other current taxes
+    //Make objects of Transfers
     var trCurrent = new TrCurrentDomestic(
-        (String) data[12][0], // "131"
+        (String) data[12][0], 
         (String) data[12][1],
         (BigDecimal) data[12][2],
         "2025");
-
     var trEU = new TrEU(
-        (String) data[13][0], // "132"
+        (String) data[13][0], 
         (String) data[13][1],
         (BigDecimal) data[13][2],
         "2025");
-
     var trForeign = new TrForeignEntities(
-        (String) data[14][0], // "133"
+        (String) data[14][0], 
         (String) data[14][1],
         (BigDecimal) data[14][2],
         "2025");
-
     var trDomInvest = new TrDomesInvestGrants(
-        (String) data[15][0], // "134"
+        (String) data[15][0], 
         (String) data[15][1],
         (BigDecimal) data[15][2],
         "2025");
-
     var trEUInvest = new TrEUInvestGrants(
-        (String) data[16][0], // "135"
+        (String) data[16][0], 
         (String) data[16][1],
         (BigDecimal) data[16][2],
         "2025");
-
     var trOther = new TrOther(
-        (String) data[17][0], // "139"
+        (String) data[17][0], 
         (String) data[17][1],
         (BigDecimal) data[17][2],
         "2025");
+    //Make objects of Sales
+    var sGoods = new SalGoods(
+        (String) data[19][0], // "141"
+        (String) data[19][1],
+        (BigDecimal) data[19][2],
+        "2025");
+    var sServices = new SalServices(
+        (String) data[20][0], // "142"
+        (String) data[20][1],
+        (BigDecimal) data[20][2],
+        "2025");
+    var sRents = new SalRents(
+        (String) data[21][0], // "143"
+        (String) data[21][1],
+        (BigDecimal) data[21][2],
+        "2025");
+    var sCommissions = new SalCommissions(
+        (String) data[22][0], // "144"
+        (String) data[22][1],
+        (BigDecimal) data[22][2],
+        "2025");
+    var sAdmin = new SalAdministFees(
+        (String) data[23][0], // "145"
+        (String) data[23][1],
+        (BigDecimal) data[23][2],
+        "2025");
+    var sOther = new SalOther(
+        (String) data[24][0], // "149"
+        (String) data[24][1],
+        (BigDecimal) data[24][2],
+        "2025");
+    //Make objects of Other Current Incone
+    var oInterest = new OciInterest(
+        (String) data[26][0], // "151"
+        (String) data[26][1],
+        (BigDecimal) data[26][2],
+        "2025");
+    var oCorpInc = new OciCorporateDistribInc(
+        (String) data[27][0], // "152"
+        (String) data[27][1],
+        (BigDecimal) data[27][2],
+        "2025");
+    var oNatRent = new OciNaturalResourceRent(
+        (String) data[28][0], // "153"
+        (String) data[28][1],
+        (BigDecimal) data[28][2],
+        "2025");
+    var oFines = new OciFinesPenaltiesAssessments(
+        (String) data[29][0], // "156"
+        (String) data[29][1],
+        (BigDecimal) data[29][2],
+        "2025");
+    var oReimb = new OciReimbursements(
+        (String) data[30][0], // "159"
+        (String) data[30][1],
+        (BigDecimal) data[30][2],
+        "2025");
+    //Make object of social contributions
+    var socContr = new ScOther(
+        (String) data[10][0], 
+        (String) data[10][1],
+        (BigDecimal) data[10][2],
+        "2025");
+
 
     
 

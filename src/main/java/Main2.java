@@ -1,12 +1,8 @@
 import java.math.BigDecimal;
 
-import incomes.TaxCapital;
-import incomes.TaxDutiesOnImports;
-import incomes.TaxGoodsServices;
-import incomes.TaxIncome;
-import incomes.TaxOther;
-import incomes.TaxProduction;
-import incomes.TaxRegularRealEstate;
+import incomes.*;
+
+
 
 
 public class Main2 {
@@ -146,14 +142,81 @@ public class Main2 {
         (String) data[8][1],      // Ονομασία
         (BigDecimal) data[8][2],  // Ποσό
         "2025");  //Other current taxes
+     //Make objects of Sales
+    var sGoods = new SalGoods(
+        (String) data[19][0], // "141"
+        (String) data[19][1],
+        (BigDecimal) data[19][2],
+        "2025");
+    var sServices = new SalServices(
+        (String) data[20][0], // "142"
+        (String) data[20][1],
+        (BigDecimal) data[20][2],
+        "2025");
+    var sRents = new SalRents(
+        (String) data[21][0], // "143"
+        (String) data[21][1],
+        (BigDecimal) data[21][2],
+        "2025");
+    var sCommissions = new SalCommissions(
+        (String) data[22][0], // "144"
+        (String) data[22][1],
+        (BigDecimal) data[22][2],
+        "2025");
+    var sAdmin = new SalAdministFees(
+        (String) data[23][0], // "145"
+        (String) data[23][1],
+        (BigDecimal) data[23][2],
+        "2025");
+    var sOther = new SalOther(
+        (String) data[24][0], // "149"
+        (String) data[24][1],
+        (BigDecimal) data[24][2],
+        "2025");
+    //Make objects of Other Current Incone
+    var oInterest = new OciInterest(
+        (String) data[26][0], // "151"
+        (String) data[26][1],
+        (BigDecimal) data[26][2],
+        "2025");
+    var oCorpInc = new OciCorporateDistribInc(
+        (String) data[27][0], // "152"
+        (String) data[27][1],
+        (BigDecimal) data[27][2],
+        "2025");
+    var oNatRent = new OciNaturalResourceRent(
+        (String) data[28][0], // "153"
+        (String) data[28][1],
+        (BigDecimal) data[28][2],
+        "2025");
+    var oFines = new OciFinesPenaltiesAssessments(
+        (String) data[29][0], // "156"
+        (String) data[29][1],
+        (BigDecimal) data[29][2],
+        "2025");
+    var oReimb = new OciReimbursements(
+        (String) data[30][0], // "159"
+        (String) data[30][1],
+        (BigDecimal) data[30][2],
+        "2025");
+    //Make object of social contributions
+    var socContr = new ScOther(
+        (String) data[10][0], 
+        (String) data[10][1],
+        (BigDecimal) data[10][2],
+        "2025");
 
+   System.out.println(socContr.toExplain());
     
-    System.out.println(tIncome.getCode());
 
 
-    }
-    
+
+ }
+
+
 }
+    
+
 
 
 
