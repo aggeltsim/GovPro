@@ -157,7 +157,7 @@ public class Main {
         //End of Expenses List
 
         //Entities List
-        ArrayList <Entitiy> ent = new ArrayList<>();
+        ArrayList <Entity> ent = new ArrayList<>();
         // Objects of each Entity class
         var decAdmAegean = new DecAdminAegean();
         var decAdmAttica = new DecAdminAttica();
@@ -235,6 +235,5 @@ public class Main {
     }
 
     
-    }
-    
 }
+    
