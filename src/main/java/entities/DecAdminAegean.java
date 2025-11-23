@@ -13,9 +13,11 @@ public class DecAdminAegean extends Entity{
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     
+    
     //getters and setters for amount
     public BigDecimal getAmount() { return amount; }
     public void setAmount(BigDecimal amount) { this.amount = amount; }
+    
 
     @Override
     public String toExplain() {

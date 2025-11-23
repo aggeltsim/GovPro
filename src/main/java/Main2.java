@@ -1,6 +1,8 @@
 import java.math.BigDecimal;
 
 import incomes.*;
+import expenses.*;
+import entities.*;
 
 
 
@@ -267,11 +269,263 @@ public class Main2 {
         (BigDecimal) data[49][2],
         "2025"
     );
+    //Make Expenses objects
+    // Employee Benefits
+    var empBenefits = new EmployeeBenefits(
+        (String) data[50][0], // "21"
+        (String) data[50][1],
+        (BigDecimal) data[50][2],
+        "2025");
+    // Social Benefits
+    var sBenefits = new SocialBenefits(
+        (String) data[51][0], // "22"
+        (String) data[51][1],
+        (BigDecimal) data[51][2],
+        "2025");
+    // Transfers
+    var transfers = new TransfersExp(
+        (String) data[52][0], // "23"
+        (String) data[52][1],
+        (BigDecimal) data[52][2],
+        "2025");
+    // Purchases of Goods and Services
+    var purchases = new Purchases(
+        (String) data[53][0], // "24"
+        (String) data[53][1],
+        (BigDecimal) data[53][2],
+        "2025");
+    // Subsidies
+    var subsidies = new Subsidies(
+        (String) data[54][0], // "25"
+        (String) data[54][1],
+        (BigDecimal) data[54][2],
+        "2025");
+    // Interests
+    var interests = new Interests(
+        (String) data[55][0], // "26"
+        (String) data[55][1],
+        (BigDecimal) data[55][2],
+        "2025");
+    // Other Expenses
+    var othExpenses = new OtherExpenses(
+        (String) data[56][0], // "27"
+        (String) data[56][1],
+        (BigDecimal) data[56][2],
+        "2025");
+    // Credits Under Allocation
+    var aFunds = new AllocatedFunds(
+        (String) data[57][0], // "29"
+        (String) data[57][1],
+        (BigDecimal) data[57][2],
+        "2025");
+    // Fixed Assets
+    var fixAssets = new FixedAssetsExp(
+        (String) data[58][0], // "31"
+        (String) data[58][1],
+        (BigDecimal) data[58][2],
+        "2025");
+    // Valuables
+    var valuables = new Valuables(
+        (String) data[59][0], // "33"
+        (String) data[59][1],
+        (BigDecimal) data[59][2],
+        "2025");
+    // Loans (code 44)
+    var lExp44 = new LoansExp44(
+        (String) data[60][0], // "44"
+        (String) data[60][1],
+        (BigDecimal) data[60][2],
+        "2025");
+    // Equity and Investment Fund Shares
+    var sShares = new SecuritySharesExp(
+        (String) data[61][0], // "45"
+        (String) data[61][1],
+        (BigDecimal) data[61][2],
+        "2025");
+    // Debt Securities (Liabilities)
+    var dSecurLiabil = new DeptSecurLiabilExp(
+        (String) data[62][0], // "53"
+        (String) data[62][1],
+        (BigDecimal) data[62][2],
+        "2025");
+    // Loans (code 54)
+    var lExp54 = new LoansExp54(
+        (String) data[63][0], // "54"
+        (String) data[63][1],
+        (BigDecimal) data[63][2],
+        "2025");
+    //Make Object for Entities (Ministries, Presidency, Parliament and Administration)
+    var repPresidency = new RepublicPresidency(
+        (String) data[64][0], // "1001"
+        (String) data[64][1],
+        (BigDecimal) data[64][2],
+        "2025");
+    var helPar = new HellenicParliament(
+        (String) data[65][0], // "1003"
+        (String) data[65][1],
+        (BigDecimal) data[65][2],
+        "2025");
+    var govPre = new GovernPresidency(
+        (String) data[66][0], // "1004"
+        (String) data[66][1],
+        (BigDecimal) data[66][2],
+        "2025");
+    var minInterior = new MinInterior(
+        (String) data[67][0], // "1007"
+        (String) data[67][1],
+        (BigDecimal) data[67][2],
+        "2025");
+    var minForeign = new MinForeign(
+        (String) data[68][0], // "1009"
+        (String) data[68][1],
+        (BigDecimal) data[68][2],
+        "2025");
+    var minDefense = new MinDefense(
+        (String) data[69][0], // "1011"
+        (String) data[69][1],
+        (BigDecimal) data[69][2],
+        "2025");
+    var minHealth = new MinHealth(
+        (String) data[70][0], // "1015"
+        (String) data[70][1],
+        (BigDecimal) data[70][2],
+        "2025");
+    var minJustice = new MinJustice(
+        (String) data[71][0], // "1017"
+        (String) data[71][1],
+        (BigDecimal) data[71][2],
+        "2025");
+    var minEducatReligSports = new MinEducatReligSports(
+        (String) data[72][0], // "1020"
+        (String) data[72][1],
+        (BigDecimal) data[72][2],
+        "2025");
+    var minCulture = new MinCulture(
+        (String) data[73][0], // "1022"
+        (String) data[73][1],
+        (BigDecimal) data[73][2],
+        "2025");
+    var minEconomy = new MinEconomy(
+        (String) data[74][0], // "1024"
+        (String) data[74][1],
+        (BigDecimal) data[74][2],
+        "2025");
+    var minRuralDevelFood = new MinRuralDevelFood(
+        (String) data[75][0], // "1029"
+        (String) data[75][1],
+        (BigDecimal) data[75][2],
+        "2025");
+    var minEnvirEnergy = new MinEnvirEnergy(
+        (String) data[76][0], // "1031"
+        (String) data[76][1],
+        (BigDecimal) data[76][2],
+        "2025");
+    var minLaborSocSecurity = new MinLaborSocSecurity(
+        (String) data[77][0], // "1032"
+        (String) data[77][1],
+        (BigDecimal) data[77][2],
+        "2025");
+    var minSocCohesionFam = new MinSocCohesFam(
+        (String) data[78][0], // "1034"
+        (String) data[78][1],
+        (BigDecimal) data[78][2],
+        "2025");
+    var minDevelopment = new MinDevelopment(
+        (String) data[79][0], // "1036"
+        (String) data[79][1],
+        (BigDecimal) data[79][2],
+        "2025");
+    var minInfrTransp = new MinInfrastTransport(
+        (String) data[80][0], // "1039"
+        (String) data[80][1],
+        (BigDecimal) data[80][2],
+        "2025");
+    var minShipIslandPolicy = new MinShipIslandPolicy(
+        (String) data[81][0], // "1041"
+        (String) data[81][1],
+        (BigDecimal) data[81][2],
+        "2025");
+    var minTourism = new MinTourism(
+        (String) data[82][0], // "1045"
+        (String) data[82][1],
+        (BigDecimal) data[82][2],
+        "2025");
+    var minDigitalGov = new MinDigitalGovern(
+        (String) data[83][0], // "1053"
+        (String) data[83][1],
+        (BigDecimal) data[83][2],
+        "2025");
+    var minImmigrAsylum = new MinImmigrAsylum(
+        (String) data[84][0], // "1055"
+        (String) data[84][1],
+        (BigDecimal) data[84][2],
+        "2025");
+    var minCivilProtect = new MinCivilProtection(
+        (String) data[85][0], // "1057"
+        (String) data[85][1],
+        (BigDecimal) data[85][2],
+        "2025");
+    var minClimaCrisis = new MinClimateCrisis(
+        (String) data[86][0], // "1060"
+        (String) data[86][1],
+        (BigDecimal) data[86][2],
+        "2025");
+// ==== DECENTRALIZED ADMINISTRATIONS ====
+    var decAdmAttica = new DecAdminAttica(
+        (String) data[87][0], // "1901"
+        (String) data[87][1],
+        (BigDecimal) data[87][2],
+        "2025");
+    var decAdminThesCenGr = new DecAdminThesCenGr(
+        (String) data[88][0], // "1902"
+        (String) data[88][1],
+        (BigDecimal) data[88][2],
+        "2025");
+    var decAdmEpirWestMac = new DecAdminEpirWMaced(
+        (String) data[89][0], // "1903"
+        (String) data[89][1],
+        (BigDecimal) data[89][2],
+        "2025");
+    var decAdminPelopWestGreeceIonio = new DecAdminPelopWGrIon(
+        (String) data[90][0], // "1904"
+        (String) data[90][1],
+        (BigDecimal) data[90][2],
+        "2025");
+    var decAdmAegean = new DecAdminAegean(
+        (String) data[91][0], // "1905"
+        (String) data[91][1],
+        (BigDecimal) data[91][2],
+        "2025");
+    var decAdmCrete = new DecAdminCrete(
+        (String) data[92][0], // "1906"
+        (String) data[92][1],
+        (BigDecimal) data[92][2],
+        "2025");
+    var decAdmMacedThr = new DecAdminMacedThr(
+        (String) data[93][0], // "1907"
+        (String) data[93][1],
+        (BigDecimal) data[93][2],
+        "2025");
+
+
+
+
+
+    
+    
+    
+    
+
     
 
 
-   System.out.println(lcdInCirculation.getName());
-   System.out.println(finDerivatives.getAmount());
+
+
+    
+
+
+   System.out.println(decAdmAegean.getName());
+   System.out.println(govPre.getAmount());
     
 
 

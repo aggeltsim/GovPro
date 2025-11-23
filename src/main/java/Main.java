@@ -194,6 +194,7 @@ public class Main {
 
         ent.add(repPresidency);
         ent.add(helPar);
+        ent.add(govPre);
         ent.add(minCivilProtect);
         ent.add(minClimaCrisis);
         ent.add(minCulture);
@@ -221,7 +222,7 @@ public class Main {
         ent.add(decAdmMacedThr);
         ent.add(decAdminPelopWestGreeceIonio);
         ent.add(decAdminThesCenGr);
-        ent.add(govPre);
+      
 
         //End of Entities List
 

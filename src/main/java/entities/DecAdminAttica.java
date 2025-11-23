@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class DecAdminAttica extends Entity{
 
-    public DecAdminAttica(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public DecAdminAttica(String code, String name, BigDecimal amount, String year) {
+        super(code, name, amount, year);
     }
 
     //Getters and Setters
