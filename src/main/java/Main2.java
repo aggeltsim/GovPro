@@ -202,22 +202,22 @@ public class Main2 {
         (BigDecimal) data[30][2],
         "2025");
     //Make object of social contributions
-    var socContr = new ScOther(
-        (String) data[10][0], 
-        (String) data[10][1],
-        (BigDecimal) data[10][2],
+    var socContr = new SocialContributions(
+        (String) data[11][0], 
+        (String) data[11][1],
+        (BigDecimal) data[11][2],
         "2025");
     //Make Object for Fixed Assets
-    var faBuildings = new FaBuildings(
-        (String) data[32][0], // "159"
-        (String) data[32][1],
-        (BigDecimal) data[32][2],
+    var faBuildings = new FixedAssets(
+        (String) data[33][0], // "159"
+        (String) data[33][1],
+        (BigDecimal) data[33][2],
         "2025");
     //Make object for Dept Securities
-    var dsLongTerm = new DslLongTerm(
-        (String) data[34][0], 
-        (String) data[34][1],
-        (BigDecimal) data[34][2],
+    var dsLongTerm = new DeptSecurities(
+        (String) data[35][0], 
+        (String) data[35][1],
+        (BigDecimal) data[35][2],
         "2025");
     //Make object for Loans with code 44
     var lLongTerm1 = new LoansInc44(

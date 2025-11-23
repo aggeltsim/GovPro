@@ -2,13 +2,41 @@ package incomes;
 
 import java.math.BigDecimal;
 
-public abstract class SocialContributions extends Income{
+public class SocialContributions extends Income{
     
     public SocialContributions(String code, String name, BigDecimal amount, String form) {
         super(code, name, amount, form);
     }
 
-    public abstract String toExplain();
+    //Getters & Setters
+    public String getCode() {
+        return code;
+    }
+    public String getName() {
+        return name;
+    }
+    public BigDecimal getAmount() {
+        return amount;
+    }
+    public String getForm() {
+        return form;
+    }
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+   
+    @Override
+    public String toExplain() {
+        return getName() + " is a form of Social Contributions."
+        + " Specifically, other social contributions are payments"
+        + " made by workers or employers to support social programs"
+        + " like pensions, unemployment benefits, or healthcare.";
+    }
 
-    public abstract String toString();
+    @Override
+    public String toString() {
+        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
+    }
+
+
 }
