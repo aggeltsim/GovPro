@@ -2,7 +2,7 @@ package entities;
 
 import java.math.BigDecimal;
 
-public abstract class Entitiy {
+public abstract class Entity {
     protected String code;
     protected String name;
     protected BigDecimal amount;
