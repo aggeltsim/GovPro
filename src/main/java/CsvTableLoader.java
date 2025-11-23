@@ -30,49 +30,49 @@ public class CsvTableLoader {
             {"141","Goods Sales", new BigDecimal("2000000")}, //19
             {"142","Provision of Services", new BigDecimal("338000000")}, //20
             {"143","Rents", new BigDecimal("1418000000")},//21 !!!!!
-            {"144","Supplies", new BigDecimal("445000000")}, //21
-            {"145","Administrative Fees", new BigDecimal("199000000")}, //22
-            {"149","Other Sales", new BigDecimal("3000000")}, //23
-            {"15","Other Current Income", new BigDecimal("2775000000")}, //24
-            {"151","Interest Income", new BigDecimal("588000000")}, //25
-            {"152","Distributed Corporate Income", new BigDecimal("356000000")}, //26
-            {"153","Natural Resource Rents", new BigDecimal("75000000")}, //27
-            {"156","Fines, Penalties and Assessments", new BigDecimal("1102000000")}, //28
-            {"159","Expense Reimbursements", new BigDecimal("654000000")},//29
-            {"31","Fixed Assets", new BigDecimal("37000000")}, //30
-            {"311","Buildings and Related Infrastructure", new BigDecimal("37000000")}, //31
-            {"43","Debt Securities", new BigDecimal("11000000")}, //32
-            {"432","Long-term Debt Securities", new BigDecimal("11000000")}, //33
-            {"44","Loans", new BigDecimal("20000000")}, //34
-            {"442","Long-term Loans", new BigDecimal("20000000")}, //35
-            {"45","Equity and Investment Fund Shares", new BigDecimal("467000000")}, //36
-            {"451","Listed Shares", new BigDecimal("239000000")}, //37
-            {"452","Unlisted Shares", new BigDecimal("228000000")}, //38
-            {"52","Currency and Deposit Liabilities", new BigDecimal("66000000")}, //39
-            {"521","Currency in Circulation Liabilities", new BigDecimal("66000000")}, //40
-            {"53","Debt Securities (Liabilities)", new BigDecimal("25973000000")}, //41
-            {"531","Short-term Debt Securities", new BigDecimal("17000000000")}, //42
-            {"532","Long-term Debt Securities", new BigDecimal("8973000000")}, //43
-            {"54","Loans", new BigDecimal("1202027000000")}, //44
-            {"541","Short-term Loans", new BigDecimal("1200000000000")}, //45
-            {"542","Long-term Loans", new BigDecimal("2027000000")}, //46
-            {"57","Financial Derivatives", new BigDecimal("800000000")}, //47
-            {"571","Financial Derivatives", new BigDecimal("800000000")}, //48
-            {"21","Employee Benefits", new BigDecimal("14889199000")}, //49
-            {"22","Social Benefits", new BigDecimal("425136000")}, //50
-            {"23","Transfers", new BigDecimal("34741365000")}, //51
-            {"24","Purchases of Goods and Services", new BigDecimal("2039542000")}, //52
-            {"25","Subsidies", new BigDecimal("80630000")}, //53
-            {"26","Interest", new BigDecimal("7701101000")}, //54
-            {"27","Other Expenses", new BigDecimal("101553000")}, //55
-            {"29","Credits Under Allocation", new BigDecimal("17283053000")}, //56
-            {"31","Fixed Assets", new BigDecimal("2609600000")}, //57
-            {"33","Valuables", new BigDecimal("85000")}, //58
-            {"44","Loans", new BigDecimal("3741000000")}, //59
-            {"45","Equity and Investment Fund Shares", new BigDecimal("1755112000")}, //60
-            {"53","Debt Securities (Liabilities)", new BigDecimal("19375000000")}, //61
-            {"54","Loans", new BigDecimal("1203165130000")}, //62
-            {"1001","Presidency of the Republic", new BigDecimal("4638000")}, //63
+            {"144","Supplies", new BigDecimal("445000000")}, //22
+            {"145","Administrative Fees", new BigDecimal("199000000")}, //23
+            {"149","Other Sales", new BigDecimal("3000000")}, //24
+            {"15","Other Current Income", new BigDecimal("2775000000")}, //25
+            {"151","Interest Income", new BigDecimal("588000000")}, //26
+            {"152","Distributed Corporate Income", new BigDecimal("356000000")}, //27
+            {"153","Natural Resource Rents", new BigDecimal("75000000")}, //28
+            {"156","Fines, Penalties and Assessments", new BigDecimal("1102000000")}, //29
+            {"159","Expense Reimbursements", new BigDecimal("654000000")},//30
+            {"31","Fixed Assets", new BigDecimal("37000000")}, //31
+            {"311","Buildings and Related Infrastructure", new BigDecimal("37000000")}, //32
+            {"43","Debt Securities", new BigDecimal("11000000")}, //33
+            {"432","Long-term Debt Securities", new BigDecimal("11000000")}, //34
+            {"44","Loans", new BigDecimal("20000000")}, //35
+            {"442","Long-term Loans", new BigDecimal("20000000")}, //36
+            {"45","Equity and Investment Fund Shares", new BigDecimal("467000000")}, //37
+            {"451","Listed Shares", new BigDecimal("239000000")}, //38
+            {"452","Unlisted Shares", new BigDecimal("228000000")}, //39
+            {"52","Currency and Deposit Liabilities", new BigDecimal("66000000")}, //40
+            {"521","Currency in Circulation Liabilities", new BigDecimal("66000000")}, //41
+            {"53","Debt Securities (Liabilities)", new BigDecimal("25973000000")}, //42
+            {"531","Short-term Debt Securities", new BigDecimal("17000000000")}, //43
+            {"532","Long-term Debt Securities", new BigDecimal("8973000000")}, //44
+            {"54","Loans", new BigDecimal("1202027000000")}, //45
+            {"541","Short-term Loans", new BigDecimal("1200000000000")}, //46
+            {"542","Long-term Loans", new BigDecimal("2027000000")}, //47
+            {"57","Financial Derivatives", new BigDecimal("800000000")}, //48
+            {"571","Financial Derivatives", new BigDecimal("800000000")}, //49
+            {"21","Employee Benefits", new BigDecimal("14889199000")}, //50
+            {"22","Social Benefits", new BigDecimal("425136000")}, //51
+            {"23","Transfers", new BigDecimal("34741365000")}, //52
+            {"24","Purchases of Goods and Services", new BigDecimal("2039542000")}, //53
+            {"25","Subsidies", new BigDecimal("80630000")}, //54
+            {"26","Interest", new BigDecimal("7701101000")}, //55
+            {"27","Other Expenses", new BigDecimal("101553000")}, //56
+            {"29","Credits Under Allocation", new BigDecimal("17283053000")}, //57
+            {"31","Fixed Assets", new BigDecimal("2609600000")}, //58
+            {"33","Valuables", new BigDecimal("85000")}, //59
+            {"44","Loans", new BigDecimal("3741000000")}, //60
+            {"45","Equity and Investment Fund Shares", new BigDecimal("1755112000")}, //61
+            {"53","Debt Securities (Liabilities)", new BigDecimal("19375000000")}, //62
+            {"54","Loans", new BigDecimal("1203165130000")}, //63
+            {"1001","Presidency of the Republic", new BigDecimal("4638000")}, //63 !!!!start from 64
             {"1003","Hellenic Parliament", new BigDecimal("171950000")}, //64
             {"1004","Presidency of the Government", new BigDecimal("41689000")}, //65
             {"1007","Ministry of Interior", new BigDecimal("3830276000")}, //66
@@ -237,7 +237,74 @@ public class CsvTableLoader {
         (String) data[10][1],
         (BigDecimal) data[10][2],
         "2025");
+    //Make Object for Fixed Assets
+    var faBuildings = new FaBuildings(
+        (String) data[32][0], // "159"
+        (String) data[32][1],
+        (BigDecimal) data[32][2],
+        "2025");
+    //Make object for Dept Securities
+    var dsLongTerm = new DslLongTerm(
+        (String) data[34][0], 
+        (String) data[34][1],
+        (BigDecimal) data[34][2],
+        "2025");
+    //Make object for Loans with code 44
+    var lLongTerm1 = new LoansInc44(
+        (String) data[36][0], // "156"
+        (String) data[36][1],
+        (BigDecimal) data[36][2],
+        "2025");
+    //Make objects for Equity and Investment Fund Shares
+    var secListed = new SsListed(
+        (String) data[38][0], 
+        (String) data[38][1],
+        (BigDecimal) data[38][2],
+        "2025");
+    var secUnlisted = new SsUnlisted(
+        (String) data[39][0], 
+        (String) data[39][1],
+        (BigDecimal) data[39][2],
+        "2025");
+    //make object for circulation
+     var lcdInCirculation = new LcdInCirculation(
+        (String) data[41][0], 
+        (String) data[41][1],
+        (BigDecimal) data[41][2],
+        "2025");
+    var dsShort = new DslShortTerm(
+        (String) data[43][0], 
+        (String) data[43][1],
+        (BigDecimal) data[43][2],
+        "2025");
+    var dsLong = new DslLongTerm(
+        (String) data[44][0], 
+        (String) data[44][1],
+        (BigDecimal) data[44][2],
+        "2025");
+    var lShort = new LShortTerm(   //Incomes form short-term internal loans
+        (String) data[46][0], 
+        (String) data[46][1],
+        (BigDecimal) data[46][2],
+        "2025");
+      
+    var lLong = new LLongTermL2( //Incomes from long-term external loans
+        (String) data[46][0], 
+        (String) data[46][1],
+        (BigDecimal) data[46][2],
+        "2025");  
+    var finDerivatives = new FinancDerivatives(
+        (String) data[49][0], 
+        (String) data[49][1],
+        (BigDecimal) data[49][2],
+        "2025"
+    );
 
+
+    
+    
+    
+    
 
     
 

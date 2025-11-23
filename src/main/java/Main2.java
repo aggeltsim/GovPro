@@ -205,8 +205,73 @@ public class Main2 {
         (String) data[10][1],
         (BigDecimal) data[10][2],
         "2025");
+    //Make Object for Fixed Assets
+    var faBuildings = new FaBuildings(
+        (String) data[32][0], // "159"
+        (String) data[32][1],
+        (BigDecimal) data[32][2],
+        "2025");
+    //Make object for Dept Securities
+    var dsLongTerm = new DslLongTerm(
+        (String) data[34][0], 
+        (String) data[34][1],
+        (BigDecimal) data[34][2],
+        "2025");
+    //Make object for Loans with code 44
+    var lLongTerm1 = new LoansInc44(
+        (String) data[36][0], // "156"
+        (String) data[36][1],
+        (BigDecimal) data[36][2],
+        "2025");
+        //Make objects for Equity and Investment Fund Shares
+    var secListed = new SsListed(
+        (String) data[38][0], 
+        (String) data[38][1],
+        (BigDecimal) data[38][2],
+        "2025");
+    var secUnlisted = new SsUnlisted(
+        (String) data[39][0], 
+        (String) data[39][1],
+        (BigDecimal) data[39][2],
+        "2025");
+    //make object for circulation
+     var lcdInCirculation = new LiabilitiesCurrenDepos(
+        (String) data[41][0], 
+        (String) data[41][1],
+        (BigDecimal) data[41][2],
+        "2025");
+    var dsShort = new DslShortTerm(
+        (String) data[43][0], 
+        (String) data[43][1],
+        (BigDecimal) data[43][2],
+        "2025");
+    var dsLong = new DslLongTerm(
+        (String) data[44][0], 
+        (String) data[44][1],
+        (BigDecimal) data[44][2],
+        "2025");
+    var lShort = new LShortTerm(   //Incomes form short-term internal loans
+        (String) data[46][0], 
+        (String) data[46][1],
+        (BigDecimal) data[46][2],
+        "2025");
+      
+    var lLong = new LLongTermL2( //Incomes from long-term external loans
+        (String) data[46][0], 
+        (String) data[46][1],
+        (BigDecimal) data[46][2],
+        "2025");  
+    var finDerivatives = new FinancDerivatives(
+        (String) data[49][0], 
+        (String) data[49][1],
+        (BigDecimal) data[49][2],
+        "2025"
+    );
+    
 
-   System.out.println(socContr.toExplain());
+
+   System.out.println(lcdInCirculation.getName());
+   System.out.println(finDerivatives.getAmount());
     
 
 
