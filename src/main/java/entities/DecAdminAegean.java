@@ -9,6 +9,8 @@ public class DecAdminAegean extends Entity {
     }
 
     //Getters and Setters
+
+
     public String getCode() {
         return code;
     }
@@ -29,6 +31,7 @@ public class DecAdminAegean extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+
 
     @Override
     public String toExplain() {

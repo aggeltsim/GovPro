@@ -7,6 +7,7 @@ public abstract class Entity {
     protected String name;
     protected BigDecimal amount;
 
+
     public Entity(String code, String name, BigDecimal amount) {
         this.code = code;
         this.name = name;

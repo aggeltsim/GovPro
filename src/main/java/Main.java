@@ -4,6 +4,8 @@
 import java.util.ArrayList;
 
 import com.sun.net.httpserver.Headers;
+import java.math.BigDecimal;
+
 
 import incomes.*;
 import expenses.*;
@@ -13,6 +15,7 @@ public class Main {
     public static void main(String args[]) {
         // Incomes List
         ArrayList <Income> inc = new ArrayList<>();
+        
 
         var tGoods = new TaxGoodsServices();  //Taxes on goods and services
         var tDuties = new TaxDutiesOnImports();  //Taxes and duties on imports
@@ -154,7 +157,7 @@ public class Main {
         //End of Expenses List
 
         //Entities List
-        ArrayList <Entitiy> ent = new ArrayList<>();
+        ArrayList <Entity> ent = new ArrayList<>();
         // Objects of each Entity class
         var decAdmAegean = new DecAdminAegean();
         var decAdmAttica = new DecAdminAttica();
@@ -191,6 +194,7 @@ public class Main {
 
         ent.add(repPresidency);
         ent.add(helPar);
+        ent.add(govPre);
         ent.add(minCivilProtect);
         ent.add(minClimaCrisis);
         ent.add(minCulture);
@@ -218,7 +222,7 @@ public class Main {
         ent.add(decAdmMacedThr);
         ent.add(decAdminPelopWestGreeceIonio);
         ent.add(decAdminThesCenGr);
-        ent.add(govPre);
+      
 
         //End of Entities List
 
@@ -231,6 +235,5 @@ public class Main {
     }
 
     
-    }
-    
 }
+    
