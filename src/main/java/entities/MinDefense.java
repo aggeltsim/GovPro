@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinDefense extends Entity {
 
-    public MinDefense(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinDefense(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,14 @@ public class MinDefense extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Oversees the country’s defense policy and the armed forces.";
+        return getName() + " oversees the country's defense policy"
+        + " and the armed forces.";
     }
 
     @Override

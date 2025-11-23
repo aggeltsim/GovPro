@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinShipIslandPolicy extends Entity {
 
-    public MinShipIslandPolicy(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinShipIslandPolicy(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,14 @@ public class MinShipIslandPolicy extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Handles shipping, ports, maritime policy, and island-related issues.";
+        return getName() + " handles shipping, ports, maritime policy,"
+        + " and island-related issues.";
     }
 
     @Override

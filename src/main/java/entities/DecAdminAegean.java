@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class DecAdminAegean extends Entity {
 
-    public DecAdminAegean(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public DecAdminAegean(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -31,11 +31,15 @@ public class DecAdminAegean extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
 
     @Override
     public String toExplain() {
-        return getName() + "Oversees administrative tasks for the North and South Aegean regions.";
+        return getName() + " oversees administrative tasks for the" 
+        + " North and South Aegean regions.";
     }
 
     @Override

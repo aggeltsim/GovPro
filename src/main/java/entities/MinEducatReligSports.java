@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinEducatReligSports extends Entity {
 
-    public MinEducatReligSports(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinEducatReligSports(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     public String getCode() {
@@ -28,10 +28,14 @@ public class MinEducatReligSports extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Oversees education, religious institutions, and sports policy.";
+        return getName() + " oversees education, religious"
+        + " institutions, and sports policy.";
     }
 
     @Override

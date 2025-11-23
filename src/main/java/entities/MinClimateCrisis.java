@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinClimateCrisis extends Entity {
 
-    public MinClimateCrisis(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinClimateCrisis(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,14 @@ public class MinClimateCrisis extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Handles natural disaster management, civil protection, and climate-related risk response.";
+        return getName() + " handles natural disaster management,"
+        + " civil protection, and climate-related risk response.";
     }
 
     @Override

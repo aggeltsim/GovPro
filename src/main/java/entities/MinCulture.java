@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinCulture extends Entity {
 
-    public MinCulture(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinCulture(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,14 @@ public class MinCulture extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Responsible for cultural heritage, the arts, and cultural promotion.";
+        return getName() + "is responsible for cultural heritage, the"
+        + " arts, and cultural promotion.";
     }
 
     @Override

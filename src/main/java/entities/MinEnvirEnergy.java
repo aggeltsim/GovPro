@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinEnvirEnergy extends Entity {
 
-    public MinEnvirEnergy(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinEnvirEnergy(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,14 @@ public class MinEnvirEnergy extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Oversees environmental protection, energy policy, and natural resources.";
+        return getName() + " oversees environmental protection, energy"
+        + " policy, and natural resources.";
     }
 
     @Override

@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinTourism extends Entity {
 
-    public MinTourism(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinTourism(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,14 @@ public class MinTourism extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Responsible for tourism policy, promotion, and development of the tourism sector.";
+        return getName() + " is responsible for tourism policy, promotion,"
+        + " and development of the tourism sector.";
     }
 
     @Override

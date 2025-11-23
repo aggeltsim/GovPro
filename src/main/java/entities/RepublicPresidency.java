@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 
 public class RepublicPresidency extends Entity {
 
-    public RepublicPresidency(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public RepublicPresidency(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -30,6 +30,9 @@ public class RepublicPresidency extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toString() {
@@ -38,7 +41,8 @@ public class RepublicPresidency extends Entity {
 
     @Override
     public String toExplain() {
-        return getName() + "The President of Greece, who represents the country and performs important ceremonial duties.";
+        return getName() + " refers to the President of Greece, who"
+        + " represents the country and performs important ceremonial duties.";
 
     }
 

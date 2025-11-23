@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinHealth extends Entity {
 
-    public MinHealth(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinHealth(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,14 @@ public class MinHealth extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Responsible for public health policy, hospitals, and national healthcare services.";
+        return getName() + " is responsible for public health policy,"
+        + " hospitals, and national healthcare services.";
     }
 
     @Override

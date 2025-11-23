@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinSocCohesFam extends Entity {
 
-    public MinSocCohesFam(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinSocCohesFam(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,14 @@ public class MinSocCohesFam extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Responsible for social welfare, family policy, and vulnerable social groups.";
+        return getName() + " is responsible for social welfare, family"
+        + " policy, and vulnerable social groups.";
     }
 
     @Override

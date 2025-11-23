@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class DecAdminMacedThr extends Entity {
 
-    public DecAdminMacedThr(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public DecAdminMacedThr(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,15 @@ public class DecAdminMacedThr extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Regional state authority managing environmental, forestry, migration, and local government oversight for Eastern Macedonia and Thrace as well as Central Macedonia.";
+        return getName() + " is a regional state authority managing"
+        + " environmental, forestry, migration, and local government"
+        + " oversight for Eastern Macedonia and Thrace as well as Central Macedonia.";
     }
 
     @Override

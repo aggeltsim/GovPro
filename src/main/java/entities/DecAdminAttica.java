@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 
 public class DecAdminAttica extends Entity {
 
-    public DecAdminAttica(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public DecAdminAttica(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -30,10 +30,15 @@ public class DecAdminAttica extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Regional state authority managing environmental, forestry, migration, and local government oversight in Attica.";
+        return getName() + " is a regional state authority managing"
+        + " environmental, forestry, migration, and local government"
+        + " oversight in Attica.";
     }
 
     @Override

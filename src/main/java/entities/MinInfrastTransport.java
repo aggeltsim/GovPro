@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinInfrastTransport extends Entity {
 
-    public MinInfrastTransport(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinInfrastTransport(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,14 @@ public class MinInfrastTransport extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Oversees public works, transportation networks, and infrastructure development.";
+        return getName() + " oversees public works, transportation"
+        + " networks, and infrastructure development.";
     }
 
     @Override

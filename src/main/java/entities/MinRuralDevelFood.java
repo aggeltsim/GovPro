@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinRuralDevelFood extends Entity {
 
-    public MinRuralDevelFood(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinRuralDevelFood(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,13 @@ public class MinRuralDevelFood extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Supports farmers and ensures safe food production.";
+        return getName() + " supports farmers and ensures safe food production.";
     }
 
     @Override

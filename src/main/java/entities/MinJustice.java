@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinJustice extends Entity {
 
-    public MinJustice(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinJustice(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,14 @@ public class MinJustice extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Manages the judicial system, legal framework, and human rights protection";
+        return getName() + " manages the judicial system, legal"
+        + " framework, and human rights protection";
     }
 
     @Override

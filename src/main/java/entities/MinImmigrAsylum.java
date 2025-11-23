@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinImmigrAsylum extends Entity {
 
-    public MinImmigrAsylum(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinImmigrAsylum(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,14 @@ public class MinImmigrAsylum extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Oversees migration policy, asylum procedures, and refugee reception.";
+        return getName() + " oversees migration policy, asylum"
+        + " procedures, and refugee reception.";
     }
 
     @Override

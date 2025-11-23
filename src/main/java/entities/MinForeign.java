@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinForeign extends Entity {
 
-    public MinForeign(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinForeign(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,14 @@ public class MinForeign extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Handles Greece’s foreign policy, diplomatic relations, and international cooperation.";
+        return getName() + " handles Greece's foreign policy,"
+        + " diplomatic relations, and international cooperation.";
     }
 
     @Override

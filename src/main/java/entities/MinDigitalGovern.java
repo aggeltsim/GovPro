@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 
 public class MinDigitalGovern extends Entity {
 
-    public MinDigitalGovern(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinDigitalGovern(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -30,10 +30,14 @@ public class MinDigitalGovern extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Manages digital transformation, e-government services, and technology policy.";
+        return getName() + " manages digital transformation,"
+        + " e-government services, and technology policy.";
     }
 
     @Override

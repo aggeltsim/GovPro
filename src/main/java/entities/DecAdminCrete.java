@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class DecAdminCrete extends Entity {
 
-    public DecAdminCrete(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public DecAdminCrete(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,14 @@ public class DecAdminCrete extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Covers the island of Crete for state-delegated responsibilities.";
+        return getName() + " covers the island of Crete for"
+        + " state-delegated responsibilities.";
     }
 
     @Override

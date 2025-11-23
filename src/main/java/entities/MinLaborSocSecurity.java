@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public class MinLaborSocSecurity extends Entity {
 
-    public MinLaborSocSecurity(String code, String name, BigDecimal amount) {
-        super(code, name, amount);
+    public MinLaborSocSecurity(String code, String name, BigDecimal amount, String form) {
+        super(code, name, amount, form);
     }
 
     //Getters and Setters
@@ -29,10 +29,14 @@ public class MinLaborSocSecurity extends Entity {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+    public String getForm() {
+        return form;
+    }
 
     @Override
     public String toExplain() {
-        return getName() + "Manages labour relations, employment policy, and the social security system.";
+        return getName() + " manages labour relations, employment policy,"
+        + " and the social security system.";
     }
 
     @Override
