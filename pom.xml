@@ -59,14 +59,14 @@
     </execution>
   </executions>
 
-  <configuration>
-    <configLocation>google_checks.xml</configLocation> <!-- ή sun_checks.xml -->
-    <encoding>UTF-8</encoding>
-    <consoleOutput>true</consoleOutput>
-    <failsOnError>false</failsOnError>
-  </configuration>
-</plugin>
-             <plugin>
+    <configuration>
+        <configLocation>google_checks.xml</configLocation> <!-- ή sun_checks.xml -->
+        <encoding>UTF-8</encoding>
+        <consoleOutput>true</consoleOutput>
+        <failsOnError>false</failsOnError>
+        </configuration>
+    </plugin>
+    <plugin>
     <groupId>org.jacoco</groupId>
     <artifactId>jacoco-maven-plugin</artifactId>
     <version>0.8.12</version>
