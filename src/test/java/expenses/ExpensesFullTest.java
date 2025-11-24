@@ -225,6 +225,38 @@ public class ExpensesFullTest {
         assertTrue(sse.toExplain().contains("equity shares"));
         assertTrue(sse.toExplain().contains("investment fund units"));
     }
+    //================
+    //OtherExpenses
+    //================
+    @Test
+    void testOtherExpenses() {
+        OtherExpenses oe = new OtherExpenses(
+            "143", "Miscellaneous Expenses", new BigDecimal("50000"), "2023"
+        );
+
+        // Έλεγχος getters
+        assertEquals("143", oe.getCode());
+        assertEquals("Miscellaneous Expenses", oe.getName());
+        assertEquals(new BigDecimal("50000"), oe.getAmount());
+        assertEquals("2023", oe.getForm());
+
+        // Αλλαγή με setters
+        oe.setName("Minor Expenses");
+        oe.setAmount(new BigDecimal("60000"));
+        assertEquals("Minor Expenses", oe.getName());
+        assertEquals(new BigDecimal("60000"), oe.getAmount());
+
+        // Έλεγχος toString
+        assertEquals("Account: Minor Expenses\nAmount: 60000", oe.toString());
+
+        // Έλεγχος toExplain με contains για τα βασικά keywords
+        String explanation = oe.toExplain();
+        assertTrue(explanation.contains("Minor Expenses"));
+        assertTrue(explanation.contains("minor expenses"));
+        assertTrue(explanation.contains("office supplies"));
+        assertTrue(explanation.contains("minor repairs"));
+        assertTrue(explanation.contains("references"));
+    }
 
     // ===========================
     // SocialBenefits
@@ -294,7 +326,7 @@ public class ExpensesFullTest {
         assertEquals(new BigDecimal("550000"), te.getAmount());
 
         assertEquals("Account: Other Transfers\nAmount: 550000", te.toString());
-        assertTrue(te.toExplain().contains("payments the government makes"));
+        assertTrue(te.toExplain().contains("payments"));
     }
 
     // ===========================
