@@ -31,7 +31,7 @@ class PresidenciesAndParliamentTest {
 
     @Test
     void testHellenicParliament() {
-        DummyParliament par = new DummyParliament("HP001", "Greek Parliament", new BigDecimal("1000"), "2025");
+        HellenicParliament par = new HellenicParliament("HP001", "Greek Parliament", new BigDecimal("1000"), "2025");
         assertEquals("HP001", par.getCode());
         assertEquals("Greek Parliament", par.getName());
         assertEquals(new BigDecimal("1000"), par.getAmount());
@@ -48,7 +48,7 @@ class PresidenciesAndParliamentTest {
 
     @Test
     void testGovernPresidency() {
-        DummyGovernPresidency gov = new DummyGovernPresidency("GP001", "Government Presidency", new BigDecimal("2000"), "2025");
+        GovernPresidency gov = new GovernPresidency("GP001", "Government Presidency", new BigDecimal("2000"), "2025");
         assertEquals("GP001", gov.getCode());
         assertEquals("Government Presidency", gov.getName());
         assertEquals(new BigDecimal("2000"), gov.getAmount());
@@ -65,7 +65,7 @@ class PresidenciesAndParliamentTest {
 
     @Test
     void testRepublicPresidency() {
-        DummyRepublicPresidency rep = new DummyRepublicPresidency("RP001", "Republic Presidency", new BigDecimal("3000"), "2025");
+        RepublicPresidency rep = new RepublicPresidency("RP001", "Republic Presidency", new BigDecimal("3000"), "2025");
         assertEquals("RP001", rep.getCode());
         assertEquals("Republic Presidency", rep.getName());
         assertEquals(new BigDecimal("3000"), rep.getAmount());
