@@ -13,6 +13,9 @@ import entities.*;
 public class Main {
     public static void main(String args[]) {
 
+        final String BLUE = "\u001B[34m";
+        final String RESET = "\u001B[0m";
+
         Object[][] data = {
             {"Code", "Name", "Amount"}, //0
             {"11","Taxes", new BigDecimal("62055000000")}, //1
@@ -777,21 +780,21 @@ public class Main {
         }
         //The case where the user chooses to read the budget.   
         if(number1 == 1) {
-            System.out.println("----------Incomes---------");
+            System.out.println(BLUE + "--------------Incomes-------------" + RESET);
             System.out.println();
             for (Income object : inc) {
                 System.out.println(object.toString());
                 System.out.println();
             }
             System.out.println();
-            System.out.println("----------Expenses-----------");
+            System.out.println(BLUE + "--------------Expenses--------------" + RESET);
             System.out.println();
             for (Expenses object : exp) {
                 System.out.println(object.toString());
                 System.out.println();
             }
             System.out.println();
-            System.out.println("----------Entities-----------");
+            System.out.println(BLUE + "--------------Entities---------------" + RESET);
             System.out.println();
             for (Entity object : ent) {
                 System.out.println(object.toString());
