@@ -1,0 +1,13 @@
+The architecture of the Percentage package adheres to the Single Responsibility Principle, by dividing the application's functionality into four specialized classes. The application, calculates the percentage {A/B *100} of two codes from the liga2025.csv file.
+
+1. Main.java and GUI.java
+The application is initialized via the Main.java class, which serves exclusively as the application's entry point. Its sole responsibility is to invoke the GUI.java class on the required Event Dispatch Thread (EDT) using SwingUtilities.invokeLater, neatly separating the application startup process from the core logic. The GUI.java acts as the central coordinator and presentation layer. It handles the GUI setup, manages user interaction, and acts as the front-end by delegating heavy tasks and displaying results and error messages.
+
+2. Loader.java
+Data and file reading are fully encapsulated within the Loader.java class. This class is decoupled from the GUI and is responsible only for input/output operations. It utilizes the Java ClassLoader with getResourceAsStream to retrieve liga2025.csv as a resource from the Maven classpath.Crucially, it manages the complexities of CSV parsing using the Apache Commons library, including proper handling of UTF-8 encoding and converting Greek/European number formats (e.g., removing dot thousand separators and converting the comma decimal separator) into the high-precision BigDecimal format, aggregating amounts by code.
+
+3. Calculator.java
+The pure mathematical calculation logic is isolated within the Calculator.java class. This makes sure that the core function of the project is highly testable and reusable, without any dependencies on file I/O or GUI components. The calculatePercentage() method performs the formula {(A/B) *100}, utilizing the BigDecimal class for high numerical accuracy. A check for division by zero is included, throwing an ArithmeticException to be handled by the presentation layer.
+
+4. Usage and Workflow
+The workflow is simple: AppLauncher starts the GUI. The GUI immediately calls the Loader to pre-process the data into a code-to-amount Map. When the user enters codes A and B and clicks the button, the GUI retrieves the amounts and passes them to the Calculator for final computation. 
