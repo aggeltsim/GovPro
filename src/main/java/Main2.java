@@ -1,10 +1,91 @@
-import entities.*;
-import expenses.*;
-import incomes.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import entities.DecAdminAegean;
+import entities.DecAdminAttica;
+import entities.DecAdminCrete;
+import entities.DecAdminEpirWMaced;
+import entities.DecAdminMacedThr;
+import entities.DecAdminPelopWGrIon;
+import entities.DecAdminThesCenGr;
+import entities.Entity;
+import entities.GovernPresidency;
+import entities.HellenicParliament;
+import entities.MinCivilProtection;
+import entities.MinClimateCrisis;
+import entities.MinCulture;
+import entities.MinDefense;
+import entities.MinDevelopment;
+import entities.MinDigitalGovern;
+import entities.MinEconomy;
+import entities.MinEducatReligSports;
+import entities.MinEnvirEnergy;
+import entities.MinForeign;
+import entities.MinHealth;
+import entities.MinImmigrAsylum;
+import entities.MinInfrastTransport;
+import entities.MinInterior;
+import entities.MinJustice;
+import entities.MinLaborSocSecurity;
+import entities.MinRuralDevelFood;
+import entities.MinShipIslandPolicy;
+import entities.MinSocCohesFam;
+import entities.MinTourism;
+import entities.RepublicPresidency;
+import expenses.AllocatedFunds;
+import expenses.DeptSecurLiabilExp;
+import expenses.EmployeeBenefits;
+import expenses.Expenses;
+import expenses.FixedAssetsExp;
+import expenses.Interests;
+import expenses.LoansExp44;
+import expenses.LoansExp54;
+import expenses.OtherExpenses;
+import expenses.Purchases;
+import expenses.SecuritySharesExp;
+import expenses.SocialBenefits;
+import expenses.Subsidies;
+import expenses.TransfersExp;
+import expenses.Valuables;
+import incomes.DeptSecurities;
+import incomes.DslLongTerm;
+import incomes.DslShortTerm;
+import incomes.FinancDerivatives;
+import incomes.FixedAssets;
+import incomes.Income;
+import incomes.LLongTermL2;
+import incomes.LShortTerm;
+import incomes.LiabilitiesCurrenDepos;
+import incomes.LoansInc44;
+import incomes.OciCorporateDistribInc;
+import incomes.OciFinesPenaltiesAssessments;
+import incomes.OciInterest;
+import incomes.OciNaturalResourceRent;
+import incomes.OciReimbursements;
+import incomes.SalAdministFees;
+import incomes.SalCommissions;
+import incomes.SalGoods;
+import incomes.SalOther;
+import incomes.SalRents;
+import incomes.SalServices;
+import incomes.SocialContributions;
+import incomes.SsListed;
+import incomes.SsUnlisted;
+import incomes.TaxCapital;
+import incomes.TaxDutiesOnImports;
+import incomes.TaxGoodsServices;
+import incomes.TaxIncome;
+import incomes.TaxOther;
+import incomes.TaxProduction;
+import incomes.TaxRegularRealEstate;
+import incomes.TrCurrentDomestic;
+import incomes.TrDomesInvestGrants;
+import incomes.TrEU;
+import incomes.TrEUInvestGrants;
+import incomes.TrForeignEntities;
+import incomes.TrOther;
 
 /** 
  * The Main class serves as the entry 
@@ -741,13 +822,28 @@ public class Main2 {
       
 
     // End of Entities List
+    double[][] dapanes = { //this an array with values of main entities from 2021 up until 2026 without inflation 
+            {3766000, 4097337, 3811641, 4059900, 3974293, 4146883}, //republic presidency
+            {143500000, 134251607, 134030043, 140477275, 147343837, 156551972}, //hellenic parliament 
+            {34251000, 40536272, 36372937, 37886945, 35723136, 38447884}, //governance presidency
+            {2986769000L, 2973891093L, 3172953535L, 3245029336L, 3282162880L, 3487669947L},//interior
+            {288237000, 246668455, 252308235, 357219091, 359936589, 404757288},//exterior
+            {5495900000L, 5937190083L, 5103551488L, 5362408267L, 5252784805L, 5916035799L},//defence
+            {4256596000L, 4276649036L, 4651583743L, 5278434922L, 6150311996L, 6568225405L},//health
+            {533261000, 531100091, 506425467, 547747086, 557774970, 569191096},//justice
+            {5605100000L, 5363728191L, 5436589608L, 5733987212L, 5660668349L, 5665485468L},//education
+            {359100000, 383427915, 409992485, 350395832, 493075321, 546993897},//sport
+            {747475497000L, 690153192000L, 669349030000L, 919467234000L, 1068139883000L, 1438513680000L}//finance
+        };
+        double[] years={2021,2022,2023,2024,2025,2026};
 
 
-    /*The below section of our code provides a menu where each user
+    /*The section of our code, shown below, provides a menu where each user
      choice triggers a specific category of functionality.
-      At first, the user has two options, read the 2025 State Budget
-      or change the 2025 State Budget. Depending on the choice, 
-      our code continue in the according way.
+      At first, the user has three options, read the 2025 State Budget
+      ,change the 2025 State Budget or get a prediction of a value. 
+      Depending on the choice, 
+      our code continues in the according way.
      */
 
 
@@ -771,16 +867,18 @@ public class Main2 {
         
       System.out.println("1. Reading of the 2025 State Budget.");
       System.out.println("2. Amendment of the 2025 State Budget.");
+      System.out.println("3. Prediction of an account");
+
         
       try {
         number1 = input.nextInt();
-        if (number1 !=1 && number1 != 2) {
-            throw new IllegalArgumentException("Please only choose between 1 and 2."
+        if (number1 < 1 || number1 > 3) {
+            throw new IllegalArgumentException("Please only choose between 1,2 and 3."
             +"More functions are coming soon!");
         }
         valid1 = true;
       } catch (InputMismatchException e) {
-        System.out.println("Please choose as an answer 1 or 2");
+        System.out.println("Please choose as an answer 1, 2 or 3. ");
         input.next();
       } catch (IllegalArgumentException e) {
         System.out.println(e.getMessage());
@@ -814,10 +912,10 @@ public class Main2 {
     /*The case where the user chooses the amendment of the 
      2025 State Budget. 
      */
-    } else {
+    } else if (number1==2) {
       while (!valid2) {
         System.out.println("Which category would you be interested in modifying?");
-        System.out.println(" Please choose one of the options below."); 
+        System.out.println(" Please choose the number of one of the options below."); 
         System.out.println();
 
         System.out.println("1. Income");
@@ -826,7 +924,7 @@ public class Main2 {
 
         try {
           number2 = input.nextInt();
-          if (number1 < 1 || number2 > 3) {
+          if (number2 < 1 || number2 > 3) {
             throw new IllegalArgumentException("Please choose a number 1-3");
           }
           valid2 = true;
@@ -1485,7 +1583,108 @@ public class Main2 {
                 } 
             }
         }
+    } else if (number1==3) {
+        while (!valid2) {
+        System.out.println("The following accounts are eligible for predictions.");
+        System.out.println("Please choose the number of one of the options below."); 
+        System.out.println(); 
+          System.out.println("1. Republic Presidency");
+          System.out.println("2. Hellenic Parliament");
+          System.out.println("3. Governmental Presidency");
+          System.out.println("4. Ministry of Interior");
+          System.out.println("5. Ministry of Exterior");
+          System.out.println("6. Ministry of Health");
+          System.out.println("7. Ministry of Justice");
+          System.out.println("8. Ministry of Education");
+          System.out.println("9. Ministry of Sport");
+          System.out.println("10. Ministry of Finance");
+
+        
+        try {
+          number2 = input.nextInt();
+          if (number2 < 1 || number2 > 10) {
+            throw new IllegalArgumentException("Please choose a number 1-10!");
+          }
+          valid2 = true;
+        } catch (InputMismatchException e) {
+          System.out.println("Please choose as an answer a number between 1-10.");
+          input.next();
+        } catch (IllegalArgumentException e) {
+          System.out.println(e.getMessage());  
+        }
     }
+    Prediction p = new Prediction();
+    while (!valid3) {
+    System.out.println("Would you like to get a prediction for a year?");
+    System.out.println("i.g. how much your chosen account is predicted");
+    System.out.println("is predicted to be budgeted in 2080?");
+    System.out.println("If so give number 1.");
+    System.out.println("Or would you like to get a prediction for a value?");
+    System.out.print("i.g. in which year was your chosen account budgeted");
+    System.out.println(" as 3500000 euro.");
+    System.out.println("In that case give number 2.");
+    try {
+        number3 = input.nextInt();
+        if (number3 < 1 || number3 > 2) {
+            throw new IllegalArgumentException("Read the"
+            +" description again please!The available options"
+            +" are 1 and 2.");
+        }
+        valid3=true;
+        
+    } catch (InputMismatchException e) {
+        System.out.println("Please read again the description!");
+        input.next();
+    } catch (IllegalArgumentException e) {
+        System.out.println(e.getMessage());
+    }
+    }
+    if (number3==1) {
+        System.out.println("Note:You can choose any year in history "
+        +"(for B.C. you need to give negative numbers)");
+        while (!valid4) {
+        System.out.println("For what year do you want"
+        +" the prediction for the account with the number "
+        + number2 +"?");
+        try {
+        number4=input.nextInt();
+        valid4=true;
+        
+        
+        } catch (InputMismatchException e) {
+            System.out.println("Please give a year as an integer.");
+            input.next();
+        }
+        
+       
+        }
+        p.predict(years,dapanes[number2 - 1],number4);
+    } else if (number3==2) {
+        double d=0.0;
+        while (!valid4) {
+        System.out.println("What value do you want the account"
+        +" with the number " + number2 +" to have?");
+        try {
+        d =input.nextDouble();
+        valid4=true;
+        
+        
+        } catch (InputMismatchException e) {
+            System.out.println("Please give the value as a number.");
+            input.next();
+        }
+        
+       
+        }
+        p.predict(years,dapanes[number2 - 1],d);
+
+        
+    }
+
+    
+
+
+    
     input.close();
 
 
@@ -1498,4 +1697,5 @@ public class Main2 {
 }
 
     
+}
 }
