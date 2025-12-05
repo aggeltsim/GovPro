@@ -53,7 +53,7 @@ public class Prediction {
 
         // Prediction for the year marked as targeted
         double predictedY =Math.floor(a + b * targetYear);
-        System.out.println("Πρόβλεψη για το έτος "+ targetYear);
+        System.out.println("Prediction for the year "+ targetYear);
         System.out.printf("%,.0f euro%n", predictedY);
         // Find x for given y
         double estimatedX = (desiredY - a) / b;
@@ -127,4 +127,62 @@ public class Prediction {
         System.out.println("Prediction for the year: "+targetYear);
         System.out.printf("%,.0f euro%n", predictedY);
     }
+    public static double getValueForGivenYear(double[] x, double[] y, int targetYear) {
+        int n = x.length;
+
+        // Find a and b through minimum squares formula
+        double sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+        for (int i = 0; i < n; i++) {
+            sumX += x[i];
+            sumY += y[i];
+            sumXY += x[i] * y[i];
+            sumX2 += x[i] * x[i];
+        }
+
+        double b = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+        double a = (sumY - b * sumX) / n;
+        // Predict for the year marked as targeted
+        double predictedY = Math.floor(a + b * targetYear);
+        return predictedY;
+    }
+    public static String getYearandMonthforGivenValue(double[] x, double[] y, double desiredY) {
+    int n = x.length;
+
+    // normalize years to start from 0 (2021 -> 0, 2022 -> 1, ...)
+    double[] relX = new double[n];
+    double base = x[0];
+    for (int i = 0; i < n; i++) {
+        relX[i] = x[i] - base;
+    }
+
+    // least squares
+    double sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+    for (int i = 0; i < n; i++) {
+        sumX += relX[i];
+        sumY += y[i];
+        sumXY += relX[i] * y[i];
+        sumX2 += relX[i] * relX[i];
+    }
+
+    double b = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+    double a = (sumY - b * sumX) / n;
+
+    // estimate relative year (starting from 0)
+    double estimatedRelX = (desiredY - a) / b;
+
+    // convert back to actual year
+    double estimatedX = base + estimatedRelX;
+
+    // transform decimal part into month
+    int yearPart = (int) estimatedX;
+    double decimalPart = estimatedX - yearPart;
+    int monthPart = (int) Math.round(decimalPart * 12);
+    if (monthPart == 0) monthPart = 1;
+    if (monthPart > 12) monthPart = 12;
+
+    return monthPart + "/" + yearPart;
+}
+
+        
+    
 }
