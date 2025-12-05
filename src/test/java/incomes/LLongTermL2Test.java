@@ -28,7 +28,7 @@ class LLongTermL2Test {
     @Test
     void testToString() {
         LLongTermL2 loan = new LLongTermL2("LT003", "School Loan", new BigDecimal("100000"), "Fixed");
-        String expected = "Account : School Loan\nAmount : 100000";
+        String expected = "Account: School Loan\nAmount : 100000";
         assertEquals(expected, loan.toString());
     }
 

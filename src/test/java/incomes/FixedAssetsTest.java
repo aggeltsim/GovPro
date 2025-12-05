@@ -28,7 +28,7 @@ class FixedAssetsTest {
     @Test
     void testToString() {
         FixedAssets fa = new FixedAssets("FA003", "Office Building", new BigDecimal("100000"), "Property");
-        String expected = "Account : Office Building\nAmount : 100000";
+        String expected = "Account: Office Building\nAmount : 100000";
         assertEquals(expected, fa.toString());
     }
 

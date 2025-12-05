@@ -28,7 +28,7 @@ class SalGoodsTest {
     @Test
     void testToString() {
         SalGoods sale = new SalGoods("SALG003", "Goods Sales", new BigDecimal("2000"), "Fixed");
-        String expected = "Account : Goods Sales\nAmount : 2000";
+        String expected = "Account: Goods Sales\nAmount : 2000";
         assertEquals(expected, sale.toString());
     }
 

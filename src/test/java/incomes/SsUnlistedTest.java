@@ -28,7 +28,7 @@ class SsUnlistedTest {
     @Test
     void testToString() {
         SsUnlisted ss = new SsUnlisted("SSU003", "Unlisted Equity", new BigDecimal("5000"), "Private");
-        String expected = "Account : Unlisted Equity\nAmount : 5000";
+        String expected = "Account: Unlisted Equity\nAmount : 5000";
         assertEquals(expected, ss.toString());
     }
 

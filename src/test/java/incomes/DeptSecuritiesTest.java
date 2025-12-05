@@ -28,7 +28,7 @@ class DebtSecuritiesTest {
     @Test
     void testToString() {
         DeptSecurities ds = new DeptSecurities("DS003", "Municipal Bond", new BigDecimal("1500"), "Fixed");
-        String expected = "Account : Municipal Bond\nAmount : 1500";
+        String expected = "Account: Municipal Bond\nAmount : 1500";
         assertEquals(expected, ds.toString());
     }
 

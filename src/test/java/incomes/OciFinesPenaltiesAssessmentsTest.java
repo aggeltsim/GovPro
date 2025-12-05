@@ -34,7 +34,7 @@ class OciFinesPenaltiesAssessmentsTest {
         OciFinesPenaltiesAssessments oci = new OciFinesPenaltiesAssessments(
             "OCI-FP003", "Tax Penalties", new BigDecimal("2000"), "Fixed"
         );
-        String expected = "Account : Tax Penalties\nAmount : 2000";
+        String expected = "Account: Tax Penalties\nAmount : 2000";
         assertEquals(expected, oci.toString());
     }
 

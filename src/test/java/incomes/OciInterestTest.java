@@ -28,7 +28,7 @@ class OciInterestTest {
     @Test
     void testToString() {
         OciInterest oci = new OciInterest("OCI-I003", "State Loan Interest", new BigDecimal("2000"), "Fixed");
-        String expected = "Account : State Loan Interest\nAmount : 2000";
+        String expected = "Account: State Loan Interest\nAmount : 2000";
         assertEquals(expected, oci.toString());
     }
 

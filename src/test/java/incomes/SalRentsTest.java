@@ -28,7 +28,7 @@ class SalRentsTest {
     @Test
     void testToString() {
         SalRents rent = new SalRents("SALR003", "Space Rent", new BigDecimal("1200"), "Fixed");
-        String expected = "Account : Space Rent\nAmount : 1200";
+        String expected = "Account: Space Rent\nAmount : 1200";
         assertEquals(expected, rent.toString());
     }
 

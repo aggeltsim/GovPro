@@ -28,7 +28,7 @@ class SsListedTest {
     @Test
     void testToString() {
         SsListed ss = new SsListed("SS003", "Listed Shares", new BigDecimal("4000"), "Common");
-        String expected = "Account : Listed Shares\nAmount : 4000";
+        String expected = "Account: Listed Shares\nAmount : 4000";
         assertEquals(expected, ss.toString());
     }
 
