@@ -28,7 +28,7 @@ class OciNaturalResourceRentTest {
     @Test
     void testToString() {
         OciNaturalResourceRent oci = new OciNaturalResourceRent("OCI-NR003", "Oil Extraction Rent", new BigDecimal("10000"), "Fixed");
-        String expected = "Account: Oil Extraction Rent\nAmount : 10000";
+        String expected = "Account: Oil Extraction Rent\nAmount: 10000";
         assertEquals(expected, oci.toString());
     }
 

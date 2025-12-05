@@ -28,7 +28,7 @@ class SalCommissionsTest {
     @Test
     void testToString() {
         SalCommissions sale = new SalCommissions("SAL003", "Commission Fees", new BigDecimal("1000"), "Fixed");
-        String expected = "Account: Commission Fees\nAmount : 1000";
+        String expected = "Account: Commission Fees\nAmount: 1000";
         assertEquals(expected, sale.toString());
     }
 

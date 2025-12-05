@@ -28,7 +28,7 @@ class LShortTermTest {
     @Test
     void testToString() {
         LShortTerm loan = new LShortTerm("LS003", "Urgent Expenses Loan", new BigDecimal("20000"), "Current");
-        String expected = "Account: Urgent Expenses Loan\nAmount : 20000";
+        String expected = "Account: Urgent Expenses Loan\nAmount: 20000";
         assertEquals(expected, loan.toString());
     }
 

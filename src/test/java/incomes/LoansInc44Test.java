@@ -28,7 +28,7 @@ class LoansInc44Test {
     @Test
     void testToString() {
         LoansInc44 loan = new LoansInc44("L44-003", "Government Debt Loan", new BigDecimal("50000"), "Fixed");
-        String expected = "Account: Government Debt Loan\nAmount : 50000";
+        String expected = "Account: Government Debt Loan\nAmount: 50000";
         assertEquals(expected, loan.toString());
     }
 

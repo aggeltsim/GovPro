@@ -28,7 +28,7 @@ class OciReimbursementsTest {
     @Test
     void testToString() {
         OciReimbursements oci = new OciReimbursements("OCI-R003", "Government Refund", new BigDecimal("2000"), "Fixed");
-        String expected = "Account: Government Refund\nAmount : 2000";
+        String expected = "Account: Government Refund\nAmount: 2000";
         assertEquals(expected, oci.toString());
     }
 

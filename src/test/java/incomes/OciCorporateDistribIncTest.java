@@ -28,7 +28,7 @@ class OciCorporateDistribIncTest {
     @Test
     void testToString() {
         OciCorporateDistribInc oci = new OciCorporateDistribInc("OCI003", "State Shares Dividend", new BigDecimal("1500"), "Fixed");
-        String expected = "Account: State Shares Dividend\nAmount : 1500";
+        String expected = "Account: State Shares Dividend\nAmount: 1500";
         assertEquals(expected, oci.toString());
     }
 
