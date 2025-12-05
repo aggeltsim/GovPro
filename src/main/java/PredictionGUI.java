@@ -35,10 +35,10 @@ public class PredictionGUI {
     static double[] years={2021,2022,2023,2024,2025,2026};
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> createAndShowGUI());
+        SwingUtilities.invokeLater(() -> createAndShowPredGUI());
     }
 
-    private static void createAndShowGUI() {
+    public static void createAndShowPredGUI() {
         JFrame frame = new JFrame("Prediction App");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 450);
