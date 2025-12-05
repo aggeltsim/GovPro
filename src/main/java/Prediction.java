@@ -36,7 +36,7 @@ public class Prediction {
     public static void predict(double[] x, double[] y, int targetYear, double desiredY) {
         int n = x.length;
 
-        // Υπολογισμός συντελεστών a και b
+        // Finding a and b
         double sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
         for (int i = 0; i < n; i++) {
             sumX += x[i];
@@ -48,30 +48,33 @@ public class Prediction {
         double b = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
         double a = (sumY - b * sumX) / n;
 
-        System.out.printf("Η εξίσωση παλινδρόμησης είναι: y = %.4f + %.4f·x\n", a, b);
+        System.out.printf("The equation used for the prediction is"
+        +": y = %.4f + %.4f·x\n", a, b);
 
-        // Πρόβλεψη για x χρόνια μπροστά
+        // Prediction for the year marked as targeted
         double predictedY =Math.floor(a + b * targetYear);
         System.out.println("Πρόβλεψη για το έτος "+ targetYear);
         System.out.printf("%,.0f euro%n", predictedY);
-        // Υπολογισμός x για δοσμένο y
+        // Find x for given y
         double estimatedX = (desiredY - a) / b;
 
-        // Μετατροπή σε έτος + μήνα
+        // Transform in year + month
         int yearPart = (int) estimatedX;
         double decimalPart = estimatedX - yearPart;
         int monthPart = (int) Math.round(decimalPart * 12);
         if (monthPart == 0) monthPart = 1;
         if (monthPart > 12) monthPart = 12;
 
-        System.out.printf("Για το δοσμένο y, το αντίστοιxo χρονικό διάστημα είναι περίπου:" 
+        System.out.printf("For the given value"
+        +", the corresponding time period in (MM/YYYY form) is:" 
         + "  " + monthPart +"/" +yearPart);
     }
-        // Void μέθοδος predict
+        // Void method predict when the user wants 
+        //to find out about the value in a year 
     public static void predict(double[] x, double[] y, double desiredY) {
         int n = x.length;
 
-        // Υπολογισμός συντελεστών a και b
+        //Find a and b through minimum squares formula
         double sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
         for (int i = 0; i < n; i++) {
             sumX += x[i];
@@ -83,27 +86,28 @@ public class Prediction {
         double b = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
         double a = (sumY - b * sumX) / n;
 
-        System.out.printf("Η εξίσωση παλινδρόμησης είναι: y = %.4f + %.4f·x\n", a, b);
+        System.out.printf("The equation used is: y = %.4f + %.4f·x\n", a, b);
 
     
 
-        // Υπολογισμός x για δοσμένο y
+        // Find x for given y
         double estimatedX = (desiredY - a) / b;
 
-        // Μετατροπή σε έτος + μήνα
+       // Transform in year + month
         int yearPart = (int) estimatedX;
         double decimalPart = estimatedX - yearPart;
         int monthPart = (int) Math.round(decimalPart * 12);
         if (monthPart == 0) monthPart = 1;
         if (monthPart > 12) monthPart = 12;
 
-        System.out.printf("Για y = %.4f, το αντίστοιχο x είναι περίπου: %d/%d\n", desiredY, monthPart, yearPart);
+        System.out.printf("For y = %.4f, the corresponding time period"
+        +" (in MM/YYYY form) is: %d/%d\n", desiredY, monthPart, yearPart);
     }
-        // Void μέθοδος predict
+        // Void method predict
     public static void predict(double[] x, double[] y, int targetYear) {
         int n = x.length;
 
-        // Υπολογισμός συντελεστών a και b
+        // Find a and b through minimum squares formula
         double sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
         for (int i = 0; i < n; i++) {
             sumX += x[i];
@@ -115,12 +119,12 @@ public class Prediction {
         double b = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
         double a = (sumY - b * sumX) / n;
 
-        System.out.printf("Η εξίσωση παλινδρόμησης είναι: y = %.4f + %.4f·x\n", a, b);
+        System.out.printf("The used equation is: y = %.4f + %.4f·x\n", a, b);
 
-        // Πρόβλεψη για x χρόνια μπροστά
+        // Predict for the year marked as targeted
         double predictedY = Math.floor(a + b * targetYear);
         
-        System.out.println("Πρόβλεψη για το έτος: "+targetYear);
+        System.out.println("Prediction for the year: "+targetYear);
         System.out.printf("%,.0f euro%n", predictedY);
     }
 }

@@ -1,8 +1,3 @@
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 import entities.DecAdminAegean;
 import entities.DecAdminAttica;
 import entities.DecAdminCrete;
@@ -86,6 +81,10 @@ import incomes.TrEU;
 import incomes.TrEUInvestGrants;
 import incomes.TrForeignEntities;
 import incomes.TrOther;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 /** 
  * The Main class serves as the entry 
