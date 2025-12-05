@@ -132,73 +132,73 @@ public class Main {
         (BigDecimal) data[2][2],  // Ποσό
         "2025"); // Έτος             // Taxes on Goods and Services
         
-    var tDuties = new TaxDutiesOnImports(
+    var taxDuties = new TaxDutiesOnImports(
         (String) data[3][0],      // Κωδικός
         (String) data[3][1],      // Ονομασία
         (BigDecimal) data[3][2],  // Ποσό
         "2025"); // Έτος      // Taxes and duties on imports
     
-    var tRegular = new TaxRegularRealEstate(
+    var taxRegular = new TaxRegularRealEstate(
         (String) data[4][0],     // Κωδικός
         (String) data[4][1],      // Ονομασία
         (BigDecimal) data[4][2],  // Ποσό
         "2025"); // Έτος       // Property taxes
     
-    var tProduction = new TaxProduction(
+    var taxProduction = new TaxProduction(
         (String) data[5][0],      // Κωδικός
         (String) data[5][1],      // Ονομασία
         (BigDecimal) data[5][2],  // Ποσό
         "2025"); // Έτος     // Other taxes on production
     
-    var tIncome = new TaxIncome(
+    var taxIncome = new TaxIncome(
         (String) data[6][0],      // Κωδικός
         (String) data[6][1],      // Ονομασία
         (BigDecimal) data[6][2],  // Ποσό
         "2025"); // Έτος      // Income taxes
     
-    var tCapital = new TaxCapital((String) data[7][0],      // Κωδικός
+    var taxCapital = new TaxCapital((String) data[7][0],      // Κωδικός
         (String) data[7][1],      // Ονομασία
         (BigDecimal) data[7][2],  // Ποσό
         "2025");  // Capital taxes
     
-    var tOther = new TaxOther((String) data[8][0],      // Κωδικός
+    var taxOther = new TaxOther((String) data[8][0],      // Κωδικός
         (String) data[8][1],      // Ονομασία
         (BigDecimal) data[8][2],  // Ποσό
         "2025");  // Other current taxes
     
     // Make objects of Sales
     
-    var sGoods = new SalGoods(
+    var salGoods = new SalGoods(
         (String) data[19][0], // "141"
         (String) data[19][1],
         (BigDecimal) data[19][2],
         "2025");
     
-    var sServices = new SalServices(
+    var salServices = new SalServices(
         (String) data[20][0], // "142"
         (String) data[20][1],
         (BigDecimal) data[20][2],
         "2025");
     
-    var sRents = new SalRents(
+    var salRents = new SalRents(
         (String) data[21][0], // "143"
         (String) data[21][1],
         (BigDecimal) data[21][2],
         "2025");
     
-    var sCommissions = new SalCommissions(
+    var salCommissions = new SalCommissions(
         (String) data[22][0], // "144"
         (String) data[22][1],
         (BigDecimal) data[22][2],
         "2025");
     
-    var sAdmin = new SalAdministFees(
+    var salAdmin = new SalAdministFees(
         (String) data[23][0], // "145"
         (String) data[23][1],
         (BigDecimal) data[23][2],
         "2025");
     
-    var sOther = new SalOther(
+    var salOther = new SalOther(
         (String) data[24][0], // "149"
         (String) data[24][1],
         (BigDecimal) data[24][2],
@@ -206,31 +206,31 @@ public class Main {
     
     // Make objects of Other Current Income
     
-    var oInterest = new OciInterest(
+    var ociInterest = new OciInterest(
         (String) data[26][0], // "151"
         (String) data[26][1],
         (BigDecimal) data[26][2],
         "2025");
     
-    var oCorpInc = new OciCorporateDistribInc(
+    var ociCorpInc = new OciCorporateDistribInc(
         (String) data[27][0], // "152"
         (String) data[27][1],
         (BigDecimal) data[27][2],
         "2025");
     
-    var oNatRent = new OciNaturalResourceRent(
+    var ociNatRent = new OciNaturalResourceRent(
         (String) data[28][0], // "153"
         (String) data[28][1],
         (BigDecimal) data[28][2],
         "2025");
     
-    var oFines = new OciFinesPenaltiesAssessments(
+    var ociFines = new OciFinesPenaltiesAssessments(
         (String) data[29][0], // "156"
         (String) data[29][1],
         (BigDecimal) data[29][2],
         "2025");
     
-    var oReimb = new OciReimbursements(
+    var ociReimb = new OciReimbursements(
         (String) data[30][0], // "159"
         (String) data[30][1],
         (BigDecimal) data[30][2],
@@ -262,7 +262,7 @@ public class Main {
     
     // Make object for Loans with code 44
     
-    var lLongTerm1 = new LoansInc44(
+    var loanLongTerm1 = new LoansInc44(
         (String) data[36][0], // "156"
         (String) data[36][1],
         (BigDecimal) data[36][2],
@@ -302,14 +302,14 @@ public class Main {
         (BigDecimal) data[44][2],
         "2025");
     
-    var lShort = new LShortTerm(// Incomes form short-term internal loans
+    var loanShort = new LShortTerm(// Incomes form short-term internal loans
         (String) data[46][0], 
         (String) data[46][1],
         (BigDecimal) data[46][2],
         "2025");
       
     
-    var lLong = new LLongTermL2(// Incomes from long-term external loans
+    var loanLong = new LLongTermL2(// Incomes from long-term external loans
         (String) data[46][0], 
         (String) data[46][1],
         (BigDecimal) data[46][2],
@@ -328,7 +328,7 @@ public class Main {
         (BigDecimal) data[13][2],
         "2025");
 
-    var trEU = new TrEU(
+    var trEu = new TrEU(
         (String) data[14][0],
         (String) data[14][1],
         (BigDecimal) data[14][2],
@@ -346,7 +346,7 @@ public class Main {
         (BigDecimal) data[16][2],
         "2025");
 
-    var trEUInvest = new TrEUInvestGrants(
+    var trEuInvest = new TrEUInvestGrants(
         (String) data[17][0],
         (String) data[17][1],
         (BigDecimal) data[17][2],
@@ -362,40 +362,40 @@ public class Main {
     ArrayList<Income> inc = new ArrayList<>();
 
     inc.add(taxGoodsServices);
-    inc.add(tDuties);
-    inc.add(tRegular);
-    inc.add(tProduction);
-    inc.add(tIncome);
-    inc.add(tCapital);
-    inc.add(tOther);
+    inc.add(taxDuties);
+    inc.add(taxRegular);
+    inc.add(taxProduction);
+    inc.add(taxIncome);
+    inc.add(taxCapital);
+    inc.add(taxOther);
     inc.add(socContr);
     inc.add(trCurrent);
-    inc.add(trEU);
+    inc.add(trEu);
     inc.add(trForeign);
     inc.add(trDomInvest);
-    inc.add(trEUInvest);
+    inc.add(trEuInvest);
     inc.add(trOther);
-    inc.add(sGoods);
-    inc.add(sServices);
-    inc.add(sRents);
-    inc.add(sCommissions);
-    inc.add(sAdmin);
-    inc.add(sOther);
-    inc.add(oInterest);
-    inc.add(oCorpInc);
-    inc.add(oNatRent);
-    inc.add(oFines);
-    inc.add(oReimb);
+    inc.add(salGoods);
+    inc.add(salServices);
+    inc.add(salRents);
+    inc.add(salCommissions);
+    inc.add(salAdmin);
+    inc.add(salOther);
+    inc.add(ociInterest);
+    inc.add(ociCorpInc);
+    inc.add(ociNatRent);
+    inc.add(ociFines);
+    inc.add(ociReimb);
     inc.add(faBuildings);
     inc.add(dsLongTerm);
-    inc.add(lLongTerm1);
+    inc.add(loanLongTerm1);
     inc.add(secListed);
     inc.add(secUnlisted);
     inc.add(lcdInCirculation);
     inc.add(dsShort);
     inc.add(dsLong);
-    inc.add(lShort);
-    inc.add(lLong);
+    inc.add(loanShort);
+    inc.add(loanLong);
     inc.add(finDerivatives);
         
 
@@ -411,7 +411,7 @@ public class Main {
         "2025");
 
     // Social Benefits
-    var sBenefits = new SocialBenefits(
+    var socialBenefits = new SocialBenefits(
         (String) data[51][0], // "22"
         (String) data[51][1],
         (BigDecimal) data[51][2],
@@ -453,7 +453,7 @@ public class Main {
         "2025");
 
     // Credits Under Allocation
-    var aFunds = new AllocatedFunds(
+    var allocFunds = new AllocatedFunds(
         (String) data[57][0], // "29"
         (String) data[57][1],
         (BigDecimal) data[57][2],
@@ -474,28 +474,28 @@ public class Main {
         "2025");
 
     // Loans (code 44)
-    var lExp44 = new LoansExp44(
+    var loanExp44 = new LoansExp44(
         (String) data[60][0], // "44"
         (String) data[60][1],
         (BigDecimal) data[60][2],
         "2025");
 
     // Equity and Investment Fund Shares
-    var sShares = new SecuritySharesExp(
+    var secShares = new SecuritySharesExp(
         (String) data[61][0], // "45"
         (String) data[61][1],
         (BigDecimal) data[61][2],
         "2025");
 
     // Debt Securities (Liabilities)
-    var dSecurLiabil = new DeptSecurLiabilExp(
+    var deptSecurLiabil = new DeptSecurLiabilExp(
         (String) data[62][0], // "53"
         (String) data[62][1],
         (BigDecimal) data[62][2],
         "2025");
 
     // Loans (code 54)
-    var lExp54 = new LoansExp54(
+    var loanExp54 = new LoansExp54(
         (String) data[63][0], // "54"
         (String) data[63][1],
         (BigDecimal) data[63][2],
@@ -506,19 +506,19 @@ public class Main {
     ArrayList<Expenses> exp = new ArrayList<>();
 
     exp.add(empBenefits);
-    exp.add(sBenefits);
+    exp.add(socialBenefits);
     exp.add(transfers);
     exp.add(purchases);
     exp.add(subsidies);
     exp.add(interests);
     exp.add(othExpenses);
-    exp.add(aFunds);
+    exp.add(allocFunds);
     exp.add(fixAssets);
     exp.add(valuables);
-    exp.add(lExp44);
-    exp.add(sShares);
-    exp.add(dSecurLiabil);
-    exp.add(lExp54);
+    exp.add(loanExp44);
+    exp.add(secShares);
+    exp.add(deptSecurLiabil);
+    exp.add(loanExp54);
       
     // End of Expenses List
 
@@ -781,24 +781,24 @@ public class Main {
       }
     }
     // The case where the user chooses to read the budget. 
-    String Blue = "\u001B[34m";
-    String Reset = "\u001B[0m";  
+    String blue = "\u001B[34m";
+    String reset = "\u001B[0m";  
     if (number1 == 1) {
-      System.out.println(Blue + "--------------Incomes-------------" + Reset);
+      System.out.println(blue + "--------------Incomes-------------" + reset);
       System.out.println();
       for (Income object : inc) {
         System.out.println(object.toString());
         System.out.println();
       }
       System.out.println();
-      System.out.println(Blue + "--------------Expenses--------------" + Reset);
+      System.out.println(blue + "--------------Expenses--------------" + reset);
       System.out.println();
       for (Expenses object : exp) {
         System.out.println(object.toString());
         System.out.println();
       }
       System.out.println();
-      System.out.println(Blue + "--------------Entities---------------" + Reset);
+      System.out.println(blue + "--------------Entities---------------" + reset);
       System.out.println();
       for (Entity object : ent) {
         System.out.println(object.toString());
@@ -874,17 +874,17 @@ public class Main {
               if (number5 == 1) {
                 taxGoodsServices.setAmount(new BigDecimal(number5));
               } else if (number5 == 2) {
-                tDuties.setAmount(new BigDecimal(number5));
+                taxDuties.setAmount(new BigDecimal(number5));
               } else if (number5 == 3) {
-                tRegular.setAmount(new BigDecimal(number5));
+                taxRegular.setAmount(new BigDecimal(number5));
               } else if (number5 == 4) {
-                tProduction.setAmount(new BigDecimal(number5));
+                taxProduction.setAmount(new BigDecimal(number5));
               } else if (number5 == 5) {
-                tIncome.setAmount(new BigDecimal(number5));
+                taxIncome.setAmount(new BigDecimal(number5));
               } else if (number5 == 6) {
-                tCapital.setAmount(new BigDecimal(number5));
+                taxCapital.setAmount(new BigDecimal(number5));
               } else {
-                tOther.setAmount(new BigDecimal(number5));
+                taxOther.setAmount(new BigDecimal(number5));
               }
               System.out.println("You succesfully "
                   + "changed the account with the amount " + number5 + " euros.");
@@ -933,13 +933,13 @@ public class Main {
               if (number5 == 1) {
                 trCurrent.setAmount(new BigDecimal(number5));
               } else if (number5 == 2) {
-                trEU.setAmount(new BigDecimal(number5));
+                trEu.setAmount(new BigDecimal(number5));
               } else if (number5 == 3) {
                 trForeign.setAmount(new BigDecimal(number5));
               } else if (number5 == 4) {
                 trDomInvest.setAmount(new BigDecimal(number5));
               } else if (number5 == 5) {
-                trEUInvest.setAmount(new BigDecimal(number5));
+                trEuInvest.setAmount(new BigDecimal(number5));
               } else {
                 trOther.setAmount(new BigDecimal(number5));
               }
@@ -951,437 +951,428 @@ public class Main {
               input.next();
             }
           }
-            } else if (number3 == 4) {
-                while (!valid4) {
+        } else if (number3 == 4) {
+          while (!valid4) {
                 
-                    System.out.println("Please choose one of the options below.");
-                    System.out.println();
+            System.out.println("Please choose one of the options below.");
+            System.out.println();
                 
-                    System.out.println("1. Sales of goods");
-                    System.out.println("2. Provision of services");
-                    System.out.println("3. Rents");
-                    System.out.println("4. Commissions");
-                    System.out.println("5. Administrative fees");
-                    System.out.println("6. Other sales");
-                    try {
-                        number4 = input.nextInt();
-                        System.out.println("Please change the account with the number " + number4);
-                        number5 = input.nextInt();
-                        if(number5 == 1) {
-                            sGoods.setAmount(new BigDecimal(number5));
-                        } else if(number5 == 2) {
-                            sServices.setAmount(new BigDecimal(number5));
-                        } else if(number5 == 3) {
-                            sRents.setAmount(new BigDecimal(number5));
-                        } else if(number5 == 4) {
-                            sCommissions.setAmount(new BigDecimal(number5));
-                        } else if(number5 == 5) {
-                            sAdmin.setAmount(new BigDecimal(number5));
-                        } else {
-                            sOther.setAmount(new BigDecimal(number5));
-                        }
-                        System.out.println("You succesfully "
-                            + "changed the account with the amount " + number5 + " euros.");
-                        valid4 = true;
-                    } catch (InputMismatchException e) {
-                        System.out.println("Please choose as an answer a number from 1 to 6");
-                        input.next();
-                    }
-                }   
-            } else if(number3 == 5) {
-                while (!valid4) {
+            System.out.println("1. Sales of goods");
+            System.out.println("2. Provision of services");
+            System.out.println("3. Rents");
+            System.out.println("4. Commissions");
+            System.out.println("5. Administrative fees");
+            System.out.println("6. Other sales");
+            try {
+              number4 = input.nextInt();
+              System.out.println("Please change the account with the number " + number4);
+              number5 = input.nextInt();
+              if (number5 == 1) {
+                salGoods.setAmount(new BigDecimal(number5));
+              } else if (number5 == 2) {
+                salServices.setAmount(new BigDecimal(number5));
+              } else if (number5 == 3) {
+                salRents.setAmount(new BigDecimal(number5));
+              } else if (number5 == 4) {
+                salCommissions.setAmount(new BigDecimal(number5));
+              } else if (number5 == 5) {
+                salAdmin.setAmount(new BigDecimal(number5));
+              } else {
+                salOther.setAmount(new BigDecimal(number5));
+              }
+              System.out.println("You succesfully "
+                  + "changed the account with the amount " + number5 + " euros.");
+              valid4 = true;
+            } catch (InputMismatchException e) {
+              System.out.println("Please choose as an answer a number from 1 to 6");
+              input.next();
+            }
+          }   
+        } else if (number3 == 5) {
+          while (!valid4) {
         
-                    System.out.println("Please choose one of the options below.");
-                    System.out.println();
+            System.out.println("Please choose one of the options below.");
+            System.out.println();
                 
-                    System.out.println("1. Interest");
-                    System.out.println("2. Distributed corporate income");
-                    System.out.println("3. Rents of natural resources");
-                    System.out.println("4. Fines, penalties and assessments");
-                    System.out.println("5. Reimbursements of expenses");
-                    try {
-                        number4 = input.nextInt();
-                        System.out.println("Please change the account with the number " + number4);
-                        number5 = input.nextInt();
-                        if(number5 == 1) {
-                            oInterest.setAmount(new BigDecimal(number5));
-                        } else if(number5 == 2) {
-                            oCorpInc.setAmount(new BigDecimal(number5));
-                        } else if(number5 == 3) {
-                            oNatRent.setAmount(new BigDecimal(number5));
-                        } else if(number5 == 4) {
-                            oFines.setAmount(new BigDecimal(number5));                                
-                        } else {
-                            oReimb.setAmount(new BigDecimal(number5));
-                        }
-                        System.out.println("You succesfully "
-                            + "changed the account with the amount " + number5 + " euros.");
-                        valid4 = true;
-                    } catch (InputMismatchException e) {
-                        System.out.println("Please choose as an answer a number from 1 to 5");
-                        input.next();
-                    }
-                }
-            } else if(number3 == 6) {
-                while (!valid4) {
+            System.out.println("1. Interest");
+            System.out.println("2. Distributed corporate income");
+            System.out.println("3. Rents of natural resources");
+            System.out.println("4. Fines, penalties and assessments");
+            System.out.println("5. Reimbursements of expenses");
+            try {
+              number4 = input.nextInt();
+              System.out.println("Please change the account with the number " + number4);
+              number5 = input.nextInt();
+              if (number5 == 1) {
+                ociInterest.setAmount(new BigDecimal(number5));
+              } else if (number5 == 2) {
+                ociCorpInc.setAmount(new BigDecimal(number5));
+              } else if (number5 == 3) {
+                ociNatRent.setAmount(new BigDecimal(number5));
+              } else if (number5 == 4) {
+                ociFines.setAmount(new BigDecimal(number5));                                
+              } else {
+                ociReimb.setAmount(new BigDecimal(number5));
+              }
+              System.out.println("You succesfully "
+                  + "changed the account with the amount " + number5 + " euros.");
+              valid4 = true;
+            } catch (InputMismatchException e) {
+              System.out.println("Please choose as an answer a number from 1 to 5");
+              input.next();
+            }
+          }
+        } else if (number3 == 6) {
+          while (!valid4) {
 
-                    System.out.println("Please choose one of the options below.");
-                    System.out.println();
+            System.out.println("Please choose one of the options below.");
+            System.out.println();
                     
-                    System.out.println("1. Buildings and related infrastructure");
-                    try {
-                        number4 = input.nextInt();
-                        System.out.println("Please change the account with the number " + number4);
-                        number5 = input.nextInt();
-                        faBuildings.setAmount(new BigDecimal(number5));
-                        System.out.println("You succesfully "
-                            + "changed the account with the amount " + number5 + " euros.");
-                        valid4 = true;
-                    } catch (InputMismatchException e) {
-                        System.out.println("Please put as an answer the number 1");
-                        input.next();
-                    }
-                }  
-            } else if(number3 == 7) {
-                while (!valid4) {
+            System.out.println("1. Buildings and related infrastructure");
+            try {
+              number4 = input.nextInt();
+              System.out.println("Please change the account with the number " + number4);
+              number5 = input.nextInt();
+              faBuildings.setAmount(new BigDecimal(number5));
+              System.out.println("You succesfully "
+                  + "changed the account with the amount " + number5 + " euros.");
+              valid4 = true;
+            } catch (InputMismatchException e) {
+              System.out.println("Please put as an answer the number 1");
+              input.next();
+            }
+          }  
+        } else if (number3 == 7) {
+          while (!valid4) {
                 
-                    System.out.println("Please choose one of the options below.");
-                    System.out.println();
+            System.out.println("Please choose one of the options below.");
+            System.out.println();
         
-                    System.out.println("1. Long-term debt securities");
-                    try {
-                        number4 = input.nextInt();
-                        System.out.println("Please change the account with the number " + number4);
-                        number5 = input.nextInt();
-                        dsLongTerm.setAmount(new BigDecimal(number5));
-                        System.out.println("You succesfully "
-                            + "changed the account with the amount " + number5 + " euros.");
-                        valid4 = true;
-                    } catch (InputMismatchException e) {
-                        System.out.println("Please put as an answer the number 1");
-                        input.next();
-                    }
-                }   
-            } else if(number3 == 8) {
-                while (!valid4) {
-                
-                    System.out.println("Please choose one of the options below.");
-                    System.out.println();
-                
-                    System.out.println("1. Long-term loans");
-                    try {
-                        number4 = input.nextInt();
-                        System.out.println("Please change the account with the number " + number4);
-                        number5 = input.nextInt();
-                        lLongTerm1.setAmount(new BigDecimal(number5));
-                        System.out.println("You succesfully "
-                            + "changed the account with the amount " + number5 + " euros.");
-                        valid4 = true;
-                    } catch (InputMismatchException e) {
-                        System.out.println("Please put as an answer the number 1");
-                        input.next();
-                    }
-                }  
-            } else if(number3 == 9) {
-                while (!valid4) {
-
-                    System.out.println("Please choose one of the options below.");
-                    System.out.println();
-
-                    System.out.println("1. Listed shares");
-                    System.out.println("2. Unlisted shares");
-                    try {
-                        number4 = input.nextInt();
-                        System.out.println("Please change the account with the number " + number4);
-                        number5 = input.nextInt();
-                        if(number5 == 1) {
-                            secListed.setAmount(new BigDecimal(number5));
-                        } else {
-                            secUnlisted.setAmount(new BigDecimal(number5));
-                        }
-                        System.out.println("You succesfully "
-                            + "changed the account with the amount " + number5 + " euros.");
-                        valid4 = true;
-                    } catch (InputMismatchException e) {
-                        System.out.println("Please choose as an answer 1 or 2");
-                        input.next();
-                    }
-                }    
-            } else if(number3 == 10) {
-                while (!valid4) {
-                
-                    System.out.println("Please choose one of the options below.");
-                    System.out.println();
-            
-                    System.out.println("1. Currency liabilities in circulation");
-                    try {
-                        number4 = input.nextInt();
-                        System.out.println("Please change the account with the number " + number4);
-                        number5 = input.nextInt();
-                        lcdInCirculation.setAmount(new BigDecimal(number5));
-                        System.out.println("You succesfully "
-                            + "changed the account with the amount " + number5 + " euros.");
-                        valid4 = true;
-                    } catch (InputMismatchException e) {
-                        System.out.println("Please put as an answer the number 1");
-                        input.next();
-                    }
-                }
-            } else if(number3 == 11) {
-                while (!valid4) {
-                
-                    System.out.println("Please choose one of the options below.");
-                    System.out.println();
-            
-                    System.out.println("1. Short-term debt securities");
-                    System.out.println("2. Long-term debt securities");
-                    try {
-                        number4 = input.nextInt();
-                        System.out.println("Please change the account with the number " + number4);
-                        number5 = input.nextInt();
-                        if(number5 == 1) {
-                            dsShort.setAmount(new BigDecimal(number5));
-                        } else {
-                            dsLong.setAmount(new BigDecimal(number5));
-                        }
-                        System.out.println("You succesfully "
-                            + "changed the account with the amount " + number5 + " euros.");
-                        valid4 = true;
-                    } catch (InputMismatchException e) {
-                        System.out.println("Please choose as an answer 1 or 2");
-                        input.next();
-                    }
-                }
-            } else if(number3 == 12) {
-                while (!valid4) {
-
-                    System.out.println("Please choose one of the options below.");
-                    System.out.println();
-                
-                    System.out.println("1. Short-term loans");
-                    System.out.println("2. Long-term loans");
-                    try {
-                        number4 = input.nextInt();
-                        System.out.println("Please change the account with the number " + number4);
-                        number5 = input.nextInt();
-                        if(number5 == 1) {
-                            lShort.setAmount(new BigDecimal(number5));
-                        } else {
-                            lLong.setAmount(new BigDecimal(number5));
-                        }
-                        System.out.println("You succesfully "
-                            + "changed the account with the amount " + number5 + " euros.");
-                        valid4 = true;
-                    } catch (InputMismatchException e) {
-                        System.out.println("Please choose as an answer 1 or 2");
-                        input.next();
-                    }
-                }
-            } else {
-                 while (!valid4) {
-                
-                    System.out.println("Please choose one of the options below.");
-                    System.out.println();  
-            
-                    System.out.println("1. Financial derivatives");
-                    try {
-                        number4 = input.nextInt();
-                        System.out.println("Please change the account with the number " + number4);
-                        number5 = input.nextInt();
-                        finDerivatives.setAmount(new BigDecimal(number5));
-                        System.out.println("You succesfully "
-                            + "changed the account with the amount " + number5 + " euros.");
-                        valid4 = true;
-                    } catch (InputMismatchException e) {
-                        System.out.println("Please put the number 1");
-                        input.next();
-                    }
-                }
+            System.out.println("1. Long-term debt securities");
+            try {
+              number4 = input.nextInt();
+              System.out.println("Please change the account with the number " + number4);
+              number5 = input.nextInt();
+              dsLongTerm.setAmount(new BigDecimal(number5));
+              System.out.println("You succesfully "
+                  + "changed the account with the amount " + number5 + " euros.");
+              valid4 = true;
+            } catch (InputMismatchException e) {
+              System.out.println("Please put as an answer the number 1");
+              input.next();
             }
-        //αν επιλέξω έξοδα
-        } else if(number2 == 2) {
-            while (!valid3) {
-
-                System.out.println("Which expence category would you be interested in modifying?");
-                System.out.println();
-
-                System.out.println("1. Employee Benefits");
-                System.out.println("2. Social Benefits");
-                System.out.println("3. Transfers");
-                System.out.println("4. Purchases of goods and services");
-                System.out.println("5. Subsidies");
-                System.out.println("6. Interest");
-                System.out.println("7. Other expenses");
-                System.out.println("8. Credits under distribution");
-                System.out.println("9. Fixed assets");
-                System.out.println("10. Valuables");
-                System.out.println("11. Loans");
-                System.out.println("12. Equity securities and investment fund shares");
-                System.out.println("13. Debt securities (liabilities)");
-                System.out.println("14. Loans");
-                try {
-                    number3 = input.nextInt();
-                    System.out.println("Please change the account with the number " + number3);
-                    number4 = input.nextInt();
-                    if(number4 == 1) {
-                        empBenefits.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 2) {
-                        sBenefits.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 3) {
-                        transfers.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 4) {
-                        purchases.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 5) {
-                        subsidies.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 6) {
-                        interests.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 7) {
-                        othExpenses.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 8) {
-                        aFunds.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 9) {
-                        fixAssets.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 10) {
-                        valuables.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 11) {
-                        lExp44.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 12) {
-                        sShares.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 13) {
-                        dSecurLiabil.setAmount(new BigDecimal(number4));
-                    } else {
-                        lExp54.setAmount(new BigDecimal(number4));
-                    }
-                    System.out.println("You succesfully "
-                        + "changed the account with the amount " + number4 + " euros.");
-                    valid3 = true;
-                } catch (InputMismatchException e) {
-                    System.out.println("Please choose as an answer a number from 1 to 13");
-                    input.next();
-                }
+          }   
+        } else if (number3 == 8) {
+          while (!valid4) {
+                
+            System.out.println("Please choose one of the options below.");
+            System.out.println();
+                
+            System.out.println("1. Long-term loans");
+            try {
+              number4 = input.nextInt();
+              System.out.println("Please change the account with the number " + number4);
+              number5 = input.nextInt();
+              loanLongTerm1.setAmount(new BigDecimal(number5));
+              System.out.println("You succesfully "
+                  + "changed the account with the amount " + number5 + " euros.");
+              valid4 = true;
+            } catch (InputMismatchException e) {
+              System.out.println("Please put as an answer the number 1");
+              input.next();
             }
-        //αν επιλέξω φορείς
+          }  
+        } else if (number3 == 9) {
+          while (!valid4) {
+
+            System.out.println("Please choose one of the options below.");
+            System.out.println();
+
+            System.out.println("1. Listed shares");
+            System.out.println("2. Unlisted shares");
+            try {
+              number4 = input.nextInt();
+              System.out.println("Please change the account with the number " + number4);
+              number5 = input.nextInt();
+              if (number5 == 1) {
+                secListed.setAmount(new BigDecimal(number5));
+              } else {
+                secUnlisted.setAmount(new BigDecimal(number5));
+              }
+              System.out.println("You succesfully "
+                  + "changed the account with the amount " + number5 + " euros.");
+              valid4 = true;
+            } catch (InputMismatchException e) {
+              System.out.println("Please choose as an answer 1 or 2");
+              input.next();
+            }
+          }    
+        } else if (number3 == 10) {
+          while (!valid4) {
+                
+            System.out.println("Please choose one of the options below.");
+            System.out.println();
+            
+            System.out.println("1. Currency liabilities in circulation");
+            try {
+              number4 = input.nextInt();
+              System.out.println("Please change the account with the number " + number4);
+              number5 = input.nextInt();
+              lcdInCirculation.setAmount(new BigDecimal(number5));
+              System.out.println("You succesfully "
+                  + "changed the account with the amount " + number5 + " euros.");
+              valid4 = true;
+            } catch (InputMismatchException e) {
+              System.out.println("Please put as an answer the number 1");
+              input.next();
+            }
+          }
+        } else if (number3 == 11) {
+          while (!valid4) {
+                
+            System.out.println("Please choose one of the options below.");
+            System.out.println();
+            
+            System.out.println("1. Short-term debt securities");
+            System.out.println("2. Long-term debt securities");
+            try {
+              number4 = input.nextInt();
+              System.out.println("Please change the account with the number " + number4);
+              number5 = input.nextInt();
+              if (number5 == 1) {
+                dsShort.setAmount(new BigDecimal(number5));
+              } else {
+                dsLong.setAmount(new BigDecimal(number5));
+              }
+              System.out.println("You succesfully "
+                  + "changed the account with the amount " + number5 + " euros.");
+              valid4 = true;
+            } catch (InputMismatchException e) {
+              System.out.println("Please choose as an answer 1 or 2");
+              input.next();
+            }
+          }
+        } else if (number3 == 12) {
+          while (!valid4) {
+
+            System.out.println("Please choose one of the options below.");
+            System.out.println();
+                
+            System.out.println("1. Short-term loans");
+            System.out.println("2. Long-term loans");
+            try {
+              number4 = input.nextInt();
+              System.out.println("Please change the account with the number " + number4);
+              number5 = input.nextInt();
+              if (number5 == 1) {
+                loanShort.setAmount(new BigDecimal(number5));
+              } else {
+                loanLong.setAmount(new BigDecimal(number5));
+              }
+              System.out.println("You succesfully "
+                  + "changed the account with the amount " + number5 + " euros.");
+              valid4 = true;
+            } catch (InputMismatchException e) {
+              System.out.println("Please choose as an answer 1 or 2");
+              input.next();
+            }
+          }
         } else {
-            while (!valid3) {
-
-                System.out.println("Which entity would you be interested in modifying?");
-                System.out.println();
-
-                System.out.println("1. Presidency of the Republic");
-                System.out.println("2. Hellenic Parliament");
-                System.out.println("3. Presidency of the Government");
-                System.out.println("4. Ministry of Interior");
-                System.out.println("5. Ministry of Foreign Affairs");
-                System.out.println("6. Ministry of National Defense");
-                System.out.println("7. Ministry of Health");
-                System.out.println("8. Ministry of Justice");
-                System.out.println("9. Ministry of Education, Religious Affairs and Sports");
-                System.out.println("10. Ministry of Culture");
-                System.out.println("11. Ministry of National Economy and Finance");
-                System.out.println("12. Ministry of Rural Development and Food");
-                System.out.println("13. Ministry of Environment and Energy");
-                System.out.println("14. Ministry of Labor and Social Security");
-                System.out.println("15. Ministry of Social Cohesion and Family");
-                System.out.println("16. Ministry of Development");
-                System.out.println("17. Ministry of Infrastructure and Transport");
-                System.out.println("18. Ministry of Shipping and Island Policy");
-                System.out.println("19. Ministry of Tourism");
-                System.out.println("20. Ministry of Digital Governance");
-                System.out.println("21. Ministry of Immigration and Asylum");
-                System.out.println("22. Ministry of Civil Protection");
-                System.out.println("23. Ministry of Climate Crisis and Civil Protection");
-                System.out.println("24. Decentralized Administration of Attica");
-                System.out.println("25. Decentralized Administration of Thessaly - Central Greece");
-                System.out.println("26. Decentralized Administration of Epirus - Western Macedonia");
-                System.out.println("27. Decentralized Administration of Peloponnese - Western Greece and Ionian");
-                System.out.println("28. Decentralized administration of the Aegean");
-                System.out.println("29. Decentralized administration of Crete");
-                System.out.println("30. Decentralized administration of Macedonia - Thrace");
-                try {
-                    number3 = input.nextInt();
-                    System.out.println("Please change the account with the number " + number3);
-                    number4 = input.nextInt();
-                    if(number4 == 1) {
-                        repPresidency.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 2) {
-                        helPar.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 3) {
-                        govPre.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 4) {
-                        minInterior.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 5) {
-                        minForeign.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 6) {
-                        minDefense.setAmount(new BigDecimal(number4));
-                    } else if(number4 ==7) {
-                        minHealth.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 8) {
-                        minJustice.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 9) {
-                        minEducatReligSports.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 10) {
-                        minCulture.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 11) {
-                        minEconomy.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 12) {
-                        minDevelopment.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 13) {
-                        minEnvirEnergy.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 14) {
-                        minLaborSocSecurity.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 15) {
-                        minSocCohesionFam.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 16) {
-                        minDevelopment.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 17) {
-                        minInfrTransp.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 18) {
-                        minShipIslandPolicy.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 19) {
-                        minTourism.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 20) {
-                        minDigitalGov.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 21) {
-                        minImmigrAsylum.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 22) {
-                        minCivilProtect.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 23) {
-                        minClimaCrisis.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 24) {
-                        decAdmAttica.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 25) {
-                        decAdminThesCenGr.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 26) {
-                        decAdmEpirWestMac.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 27) {
-                        decAdminPelopWestGreeceIonio.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 28) {
-                        decAdmAegean.setAmount(new BigDecimal(number4));
-                    } else if(number4 == 29) {
-                        decAdmCrete.setAmount(new BigDecimal(number4));
-                    } else {
-                        decAdmMacedThr.setAmount(new BigDecimal(number4));
-                    }
-                    System.out.println("You succesfully "
-                        + "changed the account with the amount " + number4 + " euros.");
-                    valid3 = true;
-                } catch (InputMismatchException e) {
-                    System.out.println("Please choose as an answer a number from 1 to 30");
-                    input.next();
-                }
+          while (!valid4) {
+                
+            System.out.println("Please choose one of the options below.");
+            System.out.println();  
+            
+            System.out.println("1. Financial derivatives");
+            try {
+              number4 = input.nextInt();
+              System.out.println("Please change the account with the number " + number4);
+              number5 = input.nextInt();
+              finDerivatives.setAmount(new BigDecimal(number5));
+              System.out.println("You succesfully "
+                  + "changed the account with the amount " + number5 + " euros.");
+              valid4 = true;
+            } catch (InputMismatchException e) {
+              System.out.println("Please put the number 1");
+              input.next();
             }
+          }
         }
+      // αν επιλέξω έξοδα
+      } else if (number2 == 2) {
+        while (!valid3) {
+
+          System.out.println("Which expence category would you be interested in modifying?");
+          System.out.println();
+
+          System.out.println("1. Employee Benefits");
+          System.out.println("2. Social Benefits");
+          System.out.println("3. Transfers");
+          System.out.println("4. Purchases of goods and services");
+          System.out.println("5. Subsidies");
+          System.out.println("6. Interest");
+          System.out.println("7. Other expenses");
+          System.out.println("8. Credits under distribution");
+          System.out.println("9. Fixed assets");
+          System.out.println("10. Valuables");
+          System.out.println("11. Loans");
+          System.out.println("12. Equity securities and investment fund shares");
+          System.out.println("13. Debt securities (liabilities)");
+          System.out.println("14. Loans");
+          try {
+            number3 = input.nextInt();
+            System.out.println("Please change the account with the number " + number3);
+            number4 = input.nextInt();
+            if (number4 == 1) {
+              empBenefits.setAmount(new BigDecimal(number4));
+            } else if (number4 == 2) {
+              socialBenefits.setAmount(new BigDecimal(number4));
+            } else if (number4 == 3) {
+              transfers.setAmount(new BigDecimal(number4));
+            } else if (number4 == 4) {
+              purchases.setAmount(new BigDecimal(number4));
+            } else if (number4 == 5) {
+              subsidies.setAmount(new BigDecimal(number4));
+            } else if (number4 == 6) {
+              interests.setAmount(new BigDecimal(number4));
+            } else if (number4 == 7) {
+              othExpenses.setAmount(new BigDecimal(number4));
+            } else if (number4 == 8) {
+              allocFunds.setAmount(new BigDecimal(number4));
+            } else if (number4 == 9) {
+              fixAssets.setAmount(new BigDecimal(number4));
+            } else if (number4 == 10) {
+              valuables.setAmount(new BigDecimal(number4));
+            } else if (number4 == 11) {
+              loanExp44.setAmount(new BigDecimal(number4));
+            } else if (number4 == 12) {
+              secShares.setAmount(new BigDecimal(number4));
+            } else if (number4 == 13) {
+              deptSecurLiabil.setAmount(new BigDecimal(number4));
+            } else {
+              loanExp54.setAmount(new BigDecimal(number4));
+            }
+            System.out.println("You succesfully "
+                + "changed the account with the amount " + number4 + " euros.");
+            valid3 = true;
+          } catch (InputMismatchException e) {
+            System.out.println("Please choose as an answer a number from 1 to 13");
+            input.next();
+          }
+        }
+      // αν επιλέξω φορείς
+      } else {
+        while (!valid3) {
+
+          System.out.println("Which entity would you be interested in modifying?");
+          System.out.println();
+
+          System.out.println("1. Presidency of the Republic");
+          System.out.println("2. Hellenic Parliament");
+          System.out.println("3. Presidency of the Government");
+          System.out.println("4. Ministry of Interior");
+          System.out.println("5. Ministry of Foreign Affairs");
+          System.out.println("6. Ministry of National Defense");
+          System.out.println("7. Ministry of Health");
+          System.out.println("8. Ministry of Justice");
+          System.out.println("9. Ministry of Education, Religious Affairs and Sports");
+          System.out.println("10. Ministry of Culture");
+          System.out.println("11. Ministry of National Economy and Finance");
+          System.out.println("12. Ministry of Rural Development and Food");
+          System.out.println("13. Ministry of Environment and Energy");
+          System.out.println("14. Ministry of Labor and Social Security");
+          System.out.println("15. Ministry of Social Cohesion and Family");
+          System.out.println("16. Ministry of Development");
+          System.out.println("17. Ministry of Infrastructure and Transport");
+          System.out.println("18. Ministry of Shipping and Island Policy");
+          System.out.println("19. Ministry of Tourism");
+          System.out.println("20. Ministry of Digital Governance");
+          System.out.println("21. Ministry of Immigration and Asylum");
+          System.out.println("22. Ministry of Civil Protection");
+          System.out.println("23. Ministry of Climate Crisis and Civil Protection");
+          System.out.println("24. Decentralized Administration of Attica");
+          System.out.println("25. Decentralized Administration of Thessaly - Central Greece");
+          System.out.println("26. Decentralized Administration of Epirus - Western Macedonia");
+          System.out.println("27. Decentralized Administration of "
+              + "Peloponnese - Western Greece and Ionian");
+          System.out.println("28. Decentralized administration of the Aegean");
+          System.out.println("29. Decentralized administration of Crete");
+          System.out.println("30. Decentralized administration of Macedonia - Thrace");
+          try {
+            number3 = input.nextInt();
+            System.out.println("Please change the account with the number " + number3);
+            number4 = input.nextInt();
+            if (number4 == 1) {
+              repPresidency.setAmount(new BigDecimal(number4));
+            } else if (number4 == 2) {
+              helPar.setAmount(new BigDecimal(number4));
+            } else if (number4 == 3) {
+              govPre.setAmount(new BigDecimal(number4));
+            } else if (number4 == 4) {
+              minInterior.setAmount(new BigDecimal(number4));
+            } else if (number4 == 5) {
+              minForeign.setAmount(new BigDecimal(number4));
+            } else if (number4 == 6) {
+              minDefense.setAmount(new BigDecimal(number4));
+            } else if (number4 == 7) {
+              minHealth.setAmount(new BigDecimal(number4));
+            } else if (number4 == 8) {
+              minJustice.setAmount(new BigDecimal(number4));
+            } else if (number4 == 9) {
+              minEducatReligSports.setAmount(new BigDecimal(number4));
+            } else if (number4 == 10) {
+              minCulture.setAmount(new BigDecimal(number4));
+            } else if (number4 == 11) {
+              minEconomy.setAmount(new BigDecimal(number4));
+            } else if (number4 == 12) {
+              minDevelopment.setAmount(new BigDecimal(number4));
+            } else if (number4 == 13) {
+              minEnvirEnergy.setAmount(new BigDecimal(number4));
+            } else if (number4 == 14) {
+              minLaborSocSecurity.setAmount(new BigDecimal(number4));
+            } else if (number4 == 15) {
+              minSocCohesionFam.setAmount(new BigDecimal(number4));
+            } else if (number4 == 16) {
+              minDevelopment.setAmount(new BigDecimal(number4));
+            } else if (number4 == 17) {
+              minInfrTransp.setAmount(new BigDecimal(number4));
+            } else if (number4 == 18) {
+              minShipIslandPolicy.setAmount(new BigDecimal(number4));
+            } else if (number4 == 19) {
+              minTourism.setAmount(new BigDecimal(number4));
+            } else if (number4 == 20) {
+              minDigitalGov.setAmount(new BigDecimal(number4));
+            } else if (number4 == 21) {
+              minImmigrAsylum.setAmount(new BigDecimal(number4));
+            } else if (number4 == 22) {
+              minCivilProtect.setAmount(new BigDecimal(number4));
+            } else if (number4 == 23) {
+              minClimaCrisis.setAmount(new BigDecimal(number4));
+            } else if (number4 == 24) {
+              decAdmAttica.setAmount(new BigDecimal(number4));
+            } else if (number4 == 25) {
+              decAdminThesCenGr.setAmount(new BigDecimal(number4));
+            } else if (number4 == 26) {
+              decAdmEpirWestMac.setAmount(new BigDecimal(number4));
+            } else if (number4 == 27) {
+              decAdminPelopWestGreeceIonio.setAmount(new BigDecimal(number4));
+            } else if (number4 == 28) {
+              decAdmAegean.setAmount(new BigDecimal(number4));
+            } else if (number4 == 29) {
+              decAdmCrete.setAmount(new BigDecimal(number4));
+            } else {
+              decAdmMacedThr.setAmount(new BigDecimal(number4));
+            }
+            System.out.println("You succesfully "
+                + "changed the account with the amount " + number4 + " euros.");
+            valid3 = true;
+          } catch (InputMismatchException e) {
+            System.out.println("Please choose as an answer a number from 1 to 30");
+            input.next();
+          }
+        }
+      }
     }
     input.close();
-
-
-
-
-
-
-
-
-}
-
-    
+  }
 }
