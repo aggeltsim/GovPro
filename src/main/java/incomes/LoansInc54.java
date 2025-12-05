@@ -9,7 +9,5 @@ public abstract class LoansInc54 extends Income{
     }
 
     public abstract String toExplain();
-
-    public abstract String toString();
     
 }

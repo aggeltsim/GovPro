@@ -9,7 +9,4 @@ public abstract class Transfers extends Income{
     }
 
     public abstract String toExplain();
-
-    public abstract String toString();
 }
-

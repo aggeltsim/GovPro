@@ -9,7 +9,6 @@ public abstract class DeptSecurLiabil extends Income {
     }
 
     public abstract String toExplain();
-    public abstract String toString();
 
 }
 

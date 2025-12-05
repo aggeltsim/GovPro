@@ -8,22 +8,6 @@ public class TaxDutiesOnImports extends Taxes {
         super(code, name, amount, form);
     }
 
-    //Getters & Setters
-    public String getCode() {
-        return code;
-    }
-    public String getName() {
-        return name;
-    }
-    public BigDecimal getAmount() {
-        return amount;
-    }
-    public String getForm() {
-        return form;
-    }
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
    
     @Override
     public String toExplain() {

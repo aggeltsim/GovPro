@@ -9,8 +9,4 @@ public abstract class SecuritiesShares extends Income {
     }
 
     public abstract String toExplain();
-
-    public abstract String toString();
-    }
-    
-
+}

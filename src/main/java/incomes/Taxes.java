@@ -9,6 +9,4 @@ public abstract class Taxes extends Income{
     }
 
     public abstract String toExplain();
-
-    public abstract String toString();
 }

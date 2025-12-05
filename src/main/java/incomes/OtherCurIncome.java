@@ -8,7 +8,5 @@ public abstract class OtherCurIncome extends Income {
     }
     @Override
     public abstract String toExplain();
-    @Override
-    public abstract String toString();
     
 }

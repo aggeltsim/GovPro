@@ -8,32 +8,9 @@ public class SalAdministFees extends Sales {
         super(code, name, amount, form);
     }
 
-    //getters and setters
-    public String getCode() {
-        return code;
-    }
-    public String getName() {
-        return name;
-    }
-    public BigDecimal getAmount() {
-        return amount;
-    }
-    public String getForm() {
-        return form;
-    }
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
     @Override
     public String toExplain() {
         return getName() + " is money the state receives for"
         + " issuing documents, permits, or other administrative actions.";
     }
-
-    @Override
-    public String toString() {
-        return "Account : " + getName() + "\n" + "Amount : " + getAmount();
-    }
-    
 }

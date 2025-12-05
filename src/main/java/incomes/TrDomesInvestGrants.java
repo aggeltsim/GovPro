@@ -7,23 +7,6 @@ public class TrDomesInvestGrants extends Transfers {
     public TrDomesInvestGrants(String code, String name, BigDecimal amount, String form) {
         super(code, name, amount, form);
     }
-
-    //Getters & Setters
-    public String getCode() {
-        return code;
-    }
-    public String getName() {
-        return name;
-    }
-    public BigDecimal getAmount() {
-        return amount;
-    }
-    public String getForm() {
-        return form;
-    }
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
    
     @Override
     public String toExplain() {
@@ -31,10 +14,5 @@ public class TrDomesInvestGrants extends Transfers {
         + " money the government receives from domestic programs that"
         + " support businesses or projects, usually to encourage"
         + " investment or development.";
-    }
-
-    @Override
-    public String toString() {
-        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
 }

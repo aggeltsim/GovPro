@@ -9,23 +9,6 @@ public class DeptSecurities extends Income {
         super(code,name,amount, form);
 
     }
-
-    //Getters and setters
-    public String getCode() {
-        return code;
-    }
-    public String getName() {
-        return name;
-    }
-    public BigDecimal getAmount() {
-        return amount;
-    }
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-    public String getForm() {
-        return form;
-    }
     
     @Override
     public String toExplain() {
@@ -35,8 +18,4 @@ public class DeptSecurities extends Income {
         + " securities to raise funds.";
     }
     
-    @Override 
-    public String toString() {
-        return "Account : " + getName() + "\n" + "Amount : " + getAmount(); 
-    }
 }

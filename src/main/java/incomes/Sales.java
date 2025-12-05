@@ -9,8 +9,6 @@ public abstract class Sales extends Income{
     }
     @Override
     public abstract String toExplain();
-    @Override 
-    public abstract String toString();
 
 
 }

@@ -17,6 +17,28 @@ public abstract class Expenses {
 
 
     }
+    //Getters and Setters
+    public String getCode() {
+        return code;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name=name;
+    }
+    public BigDecimal getAmount() {
+        return amount;
+    }
+    public void setAmount(BigDecimal amount) {
+        this.amount=amount;
+    }
+    public  String getForm() {
+        return form;
+    }
     public abstract String toExplain();  
-    public abstract String toString(); 
+     
+    public String toString() {
+        return "Account: " + getName() + "\n" + "Amount: "+ getAmount(); 
+    }
 }
