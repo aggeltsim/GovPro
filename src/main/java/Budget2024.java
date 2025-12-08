@@ -21,5 +21,20 @@ public class Budget2024 {
 
         public static BigDecimal[] staticsInc() { 
             //Anastasia
+            BigDecimal expenses2024[] = {new BigDecimal("56597000000"), new BigDecimal("56000000"), new BigDecimal("7960000000"), 
+                                    new BigDecimal("5547000000"), new BigDecimal("2555000000"), new BigDecimal("23000000"), 
+                                    new BigDecimal("11000000"), new BigDecimal("1095000000"), new BigDecimal("55000000"), 
+                                    new BigDecimal("28205000000"), new BigDecimal("1004195000000"), new BigDecimal("1350000000")};
+            final BigDecimal totalExp = new BigDecimal("1107649000000");
+            BigDecimal[] statics2024 = new BigDecimal[12];
+            for (int i = 0; i < expenses2024.length; i++) {
+               statics2024[i] = BigDecimal.ZERO;
+            }
+            for (int i = 0; i < expenses2024.length; i++) {
+                statics2024[i] = expenses2024[i].divide(totalExp); 
+            }
+            return statics2024;
+        
         }
 }
+
