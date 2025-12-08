@@ -19,8 +19,7 @@ public class Budget2024 {
         
         }
 
-        public static BigDecimal[] staticsInc() { 
-            //Anastasia
+        public static BigDecimal[] staticsInc() {
             BigDecimal expenses2024[] = {new BigDecimal("56597000000"), new BigDecimal("56000000"), new BigDecimal("7960000000"), 
                                     new BigDecimal("5547000000"), new BigDecimal("2555000000"), new BigDecimal("23000000"), 
                                     new BigDecimal("11000000"), new BigDecimal("1095000000"), new BigDecimal("55000000"), 

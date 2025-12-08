@@ -3,12 +3,12 @@ import java.math.BigDecimal;
 public class Budget2023 {
     
     public static BigDecimal[] staticsExp() {
-       BigDecimal expenses2023[] = {new BigDecimal("0"), new BigDecimal("0"), new BigDecimal("0"), 
-                                    new BigDecimal("0"), new BigDecimal("0"), new BigDecimal("0"), 
-                                    new BigDecimal("0"), new BigDecimal("0"), new BigDecimal("0"), 
-                                    new BigDecimal("0"), new BigDecimal("0"), new BigDecimal("0"), 
-                                    new BigDecimal("0"), new BigDecimal("0")};
-            final BigDecimal totalExp = new BigDecimal("0");
+       BigDecimal expenses2023[] = {new BigDecimal("13795795000"), new BigDecimal("397439000"), new BigDecimal("32475557000"), 
+                                    new BigDecimal("1540686000"), new BigDecimal("80300000"), new BigDecimal("5851155000"), 
+                                    new BigDecimal("81257000"), new BigDecimal("15117638000 "), new BigDecimal("2530934000"), 
+                                    new BigDecimal("62000"), new BigDecimal("3394000000"), new BigDecimal("1058240000"), 
+                                    new BigDecimal("27924000000"), new BigDecimal("702631130000")};
+            final BigDecimal totalExp = new BigDecimal("806878193000");
             BigDecimal[] statics2023 = new BigDecimal[14];
             for (int i = 0; i < expenses2023.length; i++) {
                statics2023[i] = BigDecimal.ZERO;
@@ -20,7 +20,6 @@ public class Budget2023 {
         }
 
         public static BigDecimal[] staticsInc() { 
-            //Anastasia
             BigDecimal incomes2023[] = {new BigDecimal("51579000000"), new BigDecimal("55000000"), new BigDecimal("7953000000"), 
                                     new BigDecimal("2405000000"), new BigDecimal("1869000000"), new BigDecimal("24000000"), 
                                     new BigDecimal("23000000"), new BigDecimal("387000000"), new BigDecimal("44000000"), 
