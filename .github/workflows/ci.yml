@@ -22,4 +22,10 @@ jobs:
 
     - name: Build and test with Maven
       run: mvn clean verify
+
+     - name: Run Checkstyle
+       run: mvn checkstyle:check
+
+      - name: Generate JaCoCo report
+        run: mvn jacoco:report
       
