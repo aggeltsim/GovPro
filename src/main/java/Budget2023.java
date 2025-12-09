@@ -1,20 +1,21 @@
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Budget2023 {
     
     public static BigDecimal[] staticsExp() {
        BigDecimal expenses2023[] = {new BigDecimal("13795795000"), new BigDecimal("397439000"), new BigDecimal("32475557000"), 
                                     new BigDecimal("1540686000"), new BigDecimal("80300000"), new BigDecimal("5851155000"), 
-                                    new BigDecimal("81257000"), new BigDecimal("15117638000 "), new BigDecimal("2530934000"), 
+                                    new BigDecimal("81257000"), new BigDecimal("15117638000"), new BigDecimal("2530934000"), 
                                     new BigDecimal("62000"), new BigDecimal("3394000000"), new BigDecimal("1058240000"), 
-                                    new BigDecimal("27924000000"), new BigDecimal("702631130000")};
+                                    new BigDecimal("27924000000"), new BigDecimal("702631130000"), new BigDecimal("0")};
             final BigDecimal totalExp = new BigDecimal("806878193000");
-            BigDecimal[] statics2023 = new BigDecimal[14];
+            BigDecimal[] statics2023 = new BigDecimal[15];
             for (int i = 0; i < expenses2023.length; i++) {
                statics2023[i] = BigDecimal.ZERO;
             }
             for (int i = 0; i < expenses2023.length; i++) {
-                statics2023[i] = expenses2023[i].divide(totalExp); 
+                statics2023[i] = expenses2023[i].divide(totalExp, 8, RoundingMode.HALF_UP); 
             }
             return statics2023;
         }
@@ -30,7 +31,7 @@ public class Budget2023 {
                statics2023[i] = BigDecimal.ZERO;
             }
             for (int i = 0; i < incomes2023.length; i++) {
-                statics2023[i] = incomes2023[i].divide(totalInc); 
+                statics2023[i] = incomes2023[i].divide(totalInc, 8, RoundingMode.HALF_UP); 
             }
             return statics2023;
         
