@@ -15,7 +15,7 @@ The main file that needs your help is GovProGUI.java!
 
 2. **Clone** your fork locally:
    by running on bash
-   git clone https://github.com/your-username/your-repo.git
+   git clone https://github.com/aggeltsim/GovPro.git
 3. **Create a new branch** for your feature or fix
    git checkout -b feature/name-of-your-feature
 4. **Make your changes**  
@@ -36,4 +36,4 @@ The main file that needs your help is GovProGUI.java!
 - Keep methods short and focused.
 - Write meaningful commit messages that explain **what** and **why**, **not** just **how**.
 
-- 
+
