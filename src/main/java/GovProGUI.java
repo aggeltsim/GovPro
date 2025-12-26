@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -62,22 +63,102 @@ public class GovProGUI {
 
             switch (choice) {
                 case 1 -> {
-                    // Reading the budget
-                    outputArea.setText("--------------Incomes-------------\n");
-                    // Example: loop through your Income objects
-                    // for (Income i : inc) outputArea.append(i.toString() + "\n");
-                    outputArea.append("...Income objects...\n\n");
-                    outputArea.append("--------------Expenses-------------\n");
-                    outputArea.append("...Expense objects...\n\n");
-                    outputArea.append("--------------Entities-------------\n");
-                    outputArea.append("...Entity objects...\n\n");
+    // 1. Ορισμός Monospaced γραμματοσειράς για να ευθυγραμμίζονται οι στήλες
+    outputArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
+    
+    StringBuilder sb = new StringBuilder();
+    // Formatter για χιλιάδες με κόμμα και 2 δεκαδικά (π.χ. 1.234.567,00)
+    java.text.NumberFormat nf = java.text.NumberFormat.getInstance(java.util.Locale.GERMANY);
 
-                    outputArea.setCaretPosition(outputArea.getDocument().getLength());
-                }
+    // Ορισμός "καλουπιού" για τις γραμμές: 
+    // %-6s  -> Code (6 χαρακτήρες, αριστερή στοίχιση)
+    // %-55s -> Name (55 χαρακτήρες, αριστερή στοίχιση)
+    // %20s  -> Amount (20 χαρακτήρες, δεξιά στοίχιση)
+    String headerFormat = "%-6s | %-55s | %20s%n";
+    String lineFormat   = "%-6s | %-55s | %20s%n";
+    String divider      = "=".repeat(87) + "\n";
+    String subDivider   = "-".repeat(87) + "\n";
+
+    sb.append(divider);
+    sb.append(String.format(headerFormat, "CODE", "ACCOUNT DESCRIPTION", "AMOUNT (€)"));
+    sb.append(divider);
+
+    for (int i = 1; i < data.length; i++) {
+        String code = (String) data[i][0];
+        String name = (String) data[i][1];
+        java.math.BigDecimal amount = (java.math.BigDecimal) data[i][2];
+
+        // Μορφοποίηση του ποσού
+        String formattedAmount = nf.format(amount);
+
+        // Προσθήκη ενδιάμεσων τίτλων για να ξέρουμε τι βλέπουμε
+        if (code.equals("21")) {
+            sb.append("\n").append(divider).append("   EXPENSES\n").append(divider);
+        } else if (code.equals("1001")) {
+            sb.append("\n").append(divider).append("   ENTITIES / MINISTRIES\n").append(divider);
+        } else if (i == 1) {
+            sb.append("   INCOMES\n").append(subDivider);
+        }
+
+        // Αν το όνομα είναι πολύ μεγάλο, το κόβουμε για να μην χαλάσει η στήλη
+        if (name.length() > 52) {
+            name = name.substring(0, 52) + "...";
+        }
+
+        sb.append(String.format(lineFormat, code, name, formattedAmount));
+    }
+
+    outputArea.setText(sb.toString());
+    outputArea.setCaretPosition(0); // Επιστροφή στην κορυφή
+}
                 case 2 -> {
-                    // Amendment GUI
-                    amendBudgetGUI(outputArea);
-                }
+    // 1. Δημιουργούμε ένα Panel για το παράθυρο διαλόγου
+    JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5));
+    
+    // Dropdown για να διαλέξει ο χρήστης τον κωδικό (παίρνουμε τους κωδικούς από το data[][])
+    String[] codes = new String[data.length - 1];
+    for (int i = 1; i < data.length; i++) {
+        codes[i - 1] = (String) data[i][0] + " - " + data[i][1];
+    }
+    JComboBox<String> codeCombo = new JComboBox<>(codes);
+    
+    JTextField newValueField = new JTextField();
+    
+    panel.add(new JLabel("Choose an account to ammend:"));
+    panel.add(codeCombo);
+    panel.add(new JLabel("New amount:"));
+    panel.add(newValueField);
+
+    // 2. Εμφάνιση του διαλόγου
+    int result = JOptionPane.showConfirmDialog(frame, panel, 
+            "Τροποποίηση Προϋπολογισμού", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+    if (result == JOptionPane.OK_OPTION) {
+        try {
+            int selectedIndex = codeCombo.getSelectedIndex() + 1; // +1 γιατί το data[0] είναι το header
+            String input = newValueField.getText().replace(",", "."); // Μετατροπή κόμματος σε τελεία για το BigDecimal
+            java.math.BigDecimal newVal = new java.math.BigDecimal(input);
+
+            // 3. Ενημέρωση του πίνακα data
+            java.math.BigDecimal oldVal = (java.math.BigDecimal) data[selectedIndex][2];
+            data[selectedIndex][2] = newVal;
+
+            // 4. Ενημέρωση του Output Area για επιβεβαίωση
+            outputArea.setFont(new Font("Consolas", Font.PLAIN, 13));
+            outputArea.setText(" Change registered successfully!\n");
+            outputArea.append("──────────────────────────────────────────────────\n");
+            outputArea.append(String.format("Account: %s\n", data[selectedIndex][1]));
+            outputArea.append(String.format("Old Value:  %,.2f €\n", oldVal));
+            outputArea.append(String.format("New Value:    %,.2f €\n", newVal));
+            outputArea.append("──────────────────────────────────────────────────\n");
+            outputArea.append(" Choose '1.Reading' to see the new budget table.");
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(frame, "Error: Please give a valid number.", 
+                    "Input Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
                 case 3 -> {
                     // Prediction GUI
                     PredictionGUI.createAndShowPredGUI();
@@ -212,52 +293,6 @@ public class GovProGUI {
         return percent.setScale(4, RoundingMode.HALF_UP).toString();
     }
 
-
-    private static void amendBudgetGUI(JTextArea outputArea) {
-        JFrame amendFrame = new JFrame("Amend Budget");
-        amendFrame.setSize(500, 400);
-        amendFrame.setLayout(new BoxLayout(amendFrame.getContentPane(), BoxLayout.Y_AXIS));
-
-        JLabel categoryLabel = new JLabel("Select a category to amend:");
-        amendFrame.add(categoryLabel);
-
-        String[] categories = {"Income", "Expenses", "Entities"};
-        JComboBox<String> categoryBox = new JComboBox<>(categories);
-        categoryBox.setMaximumSize(new Dimension(400, 30));
-        amendFrame.add(categoryBox);
-
-        JLabel itemLabel = new JLabel("Select item to amend:");
-        amendFrame.add(itemLabel);
-
-        JTextField itemField = new JTextField();
-        itemField.setMaximumSize(new Dimension(200, 30));
-        amendFrame.add(itemField);
-
-        JLabel amountLabel = new JLabel("Enter new amount:");
-        amendFrame.add(amountLabel);
-
-        JTextField amountField = new JTextField();
-        amountField.setMaximumSize(new Dimension(200, 30));
-        amendFrame.add(amountField);
-
-        JButton saveButton = new JButton("Save");
-        amendFrame.add(saveButton);
-
-        saveButton.addActionListener(e -> {
-            try {
-                int itemNum = Integer.parseInt(itemField.getText());
-                BigDecimal newAmount = new BigDecimal(amountField.getText());
-                // TODO: Based on categoryBox selection, update the corresponding object
-                outputArea.append("Updated item " + itemNum + " to " + newAmount + "€\n");
-                JOptionPane.showMessageDialog(amendFrame, "Successfully updated!");
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(amendFrame, "Please enter valid numbers!");
-            }
-        });
-
-        amendFrame.setVisible(true);
-    }
-
     private static void predictionGUI(JTextArea outputArea) {
         JFrame predFrame = new JFrame("Prediction");
         predFrame.setSize(500, 400);
@@ -308,4 +343,103 @@ public class GovProGUI {
 
         predFrame.setVisible(true);
     }
+     static Object[][] data = {
+        {"Code", "Name", "Amount"}, // 0
+        {"11", "Taxes", new BigDecimal("62055000000")}, // 1
+        {"111", "Taxes on Services and Products", new BigDecimal("33667000000")},
+        {"112", "Taxes and Duties on Imports", new BigDecimal("362000000")},
+        {"113", "Regular Property Taxes", new BigDecimal("2353000000")},
+        {"114", "Other Production Taxes", new BigDecimal("355000000")},
+        {"115", "Income Tax", new BigDecimal("23719000000")},
+        {"116", "Capital Taxes", new BigDecimal("232000000")},
+        {"119", "Other Current Taxes", new BigDecimal("1367000000")},
+        {"12", "Social Contributions", new BigDecimal("60000000")},
+        {"122", "Other Social Contributions", new BigDecimal("60000000")},
+        {"13", "Transfers", new BigDecimal("8131000000")},
+        {"131", "Current Domestic Transfers", new BigDecimal("322000000")},
+        {"132", "Current Transfers from Organizations and Member States", 
+        new BigDecimal("15000000")},
+        {"133", "Current Transfers from Foreign Entities", new BigDecimal("8000000")},
+        {"134", "Domestic Investment Grants", new BigDecimal("35000000")},
+        {"135", "Investment Grants from the EU", new BigDecimal("7645000000")},
+        {"139", "Other Capital Transfers", new BigDecimal("106000000")},
+        {"14", "Sales of Goods and Services", new BigDecimal("2405000000")},
+        {"141", "Goods Sales", new BigDecimal("2000000")},
+        {"142", "Provision of Services", new BigDecimal("338000000")},
+        {"143", "Rents", new BigDecimal("1418000000")},
+        {"144", "Supplies", new BigDecimal("445000000")},
+        {"145", "Administrative Fees", new BigDecimal("199000000")},
+        {"149", "Other Sales", new BigDecimal("3000000")},
+        {"15", "Other Current Income", new BigDecimal("2775000000")},
+        {"151", "Interest Income", new BigDecimal("588000000")},
+        {"152", "Distributed Corporate Income", new BigDecimal("356000000")},
+        {"153", "Natural Resource Rents", new BigDecimal("75000000")},
+        {"156", "Fines, Penalties and Assessments", new BigDecimal("1102000000")},
+        {"159", "Expense Reimbursements", new BigDecimal("654000000")},
+        {"31", "Fixed Assets", new BigDecimal("37000000")},
+        {"311", "Buildings and Related Infrastructure", new BigDecimal("37000000")},
+        {"43", "Debt Securities", new BigDecimal("11000000")},
+        {"432", "Long-term Debt Securities", new BigDecimal("11000000")},
+        {"44", "Loans", new BigDecimal("20000000")},
+        {"442", "Long-term Loans", new BigDecimal("20000000")},
+        {"45", "Equity and Investment Fund Shares", new BigDecimal("467000000")},
+        {"451", "Listed Shares", new BigDecimal("239000000")},
+        {"452", "Unlisted Shares", new BigDecimal("228000000")},
+        {"52", "Currency and Deposit Liabilities", new BigDecimal("66000000")},
+        {"521", "Currency in Circulation Liabilities", new BigDecimal("66000000")},
+        {"53", "Debt Securities (Liabilities)", new BigDecimal("25973000000")},
+        {"531", "Short-term Debt Securities", new BigDecimal("17000000000")},
+        {"532", "Long-term Debt Securities", new BigDecimal("8973000000")},
+        {"54", "Loans", new BigDecimal("1202027000000")},
+        {"541", "Short-term Loans", new BigDecimal("1200000000000")},
+        {"542", "Long-term Loans", new BigDecimal("2027000000")},
+        {"57", "Financial Derivatives", new BigDecimal("800000000")},
+        {"571", "Financial Derivatives", new BigDecimal("800000000")},
+        {"21", "Employee Benefits", new BigDecimal("14889199000")},
+        {"22", "Social Benefits", new BigDecimal("425136000")},
+        {"23", "Transfers", new BigDecimal("34741365000")},
+        {"24", "Purchases of Goods and Services", new BigDecimal("2039542000")},
+        {"25", "Subsidies", new BigDecimal("80630000")},
+        {"26", "Interest", new BigDecimal("7701101000")},
+        {"27", "Other Expenses", new BigDecimal("101553000")},
+        {"29", "Credits Under Allocation", new BigDecimal("17283053000")},
+        {"31", "Fixed Assets", new BigDecimal("2609600000")},
+        {"33", "Valuables", new BigDecimal("85000")},
+        {"44", "Long-Term Loans", new BigDecimal("3741000000")},
+        {"45", "Equity and Investment Fund Shares", new BigDecimal("1755112000")},
+        {"53", "Debt Securities (Liabilities)", new BigDecimal("19375000000")},
+        {"54", "Short-Term Loans", new BigDecimal("1203165130000")},
+        {"1001", "Presidency of the Republic", new BigDecimal("4638000")},
+        {"1003", "Hellenic Parliament", new BigDecimal("171950000")},
+        {"1004", "Presidency of the Government", new BigDecimal("41689000")},
+        {"1007", "Ministry of Interior", new BigDecimal("3830276000")},
+        {"1009", "Ministry of Foreign Affairs", new BigDecimal("420237000")},
+        {"1011", "Ministry of National Defense", new BigDecimal("6130000000")},
+        {"1015", "Ministry of Health", new BigDecimal("7177424000")},
+        {"1017", "Ministry of Justice", new BigDecimal("650803000")},
+        {"1020", "Ministry of Education, Religious Affairs and", new BigDecimal("6606000000")},
+        {"1022", "Ministry of Culture", new BigDecimal("575419000")},
+        {"1024", "Ministry of National Economy and", new BigDecimal("1246518464000")},
+        {"1029", "Ministry of Rural Development and Food", new BigDecimal("1281403000")},
+        {"1031", "Ministry of Environment and Energy", new BigDecimal("2341227000")},
+        {"1032", "Ministry of Labor and Social Security", new BigDecimal("18678084000")},
+        {"1034", "Ministry of Social Cohesion and", new BigDecimal("3989553000")},
+        {"1036", "Ministry of Development", new BigDecimal("818045000")},
+        {"1039", "Ministry of Infrastructure and Transport", new BigDecimal("2694810000")},
+        {"1041", "Ministry of Shipping and Island Policy", new BigDecimal("651864000")},
+        {"1045", "Ministry of Tourism", new BigDecimal("189293000")},
+        {"1053", "Ministry of Digital Governance", new BigDecimal("1073928000")},
+        {"1055", "Ministry of Migration and Asylum", new BigDecimal("475871000")},
+        {"1057", "Ministry of Citizen Protection", new BigDecimal("2285820000")},
+        {"1060", "Ministry of Climate Crisis and Civil Protection", new BigDecimal("1221116000")},
+        {"1901", "Decentralized Administration of Attica", new BigDecimal("13091000")},
+        {"1902", "Decentralized Administration of Thessaly-Central Greece", 
+        new BigDecimal("10579000")},
+        {"1903", "Decentralized Administration of Epirus-Western Greece", 
+        new BigDecimal("9943000")},
+        {"1904", "Decentralized Administration of Peloponnese -", new BigDecimal("14918000")},
+        {"1905", "Decentralized Administration of the Aegean", new BigDecimal("6188000")},
+        {"1906", "Decentralized Administration of Crete", new BigDecimal("6497000")},
+        {"1907", "Decentralized Administration of Macedonia - Thrace", new BigDecimal("18376000")}
+    };
 }

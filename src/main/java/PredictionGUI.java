@@ -40,7 +40,7 @@ public class PredictionGUI {
 
     public static void createAndShowPredGUI() {
         JFrame frame = new JFrame("Prediction App");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(600, 450);
         frame.setLayout(new BorderLayout());
 
