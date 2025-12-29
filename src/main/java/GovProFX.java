@@ -2,21 +2,43 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Locale;
+
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.paint.Color;
+import javafx.util.Duration;
+
+
 
 public class GovProFX extends Application {
 
@@ -56,44 +78,99 @@ public class GovProFX extends Application {
         {747475497000.0, 690153192000.0, 669349030000.0, 919467234000.0, 1068139883000.0, 1438513680000.0} 
     };
 
-    @Override
-    public void start(Stage primaryStage) {
-        initializeData();
+        @Override
+public void start(Stage primaryStage) {
+    // 1️⃣ Δημιουργία Splash Scene
+    Image backgroundImg = new Image(getClass().getResourceAsStream("/images/GovProbackground.png"));
+    BackgroundImage bg = new BackgroundImage(
+            backgroundImg,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundPosition.CENTER,
+            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
+    );
 
-        primaryStage.setTitle("🏛️ GovPro Budget System 2025");
+    StackPane splashPane = new StackPane();
+    splashPane.setBackground(new Background(bg));
+    splashPane.setPadding(new Insets(20));
 
-        VBox menuBox = new VBox(15);
-        menuBox.setPadding(new Insets(20));
-        menuBox.setStyle("-fx-background-color: #2c3e50;");
-        menuBox.setPrefWidth(260);
 
-        Label menuTitle = new Label("MANAGEMENT");
-        menuTitle.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16;");
 
-        Button btnRead = createMenuButton("View Budget Table");
-        Button btnAmend = createMenuButton("Make Changes");
-        Button btnPredict = createMenuButton("Forecasting Engine");
-        Button btnStats = createMenuButton("Statistics Dashboard");
+    Button startButton = new Button("Start Here ▶");
+    startButton.setStyle("""
+        -fx-background-color: #32809aff;
+        -fx-text-fill: white;
+        -fx-font-size: 18px;
+        -fx-padding: 10 25 10 25;
+        -fx-background-radius: 10;
+    """);
 
-        menuBox.getChildren().addAll(menuTitle, btnRead, btnAmend, btnPredict, btnStats);
+    VBox splashContent = new VBox(20,startButton);
+    splashContent.setAlignment(Pos.CENTER);
+    splashContent.setTranslateY(200);
+    splashPane.getChildren().add(splashContent);
 
-        setupTable();
-        StackPane contentArea = new StackPane(table);
-        contentArea.setPadding(new Insets(20));
+    Scene splashScene = new Scene(splashPane, 1100, 650);
+
+    Button btnRead = new Button("📋 Προβολή Προϋπολογισμού");
+        Button btnAmend = new Button("🔧 Τροποποίηση");
+        Button btnPredict = new Button("📈 Πρόβλεψη Λογαριασμού");
+        Button btnStats = new Button("📊 Στατιστικά");
 
         btnRead.setOnAction(e -> table.setVisible(true));
         btnAmend.setOnAction(e -> showAmendDialog());
         btnPredict.setOnAction(e -> showPredictDialog());
         btnStats.setOnAction(e -> showStatistics());
+    // sΡύθμιση αρχικού Stage
+    primaryStage.setScene(splashScene);
+    primaryStage.show();
 
-        BorderPane root = new BorderPane();
-        root.setLeft(menuBox);
-        root.setCenter(contentArea);
+    // Όταν πατηθεί το "Start Here" → φόρτωση κύριας σκηνής
+    startButton.setOnAction(e -> {
+    FadeTransition fade = new FadeTransition(Duration.seconds(1.2), splashPane);
+    fade.setFromValue(1.0);
+    fade.setToValue(0.0);
+    fade.setInterpolator(Interpolator.EASE_BOTH);
+    fade.setOnFinished(ev -> showMainApp(primaryStage)); // ✅ αφού τελειώσει το fade, ανοίγει το main UI
+    fade.play();
+});
+}
+    private void showMainApp(Stage primaryStage) {
+    initializeData();
 
-        Scene scene = new Scene(root, 1100, 650);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
+    primaryStage.setTitle("🏛️ GovPro Budget System 2025");
+
+    VBox menuBox = new VBox(15);
+    menuBox.setPadding(new Insets(20));
+    menuBox.setStyle("-fx-background-color: #2c3e50;");
+    menuBox.setPrefWidth(260);
+
+    Label menuTitle = new Label("MANAGEMENT");
+    menuTitle.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16;");
+
+    Button btnRead = createMenuButton("View Budget Table");
+    Button btnAmend = createMenuButton("Make Changes");
+    Button btnPredict = createMenuButton("Forecasting Engine");
+    Button btnStats = createMenuButton("Statistics Dashboard");
+
+    menuBox.getChildren().addAll(menuTitle, btnRead, btnAmend, btnPredict, btnStats);
+
+    setupTable();
+    StackPane contentArea = new StackPane(table);
+    contentArea.setPadding(new Insets(20));
+
+    btnRead.setOnAction(e -> table.setVisible(true));
+    btnAmend.setOnAction(e -> showAmendDialog());
+    btnPredict.setOnAction(e -> showPredictDialog());
+
+    BorderPane root = new BorderPane();
+    root.setLeft(menuBox);
+    root.setCenter(contentArea);
+
+    Scene mainScene = new Scene(root, 1100, 650);
+    primaryStage.setScene(mainScene);
+}
+
 
     private void setupTable() {
         TableColumn<BudgetEntry, String> codeCol = new TableColumn<>("Code");
@@ -296,7 +373,7 @@ public class GovProFX extends Application {
                     "📊 [%s]\nPredicted spending for %d: €%,.2f\n\n",
                     entities[idx], year, predicted));
             } catch (NumberFormatException ex) {
-                resultArea.appendText("⚠️ Invalid year input.\n");
+                resultArea.appendText("Invalid year input.Try giving a year (e.g. 2045).\n");
             }
         } else {
             try {
@@ -306,7 +383,7 @@ public class GovProFX extends Application {
                     "🕒 [%s]\nEstimated time when spending reaches €%,.2f: %s\n\n",
                     entities[idx], value, est));
             } catch (NumberFormatException ex) {
-                resultArea.appendText("⚠️ Invalid value input.\n");
+                resultArea.appendText("Invalid value input.Try giving a number (e.g. 4566778.54).\n");
             }
         }
     });
