@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Locale;
 import javafx.application.Application;
@@ -83,6 +84,7 @@ public class GovProFX extends Application {
         btnRead.setOnAction(e -> table.setVisible(true));
         btnAmend.setOnAction(e -> showAmendDialog());
         btnPredict.setOnAction(e -> showPredictDialog());
+        btnStats.setOnAction(e -> showStatistics());
 
         BorderPane root = new BorderPane();
         root.setLeft(menuBox);
@@ -325,6 +327,97 @@ public class GovProFX extends Application {
     Scene scene = new Scene(root);
     dialog.setScene(scene);
     dialog.show();
+    }
+    
+    //For Statistics
+    private void showStatistics() {
+    Stage statsStage = new Stage();
+    statsStage.initModality(Modality.APPLICATION_MODAL);
+    statsStage.setTitle("📊 Budget Statistics");
+
+    VBox root = new VBox(15);
+    root.setPadding(new Insets(20));
+    root.setStyle("-fx-background-color: linear-gradient(to bottom right, #ffffff, #e6e9f0);");
+
+    Label header = new Label("Government Budget Statistics");
+    header.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
+    root.getChildren().add(header);
+
+    // --- Επιλογή Έτους ---
+    HBox yearBox = new HBox(10);
+    yearBox.setAlignment(Pos.CENTER_LEFT);
+    Label yearLabel = new Label("Select Year:");
+    ComboBox<Integer> yearCombo = new ComboBox<>();
+    yearCombo.getItems().addAll(2022, 2023, 2024);
+    yearCombo.getSelectionModel().selectFirst();
+    yearBox.getChildren().addAll(yearLabel, yearCombo);
+    root.getChildren().add(yearBox);
+
+    // --- Επιλογή Τύπου ---
+    HBox typeBox = new HBox(10);
+    typeBox.setAlignment(Pos.CENTER_LEFT);
+    Label typeLabel = new Label("Select Type:");
+    ComboBox<String> typeCombo = new ComboBox<>();
+    typeCombo.getItems().addAll("Income", "Expense");
+    typeCombo.getSelectionModel().selectFirst();
+    typeBox.getChildren().addAll(typeLabel, typeCombo);
+    root.getChildren().add(typeBox);
+
+    // --- Περιοχή αποτελεσμάτων με Scroll ---
+    ScrollPane scrollPane = new ScrollPane();
+    scrollPane.setFitToWidth(true);
+    scrollPane.setPrefHeight(400);
+
+    VBox outputBox = new VBox(5);
+    outputBox.setPadding(new Insets(10));
+    scrollPane.setContent(outputBox);
+    root.getChildren().add(scrollPane);
+
+    // --- Κουμπιά ---
+    HBox buttons = new HBox(10);
+    buttons.setAlignment(Pos.CENTER);
+    Button btnShow = new Button("Show");
+    Button btnClear = new Button("Clear");
+    buttons.getChildren().addAll(btnShow, btnClear);
+    root.getChildren().add(buttons);
+
+    // --- Λογική κουμπιών ---
+    btnShow.setOnAction(e -> {
+        outputBox.getChildren().clear();
+
+        int year = yearCombo.getValue();
+        BudgetDataManager.BudgetType type = typeCombo.getValue().equals("Income") ?
+                BudgetDataManager.BudgetType.INCOME : BudgetDataManager.BudgetType.EXPENSE;
+
+        BigDecimal[] data = BudgetDataManager.getBudgetData(year, type);
+        if (data == null) {
+            outputBox.getChildren().add(new Label("No data for year " + year));
+            return;
+        }
+
+        String[] categories = type == BudgetDataManager.BudgetType.INCOME ?
+                new String[]{"Taxes", "Social Contributions", "Transfers", "Sales of goods and services",
+                        "Other Current Income", "Fixed Assets", "Debt Securities", "Equity Securities",
+                        "Currency Liabilities", "Debt Securities (Liabilities)", "Loans", "Financial Derivatives"} :
+                new String[]{"Employee Benefits", "Social Benefits", "Transfers", "Purchases of goods and services",
+                        "Subsidies", "Interest", "Other expenses", "Credits under distribution", "Fixed Assets",
+                        "Valuables", "Loans", "Equity Securities", "Debt Securities", "Loans", "Financial Derivatives"};
+
+        for (int i = 0; i < data.length; i++) {
+            String name = (i < categories.length) ? categories[i] : "Category " + (i + 1);
+            BigDecimal percent = data[i].multiply(new BigDecimal("100")).setScale(2, RoundingMode.HALF_UP);
+
+            Label line = new Label(String.format("%-40s : %6s%%", name, percent));
+            line.setStyle("-fx-font-family: Consolas; -fx-font-size: 14;");
+            outputBox.getChildren().add(line);
+        }
+    });
+
+    btnClear.setOnAction(e -> outputBox.getChildren().clear());
+
+    Scene scene = new Scene(root, 650, 600);
+    statsStage.setScene(scene);
+    statsStage.show();
 }
 
 
