@@ -2,6 +2,8 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,6 +34,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 
@@ -107,12 +110,19 @@ public void start(Stage primaryStage) {
 
     Scene splashScene = new Scene(splashPane, 1100, 650);
 
-    // 2️⃣ Ρύθμιση αρχικού Stage
+    // sΡύθμιση αρχικού Stage
     primaryStage.setScene(splashScene);
     primaryStage.show();
 
-    // 3️⃣ Όταν πατηθεί το "Start Here" → φόρτωση κύριας σκηνής
-    startButton.setOnAction(e -> showMainApp(primaryStage));
+    // Όταν πατηθεί το "Start Here" → φόρτωση κύριας σκηνής
+    startButton.setOnAction(e -> {
+    FadeTransition fade = new FadeTransition(Duration.seconds(1.2), splashPane);
+    fade.setFromValue(1.0);
+    fade.setToValue(0.0);
+    fade.setInterpolator(Interpolator.EASE_BOTH);
+    fade.setOnFinished(ev -> showMainApp(primaryStage)); // ✅ αφού τελειώσει το fade, ανοίγει το main UI
+    fade.play();
+});
 }
     private void showMainApp(Stage primaryStage) {
     initializeData();
@@ -352,7 +362,7 @@ public void start(Stage primaryStage) {
                     "📊 [%s]\nPredicted spending for %d: €%,.2f\n\n",
                     entities[idx], year, predicted));
             } catch (NumberFormatException ex) {
-                resultArea.appendText("⚠️ Invalid year input.\n");
+                resultArea.appendText("Invalid year input.Try giving a year (e.g. 2045).\n");
             }
         } else {
             try {
@@ -362,7 +372,7 @@ public void start(Stage primaryStage) {
                     "🕒 [%s]\nEstimated time when spending reaches €%,.2f: %s\n\n",
                     entities[idx], value, est));
             } catch (NumberFormatException ex) {
-                resultArea.appendText("⚠️ Invalid value input.\n");
+                resultArea.appendText("Invalid value input.Try giving a number (e.g. 4566778.54).\n");
             }
         }
     });
