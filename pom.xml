@@ -107,7 +107,7 @@
                 </execution>
             </executions>
             <configuration>
-                <mainClass>GovProFX</mainClass>
+                <mainClass>GovProFX2</mainClass>
             </configuration>
         </plugin>
 
