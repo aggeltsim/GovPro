@@ -112,6 +112,10 @@ public void start(Stage primaryStage) {
 
     Scene splashScene = new Scene(splashPane, 1100, 650);
 
+    // sΡύθμιση αρχικού Stage
+    primaryStage.setScene(splashScene);
+    primaryStage.show();
+
     Button btnRead = new Button("📋 Προβολή Προϋπολογισμού");
         Button btnAmend = new Button("🔧 Τροποποίηση");
         Button btnPredict = new Button("📈 Πρόβλεψη Λογαριασμού");
@@ -121,9 +125,6 @@ public void start(Stage primaryStage) {
         btnAmend.setOnAction(e -> showAmendDialog());
         btnPredict.setOnAction(e -> showPredictDialog());
         btnStats.setOnAction(e -> showStatistics());
-    // sΡύθμιση αρχικού Stage
-    primaryStage.setScene(splashScene);
-    primaryStage.show();
 
     // Όταν πατηθεί το "Start Here" → φόρτωση κύριας σκηνής
     startButton.setOnAction(e -> {
@@ -162,6 +163,7 @@ public void start(Stage primaryStage) {
     btnRead.setOnAction(e -> table.setVisible(true));
     btnAmend.setOnAction(e -> showAmendDialog());
     btnPredict.setOnAction(e -> showPredictDialog());
+    btnStats.setOnAction(e -> showStatistics());
 
     BorderPane root = new BorderPane();
     root.setLeft(menuBox);
