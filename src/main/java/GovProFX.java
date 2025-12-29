@@ -89,6 +89,7 @@ public void start(Stage primaryStage) {
             BackgroundPosition.CENTER,
             new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
     );
+    primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/govpro_icon.png")));
 
     StackPane splashPane = new StackPane();
     splashPane.setBackground(new Background(bg));
@@ -112,7 +113,8 @@ public void start(Stage primaryStage) {
 
     Scene splashScene = new Scene(splashPane, 1100, 650);
 
-    // sΡύθμιση αρχικού Stage
+    // Ρύθμιση αρχικού Stage
+    primaryStage.setTitle("🏛️ GovPro Budget System 2025");
     primaryStage.setScene(splashScene);
     primaryStage.show();
 
@@ -363,7 +365,7 @@ public void start(Stage primaryStage) {
     btnRun.setOnAction(e -> {
         int idx = comboEntity.getSelectionModel().getSelectedIndex();
         if (idx < 0 || modeBox.getValue() == null) {
-            resultArea.appendText("⚠️ Please select a prediction type and an entity.\n");
+            resultArea.appendText("Please select a prediction type and an entity.\n");
             return;
         }
 
