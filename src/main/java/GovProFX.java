@@ -78,67 +78,70 @@ public class GovProFX extends Application {
         {747475497000.0, 690153192000.0, 669349030000.0, 919467234000.0, 1068139883000.0, 1438513680000.0} 
     };
 
-        @Override
-public void start(Stage primaryStage) {
-    // 1️⃣ Δημιουργία Splash Scene
-    Image backgroundImg = new Image(getClass().getResourceAsStream("/images/GovProbackground.png"));
-    BackgroundImage bg = new BackgroundImage(
-            backgroundImg,
-            BackgroundRepeat.NO_REPEAT,
-            BackgroundRepeat.NO_REPEAT,
-            BackgroundPosition.CENTER,
-            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
-    );
-    primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/govpro_icon.png")));
+        
+    @Override
+    public void start(Stage primaryStage) {
+        start(primaryStage, false); // default behavior: show splash
+    }
 
-    StackPane splashPane = new StackPane();
-    splashPane.setBackground(new Background(bg));
-    splashPane.setPadding(new Insets(20));
+    /**
+     * Overloaded start method for tests.
+     * @param primaryStage Stage to show
+     * @param skipSplash if true, directly loads main UI (skipping fade/splash)
+     */
+    public void start(Stage primaryStage, boolean skipSplash) {
+        if (skipSplash) {
+            showMainApp(primaryStage);
+            primaryStage.show();
+            return;
+        }
 
+        // ----- Original splash screen code -----
+        Image backgroundImg = new Image(getClass().getResourceAsStream("/images/GovProbackground.png"));
+        BackgroundImage bg = new BackgroundImage(
+                backgroundImg,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
+        );
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/govpro_icon.png")));
 
+        StackPane splashPane = new StackPane();
+        splashPane.setBackground(new Background(bg));
+        splashPane.setPadding(new Insets(20));
 
-    Button startButton = new Button("Start Here ▶");
-    startButton.setStyle("""
-        -fx-background-color: #32809aff;
-        -fx-text-fill: white;
-        -fx-font-size: 18px;
-        -fx-padding: 10 25 10 25;
-        -fx-background-radius: 10;
-    """);
+        Button startButton = new Button("Start Here ▶");
+        startButton.setStyle("""
+            -fx-background-color: #32809aff;
+            -fx-text-fill: white;
+            -fx-font-size: 18px;
+            -fx-padding: 10 25 10 25;
+            -fx-background-radius: 10;
+        """);
 
-    VBox splashContent = new VBox(20,startButton);
-    splashContent.setAlignment(Pos.CENTER);
-    splashContent.setTranslateY(200);
-    splashPane.getChildren().add(splashContent);
+        VBox splashContent = new VBox(20, startButton);
+        splashContent.setAlignment(Pos.CENTER);
+        splashContent.setTranslateY(200);
+        splashPane.getChildren().add(splashContent);
 
-    Scene splashScene = new Scene(splashPane, 1100, 650);
+        Scene splashScene = new Scene(splashPane, 1100, 650);
 
-    // Ρύθμιση αρχικού Stage
-    primaryStage.setTitle("🏛️ GovPro Budget System 2025");
-    primaryStage.setScene(splashScene);
-    primaryStage.show();
+        primaryStage.setTitle("🏛️ GovPro Budget System 2025");
+        primaryStage.setScene(splashScene);
+        primaryStage.show();
 
-    Button btnRead = new Button("📋 Προβολή Προϋπολογισμού");
-        Button btnAmend = new Button("🔧 Τροποποίηση");
-        Button btnPredict = new Button("📈 Πρόβλεψη Λογαριασμού");
-        Button btnStats = new Button("📊 Στατιστικά");
+        startButton.setOnAction(e -> {
+            FadeTransition fade = new FadeTransition(Duration.seconds(1.2), splashPane);
+            fade.setFromValue(1.0);
+            fade.setToValue(0.0);
+            fade.setInterpolator(Interpolator.EASE_BOTH);
+            fade.setOnFinished(ev -> showMainApp(primaryStage));
+            fade.play();
+        });
+    }
 
-        btnRead.setOnAction(e -> table.setVisible(true));
-        btnAmend.setOnAction(e -> showAmendDialog());
-        btnPredict.setOnAction(e -> showPredictDialog());
-        btnStats.setOnAction(e -> showStatistics());
-
-    // Όταν πατηθεί το "Start Here" → φόρτωση κύριας σκηνής
-    startButton.setOnAction(e -> {
-    FadeTransition fade = new FadeTransition(Duration.seconds(1.2), splashPane);
-    fade.setFromValue(1.0);
-    fade.setToValue(0.0);
-    fade.setInterpolator(Interpolator.EASE_BOTH);
-    fade.setOnFinished(ev -> showMainApp(primaryStage)); // ✅ αφού τελειώσει το fade, ανοίγει το main UI
-    fade.play();
-});
-}
-    private void showMainApp(Stage primaryStage) {
+    protected void showMainApp(Stage primaryStage) {
     initializeData();
 
     primaryStage.setTitle("🏛️ GovPro Budget System 2025");
@@ -236,7 +239,7 @@ public void start(Stage primaryStage) {
         table.setPlaceholder(new Label("No data loaded."));
     }
 
-    private void showAmendDialog() {
+    protected void showAmendDialog() {
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setTitle("🔧 Amend Budget Entry");
@@ -630,6 +633,9 @@ public void start(Stage primaryStage) {
         for (Object[] row : rows) {
             masterData.add(new BudgetEntry(row[0].toString(), row[1].toString(), (BigDecimal) row[2]));
         }
+    }
+    public ObservableList<BudgetEntry> getMasterData() {
+        return masterData;
     }
 
     public static void main(String[] args) {

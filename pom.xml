@@ -2,7 +2,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
-                             
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.govpro</groupId>
@@ -14,37 +14,62 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javafx.version>21</javafx.version>
     </properties>
 
     <dependencies>
-        <!-- JUnit για testing -->
+        <!-- ✅ JUnit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
-        <!-- Apache Commons CSV για να διιαβασει το budget2025 -->
+
+        <!-- ✅ TestFX (for JavaFX UI testing) -->
+        <dependency>
+            <groupId>org.testfx</groupId>
+            <artifactId>testfx-junit5</artifactId>
+            <version>4.0.16-alpha</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- ✅ JavaFX dependencies -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+
+
+        <!-- Apache Commons CSV -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
             <version>1.10.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>21</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>21</version>
-        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>
-            <!-- Maven compiler plugin -->
+            <!-- ✅ JUnit 5 support in Maven -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <useModulePath>false</useModulePath>
+                </configuration>
+            </plugin>
+
+            <!-- Compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -54,66 +79,66 @@
                     <target>17</target>
                 </configuration>
             </plugin>
-            <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>3.3.1</version>
 
+            <!-- Checkstyle -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
-                    <id>validate</id>
-                    <phase>verify</phase>
-            <goals>
-                    <goal>check</goal>
-            </goals>
-    </execution>
-  </executions>
+                        <id>validate</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <configLocation>google_checks.xml</configLocation>
+                    <encoding>UTF-8</encoding>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>false</failsOnError>
+                </configuration>
+            </plugin>
 
-    <configuration>
-        <configLocation>google_checks.xml</configLocation> <!-- ή sun_checks.xml -->
-        <encoding>UTF-8</encoding>
-        <consoleOutput>true</consoleOutput>
-        <failsOnError>false</failsOnError>
-        </configuration>
-    </plugin>
-    <plugin>
-    <groupId>org.jacoco</groupId>
-    <artifactId>jacoco-maven-plugin</artifactId>
-    <version>0.8.12</version>
-    <executions>
-        <execution>
-            <goals>
-                <goal>prepare-agent</goal> <!-- Προετοιμάζει τον agent για συλλογή δεδομένων -->
-            </goals>
-        </execution>
-             <execution>
-            <id>report</id>
-            <phase>verify</phase> <!-- Τρέχει μετά τα tests -->
-            <goals>
-                <goal>report</goal> <!-- Δημιουργεί την αναφορά -->
-            </goals>
-            </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-maven-plugin</artifactId>
-            <version>0.0.8</version>
-            <executions>
-                <execution>
-                    <goals>
-                        <goal>run</goal>
-                    </goals>
-                </execution>
-            </executions>
-            <configuration>
-                <mainClass>GovProFX</mainClass>
-            </configuration>
-        </plugin>
+            <!-- ✅ JaCoCo (coverage reports) -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
+            <!-- JavaFX plugin for running the app -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>GovProFX</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
 </project>
- 
-
