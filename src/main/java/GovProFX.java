@@ -241,7 +241,7 @@ public class GovProFX extends Application {
 
     protected void showAmendDialog() {
         Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initModality(Modality.NONE);
         dialog.setTitle("🔧 Amend Budget Entry");
 
         VBox layout = new VBox(10);
@@ -416,7 +416,7 @@ public class GovProFX extends Application {
     //For Statistics
     private void showStatistics() {
     Stage statsStage = new Stage();
-    statsStage.initModality(Modality.APPLICATION_MODAL);
+    statsStage.initModality(Modality.NONE);
     statsStage.setTitle("📊 Budget Statistics");
 
     VBox root = new VBox(15);
@@ -492,7 +492,7 @@ public class GovProFX extends Application {
             BigDecimal percent = data[i].multiply(new BigDecimal("100")).setScale(2, RoundingMode.HALF_UP);
 
             Label line = new Label(String.format("%-40s : %6s%%", name, percent));
-            line.setStyle("-fx-font-family: Consolas; -fx-font-size: 14;");
+            line.setStyle("-fx-font-family: Arial; -fx-font-size: 14;");
             outputBox.getChildren().add(line);
         }
     });
