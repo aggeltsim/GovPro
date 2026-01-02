@@ -56,55 +56,137 @@ public class GUI2 {
     }
 
     public void processCalculation() {
-        try {
-            List<String> codesA = parse(gui.codeAField.getText());
-            List<String> codesB = parse(gui.codeBField.getText());
+    try {
+        String rawA = gui.codeAField.getText().trim();
+        String rawB = gui.codeBField.getText().trim();
 
-            BigDecimal sumA = codesA.stream().map(gui.amounts::get).reduce(BigDecimal.ZERO, BigDecimal::add);
-            BigDecimal sumB = codesB.stream().map(gui.amounts::get).reduce(BigDecimal.ZERO, BigDecimal::add);
+        // 1. Έλεγχος για κενά πεδία
+        if (rawA.isEmpty() || rawB.isEmpty()) {
+            throw new IllegalArgumentException("Παρακαλώ εισάγετε κωδικούς για να γίνει ο υπολογισμός!");
+        }
 
-            BigDecimal perc = gui.calculator.calculatePercentage(
-                codesA.stream().map(gui.amounts::get).collect(Collectors.toList()),
-                codesB.stream().map(gui.amounts::get).collect(Collectors.toList())
-            );
+        List<String> codesA = parse(rawA);
+        List<String> codesB = parse(rawB);
 
-            String res = String.format("%.2f", perc) + " %";
-            gui.resultLabel.setText("Αποτέλεσμα: " + res);
-            gui.historyItems.add(0, res + " (Σύγκριση " + codesA.size() + " προς " + codesB.size() + " στοιχεία)");
+        // 2. Έλεγχος για Διπλότυπα (π.χ. 11, 11)
+        checkForDuplicates(codesA, "Αριθμητή (Α)");
+        checkForDuplicates(codesB, "Βάσης (Β)");
 
-            showSimpleExplanation(codesA, sumA, codesB, sumB, res);
+        // 3. Έλεγχος για Ταυτότητα (Α και Β είναι ίδια)
+        if (new HashSet<>(codesA).equals(new HashSet<>(codesB))) {
+            throw new IllegalArgumentException("Τα πεδία Α και Β περιέχουν τους ίδιους κωδικούς. Το αποτέλεσμα θα είναι 100%, κάτι που δεν έχει νόημα για ανάλυση.");
+        }
 
-        } catch (Exception ex) {
-            new Alert(Alert.AlertType.ERROR, "Κάτι δεν πήγε καλά: " + ex.getMessage()).showAndWait();
+        // 4. Έλεγχος για Υποκατηγορίες (Sub-codes)
+        // Εμποδίζει το να προσθέσεις π.χ. το 11 και το 111 μαζί
+        checkForSubCodes(codesA, "Αριθμητή (Α)");
+        checkForSubCodes(codesB, "Βάσης (Β)");
+
+        // 5. Έλεγχος ύπαρξης κωδικών στο CSV
+        validateCodesExist(codesA);
+        validateCodesExist(codesB);
+
+        BigDecimal sumA = codesA.stream().map(gui.amounts::get).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal sumB = codesB.stream().map(gui.amounts::get).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        // 6. Έλεγχος Μηδενικού Παρονομαστή
+        if (sumB.compareTo(BigDecimal.ZERO) == 0) {
+            throw new ArithmeticException("Το ποσό στη Βάση (Β) είναι μηδέν. Η διαίρεση είναι αδύνατη!");
+        }
+
+        // 7. Έλεγχος Α > Β (Confirmation)
+        if (sumA.compareTo(sumB) > 0) {
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, 
+                "Προσοχή: Ο Αριθμητής είναι μεγαλύτερος από τη Βάση. Το ποσοστό θα υπερβεί το 100%. Συνέχεια;", 
+                ButtonType.YES, ButtonType.NO);
+            if (confirm.showAndWait().get() == ButtonType.NO) return;
+        }
+
+        // Υπολογισμός και Εμφάνιση
+        BigDecimal perc = gui.calculator.calculatePercentage(
+            codesA.stream().map(gui.amounts::get).collect(Collectors.toList()),
+            codesB.stream().map(gui.amounts::get).collect(Collectors.toList())
+        );
+
+        String formatted = String.format("%.2f", perc) + " %";
+        gui.resultLabel.setText("Αποτέλεσμα: " + formatted);
+        gui.historyItems.add(0, formatted + " (" + rawA + " / " + rawB + ")");
+
+        showSimpleExplanation(codesA, sumA, codesB, sumB, formatted);
+
+    } catch (Exception ex) {
+        Alert err = new Alert(Alert.AlertType.ERROR, ex.getMessage());
+        err.getDialogPane().setMinWidth(400);
+        err.showAndWait();
+    }
+}
+
+// --- Βοηθητικές Μέθοδοι Ελέγχου ---
+
+private void checkForDuplicates(List<String> codes, String fieldName) {
+    Set<String> set = new HashSet<>();
+    for (String c : codes) {
+        if (!set.add(c)) {
+            throw new IllegalArgumentException("Ο κωδικός '" + c + "' εμφανίζεται δύο φορές στο πεδίο του " + fieldName + ".");
         }
     }
+}
 
-    private void showSimpleExplanation(List<String> cA, BigDecimal sA, List<String> cB, BigDecimal sB, String res) {
-        String namesA = cA.stream().map(gui.loader::getName).collect(Collectors.joining(" και "));
-        String namesB = cB.stream().map(gui.loader::getName).collect(Collectors.joining(" και "));
-
-        Alert info = new Alert(Alert.AlertType.INFORMATION);
-        info.setTitle("Τι σημαίνει αυτό το νούμερο;");
-        info.setHeaderText(null);
-
-        TextArea text = new TextArea(
-            "Ας δούμε τι ανακαλύψατε για τον Προϋπολογισμό του 2025:\n\n" +
-            "Φανταστείτε ότι όλα τα χρήματα που μαζεύει το κράτος από τα στοιχεία [" + namesB + "] " +
-            "είναι μια μεγάλη πίτα που αξίζει " + sB.toPlainString() + " €.\n\n" +
-            "Εσείς διαλέξατε να συγκρίνετε συστατικά (ή και όχι) αυτής της πίτας, δηλαδή τα στοιχεία [" + namesA + "], " +
-            "με συνολικη αξία " + sA.toPlainString() + " €, με το σύνολο όλης της πίτας που μπορεί να ανάγεται ακόμη και στο σύνολο του προϋπολογισμού!\n\n" +
-            "Η ετυμηγορία:\n" +
-            "Το κομμάτι που διαλέξατε πιάνει το " + res + " της συνολικής πίτας. " +
-            "Για να το καταλάβετε πιο απλά, αν η πίτα είχε 100 ίσα κομμάτια, τα στοιχεία που εξετάζετε " +
-            "θα ισοδυναμούσαν περίπου σε " + String.format("%.1f", res.replace("%","").trim().isEmpty() ? 0 : Double.parseDouble(res.replace("%","").replace(",","."))) + " κομμάτια.\n\n" +
-            "Είναι σαν να λέμε ότι για κάθε 100€ που υπάρχουν στο 'καλάθι' του παρονομαστή, " +
-            "τα " + String.format("%.2f", sA.divide(sB, 4, RoundingMode.HALF_UP).multiply(new BigDecimal(100))) + "€ πηγαίνουν στον αριθμητή."
-        );
-        text.setWrapText(true); text.setEditable(false); text.setPrefSize(550, 300);
-        info.getDialogPane().setContent(text);
-        info.showAndWait();
+private void checkForSubCodes(List<String> codes, String fieldName) {
+    for (String c1 : codes) {
+        for (String c2 : codes) {
+            if (!c1.equals(c2) && (c1.startsWith(c2) || c2.startsWith(c1))) {
+                String parent = c1.length() < c2.length() ? c1 : c2;
+                String child = c1.length() < c2.length() ? c2 : c1;
+                throw new IllegalArgumentException("Λογικό Σφάλμα στο πεδίο " + fieldName + ":\n" +
+                    "Ο κωδικός '" + child + "' περιλαμβάνεται ήδη μέσα στον κωδικό '" + parent + "'.\n" +
+                    "Αν τους προσθέσετε και τους δύο, το ποσό θα μετρηθεί διπλά!");
+            }
+        }
     }
+}
 
+private void validateCodesExist(List<String> codes) {
+    for (String c : codes) {
+        if (!gui.amounts.containsKey(c)) {
+            throw new NoSuchElementException("Ο κωδικός '" + c + "' δεν υπάρχει στα δεδομένα του 2025.");
+        }
+    }
+}
+
+private void showSimpleExplanation(List<String> cA, BigDecimal sA, List<String> cB, BigDecimal sB, String res) {
+    String namesA = cA.stream().map(gui.loader::getName).collect(Collectors.joining(" και "));
+    String namesB = cB.stream().map(gui.loader::getName).collect(Collectors.joining(" και "));
+
+    // Δημιουργία format για τελείες στις χιλιάδες (Ελληνικό πρότυπο)
+    java.text.NumberFormat formatter = java.text.NumberFormat.getInstance(new java.util.Locale("el", "GR"));
+    String formattedSumA = formatter.format(sA);
+    String formattedSumB = formatter.format(sB);
+
+    Alert info = new Alert(Alert.AlertType.INFORMATION);
+    info.setTitle("Τι σημαίνει αυτό το νούμερο;");
+    info.setHeaderText(null);
+
+     TextArea text = new TextArea(
+        "Ας δούμε τι ανακαλύψαμε για τον Προϋπολογισμό του 2025:\n\n" +
+        "Φανταστείτε ότι όλα τα χρήματα που μαζεύει το κράτος από τα στοιχεία [" + namesB + "] " +
+        "είναι μια μεγάλη πίτα που αξίζει " + formattedSumB + " €.\n\n" +
+        "Εσείς διαλέξατε να δείτε ένα κομμάτι αυτής της πίτας, που είναι τα στοιχεία [" + namesA + "], " +
+        "με αξία " + formattedSumA + " €.\n\n" +
+        "Η ετυμηγορία:\n" +
+        "Το κομμάτι που διαλέξατε πιάνει το " + res + " της συνολικής πίτας. " +
+        "Για να το καταλάβετε πιο απλά, αν η πίτα είχε 100 ίσα κομμάτια, τα στοιχεία που εξετάζετε " +
+        "θα ήταν περίπου " + String.format("%.1f", Double.parseDouble(res.replace("%","").replace(",",".").trim())) + " κομμάτια.\n\n" +
+        "Είναι σαν να λέμε ότι για κάθε 100€ που υπάρχουν στο 'καλάθι' του παρονομαστή, " +
+        "τα " + String.format("%.2f", sA.divide(sB, 4, RoundingMode.HALF_UP).multiply(new BigDecimal(100))) + "€ πηγαίνουν στον αριθμητή."
+    );
+    
+    text.setWrapText(true); 
+    text.setEditable(false); 
+    text.setPrefSize(550, 300);
+    info.getDialogPane().setContent(text);
+    info.showAndWait();
+}
     private List<String> parse(String s) {
         return Arrays.stream(s.split(",")).map(String::trim).filter(i -> !i.isEmpty()).collect(Collectors.toList());
     }
