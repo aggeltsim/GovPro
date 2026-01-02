@@ -115,13 +115,24 @@ public class GUI2 {
         showSimpleExplanation(codesA, sumA, codesB, sumB, formatted);
 
     } catch (Exception ex) {
-        Alert err = new Alert(Alert.AlertType.ERROR, ex.getMessage());
-        err.getDialogPane().setMinWidth(400);
-        err.showAndWait();
+        showErrorDialog("Σφάλμα", ex.getMessage());
     }
 }
 
 // --- Additional Check Methods ---
+private void showErrorDialog(String title, String message) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle(title);
+    alert.setHeaderText(null);
+    TextArea area = new TextArea(message == null ? "" : message);
+    area.setWrapText(true);
+    area.setEditable(false);
+    area.setPrefSize(600, 220);
+    alert.getDialogPane().setContent(area);
+    alert.getDialogPane().setMinWidth(600);
+    alert.getDialogPane().setMinHeight(220);
+    alert.showAndWait();
+}
 
 private void checkForDuplicates(List<String> codes, String fieldName) {
     Set<String> set = new HashSet<>();
@@ -196,6 +207,7 @@ private void showSimpleExplanation(List<String> cA, BigDecimal sA, List<String> 
                 getClass().getClassLoader().getResourceAsStream(Loader.CSV_FILE), java.nio.charset.StandardCharsets.UTF_8))) {
             br.readLine(); StringBuilder sb = new StringBuilder(); String line;
             while ((line = br.readLine()) != null) sb.append(line).append("\n");
+            gui.resultLabel.setWrapText(true);
             gui.csvDisplayArea.setText(sb.toString());
         } catch (Exception e) { e.printStackTrace(); }
     }

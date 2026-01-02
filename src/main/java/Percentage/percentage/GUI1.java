@@ -26,7 +26,11 @@ public class GUI1 extends Application {
         this.loader = new Loader();
         this.calculator = new Calculator();
         this.logic = new GUI2(this);
-        try { this.amounts = loader.loadAmounts(); } catch (Exception e) { e.printStackTrace(); }
+        try { 
+            this.amounts = loader.loadAmounts(); 
+        } catch (Exception e) { 
+            e.printStackTrace(); 
+        }
     }
 
     @Override
@@ -35,6 +39,7 @@ public class GUI1 extends Application {
 
         csvDisplayArea = new TextArea();
         csvDisplayArea.setEditable(false);
+        csvDisplayArea.setFont(javafx.scene.text.Font.font("Monospaced", 12));
         logic.setupContextMenu();
 
         historyItems = FXCollections.observableArrayList();
@@ -43,26 +48,37 @@ public class GUI1 extends Application {
         historyBox.setPrefWidth(280);
         historyBox.setPadding(new Insets(10));
 
+        // Προσθήκη Prompt Text (Αχνά παραδείγματα)
         codeAField = new TextField(); 
+        codeAField.setPromptText("π.χ. 11101");
+        
         codeBField = new TextField();
+        codeBField.setPromptText("π.χ. 11 (Σύνολο)");
+        
         logic.setupKeyboardEvents();
 
         Button calculateButton = new Button("Υπολογισμός Τώρα");
         calculateButton.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;");
         calculateButton.setOnAction(e -> logic.processCalculation());
 
-        resultLabel = new Label("Περιμένω δεδομένα...");
-        resultLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #2c3e50;");
+        // Ρύθμιση Label ώστε να ΜΗΝ κόβεται το κείμενο
+        resultLabel = new Label("Περιμένω δεδομένα για επεξεργασία...");
+        resultLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: #2c3e50;");
+        resultLabel.setWrapText(true); // Ενεργοποίηση αλλαγής γραμμής
+        resultLabel.setMaxWidth(550);  // Μέγιστο πλάτος πριν την αλλαγή γραμμής
+        resultLabel.setMinHeight(Region.USE_PREF_SIZE); // Αυτόματο ύψος ανάλογα με το κείμενο
 
         GridPane inputGrid = new GridPane();
         inputGrid.setHgap(15); inputGrid.setVgap(10);
         inputGrid.setPadding(new Insets(20));
-        inputGrid.add(new Label("Τι θέλετε να εξετάσετε (Α):"), 0, 0);
+        inputGrid.add(new Label("Κωδικός Α:"), 0, 0);
         inputGrid.add(codeAField, 1, 0);
-        inputGrid.add(new Label("Με τι το συγκρίνετε (Β):"), 0, 1);
+        inputGrid.add(new Label("Κωδικός Β:"), 0, 1);
         inputGrid.add(codeBField, 1, 1);
         inputGrid.add(calculateButton, 2, 1);
-        inputGrid.add(resultLabel, 1, 2);
+        
+        // Το Label πιάνει 2 στήλες για να έχει χώρο να απλωθεί
+        inputGrid.add(resultLabel, 1, 2, 2, 1); 
 
         BorderPane root = new BorderPane();
         root.setCenter(csvDisplayArea);
