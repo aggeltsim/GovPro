@@ -3,7 +3,7 @@ import javafx.application.Application;
 
 public class Runner {
     public static void main(String[] args) {
-        // Τρέχουμε το GUI1 που είναι η κεντρική κλάση Application
+        // Run the GUI1 application
         Application.launch(GUI1.class, args);
     }
 }

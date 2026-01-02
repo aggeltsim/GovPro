@@ -60,7 +60,7 @@ public class GUI2 {
         String rawA = gui.codeAField.getText().trim();
         String rawB = gui.codeBField.getText().trim();
 
-        // 1. Έλεγχος για κενά πεδία
+        // 1. check for empty fields
         if (rawA.isEmpty() || rawB.isEmpty()) {
             throw new IllegalArgumentException("Παρακαλώ εισάγετε κωδικούς για να γίνει ο υπολογισμός!");
         }
@@ -68,33 +68,33 @@ public class GUI2 {
         List<String> codesA = parse(rawA);
         List<String> codesB = parse(rawB);
 
-        // 2. Έλεγχος για Διπλότυπα (π.χ. 11, 11)
+        // 2. check for duplicates (e.g. 11, 11)
         checkForDuplicates(codesA, "Αριθμητή (Α)");
         checkForDuplicates(codesB, "Βάσης (Β)");
 
-        // 3. Έλεγχος για Ταυτότητα (Α και Β είναι ίδια)
+        // 3. check for Identity (A and B are identical)
         if (new HashSet<>(codesA).equals(new HashSet<>(codesB))) {
             throw new IllegalArgumentException("Τα πεδία Α και Β περιέχουν τους ίδιους κωδικούς. Το αποτέλεσμα θα είναι 100%, κάτι που δεν έχει νόημα για ανάλυση.");
         }
 
-        // 4. Έλεγχος για Υποκατηγορίες (Sub-codes)
-        // Εμποδίζει το να προσθέσεις π.χ. το 11 και το 111 μαζί
+        // 4. check for Sub-codes
+        // Prevents double counting e.g. 11 and 111
         checkForSubCodes(codesA, "Αριθμητή (Α)");
         checkForSubCodes(codesB, "Βάσης (Β)");
 
-        // 5. Έλεγχος ύπαρξης κωδικών στο CSV
+        // 5. check for existence of codes in CSV
         validateCodesExist(codesA);
         validateCodesExist(codesB);
 
         BigDecimal sumA = codesA.stream().map(gui.amounts::get).reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal sumB = codesB.stream().map(gui.amounts::get).reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        // 6. Έλεγχος Μηδενικού Παρονομαστή
+        // 6. check for Division by Zero
         if (sumB.compareTo(BigDecimal.ZERO) == 0) {
             throw new ArithmeticException("Το ποσό στη Βάση (Β) είναι μηδέν. Η διαίρεση είναι αδύνατη!");
         }
 
-        // 7. Έλεγχος Α > Β (Confirmation)
+        // 7. check for A > B (Confirmation)
         if (sumA.compareTo(sumB) > 0) {
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, 
                 "Προσοχή: Ο Αριθμητής είναι μεγαλύτερος από τη Βάση. Το ποσοστό θα υπερβεί το 100%. Συνέχεια;", 
@@ -102,7 +102,7 @@ public class GUI2 {
             if (confirm.showAndWait().get() == ButtonType.NO) return;
         }
 
-        // Υπολογισμός και Εμφάνιση
+        // 8. Calculate and Show Percentage
         BigDecimal perc = gui.calculator.calculatePercentage(
             codesA.stream().map(gui.amounts::get).collect(Collectors.toList()),
             codesB.stream().map(gui.amounts::get).collect(Collectors.toList())
@@ -121,7 +121,7 @@ public class GUI2 {
     }
 }
 
-// --- Βοηθητικές Μέθοδοι Ελέγχου ---
+// --- Additional Check Methods ---
 
 private void checkForDuplicates(List<String> codes, String fieldName) {
     Set<String> set = new HashSet<>();
@@ -158,7 +158,7 @@ private void showSimpleExplanation(List<String> cA, BigDecimal sA, List<String> 
     String namesA = cA.stream().map(gui.loader::getName).collect(Collectors.joining(" και "));
     String namesB = cB.stream().map(gui.loader::getName).collect(Collectors.joining(" και "));
 
-    // Δημιουργία format για τελείες στις χιλιάδες (Ελληνικό πρότυπο)
+    // Reformat numbers for Greek model
     java.text.NumberFormat formatter = java.text.NumberFormat.getInstance(new java.util.Locale("el", "GR"));
     String formattedSumA = formatter.format(sA);
     String formattedSumB = formatter.format(sB);

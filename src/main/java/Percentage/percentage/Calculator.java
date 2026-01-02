@@ -7,7 +7,7 @@ import java.util.List;
 public class Calculator {
 
     /**
-     * Υπολογίζει το ποσοστό: (Άθροισμα Λίστας Α / Άθροισμα Λίστας Β) * 100
+     * Calculates the percentage: (Sum of List A / Sum of List B) * 100
      */
     public BigDecimal calculatePercentage(List<BigDecimal> amountsA, List<BigDecimal> amountsB) {
         BigDecimal sumA = amountsA.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -17,7 +17,7 @@ public class Calculator {
             throw new ArithmeticException("Το άθροισμα των ποσών βάσης (Β) είναι μηδέν.");
         }
 
-        // Διαίρεση με ακρίβεια 6 δεκαδικών και μετά πολλαπλασιασμός επί 100
+        // Division with precision of 6 decimals, then multiply by 100
         return sumA.divide(sumB, 6, RoundingMode.HALF_UP)
                    .multiply(new BigDecimal("100"))
                    .stripTrailingZeros();
