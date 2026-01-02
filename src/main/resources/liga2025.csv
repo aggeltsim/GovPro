@@ -29,25 +29,6 @@
 153,Natural Resource Rents,75.000.000
 156,"Fines, Penalties and Assessments",1.102.000.000
 159,Expense Reimbursements,654.000.000
-31,Fixed Assets,37.000.000
-311,Buildings and Related Infrastructure,37.000.000
-43,Debt Securities,11.000.000
-432,Long-term Debt Securities,11.000.000
-44,Loans,20.000.000
-442,Long-term Loans,20.000.000
-45,Equity and Investment Fund Shares,467.000.000
-451,Listed Shares,239.000.000
-452,Unlisted Shares,228.000.000
-52,Currency and Deposit Liabilities,66.000.000
-521,Currency in Circulation Liabilities,66.000.000
-53,Debt Securities (Liabilities),25.973.000.000
-531,Short-term Debt Securities,17.000.000.000
-532,Long-term Debt Securities,8.973.000.000
-54,Loans,1.202.027.000.000
-541,Short-term Loans,1.200.000.000.000
-542,Long-term Loans,2.027.000.000
-57,Financial Derivatives,800.000.000
-571,Financial Derivatives,800.000.000
 21,Employee Benefits,14.889.199.000
 22,Social Benefits,425.136.000
 23,Transfers,34.741.365.000
@@ -58,10 +39,23 @@
 29,Credits Under Allocation,17.283.053.000
 31,Fixed Assets,2.609.600.000
 33,Valuables,85.000
+43,Debt Securities,11.000.000
+432,Long-term Debt Securities,11.000.000
 44,Loans,3.741.000.000
+442,Long-term Loans,20.000.000
 45,Equity and Investment Fund Shares,1.755.112.000
+451,Listed Shares,239.000.000
+452,Unlisted Shares,228.000.000
+52,Currency and Deposit Liabilities,66.000.000
+521,Currency in Circulation Liabilities,66.000.000
 53,Debt Securities (Liabilities),19.375.000.000
+531,Short-term Debt Securities,17.000.000.000
+532,Long-term Debt Securities,8.973.000.000
 54,Loans,1.203.165.130.000
+541,Short-term Loans,1.200.000.000.000
+542,Long-term Loans,2.027.000.000
+57,Financial Derivatives,800.000.000
+571,Financial Derivatives,800.000.000
 1001,Presidency of the Republic,4.638.000
 1003,Hellenic Parliament,171.950.000
 1004,Presidency of the Government,41.689.000
@@ -70,13 +64,13 @@
 1011,Ministry of National Defense,6.130.000.000
 1015,Ministry of Health,7.177.424.000
 1017,Ministry of Justice,650.803.000
-1020,"Ministry of Education, Religious Affairs and",6.606.000.000
+1020,"Ministry of Education, Religious Affairs and Sports",6.606.000.000
 1022,Ministry of Culture,575.419.000
-1024,Ministry of National Economy and,1.246.518.464.000
+1024,Ministry of National Economy and Finance,1.246.518.464.000
 1029,Ministry of Rural Development and Food,1.281.403.000
 1031,Ministry of Environment and Energy,2.341.227.000
 1032,Ministry of Labor and Social Security,18.678.084.000
-1034,Ministry of Social Cohesion and,3.989.553.000
+1034,Ministry of Social Cohesion and Family,3.989.553.000
 1036,Ministry of Development,818.045.000
 1039,Ministry of Infrastructure and Transport,2.694.810.000
 1041,Ministry of Shipping and Island Policy,651.864.000
@@ -88,8 +82,7 @@
 1901,Decentralized Administration of Attica,13.091.000
 1902,Decentralized Administration of Thessaly - Central Greece,10.579.000
 1903,Decentralized Administration of Epirus - Western Greece,9.943.000
-1904,Decentralized Administration of Peloponnese -,14.918.000
+1904,Decentralized Administration of Peloponnese - Western Greece and Ionian,14.918.000
 1905,Decentralized Administration of the Aegean,6.188.000
 1906,Decentralized Administration of Crete,6.497.000
-
 1907,Decentralized Administration of Macedonia - Thrace,18.376.000
