@@ -34,7 +34,7 @@ public class GUI2 {
         gui.codeBField.setOnKeyPressed(e -> { if(e.getCode() == KeyCode.ENTER) processCalculation(); });
     }
 
-    public void showVividInstructions() {
+    public void showInstructions() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Οδηγός Χρήσης Προϋπολογισμού");
         alert.setHeaderText("Καλώς ήρθατε στον 'Ποσοστιαίο' Αναλυτή του Κράτους!");
@@ -50,8 +50,12 @@ public class GUI2 {
             "θα μάθετε τι ποσοστό των φόρων μας ξοδεύεται στα νοσοκομεία.\n\n" +
             "Πατήστε ENTER και η εφαρμογή θα σας εξηγήσει τα πάντα σαν παιχνίδι!"
         );
-        area.setWrapText(true); area.setEditable(false);
+        area.setWrapText(true);
+        area.setEditable(false);
+        area.setPrefSize(700, 420);
         alert.getDialogPane().setContent(area);
+        alert.getDialogPane().setMinWidth(700);
+        alert.getDialogPane().setMinHeight(420);
         alert.showAndWait();
     }
 
@@ -96,9 +100,18 @@ public class GUI2 {
 
         // 7. check for A > B (Confirmation)
         if (sumA.compareTo(sumB) > 0) {
-            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, 
-                "Προσοχή: Ο Αριθμητής είναι μεγαλύτερος από τη Βάση. Το ποσοστό θα υπερβεί το 100%. Συνέχεια;", 
-                ButtonType.YES, ButtonType.NO);
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setTitle("Επιβεβαίωση");
+            confirm.setHeaderText(null);
+            TextArea confirmArea = new TextArea(
+                "Προσοχή: Ο Αριθμητής είναι μεγαλύτερος από τη Βάση. Το ποσοστό θα υπερβεί το 100%. Συνέχεια;");
+            confirmArea.setWrapText(true);
+            confirmArea.setEditable(false);
+            confirmArea.setPrefSize(560, 120);
+            confirm.getDialogPane().setContent(confirmArea);
+            confirm.getDialogPane().setMinWidth(560);
+            confirm.getDialogPane().setMinHeight(140);
+            confirm.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
             if (confirm.showAndWait().get() == ButtonType.NO) return;
         }
 
@@ -115,25 +128,30 @@ public class GUI2 {
         showSimpleExplanation(codesA, sumA, codesB, sumB, formatted);
 
     } catch (Exception ex) {
-        showErrorDialog("Σφάλμα", ex.getMessage());
+        showErrorDialog("Σφάλμα", ex);
     }
 }
 
 // --- Additional Check Methods ---
-private void showErrorDialog(String title, String message) {
+private void showErrorDialog(String title, Exception ex) {
     Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle(title);
-    alert.setHeaderText(null);
-    TextArea area = new TextArea(message == null ? "" : message);
+    alert.setHeaderText(null); // Αφαιρούμε το όνομα της κλάσης (π.χ. IllegalArgumentException)
+
+    // Κρατάμε ΜΟΝΟ το μήνυμα που ορίσαμε εμείς, χωρίς το StackTrace
+    String content = (ex.getMessage() != null) ? ex.getMessage() : "Παρουσιάστηκε ένα άγνωστο σφάλμα.";
+
+    TextArea area = new TextArea(content);
     area.setWrapText(true);
     area.setEditable(false);
-    area.setPrefSize(600, 220);
+    
+    // Ρυθμίζουμε το μέγεθος ώστε να είναι κομψό
+    area.setPrefSize(450, 150); 
+
     alert.getDialogPane().setContent(area);
-    alert.getDialogPane().setMinWidth(600);
-    alert.getDialogPane().setMinHeight(220);
     alert.showAndWait();
 }
-
+    
 private void checkForDuplicates(List<String> codes, String fieldName) {
     Set<String> set = new HashSet<>();
     for (String c : codes) {
@@ -194,8 +212,10 @@ private void showSimpleExplanation(List<String> cA, BigDecimal sA, List<String> 
     
     text.setWrapText(true); 
     text.setEditable(false); 
-    text.setPrefSize(550, 300);
+    text.setPrefSize(600, 320);
     info.getDialogPane().setContent(text);
+    info.getDialogPane().setMinWidth(600);
+    info.getDialogPane().setMinHeight(320);
     info.showAndWait();
 }
     private List<String> parse(String s) {

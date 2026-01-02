@@ -89,7 +89,7 @@ public class GUI1 extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        logic.showVividInstructions();
+        logic.showInstructions();
         logic.loadCsvToDisplay();
     }
 }
