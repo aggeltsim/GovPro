@@ -47,6 +47,13 @@
             <version>${javafx.version}</version>
         </dependency>
 
+        <!-- JavaFX media for sounds--> 
+        <dependency>
+           <groupId>org.openjfx</groupId>
+           <artifactId>javafx-media</artifactId>
+           <version>${javafx.version}</version>
+        </dependency>
+
 
         <!-- Apache Commons CSV -->
         <dependency>
