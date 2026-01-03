@@ -1,8 +1,14 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import Percentage.percentage.Runner;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.application.Application;
@@ -14,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TableCell;
@@ -38,9 +45,25 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javafx.scene.media.AudioClip;
+
+import javafx.collections.FXCollections;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 
 
 public class GovProFX extends Application {
+
+    private AudioClip gameTreasure;
+    private AudioClip gameNotification;
+    private AudioClip startConfirm;
+    private AudioClip instantWin;
+    private AudioClip clearSound;
+
 
     // Model class for TableView
     public static class BudgetEntry {
@@ -95,6 +118,15 @@ public class GovProFX extends Application {
             primaryStage.show();
             return;
         }
+        //---- Start Here sound----
+        startConfirm = new AudioClip(getClass().getResource("/sounds/winning-a-coin.wav").toExternalForm());
+        startConfirm.setVolume(0.5);
+
+        // WARM-UP
+        startConfirm.setVolume(0.0);
+        startConfirm.play();
+        startConfirm.stop();
+        startConfirm.setVolume(0.5);
 
         // ----- Original splash screen code -----
         Image backgroundImg = new Image(getClass().getResourceAsStream("/images/GovProbackground.png"));
@@ -132,6 +164,7 @@ public class GovProFX extends Application {
         primaryStage.show();
 
         startButton.setOnAction(e -> {
+            startConfirm.play();
             FadeTransition fade = new FadeTransition(Duration.seconds(1.2), splashPane);
             fade.setFromValue(1.0);
             fade.setToValue(0.0);
@@ -142,6 +175,21 @@ public class GovProFX extends Application {
     }
 
     protected void showMainApp(Stage primaryStage) {
+
+    //-----Sounds----
+    gameNotification = new AudioClip(getClass().getResource("/sounds/game-notification.wav").toExternalForm());
+    gameTreasure = new AudioClip(getClass().getResource("/sounds/game-treasure.wav").toExternalForm());
+    instantWin = new AudioClip(getClass().getResource("/sounds/instant-win.wav").toExternalForm());
+    instantWin.setVolume(0.6);
+    clearSound = new AudioClip(getClass().getResource("/sounds/arcade-casino.wav").toExternalForm());
+
+    // Preload for instant playback
+    instantWin.setVolume(0.0);
+    instantWin.play();
+    instantWin.stop();
+    instantWin.setVolume(0.6);
+
+
     initializeData();
 
     primaryStage.setTitle("🏛️ GovPro Budget System 2025");
@@ -158,7 +206,7 @@ public class GovProFX extends Application {
     Button btnAmend = createMenuButton("Make Changes");
     Button btnPredict = createMenuButton("Forecasting Engine");
     Button btnStats = createMenuButton("Statistics Dashboard");
-    Button btnPercent = createMenuButton("Percentage Calculator");// Μέσα στη μέθοδο showMainApp του GovProFX.java
+    Button btnPercent = createMenuButton("Percentage Calculator");
 
     menuBox.getChildren().addAll(menuTitle, btnRead, btnAmend, btnPredict, btnStats, btnPercent);
 
@@ -178,6 +226,22 @@ public class GovProFX extends Application {
         }
     }).start();
 });
+    btnRead.setOnAction(e -> {
+        gameTreasure.play();
+        table.setVisible(true);
+    });
+    btnAmend.setOnAction(e -> {
+        gameTreasure.play();
+        showAmendDialog();
+    });
+    btnPredict.setOnAction(e -> {
+        gameTreasure.play();
+        showPredictDialog();
+    });
+    btnStats.setOnAction(e -> {
+        gameTreasure.play();
+        showStatistics();
+    });
 
     BorderPane root = new BorderPane();
     root.setLeft(menuBox);
@@ -257,6 +321,13 @@ public class GovProFX extends Application {
         layout.setPadding(new Insets(20));
 
         ComboBox<String> combo = new ComboBox<>();
+        combo.valueProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                gameNotification.stop();
+                gameNotification.play();
+            }
+        });
+
         masterData.forEach(entry -> {
             if (!"SECTION".equals(entry.getCode()))
                 combo.getItems().add(entry.getCode() + " - " + entry.getName());
@@ -269,6 +340,10 @@ public class GovProFX extends Application {
         Button btnSave = new Button("Commit Changes ✅");
         btnSave.setMaxWidth(Double.MAX_VALUE);
         btnSave.setOnAction(e -> {
+            if (instantWin != null) {
+                instantWin.stop(); // για να μην κολλάει rapid clicks
+                instantWin.play();
+            }
             int idx = combo.getSelectionModel().getSelectedIndex();
             if (idx >= 0) {
                 try {
@@ -293,7 +368,7 @@ public class GovProFX extends Application {
         dialog.show();
     }
 
-        private void showPredictDialog() {
+    private void showPredictDialog() {
     Stage dialog = new Stage();
     dialog.initModality(Modality.NONE);
     dialog.setTitle("📈 Budget Forecasting System");
@@ -332,11 +407,23 @@ public class GovProFX extends Application {
 
     // --- Επιλογή τύπου πρόβλεψης ---
     ComboBox<String> modeBox = new ComboBox<>();
+    modeBox.valueProperty().addListener((obs, oldVal, newVal) -> {
+        if (newVal != null) {
+            gameNotification.stop(); // για rapid clicks
+            gameNotification.play();
+        }
+    });
     modeBox.getItems().addAll("📊 Predict Value for Given Year", "🕒 Predict When Value Will Be Reached");
     modeBox.setPromptText("Select Prediction Type");
 
     // --- Επιλογή Υπουργείου ---
     ComboBox<String> comboEntity = new ComboBox<>(FXCollections.observableArrayList(entities));
+    comboEntity.valueProperty().addListener((obs, oldVal, newVal) -> {
+        if (newVal != null) {
+            gameNotification.stop();
+            gameNotification.play();
+        }
+    });
     comboEntity.setPromptText("Select Ministry/Entity");
 
     // --- Πεδία εισαγωγής ---
@@ -375,6 +462,11 @@ public class GovProFX extends Application {
 
     // --- Λογική κουμπιών ---
     btnRun.setOnAction(e -> {
+        // Play reward / action sound
+        if (instantWin != null) {
+            instantWin.stop();
+            instantWin.play();
+        }
         int idx = comboEntity.getSelectionModel().getSelectedIndex();
         if (idx < 0 || modeBox.getValue() == null) {
             resultArea.appendText("Please select a prediction type and an entity.\n");
@@ -404,7 +496,13 @@ public class GovProFX extends Application {
         }
     });
 
-    btnClear.setOnAction(e -> resultArea.clear());
+    btnClear.setOnAction(e -> {
+        resultArea.clear();
+        if (clearSound != null) { 
+            clearSound.stop();
+            clearSound.play();
+        }
+    });
 
     // --- Συναρμολόγηση ---
     VBox formBox = new VBox(15,
@@ -441,6 +539,13 @@ public class GovProFX extends Application {
     yearBox.setAlignment(Pos.CENTER_LEFT);
     Label yearLabel = new Label("Select Year:");
     ComboBox<Integer> yearCombo = new ComboBox<>();
+    // Year ComboBox
+    yearCombo.valueProperty().addListener((obs, oldVal, newVal) -> {
+        if (newVal != null) {
+            gameNotification.stop();
+            gameNotification.play();
+        }
+    });
     yearCombo.getItems().addAll(2022, 2023, 2024);
     yearCombo.getSelectionModel().selectFirst();
     yearBox.getChildren().addAll(yearLabel, yearCombo);
@@ -451,6 +556,13 @@ public class GovProFX extends Application {
     typeBox.setAlignment(Pos.CENTER_LEFT);
     Label typeLabel = new Label("Select Type:");
     ComboBox<String> typeCombo = new ComboBox<>();
+    // Type ComboBox (Income / Expense/ Entity)
+    typeCombo.valueProperty().addListener((obs, oldVal, newVal) -> {
+        if (newVal != null) {
+            gameNotification.stop();
+            gameNotification.play();
+        }
+    });
     typeCombo.getItems().addAll("Income", "Expense");
     typeCombo.getSelectionModel().selectFirst();
     typeBox.getChildren().addAll(typeLabel, typeCombo);
@@ -466,6 +578,29 @@ public class GovProFX extends Application {
     scrollPane.setContent(outputBox);
     root.getChildren().add(scrollPane);
 
+    // --- HBox για τα Charts ---
+    HBox chartsBox = new HBox(20);
+    chartsBox.setPadding(new Insets(10));
+    root.getChildren().add(chartsBox);
+
+    // --- Pie Chart ---
+    PieChart pieChart = new PieChart();
+    pieChart.setTitle("Budget Distribution (Pie Chart)");
+    pieChart.setLabelsVisible(true);
+    pieChart.setLegendVisible(true);
+    pieChart.setPrefHeight(300);
+    root.getChildren().add(pieChart);
+
+    VBox barsContainer = new VBox(5);
+    barsContainer.setPadding(new Insets(10));
+    barsContainer.setStyle("-fx-background-color: #f8f9fa; -fx-border-color: #d0d7de; -fx-border-width: 1;"); 
+    ScrollPane barsScroll = new ScrollPane(barsContainer);
+    barsScroll.setFitToWidth(true);
+    barsScroll.setPrefHeight(300); // ύψος για scroll αν είναι πολλοί λογαριασμοί
+
+    root.getChildren().add(barsScroll); // πρόσθεσε το στο τέλος του root
+
+    
     // --- Κουμπιά ---
     HBox buttons = new HBox(10);
     buttons.setAlignment(Pos.CENTER);
@@ -477,6 +612,11 @@ public class GovProFX extends Application {
     // --- Λογική κουμπιών ---
     btnShow.setOnAction(e -> {
         outputBox.getChildren().clear();
+
+        if (instantWin != null) {
+            instantWin.stop();
+            instantWin.play();
+        }
 
         int year = yearCombo.getValue();
         BudgetDataManager.BudgetType type = typeCombo.getValue().equals("Income") ?
@@ -504,9 +644,89 @@ public class GovProFX extends Application {
             line.setStyle("-fx-font-family: Arial; -fx-font-size: 14;");
             outputBox.getChildren().add(line);
         }
+        ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
+
+        for (int i = 0; i < data.length; i++) {
+            String name = (i < categories.length) ? categories[i] : "Category " + (i + 1);
+            BigDecimal percent = data[i].multiply(new BigDecimal("100")).setScale(2, RoundingMode.HALF_UP);
+
+            Label line = new Label(String.format("%-40s : %6s%%", name, percent));
+            line.setStyle("-fx-font-family: Arial; -fx-font-size: 14;");
+            outputBox.getChildren().add(line);
+
+            // Προσθήκη στο PieChart
+            if (data[i].compareTo(BigDecimal.ZERO) > 0) { // αποφυγή μηδενικών
+                pieData.add(new PieChart.Data(name, data[i].doubleValue()));
+            }
+        }
+
+        // Ενημέρωση του PieChart
+        pieChart.setData(pieData);
+
+        List<BudgetEntry> filtered = new ArrayList<>();
+
+        for (BudgetEntry entry : masterData) {
+            if ("SECTION".equals(entry.getCode())) continue;
+            
+            if(typeCombo.getValue().equals("Income")) {
+                
+                try {
+                    int codeInt = Integer.parseInt(entry.getCode());
+                    if(codeInt >= 11 && codeInt <= 571) filtered.add(entry); // Income codes
+                } catch (NumberFormatException ex) { }
+            } else { // Expense
+                try {
+                    int codeInt = Integer.parseInt(entry.getCode());
+                    if (codeInt >= 21 && codeInt <= 57) filtered.add(entry);
+                } catch (NumberFormatException ex) { }
+            }
+        }
+
+        // Φιλτράρουμε μόνο όσους λογαριασμούς περιλαμβάνονται στις κατηγορίες
+        filtered = filtered.stream()
+           .filter(m -> Arrays.asList(categories).contains(m.getName()))
+           .collect(Collectors.toList());
+
+        barsContainer.getChildren().clear();
+
+        BigDecimal total = filtered.stream()
+            .map(BudgetEntry::getAmount)
+            .filter(Objects::nonNull)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        for (BudgetEntry n : filtered) {
+            HBox row = new HBox(10);
+            row.setAlignment(Pos.CENTER_LEFT);
+
+            Label lblName = new Label(n.getName());
+            lblName.setPrefWidth(250);
+
+            ProgressBar pb = new ProgressBar();
+            double value = total.compareTo(BigDecimal.ZERO) > 0
+                ? n.getAmount().doubleValue() / total.doubleValue()
+                : 0;
+            pb.setProgress(value);
+            pb.setPrefWidth(300);
+
+            Label lblAmount = new Label(String.format("€%,.0f", n.getAmount()));
+
+            row.getChildren().addAll(lblName, pb, lblAmount);
+            barsContainer.getChildren().add(row);
+            }
+
+
     });
 
-    btnClear.setOnAction(e -> outputBox.getChildren().clear());
+    btnClear.setOnAction(e -> {
+        outputBox.getChildren().clear();
+        if (clearSound != null) { 
+            clearSound.stop();
+            clearSound.play();
+        }
+        pieChart.getData().clear();
+
+        pieChart.setData(FXCollections.observableArrayList());
+    });
 
     Scene scene = new Scene(root, 650, 600);
     statsStage.setScene(scene);
@@ -520,8 +740,11 @@ public class GovProFX extends Application {
         btn.setMaxWidth(Double.MAX_VALUE);
         btn.setAlignment(Pos.BASELINE_LEFT);
         btn.setStyle("-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-font-size: 14; -fx-cursor: hand;");
-        btn.setOnMouseEntered(e -> btn.setStyle("-fx-background-color: #34495e; -fx-text-fill: #ecf0f1; -fx-font-size: 14;"));
-        btn.setOnMouseExited(e -> btn.setStyle("-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-font-size: 14;"));
+        btn.setOnMouseEntered(e -> {
+            btn.setStyle("-fx-background-color: #34495e; -fx-text-fill: #ecf0f1; -fx-font-size: 14;");
+            if (gameNotification != null) gameNotification.play();
+        });
+        btn.setOnMouseExited(e ->btn.setStyle("-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-font-size: 14;"));
         return btn;
     }
 
