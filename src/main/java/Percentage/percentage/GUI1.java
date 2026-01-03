@@ -7,14 +7,18 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import java.math.BigDecimal;
 import java.util.Map;
 
 public class GUI1 extends Application {
     protected TextField codeAField, codeBField;
-    protected TextArea csvDisplayArea;
     protected Label resultLabel;
+    protected TextArea csvDisplayArea;
+    protected AudioClip successSound; 
+    protected AudioClip errorSound;   
+    protected AudioClip hoverSound;   
     protected Loader loader;
     protected Calculator calculator;
     protected Map<String, BigDecimal> amounts;
@@ -42,7 +46,23 @@ public class GUI1 extends Application {
         csvDisplayArea.setFont(javafx.scene.text.Font.font("Monospaced", 12));
         logic.setupContextMenu();
 
-        historyItems = FXCollections.observableArrayList();
+        successSound = new AudioClip(getClass().getResource("/sounds/instant-win.wav").toExternalForm());
+        errorSound = new AudioClip(getClass().getResource("/sounds/game-notification.wav").toExternalForm());
+        hoverSound = new AudioClip(getClass().getResource("/sounds/game-notification.wav").toExternalForm());
+
+
+    successSound.setVolume(0.6);
+    errorSound.setVolume(0.4);
+    hoverSound.setVolume(0.2);
+
+    Button calculateButton = new Button("Υπολογισμός Τώρα");
+    calculateButton.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;");
+    calculateButton.setOnMouseEntered(e -> {
+        hoverSound.stop(); 
+        hoverSound.play();
+    });
+
+    historyItems = FXCollections.observableArrayList();
         ListView<String> historyListView = new ListView<>(historyItems);
         VBox historyBox = new VBox(5, new Label("Προηγούμενοι Υπολογισμοί:"), historyListView);
         historyBox.setPrefWidth(280);
@@ -57,15 +77,12 @@ public class GUI1 extends Application {
         
         logic.setupKeyboardEvents();
 
-        Button calculateButton = new Button("Υπολογισμός Τώρα");
-        calculateButton.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;");
         calculateButton.setOnAction(e -> logic.processCalculation());
 
-        // Ρύθμιση Label ώστε να ΜΗΝ κόβεται το κείμενο
         resultLabel = new Label("Περιμένω δεδομένα για επεξεργασία...");
         resultLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 13px; -fx-text-fill: #2c3e50;");
-        resultLabel.setWrapText(true); // Ενεργοποίηση αλλαγής γραμμής
-        resultLabel.setMaxWidth(550);  // Μέγιστο πλάτος πριν την αλλαγή γραμμής
+        resultLabel.setWrapText(true);
+        resultLabel.setMaxWidth(550);
         resultLabel.setMinHeight(Region.USE_PREF_SIZE); // Αυτόματο ύψος ανάλογα με το κείμενο
 
         GridPane inputGrid = new GridPane();

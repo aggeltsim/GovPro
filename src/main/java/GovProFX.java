@@ -221,6 +221,7 @@ public class GovProFX extends Application {
     btnPercent.setOnAction(e -> { new Thread(() -> {
         try {
             Percentage.percentage.Runner.main(new String[0]);
+            gameTreasure.play();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
