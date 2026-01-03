@@ -3,7 +3,14 @@ import javafx.application.Application;
 
 public class Runner {
     public static void main(String[] args) {
-        // Run the GUI1 application
-        Application.launch(GUI1.class, args);
+    javafx.application.Platform.runLater(() -> {
+        try {
+            GUI1 gui = new GUI1();
+            gui.init();
+            gui.start(new javafx.stage.Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+      });
     }
 }

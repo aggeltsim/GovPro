@@ -2,7 +2,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Locale;
-
+import Percentage.percentage.Runner;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.application.Application;
@@ -158,8 +158,9 @@ public class GovProFX extends Application {
     Button btnAmend = createMenuButton("Make Changes");
     Button btnPredict = createMenuButton("Forecasting Engine");
     Button btnStats = createMenuButton("Statistics Dashboard");
+    Button btnPercent = createMenuButton("Percentage Calculator");// Μέσα στη μέθοδο showMainApp του GovProFX.java
 
-    menuBox.getChildren().addAll(menuTitle, btnRead, btnAmend, btnPredict, btnStats);
+    menuBox.getChildren().addAll(menuTitle, btnRead, btnAmend, btnPredict, btnStats, btnPercent);
 
     setupTable();
     StackPane contentArea = new StackPane(table);
@@ -169,6 +170,14 @@ public class GovProFX extends Application {
     btnAmend.setOnAction(e -> showAmendDialog());
     btnPredict.setOnAction(e -> showPredictDialog());
     btnStats.setOnAction(e -> showStatistics());
+    btnPercent.setOnAction(e -> { new Thread(() -> {
+        try {
+            Percentage.percentage.Runner.main(new String[0]);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }).start();
+});
 
     BorderPane root = new BorderPane();
     root.setLeft(menuBox);
