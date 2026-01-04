@@ -55,7 +55,29 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 
-
+/**
+ * The {@code GovProFX} class represents the main JavaFX application
+ * of the GovPro Budget System.
+ *
+ * <p>
+ * The application provides a graphical user interface for:
+ * <ul>
+ *   <li>Viewing government budget data</li>
+ *   <li>Editing budget entries</li>
+ *   <li>Statistical analysis with charts</li>
+ *   <li>Budget forecasting and predictions</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * JavaFX components such as {@link TableView}, {@link PieChart},
+ * {@link ProgressBar}, and multiple dialog windows are used.
+ * Audio feedback is also included to enhance user interaction.
+ * </p>
+ *
+ * @author —
+ * @version 1.0
+ */
 public class GovProFX extends Application {
 
     private AudioClip gameTreasure;
@@ -65,20 +87,45 @@ public class GovProFX extends Application {
     private AudioClip clearSound;
 
 
-    // Model class for TableView
+    /**
+     * Model class representing a single budget record.
+     *
+     * <p>
+     * This class is used by the {@link TableView} to display
+     * budget codes, descriptions, and monetary amounts.
+     * </p>
+     */
     public static class BudgetEntry {
+        /** Budget account code */
         private String code;
+        /** Description of the budget entry */
         private String name;
+        /** Monetary amount associated with the entry */
         private BigDecimal amount;
 
+        /**
+         * Constructs a new {@code BudgetEntry}.
+         *
+         * @param code   the account code
+         * @param name   the description of the entry
+         * @param amount the monetary amount
+         */
         public BudgetEntry(String code, String name, BigDecimal amount) {
             this.code = code;
             this.name = name;
             this.amount = amount;
         }
+        /** @return the budget account code */
         public String getCode() { return code; }
+        /** @return the description of the entry */
         public String getName() { return name; }
+        /** @return the monetary amount */
         public BigDecimal getAmount() { return amount; }
+         /**
+         * Updates the monetary amount of this entry.
+         *
+         * @param amount the new monetary amount
+         */
         public void setAmount(BigDecimal amount) { this.amount = amount; }
     }
 
@@ -101,16 +148,26 @@ public class GovProFX extends Application {
         {747475497000.0, 690153192000.0, 669349030000.0, 919467234000.0, 1068139883000.0, 1438513680000.0} 
     };
 
-        
+    /**
+     * Entry point of the JavaFX application.
+     *
+     * <p>
+     * Displays a splash screen before loading the main UI.
+     * </p>
+     *
+     * @param primaryStage the primary application stage
+     */   
     @Override
     public void start(Stage primaryStage) {
         start(primaryStage, false); // default behavior: show splash
     }
 
     /**
-     * Overloaded start method for tests.
-     * @param primaryStage Stage to show
-     * @param skipSplash if true, directly loads main UI (skipping fade/splash)
+     * Overloaded start method mainly used for testing.
+     *
+     * @param primaryStage the main application stage
+     * @param skipSplash   if {@code true}, skips the splash screen
+     *                     and loads the main UI directly
      */
     public void start(Stage primaryStage, boolean skipSplash) {
         if (skipSplash) {
@@ -173,7 +230,16 @@ public class GovProFX extends Application {
             fade.play();
         });
     }
-
+    
+    /**
+     * Builds and displays the main user interface of the application.
+     *
+     * <p>
+     * Initializes menus, tables, dialogs, and sound effects.
+     * </p>
+     *
+     * @param primaryStage the primary application stage
+     */
     protected void showMainApp(Stage primaryStage) {
 
     //-----Sounds----
@@ -252,7 +318,14 @@ public class GovProFX extends Application {
     primaryStage.setScene(mainScene);
 }
 
-
+    /**
+     * Configures the budget {@link TableView}.
+     *
+     * <p>
+     * Sets up columns, value formatting, and conditional row styling
+     * based on budget entry categories.
+     * </p>
+     */
     private void setupTable() {
         TableColumn<BudgetEntry, String> codeCol = new TableColumn<>("Code");
         codeCol.setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -313,6 +386,15 @@ public class GovProFX extends Application {
         table.setPlaceholder(new Label("No data loaded."));
     }
 
+    /**
+     * Displays a dialog window that allows the user
+     * to modify existing budget entries.
+     *
+     * <p>
+     * The selected entry is updated in real time
+     * within the table.
+     * </p>
+     */
     protected void showAmendDialog() {
         Stage dialog = new Stage();
         dialog.initModality(Modality.NONE);
@@ -369,6 +451,17 @@ public class GovProFX extends Application {
         dialog.show();
     }
 
+    /**
+     * Displays the budget forecasting and prediction dialog.
+     *
+     * <p>
+     * Supports:
+     * <ul>
+     *   <li>Predicting budget values for a given year</li>
+     *   <li>Estimating the time when a target value is reached</li>
+     * </ul>
+     * </p>
+     */
     private void showPredictDialog() {
     Stage dialog = new Stage();
     dialog.initModality(Modality.NONE);
@@ -521,7 +614,14 @@ public class GovProFX extends Application {
     dialog.show();
     }
     
-    //For Statistics
+    /**
+     * Displays the statistics dashboard for budget analysis.
+     *
+     * <p>
+     * Includes pie charts, progress bars, and
+     * percentage breakdowns of budget data.
+     * </p>
+     */
     private void showStatistics() {
     Stage statsStage = new Stage();
     statsStage.initModality(Modality.NONE);
@@ -749,6 +849,14 @@ public class GovProFX extends Application {
         return btn;
     }
 
+    /**
+     * Initializes all budget data including incomes,
+     * expenses, and government entities.
+     *
+     * <p>
+     * Data are stored in the {@link #masterData} collection.
+     * </p>
+     */
     private void initializeData() {
         masterData.add(new BudgetEntry("SECTION", "REVENUE & INCOMES", null));
         Object[][] rawIncomes = {
@@ -862,15 +970,32 @@ public class GovProFX extends Application {
         addRows(rawEntities);
     }
 
+    /**
+     * Adds multiple budget entries to the data collection.
+     *
+     * @param rows a 2D array containing
+     *             [code, description, amount]
+     */
     private void addRows(Object[][] rows) {
         for (Object[] row : rows) {
             masterData.add(new BudgetEntry(row[0].toString(), row[1].toString(), (BigDecimal) row[2]));
         }
     }
+    
+    /**
+     * Returns the complete list of budget data.
+     *
+     * @return an {@link ObservableList} of {@link BudgetEntry}
+     */
     public ObservableList<BudgetEntry> getMasterData() {
         return masterData;
     }
 
+    /**
+     * Launches the GovPro Budget System application.
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
