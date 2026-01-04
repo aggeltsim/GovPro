@@ -47,13 +47,8 @@ import javafx.util.Duration;
 
 import javafx.scene.media.AudioClip;
 
-import javafx.collections.FXCollections;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
+
 
 /**
  * The {@code GovProFX} class represents the main JavaFX application
