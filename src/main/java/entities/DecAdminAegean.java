@@ -11,7 +11,14 @@ public class DecAdminAegean extends Entity {
 
     @Override
     public String toExplain() {
-        return getName() + " oversees administrative tasks for the" 
-        + " North and South Aegean regions.";
+        return "The " + getName() + " is a public authority that"
+        + " represents the Greek state in the Aegean islands. It"
+        + " ensures that national laws are properly applied, supervises" 
+        + " local governments for legality, manages public land and"
+        + " state property, issues permits in areas such as environmental"
+        + " protection, urban planning, forests and coastal zones, and"
+        + " handles administrative matters related to citizenship and"
+        + " migration. Its role is to support and control local authorities"
+        + " while protecting the public interest.";
     }
 }

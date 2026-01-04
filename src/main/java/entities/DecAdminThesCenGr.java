@@ -10,8 +10,15 @@ public class DecAdminThesCenGr extends Entity {
 
     @Override
     public String toExplain() {
-        return getName() + " is a regional state authority managing"
-        + " environmental, forestry, migration, and local government"
-        + " oversight in Thessaly and Central Greece.";
+        return "The " + getName() + " is a government authority that"
+        + " represents the Greek state in these regions. It makes sure"
+        + " national laws are applied correctly, supervises local"
+        + " authorities to ensure their decisions are legal, manages"
+        + " public land and state property, and issues permits for"
+        + " things like environmental protection, urban planning, forests,"
+        + " and coastal areas. It also handles administrative matters"
+        + " related to citizenship, migration, and public services."
+        + " Its main role is to support local governments while"
+        + " protecting the public interest.";
     }
 }

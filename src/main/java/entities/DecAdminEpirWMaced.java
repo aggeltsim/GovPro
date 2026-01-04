@@ -10,7 +10,14 @@ public class DecAdminEpirWMaced extends Entity {
 
     @Override
     public String toExplain() {
-        return getName() + " covers Epirus and Western Macedonia under"
-        + " state-level administrative duties.";
+        return "The " + getName() + " is a government authority that"
+        + " represents the Greek state in these regions. It makes sure"
+        + " national laws are followed, oversees local authorities to"
+        + " ensure their decisions are legal, manages public land and"
+        + " state property, and issues permits for things like environmental"
+        + " protection, urban planning, forests, and coastal areas. It also"
+        + " deals with administrative matters related to citizenship,"
+        + " migration and public services. Its main role is to support"
+        + " local governments while protecting the public interest.";
     }
 }
