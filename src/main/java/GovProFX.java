@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import Percentage.percentage.Runner;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
+import javafx.scene.layout.Priority;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
@@ -17,6 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -40,14 +43,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import javafx.scene.media.AudioClip;
-
-import javafx.scene.chart.PieChart;
 
 
 /**
@@ -268,8 +268,9 @@ public class GovProFX extends Application {
     Button btnPredict = createMenuButton("Forecasting Engine");
     Button btnStats = createMenuButton("Statistics Dashboard");
     Button btnPercent = createMenuButton("Percentage Calculator");
+    Button btnCitizen = createMenuButton("Citizen Assistant");
 
-    menuBox.getChildren().addAll(menuTitle, btnRead, btnAmend, btnPredict, btnStats, btnPercent);
+    menuBox.getChildren().addAll(menuTitle, btnRead, btnAmend, btnPredict, btnStats, btnPercent,btnCitizen);
 
     setupTable();
     StackPane contentArea = new StackPane(table);
@@ -286,6 +287,12 @@ public class GovProFX extends Application {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }).start();
+});
+    btnCitizen.setOnAction(e -> {
+    new Thread(() -> {
+        
+        javafx.application.Platform.runLater(() -> showCitizenAssistantDialog());
     }).start();
 });
     btnRead.setOnAction(e -> {
@@ -539,7 +546,7 @@ public class GovProFX extends Application {
     VBox dynamicFields = new VBox(10);
     dynamicFields.setAlignment(Pos.CENTER_LEFT);
 
-    // αλλάζει δυναμικά τι εμφανίζεται ανάλογα με το mode
+    
     modeBox.setOnAction(e -> {
         dynamicFields.getChildren().clear();
         if (modeBox.getValue().contains("Value for Given Year")) {
@@ -549,7 +556,7 @@ public class GovProFX extends Application {
         }
     });
 
-    // --- Λογική κουμπιών ---
+    
     btnRun.setOnAction(e -> {
         // Play reward / action sound
         if (instantWin != null) {
@@ -593,7 +600,7 @@ public class GovProFX extends Application {
         }
     });
 
-    // --- Συναρμολόγηση ---
+    
     VBox formBox = new VBox(15,
             new Label("Prediction Type:"), modeBox,
             new Label("Select Entity:"), comboEntity,
@@ -828,6 +835,30 @@ public class GovProFX extends Application {
     statsStage.setScene(scene);
     statsStage.show();
 }
+    private void showCitizenAssistantDialog() {
+    Stage stage = new Stage();
+    stage.setTitle("Citizen Assistant - AI Helper");
+
+    WebView browser = new WebView();
+    WebEngine engine = browser.getEngine();
+
+    // 1. Ρύθμιση User Agent για να "ξεγελάσουμε" τη σελίδα και να φορτώσει σωστά
+    engine.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36");
+
+    // 2. Φόρτωση της AI υπηρεσίας (Free, No Login, No API Key)
+    engine.load("https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat");
+
+    Label infoLabel = new Label("Follow the on-screen instructions to interact with the AI assistant.");
+    infoLabel.setStyle("-fx-padding: 10; -fx-font-weight: bold; -fx-text-fill: #555;");
+
+    // 3. Διάταξη - Κάνουμε το browser να καταλαμβάνει όλο το χώρο
+    VBox root = new VBox(infoLabel, browser);
+    VBox.setVgrow(browser, Priority.ALWAYS);
+
+    Scene scene = new Scene(root, 900, 700);
+    stage.setScene(scene);
+    stage.show();
+}
 
 
 
@@ -843,6 +874,9 @@ public class GovProFX extends Application {
         btn.setOnMouseExited(e ->btn.setStyle("-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-font-size: 14;"));
         return btn;
     }
+
+    
+
 
     /**
      * Initializes all budget data including incomes,
