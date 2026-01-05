@@ -70,7 +70,6 @@ import javafx.scene.chart.PieChart;
  * Audio feedback is also included to enhance user interaction.
  * </p>
  *
- * @author —
  * @version 1.0
  */
 public class GovProFX extends Application {
@@ -419,14 +418,14 @@ public class GovProFX extends Application {
         btnSave.setMaxWidth(Double.MAX_VALUE);
         btnSave.setOnAction(e -> {
             if (instantWin != null) {
-                instantWin.stop(); // για να μην κολλάει rapid clicks
+                instantWin.stop(); 
                 instantWin.play();
             }
             int idx = combo.getSelectionModel().getSelectedIndex();
             if (idx >= 0) {
                 try {
                     BigDecimal val = new BigDecimal(txtNewValue.getText().replace(",", "."));
-                    // Προσοχή: Εδώ βρίσκουμε το σωστό αντικείμενο βάσει του κωδικού
+                    // Attention: Here we find the correct object based on the code
                     String selectedCode = combo.getValue().split(" - ")[0];
                     masterData.stream()
                         .filter(ent -> ent.getCode().equals(selectedCode))
@@ -462,7 +461,7 @@ public class GovProFX extends Application {
     dialog.initModality(Modality.NONE);
     dialog.setTitle("📈 Budget Forecasting System");
     Prediction p = new Prediction();    
-    // --- Δεδομένα ---
+    // --- Data ---
     double[][] dapanes = {
         {3766000, 4097337, 3811641, 4059900, 3974293, 4146883},
         {143500000, 134251607, 134030043, 140477275, 147343837, 156551972},
@@ -484,7 +483,7 @@ public class GovProFX extends Application {
         "Ministry of Sport", "Ministry of Finance"
     };
 
-    // --- Κεντρική Διάταξη ---
+    // --- Central Layout ---
     VBox root = new VBox(20);
     root.setPadding(new Insets(25));
     root.setStyle("-fx-background-color: linear-gradient(to bottom right, #ffffff, #e6e9f0);");
@@ -494,18 +493,18 @@ public class GovProFX extends Application {
     headerLabel.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
     Separator separator = new Separator();
 
-    // --- Επιλογή τύπου πρόβλεψης ---
+    // --- Select Prediction Type ---
     ComboBox<String> modeBox = new ComboBox<>();
     modeBox.valueProperty().addListener((obs, oldVal, newVal) -> {
         if (newVal != null) {
-            gameNotification.stop(); // για rapid clicks
+            gameNotification.stop(); // for rapid clicks
             gameNotification.play();
         }
     });
     modeBox.getItems().addAll("📊 Predict Value for Given Year", "🕒 Predict When Value Will Be Reached");
     modeBox.setPromptText("Select Prediction Type");
 
-    // --- Επιλογή Υπουργείου ---
+    // --- Select Ministry ---
     ComboBox<String> comboEntity = new ComboBox<>(FXCollections.observableArrayList(entities));
     comboEntity.valueProperty().addListener((obs, oldVal, newVal) -> {
         if (newVal != null) {
@@ -515,21 +514,21 @@ public class GovProFX extends Application {
     });
     comboEntity.setPromptText("Select Ministry/Entity");
 
-    // --- Πεδία εισαγωγής ---
+    // --- Input fields ---
     TextField txtYear = new TextField();
     txtYear.setPromptText("Enter Target Year (e.g. 2028)");
 
     TextField txtDesiredValue = new TextField();
     txtDesiredValue.setPromptText("Enter Desired Value (€)");
 
-    // --- Περιοχή αποτελεσμάτων ---
+    // --- Results area ---
     Label lblResults = new Label("Results:");
     lblResults.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
     TextArea resultArea = new TextArea();
     resultArea.setEditable(false);
     resultArea.setPrefHeight(200);
 
-    // --- Κουμπιά ---
+    // --- Buttons ---
     Button btnRun = new Button("Run Prediction");
     Button btnClear = new Button("Clear Results");
     HBox actionButtons = new HBox(10, btnRun, btnClear);
@@ -539,7 +538,7 @@ public class GovProFX extends Application {
     VBox dynamicFields = new VBox(10);
     dynamicFields.setAlignment(Pos.CENTER_LEFT);
 
-    // αλλάζει δυναμικά τι εμφανίζεται ανάλογα με το mode
+    // dynamically changes what is displayed depending on the mode
     modeBox.setOnAction(e -> {
         dynamicFields.getChildren().clear();
         if (modeBox.getValue().contains("Value for Given Year")) {
@@ -549,7 +548,7 @@ public class GovProFX extends Application {
         }
     });
 
-    // --- Λογική κουμπιών ---
+    // --- Button structure ---
     btnRun.setOnAction(e -> {
         // Play reward / action sound
         if (instantWin != null) {
@@ -593,7 +592,7 @@ public class GovProFX extends Application {
         }
     });
 
-    // --- Συναρμολόγηση ---
+    // --- Fitting ---
     VBox formBox = new VBox(15,
             new Label("Prediction Type:"), modeBox,
             new Label("Select Entity:"), comboEntity,
@@ -630,11 +629,12 @@ public class GovProFX extends Application {
     header.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
     root.getChildren().add(header);
 
-    // --- Επιλογή Έτους ---
+    // --- Select Year ---
     HBox yearBox = new HBox(10);
     yearBox.setAlignment(Pos.CENTER_LEFT);
     Label yearLabel = new Label("Select Year:");
     ComboBox<Integer> yearCombo = new ComboBox<>();
+
     // Year ComboBox
     yearCombo.valueProperty().addListener((obs, oldVal, newVal) -> {
         if (newVal != null) {
@@ -647,7 +647,7 @@ public class GovProFX extends Application {
     yearBox.getChildren().addAll(yearLabel, yearCombo);
     root.getChildren().add(yearBox);
 
-    // --- Επιλογή Τύπου ---
+    // --- Select Type ---
     HBox typeBox = new HBox(10);
     typeBox.setAlignment(Pos.CENTER_LEFT);
     Label typeLabel = new Label("Select Type:");
@@ -664,7 +664,7 @@ public class GovProFX extends Application {
     typeBox.getChildren().addAll(typeLabel, typeCombo);
     root.getChildren().add(typeBox);
 
-    // --- Περιοχή αποτελεσμάτων με Scroll ---
+    // --- Results area with Scroll ---
     ScrollPane scrollPane = new ScrollPane();
     scrollPane.setFitToWidth(true);
     scrollPane.setPrefHeight(400);
@@ -674,7 +674,7 @@ public class GovProFX extends Application {
     scrollPane.setContent(outputBox);
     root.getChildren().add(scrollPane);
 
-    // --- HBox για τα Charts ---
+    // --- HBox for Charts ---
     HBox chartsBox = new HBox(20);
     chartsBox.setPadding(new Insets(10));
     root.getChildren().add(chartsBox);
@@ -692,12 +692,11 @@ public class GovProFX extends Application {
     barsContainer.setStyle("-fx-background-color: #f8f9fa; -fx-border-color: #d0d7de; -fx-border-width: 1;"); 
     ScrollPane barsScroll = new ScrollPane(barsContainer);
     barsScroll.setFitToWidth(true);
-    barsScroll.setPrefHeight(300); // ύψος για scroll αν είναι πολλοί λογαριασμοί
+    barsScroll.setPrefHeight(300); // height for scroll if there are many accounts
 
-    root.getChildren().add(barsScroll); // πρόσθεσε το στο τέλος του root
-
+    root.getChildren().add(barsScroll); // add it to the end of the root
     
-    // --- Κουμπιά ---
+    // --- Buttons ---
     HBox buttons = new HBox(10);
     buttons.setAlignment(Pos.CENTER);
     Button btnShow = new Button("Show");
@@ -705,7 +704,7 @@ public class GovProFX extends Application {
     buttons.getChildren().addAll(btnShow, btnClear);
     root.getChildren().add(buttons);
 
-    // --- Λογική κουμπιών ---
+    // --- Button structure ---
     btnShow.setOnAction(e -> {
         outputBox.getChildren().clear();
 
@@ -750,13 +749,13 @@ public class GovProFX extends Application {
             line.setStyle("-fx-font-family: Arial; -fx-font-size: 14;");
             outputBox.getChildren().add(line);
 
-            // Προσθήκη στο PieChart
-            if (data[i].compareTo(BigDecimal.ZERO) > 0) { // αποφυγή μηδενικών
+            // ΠAdd to PieChart
+            if (data[i].compareTo(BigDecimal.ZERO) > 0) { // avoid zeros
                 pieData.add(new PieChart.Data(name, data[i].doubleValue()));
             }
         }
 
-        // Ενημέρωση του PieChart
+        // Update of PieChart
         pieChart.setData(pieData);
 
         List<BudgetEntry> filtered = new ArrayList<>();
@@ -778,7 +777,7 @@ public class GovProFX extends Application {
             }
         }
 
-        // Φιλτράρουμε μόνο όσους λογαριασμούς περιλαμβάνονται στις κατηγορίες
+        // We only filter those accounts that are included in the categories
         filtered = filtered.stream()
            .filter(m -> Arrays.asList(categories).contains(m.getName()))
            .collect(Collectors.toList());
