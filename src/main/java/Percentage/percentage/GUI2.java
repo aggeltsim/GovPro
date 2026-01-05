@@ -14,8 +14,8 @@ public class GUI2 {
 
     public void setupContextMenu() {
         ContextMenu menu = new ContextMenu();
-        MenuItem itemA = new MenuItem("Προσθήκη στον Αριθμητή (Α)");
-        MenuItem itemB = new MenuItem("Προσθήκη στη Βάση (Β)");
+        MenuItem itemA = new MenuItem("Add to Numerator (A)");
+        MenuItem itemB = new MenuItem("Add to Base (B)");
         itemA.setOnAction(e -> addSelectedToField(gui.codeAField));
         itemB.setOnAction(e -> addSelectedToField(gui.codeBField));
         menu.getItems().addAll(itemA, itemB);
@@ -36,19 +36,19 @@ public class GUI2 {
 
     public void showInstructions() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Οδηγός Χρήσης Προϋπολογισμού");
-        alert.setHeaderText("Καλώς ήρθατε στον 'Ποσοστιαίο' Αναλυτή του Κράτους!");
+        alert.setTitle("Budget User Guide");
+        alert.setHeaderText("Welcome to the State 'Percentage' Analyzer!");
         
         TextArea area = new TextArea(
-            "Εδώ μπορείτε να δείτε πως κατανέμονται τα λεφτά της Ελλάδας για το 2025!\n\n" +
-            "ΠΩΣ ΔΟΥΛΕΥΕΙ:\n" +
-            "1. Δείτε τη λίστα: Κάθε γραμμή είναι ένα μέρος της κρατικής αλυσίδας (π.χ. Φόροι, Υγεία, Άμυνα).\n" +
-            "2. Διαλέξτε 'συστατικά': Με το ποντίκι σας, επιλέξτε κωδικούς από το κείμενο, κάντε δεξί κλικ και αυτόματα εισάγονται στο πεδίο που επιλέξατε.\n" +
-            "3. Συγκρίνετε: Στο πεδίο (Α) βάλτε το κομμάτι της αλυσίδας που σας ενδιαφέρει και στο (Β) το 'μεγάλο σύνολο' με το οποίο θέλετε να το συγκρίνετε.\n\n" +
-            "💡 ΠΑΡΑΔΕΙΓΜΑ:\n" +
-            "Αν βάλετε στον Αριθμητή (Α) τον κωδικό της Υγείας (1015) και στη Βάση (Β) τον κωδικό των συνολικών Φόρων (11), " +
-            "θα μάθετε τι ποσοστό των φόρων μας ξοδεύεται στα νοσοκομεία.\n\n" +
-            "Πατήστε ENTER και η εφαρμογή θα σας εξηγήσει τα πάντα σαν παιχνίδι!"
+            "Here you can see how Greece's money is distributed for 2025!\n\n" +
+            "HOW IT WORKS:\n" +
+            "1. View the list: Each line is a part of the state chain (e.g., Taxes, Health, Defense).\n" +
+            "2. Pick 'ingredients': Select codes from the text with your mouse, right-click, and they are automatically entered into the field you chose.\n" +
+            "3. Compare: In field (A) put the part of the chain you are interested in and in (B) the 'grand total' you want to compare it with.\n\n" +
+            "💡 EXAMPLE:\n" +
+            "If you put the Health code (1015) in the Numerator (A) and the total Taxes code (11) in the Base (B), " +
+            "you will find out what percentage of our taxes is spent on hospitals.\n\n" +
+            "Press ENTER and the application will explain everything like a game!"
         );
         area.setWrapText(true);
         area.setEditable(false);
@@ -66,25 +66,24 @@ public class GUI2 {
 
         // 1. check for empty fields
         if (rawA.isEmpty() || rawB.isEmpty()) {
-            throw new IllegalArgumentException("Παρακαλώ εισάγετε κωδικούς για να γίνει ο υπολογισμός!");
+            throw new IllegalArgumentException("Please enter codes to perform the calculation!");
         }
 
         List<String> codesA = parse(rawA);
         List<String> codesB = parse(rawB);
 
         // 2. check for duplicates (e.g. 11, 11)
-        checkForDuplicates(codesA, "Αριθμητή (Α)");
-        checkForDuplicates(codesB, "Βάσης (Β)");
+        checkForDuplicates(codesA, "Numerator (A)");
+        checkForDuplicates(codesB, "Base (B)");
 
         // 3. check for Identity (A and B are identical)
         if (new HashSet<>(codesA).equals(new HashSet<>(codesB))) {
-            throw new IllegalArgumentException("Τα πεδία Α και Β περιέχουν τους ίδιους κωδικούς. Το αποτέλεσμα θα είναι 100%, κάτι που δεν έχει νόημα για ανάλυση.");
+            throw new IllegalArgumentException("Fields A and B contain the same codes. The result will be 100%, which doesn't make sense for analysis.");
         }
 
         // 4. check for Sub-codes
-        // Prevents double counting e.g. 11 and 111
-        checkForSubCodes(codesA, "Αριθμητή (Α)");
-        checkForSubCodes(codesB, "Βάσης (Β)");
+        checkForSubCodes(codesA, "Numerator (A)");
+        checkForSubCodes(codesB, "Base (B)");
 
         // 5. check for existence of codes in CSV
         validateCodesExist(codesA);
@@ -95,16 +94,16 @@ public class GUI2 {
 
         // 6. check for Division by Zero
         if (sumB.compareTo(BigDecimal.ZERO) == 0) {
-            throw new ArithmeticException("Το ποσό στη Βάση (Β) είναι μηδέν. Η διαίρεση είναι αδύνατη!");
+            throw new ArithmeticException("The amount in the Base (B) is zero. Division is impossible!");
         }
 
         // 7. check for A > B (Confirmation)
         if (sumA.compareTo(sumB) > 0) {
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-            confirm.setTitle("Επιβεβαίωση");
+            confirm.setTitle("Confirmation");
             confirm.setHeaderText(null);
             TextArea confirmArea = new TextArea(
-                "Προσοχή: Ο Αριθμητής είναι μεγαλύτερος από τη Βάση. Το ποσοστό θα υπερβεί το 100%. Συνέχεια;");
+                "Attention: The Numerator is larger than the Base. The percentage will exceed 100%. Continue?");
             confirmArea.setWrapText(true);
             confirmArea.setEditable(false);
             confirmArea.setPrefSize(560, 120);
@@ -122,13 +121,13 @@ public class GUI2 {
         );
 
         String formatted = String.format("%.2f", perc) + " %";
-        gui.resultLabel.setText("Αποτέλεσμα: " + formatted);
+        gui.resultLabel.setText("Result: " + formatted);
         gui.historyItems.add(0, formatted + " (" + rawA + " / " + rawB + ")");
 
         showSimpleExplanation(codesA, sumA, codesB, sumB, formatted);
 
     } catch (Exception ex) {
-        showErrorDialog("Σφάλμα", ex);
+        showErrorDialog("Error", ex);
     }
 }
 
@@ -136,16 +135,14 @@ public class GUI2 {
 private void showErrorDialog(String title, Exception ex) {
     Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle(title);
-    alert.setHeaderText(null); // Αφαιρούμε το όνομα της κλάσης (π.χ. IllegalArgumentException)
+    alert.setHeaderText(null);
 
-    // Κρατάμε ΜΟΝΟ το μήνυμα που ορίσαμε εμείς, χωρίς το StackTrace
-    String content = (ex.getMessage() != null) ? ex.getMessage() : "Παρουσιάστηκε ένα άγνωστο σφάλμα.";
+    String content = (ex.getMessage() != null) ? ex.getMessage() : "An unknown error occurred.";
 
     TextArea area = new TextArea(content);
     area.setWrapText(true);
     area.setEditable(false);
     
-    // Ρυθμίζουμε το μέγεθος ώστε να είναι κομψό
     area.setPrefSize(450, 150); 
 
     alert.getDialogPane().setContent(area);
@@ -156,7 +153,7 @@ private void checkForDuplicates(List<String> codes, String fieldName) {
     Set<String> set = new HashSet<>();
     for (String c : codes) {
         if (!set.add(c)) {
-            throw new IllegalArgumentException("Ο κωδικός '" + c + "' εμφανίζεται δύο φορές στο πεδίο του " + fieldName + ".");
+            throw new IllegalArgumentException("The code '" + c + "' appears twice in the " + fieldName + " field.");
         }
     }
 }
@@ -167,9 +164,9 @@ private void checkForSubCodes(List<String> codes, String fieldName) {
             if (!c1.equals(c2) && (c1.startsWith(c2) || c2.startsWith(c1))) {
                 String parent = c1.length() < c2.length() ? c1 : c2;
                 String child = c1.length() < c2.length() ? c2 : c1;
-                throw new IllegalArgumentException("Λογικό Σφάλμα στο πεδίο " + fieldName + ":\n" +
-                    "Ο κωδικός '" + child + "' περιλαμβάνεται ήδη μέσα στον κωδικό '" + parent + "'.\n" +
-                    "Αν τους προσθέσετε και τους δύο, το ποσό θα μετρηθεί διπλά!");
+                throw new IllegalArgumentException("Logic Error in " + fieldName + " field:\n" +
+                    "The code '" + child + "' is already included within code '" + parent + "'.\n" +
+                    "If you add both, the amount will be double-counted!");
             }
         }
     }
@@ -178,36 +175,36 @@ private void checkForSubCodes(List<String> codes, String fieldName) {
 private void validateCodesExist(List<String> codes) {
     for (String c : codes) {
         if (!gui.amounts.containsKey(c)) {
-            throw new NoSuchElementException("Ο κωδικός '" + c + "' δεν υπάρχει στα δεδομένα του 2025.");
+            throw new NoSuchElementException("The code '" + c + "' does not exist in the 2025 data.");
         }
     }
 }
 
 private void showSimpleExplanation(List<String> cA, BigDecimal sA, List<String> cB, BigDecimal sB, String res) {
-    String namesA = cA.stream().map(gui.loader::getName).collect(Collectors.joining(" και "));
-    String namesB = cB.stream().map(gui.loader::getName).collect(Collectors.joining(" και "));
+    String namesA = cA.stream().map(gui.loader::getName).collect(Collectors.joining(" and "));
+    String namesB = cB.stream().map(gui.loader::getName).collect(Collectors.joining(" and "));
 
-    // Reformat numbers for Greek model
-    java.text.NumberFormat formatter = java.text.NumberFormat.getInstance(new java.util.Locale("el", "GR"));
+    // Reformat numbers using English locale
+    java.text.NumberFormat formatter = java.text.NumberFormat.getInstance(java.util.Locale.ENGLISH);
     String formattedSumA = formatter.format(sA);
     String formattedSumB = formatter.format(sB);
 
     Alert info = new Alert(Alert.AlertType.INFORMATION);
-    info.setTitle("Τι σημαίνει αυτό το νούμερο;");
+    info.setTitle("What does this number mean?");
     info.setHeaderText(null);
 
      TextArea text = new TextArea(
-        "Ας δούμε τι ανακαλύψαμε για τον Προϋπολογισμό του 2025:\n\n" +
-        "Φανταστείτε ότι όλα τα χρήματα που μαζεύει το κράτος από τα στοιχεία [" + namesB + "] " +
-        "είναι μια μεγάλη πίτα που αξίζει " + formattedSumB + " €.\n\n" +
-        "Εσείς διαλέξατε να δείτε ένα κομμάτι αυτής της πίτας, που είναι τα στοιχεία [" + namesA + "], " +
-        "με αξία " + formattedSumA + " €.\n\n" +
-        "Η ετυμηγορία:\n" +
-        "Το κομμάτι που διαλέξατε πιάνει το " + res + " της συνολικής πίτας. " +
-        "Για να το καταλάβετε πιο απλά, αν η πίτα είχε 100 ίσα κομμάτια, τα στοιχεία που εξετάζετε " +
-        "θα ήταν περίπου " + String.format("%.1f", Double.parseDouble(res.replace("%","").replace(",",".").trim())) + " κομμάτια.\n\n" +
-        "Είναι σαν να λέμε ότι για κάθε 100€ που υπάρχουν στο 'καλάθι' του παρονομαστή, " +
-        "τα " + String.format("%.2f", sA.divide(sB, 4, RoundingMode.HALF_UP).multiply(new BigDecimal(100))) + "€ πηγαίνουν στον αριθμητή."
+        "Let's see what we discovered about the 2025 Budget:\n\n" +
+        "Imagine that all the money the state collects from the items [" + namesB + "] " +
+        "is a big pie worth " + formattedSumB + " €.\n\n" +
+        "You chose to look at a slice of this pie, which are the items [" + namesA + "], " +
+        "with a value of " + formattedSumA + " €.\n\n" +
+        "The verdict:\n" +
+        "The slice you chose takes up " + res + " of the total pie. " +
+        "To put it simply, if the pie had 100 equal slices, the items you are examining " +
+        "would be approximately " + String.format("%.1f", Double.parseDouble(res.replace("%","").replace(",",".").trim())) + " slices.\n\n" +
+        "It's like saying that for every 100€ in the 'denominator basket', " +
+        "the " + String.format("%.2f", sA.divide(sB, 4, RoundingMode.HALF_UP).multiply(new BigDecimal(100))) + "€ goes to the numerator."
     );
     
     text.setWrapText(true); 
