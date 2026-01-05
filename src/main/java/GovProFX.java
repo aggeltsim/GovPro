@@ -6,6 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import Percentage.percentage.Runner;
+import entities.Entity;
+import expenses.Expenses;
+import incomes.Income;
+
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -20,6 +24,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
@@ -267,8 +272,9 @@ public class GovProFX extends Application {
     Button btnPredict = createMenuButton("Forecasting Engine");
     Button btnStats = createMenuButton("Statistics Dashboard");
     Button btnPercent = createMenuButton("Percentage Calculator");
+    Button btnExplain = createMenuButton("Account Explanation ");
 
-    menuBox.getChildren().addAll(menuTitle, btnRead, btnAmend, btnPredict, btnStats, btnPercent);
+    menuBox.getChildren().addAll(menuTitle, btnRead, btnAmend, btnPredict, btnStats, btnPercent, btnExplain);
 
     setupTable();
     StackPane contentArea = new StackPane(table);
@@ -302,6 +308,10 @@ public class GovProFX extends Application {
     btnStats.setOnAction(e -> {
         gameTreasure.play();
         showStatistics();
+    });
+    btnExplain.setOnAction(e -> {
+        gameTreasure.play();
+        showExplanation();
     });
 
     BorderPane root = new BorderPane();
@@ -749,7 +759,7 @@ public class GovProFX extends Application {
             line.setStyle("-fx-font-family: Arial; -fx-font-size: 14;");
             outputBox.getChildren().add(line);
 
-            // ΠAdd to PieChart
+            // Add to PieChart
             if (data[i].compareTo(BigDecimal.ZERO) > 0) { // avoid zeros
                 pieData.add(new PieChart.Data(name, data[i].doubleValue()));
             }
@@ -827,6 +837,151 @@ public class GovProFX extends Application {
     statsStage.setScene(scene);
     statsStage.show();
 }
+
+/**
+ * Displays an interactive dialog for explaining government budget accounts.
+ *
+ * <p>
+ * The dialog allows the user to select an income, expense, or entity account
+ * and view a detailed textual explanation generated through the account's
+ * {@code toExplain()} implementation.
+ * </p>
+ *
+ * <p>
+ * The explanation is presented using category-specific styling and
+ * visual effects to enhance readability and user experience.
+ * </p>
+ */
+private void showExplanation() {
+
+    Stage dialog = new Stage();
+    dialog.initModality(Modality.NONE);
+    dialog.setTitle("📘 Account Explanation");
+
+    VBox root = new VBox(18);
+    root.setPadding(new Insets(25));
+    root.setAlignment(Pos.TOP_CENTER);
+    root.setStyle("""
+        -fx-background-color: linear-gradient(to bottom right, #ffffff, #e9eef3);
+    """);
+
+    Label header = new Label("Select an Account to View Explanation");
+    header.setStyle("""
+        -fx-font-size: 20px;
+        -fx-font-weight: bold;
+        -fx-text-fill: #2c3e50;
+    """);
+
+    ComboBox<Object> combo = new ComboBox<>();
+    combo.setMaxWidth(Double.MAX_VALUE);
+    combo.setPromptText("Choose account...");
+
+    // Γέμισμα ComboBox
+    combo.getItems().addAll(ObjectsIncomes.createObjectsInc());
+    combo.getItems().addAll(ObjectsExpenses.createObjectsExp());
+    combo.getItems().addAll(ObjectsEntities.createObjectsEnt());
+
+    // Custom εμφάνιση επιλογών
+    combo.setCellFactory(cb -> new ListCell<>() {
+        @Override
+        protected void updateItem(Object item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty || item == null) {
+                setText(null);
+            } else if (item instanceof Income i) {
+                setText("💰 " + i.getCode() + " - " + i.getName());
+            } else if (item instanceof Expenses e) {
+                setText("💸 " + e.getCode() + " - " + e.getName());
+            } else if (item instanceof Entity en) {
+                setText("🏛 " + en.getCode() + " - " + en.getName());
+            }
+        }
+    });
+    combo.setButtonCell(combo.getCellFactory().call(null));
+
+    Button btnExplain = new Button("Explain Account");
+    btnExplain.setMaxWidth(Double.MAX_VALUE);
+    btnExplain.setStyle("""
+        -fx-background-color: #32809a;
+        -fx-text-fill: white;
+        -fx-font-size: 14px;
+        -fx-font-weight: bold;
+        -fx-background-radius: 10;
+        -fx-padding: 10;
+    """);
+
+    VBox explanationCard = new VBox(10);
+    explanationCard.setPadding(new Insets(20));
+    explanationCard.setVisible(false);
+    explanationCard.setStyle("""
+        -fx-background-radius: 15;
+        -fx-border-radius: 15;
+        -fx-border-width: 1;
+    """);
+
+    Label title = new Label();
+    title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
+    TextArea explanationArea = new TextArea();
+    explanationArea.setEditable(false);
+    explanationArea.setWrapText(true);
+    explanationArea.setPrefHeight(220);
+    explanationArea.setStyle("""
+        -fx-background-color: transparent;
+        -fx-font-size: 14px;
+    """);
+
+    explanationCard.getChildren().addAll(title, explanationArea);
+
+    btnExplain.setOnAction(e -> {
+        Object selected = combo.getValue();
+        if (selected == null) return;
+
+        gameNotification.play();
+
+        explanationCard.setVisible(true);
+
+        if (selected instanceof Income i) {
+            title.setText("💰 Income Account: " + i.getName());
+            explanationArea.setText(i.toExplain());
+            explanationCard.setStyle("""
+                -fx-background-color: #e8f5e9;
+                -fx-border-color: #66bb6a;
+                -fx-background-radius: 15;
+            """);
+        }
+        else if (selected instanceof Expenses ex) {
+            title.setText("💸 Expense Account: " + ex.getName());
+            explanationArea.setText(ex.toExplain());
+            explanationCard.setStyle("""
+                -fx-background-color: #ffebee;
+                -fx-border-color: #ef5350;
+                -fx-background-radius: 15;
+            """);
+        }
+        else if (selected instanceof Entity en) {
+            title.setText("🏛 Government Entity: " + en.getName());
+            explanationArea.setText(en.toExplain());
+            explanationCard.setStyle("""
+                -fx-background-color: #e3f2fd;
+                -fx-border-color: #42a5f5;
+                -fx-background-radius: 15;
+            """);
+        }
+
+        FadeTransition ft = new FadeTransition(Duration.millis(500), explanationCard);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        ft.play();
+    });
+
+    root.getChildren().addAll(header, combo, btnExplain, explanationCard);
+
+    Scene scene = new Scene(root, 520, 520);
+    dialog.setScene(scene);
+    dialog.show();
+}
+
 
 
 

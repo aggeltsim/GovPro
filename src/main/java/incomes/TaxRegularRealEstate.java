@@ -15,9 +15,4 @@ public class TaxRegularRealEstate extends Taxes {
         + " on the value of their land and buildings, which helps fund"
         + " local services like schools and roads.";
     }
-
-    @Override
-    public String toString() {
-        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
-    }
 }

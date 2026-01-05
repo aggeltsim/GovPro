@@ -17,9 +17,4 @@ public class TaxGoodsServices extends Taxes {
         + " price when you buy something, and that money goes to the"
         + " government to help pay for public services";
     }
-
-    @Override
-    public String toString() {
-        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
-    }
 }

@@ -10,7 +10,12 @@ public class SalServices extends Sales {
 
     @Override
     public String toExplain() {
-        return getName() + " is revenue the government earns from"
-        + " providing services to individuals or businesses.";
+        return getName() + " are amounts of money the government"
+        + " receives when it provides services to citizens, businesses,"
+        + " or other organizations and charges a fee. This can include"
+        + " things like consulting, training, technical support, or other"
+        + " professional services. In simple terms, a sales of services"
+        + " account shows the money the government earns by offering"
+        + " services and receiving payment in return.";
     }
 }

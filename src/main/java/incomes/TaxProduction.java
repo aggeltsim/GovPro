@@ -16,9 +16,4 @@ public class TaxProduction extends Taxes {
         + " they are made or extracted, and it helps the government"
         + " raise money while regulating certain industries.";
     }
-
-    @Override
-    public String toString() {
-        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
-    }
 }

@@ -8,7 +8,11 @@ public class Interests extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + " is the cost that the government has " + 
-        "to pay to the lenders ,anually,when it borrows money.";
+        return getName() + " is the money the government pays on its"
+        + " debts, like loans or bonds. This account shows how much"
+        + " the government owes each year just for borrowing money,"
+        + " separate from paying back the actual loan. In simple terms,"
+        + " an interest account tracks the cost of borrowing and shows"
+        + " how much the government must pay to lenders for using their money.";
     }
 }

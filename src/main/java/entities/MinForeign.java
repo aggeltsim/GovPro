@@ -10,7 +10,13 @@ public class MinForeign extends Entity {
 
     @Override
     public String toExplain() {
-        return getName() + " handles Greece's foreign policy,"
-        + " diplomatic relations, and international cooperation.";
+        return "The " + getName() + " is the Greek government department"
+        + " responsible for managing Greece’s relations with other"
+        + " countries. It represents Greece abroad, conducts diplomacy,"
+        + " and works to protect Greek citizens and interests overseas."
+        + " It also handles international agreements, promotes cooperation"
+        + " with other countries, and supports peace and stability."
+        + " In simple terms, it is the part of the government that deals"
+        + " with other countries and represents Greece on the international stage.";
     }
 }

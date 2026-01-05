@@ -10,7 +10,11 @@ public class SalAdministFees extends Sales {
 
     @Override
     public String toExplain() {
-        return getName() + " is money the state receives for"
-        + " issuing documents, permits, or other administrative actions.";
+        return getName() + " are amounts of money the government receives"
+        + " when it charges for administrative services it provides."
+        + " This can include fees for issuing permits, certificates,"
+        + " licenses, or other official documents. In simple terms, a"
+        + " sales of administrative fees account shows the money the"
+        + " government earns from the services it provides to citizens and businesses.";
     }
 }

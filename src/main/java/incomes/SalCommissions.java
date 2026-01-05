@@ -10,7 +10,11 @@ public class SalCommissions extends Sales {
 
     @Override
     public String toExplain() {
-        return getName() + " is revenue the state collects from"
-        + " small fees or percentage charges on transactions or services.";
+        return getName() + " are amounts of money the government earns"
+        + " by selling materials, equipment, or other items it owns."
+        + " This account tracks the income from these sales. In simple"
+        + " terms, a sales of supplies account shows the money the"
+        + " government makes when it sells things it no longer needs"
+        + " or produces for public use.";
     }
 }
