@@ -18,17 +18,17 @@ GovPro is a Java-based application designed to process, analyze, and visualize d
 
 ## Forecasting & Analysis
 
-Explore future budget projections by:
+- Explore future budget projections by:
 
-- Entering a specific year to view the corresponding projected amount.
+  - Entering a specific year to view the corresponding projected amount.
 
-- Entering a target amount to calculate the year it is expected to be reached.
+  - Entering a target amount to calculate the year it is expected to be reached.
 
-Perform statistical analysis by selecting a year and viewing:
+- Perform statistical analysis by selecting a year and viewing:
 
-- Revenues and expenses in percentage form.
+  - Revenues and expenses in percentage form.
 
-- Visual representations through pie charts.
+  - Visual representations through pie charts.
 
 ## Additional Functionality
 
