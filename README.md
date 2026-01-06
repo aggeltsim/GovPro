@@ -80,7 +80,7 @@ The application is fully implemented and represents the final version of the pro
 
 GovPro — Data from the State, Insights for All!
 
-## Goal
+## 💫 Goal
 
 GovPro is built with the mission of delivering public financial information in the simplest and most transparent form possible—so every citizen, student, researcher, or professional can easily understand how national resources are used.
 </b>
