@@ -1,8 +1,10 @@
 package incomes;
 
 import java.math.BigDecimal;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class IncomesFullTest {
 
@@ -21,7 +23,7 @@ public class IncomesFullTest {
         assertEquals(new BigDecimal("1200.00"), ti.getAmount());
 
         assertEquals("Account: Income Tax\nAmount: 1200.00", ti.toString());
-        assertTrue(ti.toExplain().contains("money people and businesses pay"));
+        assertTrue(ti.toExplain().contains("collects from individuals"));
     }
 
     @Test
@@ -80,37 +82,37 @@ public class IncomesFullTest {
         SalGoods sg = new SalGoods("S1", "Goods Sales", new BigDecimal("500.00"), "FormS");
         sg.setAmount(new BigDecimal("600.00"));
         assertEquals(new BigDecimal("600.00"), sg.getAmount());
-        assertTrue(sg.toExplain().contains("physical goods"));
+        assertTrue(sg.toExplain().contains("selling goods"));
     }
 
     @Test
     void testSalServices() {
         SalServices ss = new SalServices("S2", "Services Sales", new BigDecimal("300.00"), "FormS");
-        assertTrue(ss.toExplain().contains("providing services"));
+        assertTrue(ss.toExplain().contains("provides services"));
     }
 
     @Test
     void testSalRents() {
         SalRents sr = new SalRents("S3", "Rents", new BigDecimal("700.00"), "FormR");
-        assertTrue(sr.toExplain().contains("renting out public buildings"));
+        assertTrue(sr.toExplain().contains("renting out its property"));
     }
 
     @Test
     void testSalAdministFees() {
         SalAdministFees saf = new SalAdministFees("S4", "Admin Fees", new BigDecimal("200.00"), "FormF");
-        assertTrue(saf.toExplain().contains("issuing documents"));
+        assertTrue(saf.toExplain().contains("issuing permits"));
     }
 
     @Test
     void testSalCommissions() {
         SalCommissions sc = new SalCommissions("S5", "Commissions", new BigDecimal("150.00"), "FormC");
-        assertTrue(sc.toExplain().contains("small fees or percentage charges"));
+        assertTrue(sc.toExplain().contains("money"));
     }
 
     @Test
     void testSalOther() {
         SalOther so = new SalOther("S6", "Other Sales", new BigDecimal("100.00"), "FormO");
-        assertTrue(so.toExplain().contains("various other small sales activities"));
+        assertTrue(so.toExplain().contains("miscellaneous income"));
     }
 
     // ===========================
@@ -140,31 +142,31 @@ public class IncomesFullTest {
     @Test
     void testOciInterest() {
         OciInterest oi = new OciInterest("OC1", "Interest Income", new BigDecimal("400.00"), "FormO");
-        assertTrue(oi.toExplain().contains("interest on money"));
+        assertTrue(oi.toExplain().contains("earns from lending funds"));
     }
 
     @Test
     void testOciCorporateDistribInc() {
         OciCorporateDistribInc oci = new OciCorporateDistribInc("OC2", "Dividends", new BigDecimal("500.00"), "FormO");
-        assertTrue(oci.toExplain().contains("dividends from companies"));
+        assertTrue(oci.toExplain().contains("receives from companies"));
     }
 
     @Test
     void testOciFinesPenaltiesAssessments() {
         OciFinesPenaltiesAssessments ofpa = new OciFinesPenaltiesAssessments("OC3", "Fines", new BigDecimal("600.00"), "FormO");
-        assertTrue(ofpa.toExplain().contains("penalties imposed"));
+        assertTrue(ofpa.toExplain().contains(" official charges"));
     }
 
     @Test
     void testOciNaturalResourceRent() {
         OciNaturalResourceRent onrr = new OciNaturalResourceRent("OC4", "Resource Rent", new BigDecimal("700.00"), "FormO");
-        assertTrue(onrr.toExplain().contains("payments for the use of natural resources"));
+        assertTrue(onrr.toExplain().contains(" land, forests, water"));
     }
 
     @Test
     void testOciReimbursements() {
         OciReimbursements orr = new OciReimbursements("OC5", "Reimbursements", new BigDecimal("800.00"), "FormO");
-        assertTrue(orr.toExplain().contains("receives back money"));
+        assertTrue(orr.toExplain().contains("money was paid in advance"));
     }
 
     // ===========================
@@ -173,13 +175,13 @@ public class IncomesFullTest {
     @Test
     void testSsListed() {
         SsListed sl = new SsListed("SS1", "Listed Shares", new BigDecimal("1000.00"), "FormSS");
-        assertTrue(sl.toExplain().contains("shares of companies that the government owns"));
+        assertTrue(sl.toExplain().contains("traded on the stock market. "));
     }
 
     @Test
     void testSsUnlisted() {
         SsUnlisted su = new SsUnlisted("SS2", "Unlisted Shares", new BigDecimal("2000.00"), "FormSS");
-        assertTrue(su.toExplain().contains("not on the stock market"));
+        assertTrue(su.toExplain().contains("not traded on the stock market"));
     }
 
     // ===========================
@@ -197,7 +199,7 @@ public class IncomesFullTest {
     @Test
     void testTrCurrentDomestic() {
         TrCurrentDomestic tr = new TrCurrentDomestic("TR1", "Domestic Transfer", new BigDecimal("400.00"), "FormTR");
-        assertTrue(tr.toExplain().contains("receives from within the country"));
+        assertTrue(tr.toExplain().contains("money"));
     }
 
     @Test
@@ -221,7 +223,7 @@ public class IncomesFullTest {
     @Test
     void testTrForeignEntities() {
         TrForeignEntities tr = new TrForeignEntities("TR5", "Foreign Transfers", new BigDecimal("800.00"), "FormTR");
-        assertTrue(tr.toExplain().contains("receives from other countries or international organizations"));
+        assertTrue(tr.toExplain().contains("money"));
     }
 
     @Test

@@ -11,7 +11,7 @@ public class TaxCapital extends Taxes {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Taxes. Specifically,"
+        return getName() + " is a form of Taxes. Specifically,"
         + " are amounts of money the government collects from"
         + " individuals or businesses based on their assets, investments,"
         + " or wealth. This can include taxes on property, inheritance,"

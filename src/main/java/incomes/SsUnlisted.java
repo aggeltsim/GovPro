@@ -10,7 +10,7 @@ public class SsUnlisted extends SecuritiesShares {
     
     @Override
     public String toExplain() {
-        return getName() + "are a form of Securities Shares."
+        return getName() + " are a form of Securities Shares."
         + " Specifically, they are amounts of money the government"
         + " invests in companies whose shares are not traded on the"
         + " stock market. This account tracks the value of these shares"
