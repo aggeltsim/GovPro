@@ -76,11 +76,11 @@ GovPro is a Java-based application designed to process, analyze, and visualize d
 
 The application is fully implemented and represents the final version of the project, incorporating all planned features and improvements.
 
-### **Team Motto**
+## Team Motto
 
 GovPro — Data from the State, Insights for All!
 
-### **Goal**
+## Goal
 
 GovPro is built with the mission of delivering public financial information in the simplest and most transparent form possible—so every citizen, student, researcher, or professional can easily understand how national resources are used.
 </b>
