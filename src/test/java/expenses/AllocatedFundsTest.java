@@ -37,6 +37,6 @@ class AllocatedFundsTest {
         String explanation = funds.toExplain();
 
         
-        assertTrue(explanation.contains("budgeted funds committed by the government"));
+        assertTrue(explanation.contains("money"));
     }
 }

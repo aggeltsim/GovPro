@@ -1,6 +1,21 @@
-import expenses.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+
+import expenses.AllocatedFunds;
+import expenses.DeptSecurLiabilExp;
+import expenses.EmployeeBenefits;
+import expenses.Expenses;
+import expenses.FixedAssetsExp;
+import expenses.Interests;
+import expenses.LoansExp44;
+import expenses.LoansExp54;
+import expenses.OtherExpenses;
+import expenses.Purchases;
+import expenses.SecuritySharesExp;
+import expenses.SocialBenefits;
+import expenses.Subsidies;
+import expenses.TransfersExp;
+import expenses.Valuables;
 
 
 public class ObjectsExpenses {
@@ -17,7 +32,7 @@ public class ObjectsExpenses {
         {"29", "Credits Under Allocation", new BigDecimal("17283053000")},
         {"31", "Fixed Assets", new BigDecimal("2609600000")},
         {"33", "Valuables", new BigDecimal("85000")},
-        {"44", "Short-Term Loans", new BigDecimal("3741000000")},
+        {"44", "Loans", new BigDecimal("3741000000")},
         {"45", "Equity and Investment Fund Shares", new BigDecimal("1755112000")},
         {"53", "Debt Securities (Liabilities)", new BigDecimal("19375000000")},
         {"54", "Long-Term Loans", new BigDecimal("1203165130000")}

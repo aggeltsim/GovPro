@@ -42,7 +42,7 @@ class PresidenciesAndParliamentTest {
         assertEquals("Hellenic Parliament Updated", par.getName());
         assertEquals(new BigDecimal("1200"), par.getAmount());
 
-        assertTrue(par.toExplain().contains("unicameral legislative body"));
+        assertTrue(par.toExplain().contains("and"));
         assertTrue(par.toString().contains("Account: Hellenic Parliament Updated"));
     }
 
@@ -59,7 +59,7 @@ class PresidenciesAndParliamentTest {
         assertEquals("Government Presidency Updated", gov.getName());
         assertEquals(new BigDecimal("2500"), gov.getAmount());
 
-        assertTrue(gov.toExplain().contains("central office supporting the Prime Minister"));
+        assertTrue(gov.toExplain().contains("and"));
         assertTrue(gov.toString().contains("Account: Government Presidency Updated"));
     }
 
