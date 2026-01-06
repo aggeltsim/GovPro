@@ -12,6 +12,9 @@ import incomes.Income;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
+import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
+import javafx.scene.layout.Priority;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
@@ -21,6 +24,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -45,14 +49,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import javafx.scene.media.AudioClip;
-
-import javafx.scene.chart.PieChart;
 
 
 /**
@@ -273,8 +274,9 @@ public class GovProFX extends Application {
     Button btnStats = createMenuButton("Statistics Dashboard");
     Button btnPercent = createMenuButton("Percentage Calculator");
     Button btnExplain = createMenuButton("Account Explanation ");
+    Button btnCitizen = createMenuButton("AI Assistant");
 
-    menuBox.getChildren().addAll(menuTitle, btnRead, btnAmend, btnPredict, btnStats, btnPercent, btnExplain);
+    menuBox.getChildren().addAll(menuTitle, btnRead, btnAmend, btnPredict, btnStats, btnPercent, btnExplain,btnCitizen);
 
     setupTable();
     StackPane contentArea = new StackPane(table);
@@ -291,6 +293,12 @@ public class GovProFX extends Application {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }).start();
+});
+    btnCitizen.setOnAction(e -> {
+    new Thread(() -> {
+        
+        javafx.application.Platform.runLater(() -> showCitizenAssistantDialog());
     }).start();
 });
     btnRead.setOnAction(e -> {
@@ -558,7 +566,7 @@ public class GovProFX extends Application {
         }
     });
 
-    // --- Button structure ---
+    // --- Λογική κουμπιών ---
     btnRun.setOnAction(e -> {
         // Play reward / action sound
         if (instantWin != null) {
@@ -993,6 +1001,39 @@ private void showExplanation() {
     dialog.show();
 }
 
+    /**
+ * Displays a dialog window containing an embedded web browser
+ * that loads a free AI assistant page (DuckDuckGo AI Chat).
+ * <p>
+ * The method sets a custom User-Agent to ensure compatibility
+ * with modern web pages and uses JavaFX components to build
+ * the interface dynamically.
+ */
+    private void showCitizenAssistantDialog() {
+        Stage stage = new Stage();
+        stage.setTitle("Citizen Assistant - AI Helper");
+
+        WebView browser = new WebView();
+        WebEngine engine = browser.getEngine();
+
+        // 1. Set up the User-Agent to "trick" the website into loading the desktop version correctly
+        engine.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            + "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36");
+
+        // 2. Load the AI service (Free, No Login, No API Key required)
+        engine.load("https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat");
+
+        Label infoLabel = new Label("Follow the on-screen instructions to interact with the AI assistant.");
+        infoLabel.setStyle("-fx-padding: 10; -fx-font-weight: bold; -fx-text-fill: #555;");
+
+        // 3. Layout setup - Make the browser take up all available space
+        VBox root = new VBox(infoLabel, browser);
+        VBox.setVgrow(browser, Priority.ALWAYS);
+
+        Scene scene = new Scene(root, 900, 700);
+        stage.setScene(scene);
+        stage.show();
+    }
 
 
 
@@ -1008,6 +1049,9 @@ private void showExplanation() {
         btn.setOnMouseExited(e ->btn.setStyle("-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-font-size: 14;"));
         return btn;
     }
+
+    
+
 
     /**
      * Initializes all budget data including incomes,
