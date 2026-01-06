@@ -30,9 +30,15 @@ Perform statistical analysis by selecting a year and viewing:
 
 - Visual representations through pie charts.
 
-## Budget History and Forecasting
+## Additional Functionality
 
-Users can explore data from past state budgets and view forecasts for upcoming fiscal years, helping them understand long-term financial patterns.
+- Access a terminology explanation module that provides definitions for financial terms used in the application.
+
+- Interact with an integrated AI assistant to receive guidance and clarifications regarding budget data and system usage.
+
+- View budget allocation for the year 2025, showing how national funds are distributed across government sectors.
+
+- Perform comparative budget analysis by selecting numerator and denominator values to calculate relative percentages.
 
 ## Data Visualization
 
