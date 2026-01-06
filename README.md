@@ -16,9 +16,19 @@ GovPro is a Java-based application designed to process, analyze, and visualize d
 
 - Automatically update budget tables in real time after data modifications.
 
-## Regional Statistical Analysis
+## Forecasting & Analysis
 
-The application supports comparisons between different regions of Greece, using various statistical indicators to reveal differences and economic trends.
+Explore future budget projections by:
+
+- Entering a specific year to view the corresponding projected amount.
+
+- Entering a target amount to calculate the year it is expected to be reached.
+
+Perform statistical analysis by selecting a year and viewing:
+
+- Revenues and expenses in percentage form.
+
+- Visual representations through pie charts.
 
 ## Budget History and Forecasting
 
