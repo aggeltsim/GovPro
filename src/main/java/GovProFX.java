@@ -1024,7 +1024,8 @@ private void showExplanation() {
             + "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36");
 
         // 2. Load the AI service (Free, No Login, No API Key required)
-        engine.load("https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat");
+        engine.load("https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&kl=us-en&kad=en_US");
+
 
         Label infoLabel = new Label("Follow the on-screen instructions to interact with the AI assistant.");
         infoLabel.setStyle("-fx-padding: 10; -fx-font-weight: bold; -fx-text-fill: #555;");
