@@ -3,12 +3,18 @@
 <b>
 
 # Overview 
-GovPro is a Java-based application designed to process, analyze, and visualize data from the Greek state budget in a clear and accessible way. The application aims to transform complex financial information into structured, accessible, and meaningful insights for users., regardless of technical expertise.
+GovPro is a Java-based application designed to process, analyze, and visualize data from the Greek state budget in a clear and accessible way. The application aims to transform complex financial information into structured, accessible, and meaningful insights for users, regardless of technical expertise.
 
 # Features
-## Ministry Comparisons
+## Budget Management
 
-GovPro allows users to compare income and expenses across different ministries, offering insights into how public funds are allocated and managed.
+- View a centralized dashboard displaying structured state budget data.
+
+- Navigate through budget categories and fields using a clear and intuitive interface.
+
+- Insert new data and update existing budget values by selecting a specific field and entering a new amount.
+
+- Automatically update budget tables in real time after data modifications.
 
 ## Regional Statistical Analysis
 
