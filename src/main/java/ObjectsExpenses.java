@@ -17,10 +17,10 @@ public class ObjectsExpenses {
         {"29", "Credits Under Allocation", new BigDecimal("17283053000")},
         {"31", "Fixed Assets", new BigDecimal("2609600000")},
         {"33", "Valuables", new BigDecimal("85000")},
-        {"44", "Loans", new BigDecimal("3741000000")},
+        {"44", "Short-Term Loans", new BigDecimal("3741000000")},
         {"45", "Equity and Investment Fund Shares", new BigDecimal("1755112000")},
         {"53", "Debt Securities (Liabilities)", new BigDecimal("19375000000")},
-        {"54", "Loans", new BigDecimal("1203165130000")}
+        {"54", "Long-Term Loans", new BigDecimal("1203165130000")}
     };
 
     // Make Expenses objects
