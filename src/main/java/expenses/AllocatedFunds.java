@@ -8,8 +8,12 @@ public class AllocatedFunds extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + " are budgeted funds committed by the "
-        + "government but not yet spent" 
-        + " at a specific programs, recorded as future expenditure.";
+        return getName() + " are amounts of money set aside within the"
+        + " government's budget for specific purposes. Each account"
+        + " shows how much money is reserved for things like education,"
+        + " healthcare, or public works. This money is planned in"
+        + " advance and cannot be spent on other things. In simple terms,"
+        + " an allocated funds account is a “special budget account”"
+        + " that tracks money reserved for a particular project or government program.";
     }
 }

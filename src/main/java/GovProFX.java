@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import Percentage.percentage.Runner;
+import entities.Entity;
+import expenses.Expenses;
+import incomes.Income;
+
 import java.util.Objects;
 import java.util.stream.Collectors;
 import javafx.scene.web.WebView;
@@ -23,6 +28,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
@@ -70,7 +76,6 @@ import javafx.util.Duration;
  * Audio feedback is also included to enhance user interaction.
  * </p>
  *
- * @author —
  * @version 1.0
  */
 public class GovProFX extends Application {
@@ -268,9 +273,10 @@ public class GovProFX extends Application {
     Button btnPredict = createMenuButton("Forecasting Engine");
     Button btnStats = createMenuButton("Statistics Dashboard");
     Button btnPercent = createMenuButton("Percentage Calculator");
-    Button btnCitizen = createMenuButton("Citizen Assistant");
+    Button btnExplain = createMenuButton("Account Explanation ");
+    Button btnCitizen = createMenuButton("AI Assistant");
 
-    menuBox.getChildren().addAll(menuTitle, btnRead, btnAmend, btnPredict, btnStats, btnPercent,btnCitizen);
+    menuBox.getChildren().addAll(menuTitle, btnRead, btnAmend, btnPredict, btnStats, btnPercent, btnExplain,btnCitizen);
 
     setupTable();
     StackPane contentArea = new StackPane(table);
@@ -310,6 +316,10 @@ public class GovProFX extends Application {
     btnStats.setOnAction(e -> {
         gameTreasure.play();
         showStatistics();
+    });
+    btnExplain.setOnAction(e -> {
+        gameTreasure.play();
+        showExplanation();
     });
 
     BorderPane root = new BorderPane();
@@ -426,14 +436,14 @@ public class GovProFX extends Application {
         btnSave.setMaxWidth(Double.MAX_VALUE);
         btnSave.setOnAction(e -> {
             if (instantWin != null) {
-                instantWin.stop(); // για να μην κολλάει rapid clicks
+                instantWin.stop(); 
                 instantWin.play();
             }
             int idx = combo.getSelectionModel().getSelectedIndex();
             if (idx >= 0) {
                 try {
                     BigDecimal val = new BigDecimal(txtNewValue.getText().replace(",", "."));
-                    // Προσοχή: Εδώ βρίσκουμε το σωστό αντικείμενο βάσει του κωδικού
+                    // Attention: Here we find the correct object based on the code
                     String selectedCode = combo.getValue().split(" - ")[0];
                     masterData.stream()
                         .filter(ent -> ent.getCode().equals(selectedCode))
@@ -469,7 +479,7 @@ public class GovProFX extends Application {
     dialog.initModality(Modality.NONE);
     dialog.setTitle("📈 Budget Forecasting System");
     Prediction p = new Prediction();    
-    // --- Δεδομένα ---
+    // --- Data ---
     double[][] dapanes = {
         {3766000, 4097337, 3811641, 4059900, 3974293, 4146883},
         {143500000, 134251607, 134030043, 140477275, 147343837, 156551972},
@@ -491,7 +501,7 @@ public class GovProFX extends Application {
         "Ministry of Sport", "Ministry of Finance"
     };
 
-    // --- Κεντρική Διάταξη ---
+    // --- Central Layout ---
     VBox root = new VBox(20);
     root.setPadding(new Insets(25));
     root.setStyle("-fx-background-color: linear-gradient(to bottom right, #ffffff, #e6e9f0);");
@@ -501,18 +511,18 @@ public class GovProFX extends Application {
     headerLabel.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
     Separator separator = new Separator();
 
-    // --- Επιλογή τύπου πρόβλεψης ---
+    // --- Select Prediction Type ---
     ComboBox<String> modeBox = new ComboBox<>();
     modeBox.valueProperty().addListener((obs, oldVal, newVal) -> {
         if (newVal != null) {
-            gameNotification.stop(); // για rapid clicks
+            gameNotification.stop(); // for rapid clicks
             gameNotification.play();
         }
     });
     modeBox.getItems().addAll("📊 Predict Value for Given Year", "🕒 Predict When Value Will Be Reached");
     modeBox.setPromptText("Select Prediction Type");
 
-    // --- Επιλογή Υπουργείου ---
+    // --- Select Ministry ---
     ComboBox<String> comboEntity = new ComboBox<>(FXCollections.observableArrayList(entities));
     comboEntity.valueProperty().addListener((obs, oldVal, newVal) -> {
         if (newVal != null) {
@@ -522,21 +532,21 @@ public class GovProFX extends Application {
     });
     comboEntity.setPromptText("Select Ministry/Entity");
 
-    // --- Πεδία εισαγωγής ---
+    // --- Input fields ---
     TextField txtYear = new TextField();
     txtYear.setPromptText("Enter Target Year (e.g. 2028)");
 
     TextField txtDesiredValue = new TextField();
     txtDesiredValue.setPromptText("Enter Desired Value (€)");
 
-    // --- Περιοχή αποτελεσμάτων ---
+    // --- Results area ---
     Label lblResults = new Label("Results:");
     lblResults.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
     TextArea resultArea = new TextArea();
     resultArea.setEditable(false);
     resultArea.setPrefHeight(200);
 
-    // --- Κουμπιά ---
+    // --- Buttons ---
     Button btnRun = new Button("Run Prediction");
     Button btnClear = new Button("Clear Results");
     HBox actionButtons = new HBox(10, btnRun, btnClear);
@@ -546,7 +556,7 @@ public class GovProFX extends Application {
     VBox dynamicFields = new VBox(10);
     dynamicFields.setAlignment(Pos.CENTER_LEFT);
 
-    
+    // dynamically changes what is displayed depending on the mode
     modeBox.setOnAction(e -> {
         dynamicFields.getChildren().clear();
         if (modeBox.getValue().contains("Value for Given Year")) {
@@ -556,7 +566,7 @@ public class GovProFX extends Application {
         }
     });
 
-    
+    // --- Λογική κουμπιών ---
     btnRun.setOnAction(e -> {
         // Play reward / action sound
         if (instantWin != null) {
@@ -600,7 +610,7 @@ public class GovProFX extends Application {
         }
     });
 
-    
+    // --- Fitting ---
     VBox formBox = new VBox(15,
             new Label("Prediction Type:"), modeBox,
             new Label("Select Entity:"), comboEntity,
@@ -637,11 +647,12 @@ public class GovProFX extends Application {
     header.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
     root.getChildren().add(header);
 
-    // --- Επιλογή Έτους ---
+    // --- Select Year ---
     HBox yearBox = new HBox(10);
     yearBox.setAlignment(Pos.CENTER_LEFT);
     Label yearLabel = new Label("Select Year:");
     ComboBox<Integer> yearCombo = new ComboBox<>();
+
     // Year ComboBox
     yearCombo.valueProperty().addListener((obs, oldVal, newVal) -> {
         if (newVal != null) {
@@ -654,7 +665,7 @@ public class GovProFX extends Application {
     yearBox.getChildren().addAll(yearLabel, yearCombo);
     root.getChildren().add(yearBox);
 
-    // --- Επιλογή Τύπου ---
+    // --- Select Type ---
     HBox typeBox = new HBox(10);
     typeBox.setAlignment(Pos.CENTER_LEFT);
     Label typeLabel = new Label("Select Type:");
@@ -671,7 +682,7 @@ public class GovProFX extends Application {
     typeBox.getChildren().addAll(typeLabel, typeCombo);
     root.getChildren().add(typeBox);
 
-    // --- Περιοχή αποτελεσμάτων με Scroll ---
+    // --- Results area with Scroll ---
     ScrollPane scrollPane = new ScrollPane();
     scrollPane.setFitToWidth(true);
     scrollPane.setPrefHeight(400);
@@ -681,7 +692,7 @@ public class GovProFX extends Application {
     scrollPane.setContent(outputBox);
     root.getChildren().add(scrollPane);
 
-    // --- HBox για τα Charts ---
+    // --- HBox for Charts ---
     HBox chartsBox = new HBox(20);
     chartsBox.setPadding(new Insets(10));
     root.getChildren().add(chartsBox);
@@ -699,12 +710,11 @@ public class GovProFX extends Application {
     barsContainer.setStyle("-fx-background-color: #f8f9fa; -fx-border-color: #d0d7de; -fx-border-width: 1;"); 
     ScrollPane barsScroll = new ScrollPane(barsContainer);
     barsScroll.setFitToWidth(true);
-    barsScroll.setPrefHeight(300); // ύψος για scroll αν είναι πολλοί λογαριασμοί
+    barsScroll.setPrefHeight(300); // height for scroll if there are many accounts
 
-    root.getChildren().add(barsScroll); // πρόσθεσε το στο τέλος του root
-
+    root.getChildren().add(barsScroll); // add it to the end of the root
     
-    // --- Κουμπιά ---
+    // --- Buttons ---
     HBox buttons = new HBox(10);
     buttons.setAlignment(Pos.CENTER);
     Button btnShow = new Button("Show");
@@ -712,7 +722,7 @@ public class GovProFX extends Application {
     buttons.getChildren().addAll(btnShow, btnClear);
     root.getChildren().add(buttons);
 
-    // --- Λογική κουμπιών ---
+    // --- Button structure ---
     btnShow.setOnAction(e -> {
         outputBox.getChildren().clear();
 
@@ -757,13 +767,13 @@ public class GovProFX extends Application {
             line.setStyle("-fx-font-family: Arial; -fx-font-size: 14;");
             outputBox.getChildren().add(line);
 
-            // Προσθήκη στο PieChart
-            if (data[i].compareTo(BigDecimal.ZERO) > 0) { // αποφυγή μηδενικών
+            // Add to PieChart
+            if (data[i].compareTo(BigDecimal.ZERO) > 0) { // avoid zeros
                 pieData.add(new PieChart.Data(name, data[i].doubleValue()));
             }
         }
 
-        // Ενημέρωση του PieChart
+        // Update of PieChart
         pieChart.setData(pieData);
 
         List<BudgetEntry> filtered = new ArrayList<>();
@@ -785,7 +795,7 @@ public class GovProFX extends Application {
             }
         }
 
-        // Φιλτράρουμε μόνο όσους λογαριασμούς περιλαμβάνονται στις κατηγορίες
+        // We only filter those accounts that are included in the categories
         filtered = filtered.stream()
            .filter(m -> Arrays.asList(categories).contains(m.getName()))
            .collect(Collectors.toList());
@@ -835,30 +845,195 @@ public class GovProFX extends Application {
     statsStage.setScene(scene);
     statsStage.show();
 }
-    private void showCitizenAssistantDialog() {
-    Stage stage = new Stage();
-    stage.setTitle("Citizen Assistant - AI Helper");
 
-    WebView browser = new WebView();
-    WebEngine engine = browser.getEngine();
+/**
+ * Displays an interactive dialog for explaining government budget accounts.
+ *
+ * <p>
+ * The dialog allows the user to select an income, expense, or entity account
+ * and view a detailed textual explanation generated through the account's
+ * {@code toExplain()} implementation.
+ * </p>
+ *
+ * <p>
+ * The explanation is presented using category-specific styling and
+ * visual effects to enhance readability and user experience.
+ * </p>
+ */
+private void showExplanation() {
 
-    // 1. Ρύθμιση User Agent για να "ξεγελάσουμε" τη σελίδα και να φορτώσει σωστά
-    engine.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36");
+    Stage dialog = new Stage();
+    dialog.initModality(Modality.NONE);
+    dialog.setTitle("📘 Account Explanation");
 
-    // 2. Φόρτωση της AI υπηρεσίας (Free, No Login, No API Key)
-    engine.load("https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat");
+    VBox root = new VBox(18);
+    root.setPadding(new Insets(25));
+    root.setAlignment(Pos.TOP_CENTER);
+    root.setStyle("""
+        -fx-background-color: linear-gradient(to bottom right, #ffffff, #e9eef3);
+    """);
 
-    Label infoLabel = new Label("Follow the on-screen instructions to interact with the AI assistant.");
-    infoLabel.setStyle("-fx-padding: 10; -fx-font-weight: bold; -fx-text-fill: #555;");
+    Label header = new Label("Select an Account to View Explanation");
+    header.setStyle("""
+        -fx-font-size: 20px;
+        -fx-font-weight: bold;
+        -fx-text-fill: #2c3e50;
+    """);
 
-    // 3. Διάταξη - Κάνουμε το browser να καταλαμβάνει όλο το χώρο
-    VBox root = new VBox(infoLabel, browser);
-    VBox.setVgrow(browser, Priority.ALWAYS);
+    ComboBox<Object> combo = new ComboBox<>();
+    combo.setMaxWidth(Double.MAX_VALUE);
+    combo.setPromptText("Choose account...");
 
-    Scene scene = new Scene(root, 900, 700);
-    stage.setScene(scene);
-    stage.show();
+    // Fill ComboBox
+    combo.getItems().addAll(
+    ObjectsIncomes.createObjectsInc().stream()
+        .filter(inc -> {
+            try {
+                int code = Integer.parseInt(inc.getCode());
+                return code >= 100 && code <= 999; 
+            } catch (NumberFormatException ex) {
+                return false;
+            }
+        })
+        .toList()
+    );
+    combo.getItems().addAll(ObjectsExpenses.createObjectsExp());
+    combo.getItems().addAll(ObjectsEntities.createObjectsEnt());
+
+    // Options
+    combo.setCellFactory(cb -> new ListCell<>() {
+        @Override
+        protected void updateItem(Object item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty || item == null) {
+                setText(null);
+            } else if (item instanceof Income i) {
+                setText("💰 " + i.getCode() + " - " + i.getName());
+            } else if (item instanceof Expenses e) {
+                setText("💸 " + e.getCode() + " - " + e.getName());
+            } else if (item instanceof Entity en) {
+                setText("🏛 " + en.getCode() + " - " + en.getName());
+            }
+        }
+    });
+    combo.setButtonCell(combo.getCellFactory().call(null));
+
+    Button btnExplain = new Button("Explain Account");
+    btnExplain.setMaxWidth(Double.MAX_VALUE);
+    btnExplain.setStyle("""
+        -fx-background-color: #32809a;
+        -fx-text-fill: white;
+        -fx-font-size: 14px;
+        -fx-font-weight: bold;
+        -fx-background-radius: 10;
+        -fx-padding: 10;
+    """);
+
+    VBox explanationCard = new VBox(10);
+    explanationCard.setPadding(new Insets(20));
+    explanationCard.setVisible(false);
+    explanationCard.setStyle("""
+        -fx-background-radius: 15;
+        -fx-border-radius: 15;
+        -fx-border-width: 1;
+    """);
+
+    Label title = new Label();
+    title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
+    TextArea explanationArea = new TextArea();
+    explanationArea.setEditable(false);
+    explanationArea.setWrapText(true);
+    explanationArea.setPrefHeight(220);
+    explanationArea.setStyle("""
+        -fx-background-color: transparent;
+        -fx-font-size: 14px;
+    """);
+
+    explanationCard.getChildren().addAll(title, explanationArea);
+
+    btnExplain.setOnAction(e -> {
+        Object selected = combo.getValue();
+        if (selected == null) return;
+
+        gameNotification.play();
+
+        explanationCard.setVisible(true);
+
+        if (selected instanceof Income i) {
+            title.setText("💰 Income Account: " + i.getName());
+            explanationArea.setText(i.toExplain());
+            explanationCard.setStyle("""
+                -fx-background-color: #e8f5e9;
+                -fx-border-color: #66bb6a;
+                -fx-background-radius: 15;
+            """);
+        }
+        else if (selected instanceof Expenses ex) {
+            title.setText("💸 Expense Account: " + ex.getName());
+            explanationArea.setText(ex.toExplain());
+            explanationCard.setStyle("""
+                -fx-background-color: #ffebee;
+                -fx-border-color: #ef5350;
+                -fx-background-radius: 15;
+            """);
+        }
+        else if (selected instanceof Entity en) {
+            title.setText("🏛 Government Entity: " + en.getName());
+            explanationArea.setText(en.toExplain());
+            explanationCard.setStyle("""
+                -fx-background-color: #e3f2fd;
+                -fx-border-color: #42a5f5;
+                -fx-background-radius: 15;
+            """);
+        }
+
+        FadeTransition ft = new FadeTransition(Duration.millis(500), explanationCard);
+        ft.setFromValue(0);
+        ft.setToValue(1);
+        ft.play();
+    });
+
+    root.getChildren().addAll(header, combo, btnExplain, explanationCard);
+
+    Scene scene = new Scene(root, 520, 520);
+    dialog.setScene(scene);
+    dialog.show();
 }
+
+    /**
+ * Displays a dialog window containing an embedded web browser
+ * that loads a free AI assistant page (DuckDuckGo AI Chat).
+ * <p>
+ * The method sets a custom User-Agent to ensure compatibility
+ * with modern web pages and uses JavaFX components to build
+ * the interface dynamically.
+ */
+    private void showCitizenAssistantDialog() {
+        Stage stage = new Stage();
+        stage.setTitle("Citizen Assistant - AI Helper");
+
+        WebView browser = new WebView();
+        WebEngine engine = browser.getEngine();
+
+        // 1. Set up the User-Agent to "trick" the website into loading the desktop version correctly
+        engine.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            + "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36");
+
+        // 2. Load the AI service (Free, No Login, No API Key required)
+        engine.load("https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat");
+
+        Label infoLabel = new Label("Follow the on-screen instructions to interact with the AI assistant.");
+        infoLabel.setStyle("-fx-padding: 10; -fx-font-weight: bold; -fx-text-fill: #555;");
+
+        // 3. Layout setup - Make the browser take up all available space
+        VBox root = new VBox(infoLabel, browser);
+        VBox.setVgrow(browser, Priority.ALWAYS);
+
+        Scene scene = new Scene(root, 900, 700);
+        stage.setScene(scene);
+        stage.show();
+    }
 
 
 

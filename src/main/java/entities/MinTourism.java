@@ -10,7 +10,13 @@ public class MinTourism extends Entity {
 
     @Override
     public String toExplain() {
-        return getName() + " is responsible for tourism policy, promotion,"
-        + " and development of the tourism sector.";
+        return "The " + getName() + " is the Greek government department"
+        + " responsible for promoting tourism and supporting the travel"
+        + " industry. It creates policies to attract visitors, develops"
+        + " tourist infrastructure, and helps businesses in the tourism"
+        + " sector. It also works to ensure a safe and high-quality"
+        + " experience for tourists. In simple terms, it is the part"
+        + " of the government that helps Greece welcome visitors,"
+        + " supports tourism businesses, and makes travel enjoyable and safe.";
     }
 }

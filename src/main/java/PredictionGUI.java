@@ -16,9 +16,42 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+
+/**
+ * The {@code PredictionGUI} class provides a Swing-based
+ * graphical user interface for budget prediction.
+ *
+ * <p>
+ * The application allows users to:
+ * <ul>
+ *   <li>Select a government account</li>
+ *   <li>Choose a prediction mode (by year or by value)</li>
+ *   <li>Display forecast results using historical data</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * The predictions are computed using the {@link Prediction} class
+ * and are based on historical spending data from 2021 to 2026.
+ * </p>
+ *
+ * <p>
+ * This class uses Java Swing components such as {@link JFrame},
+ * {@link JComboBox}, {@link JTextField}, and {@link JTextArea}.
+ * </p>
+ *
+ * @version 1.0
+ */
 public class PredictionGUI {
 
-    // Δείγμα δεδομένων
+    /**
+     * Sample historical spending data for government entities.
+     *
+     * <p>
+     * Each row represents an entity, while each column corresponds
+     * to a year from 2021 to 2026 (without inflation adjustment).
+     * </p>
+     */
     static double[][] dapanes = { //this an array with values of main entities from 2021 up until 2026 without inflation 
             {3766000, 4097337, 3811641, 4059900, 3974293, 4146883}, //republic presidency
             {143500000, 134251607, 134030043, 140477275, 147343837, 156551972}, //hellenic parliament 
@@ -32,24 +65,45 @@ public class PredictionGUI {
             {359100000, 383427915, 409992485, 350395832, 493075321, 546993897},//sport
             {747475497000L, 690153192000L, 669349030000L, 919467234000L, 1068139883000L, 1438513680000L}//finance
         };
+
+    /**
+    * Array of years corresponding to the historical data.
+    */    
     static double[] years={2021,2022,2023,2024,2025,2026};
 
+    /**
+     * Application entry point.
+     *
+     * <p>
+     * Launches the Swing GUI on the Event Dispatch Thread (EDT)
+     * using {@link SwingUtilities#invokeLater(Runnable)}.
+     * </p>
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> createAndShowPredGUI());
     }
 
+    /**
+     * Creates and displays the Prediction graphical user interface.
+     *
+     * <p>
+     * Initializes all Swing components, layouts, and event listeners.
+     * </p>
+     */
     public static void createAndShowPredGUI() {
         JFrame frame = new JFrame("Prediction App");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(600, 450);
         frame.setLayout(new BorderLayout());
 
-        // Panel επιλογών
+        //Options panel
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Επιλογή λογαριασμού
+        //Account selection
         panel.add(new JLabel("Choose an account:"));
         String[] accounts = {
             "1.Republic Presidency", "2.Hellenic Parliament", "3.Governmental Presidency",
@@ -57,6 +111,10 @@ public class PredictionGUI {
             "7.Ministry of Justice", "8.Ministry of Education", "9.Ministry of Sport", 
             "10.Ministry of Finance"
         };
+
+        /**
+         * JComboBox allowing the user to select a government account.
+         */
         JComboBox<String> accountBox = new JComboBox<>(accounts);
         panel.add(accountBox);
 
@@ -65,27 +123,33 @@ public class PredictionGUI {
         // Επιλογή τύπου πρόβλεψης
         panel.add(new JLabel("Choose prediction type:"));
         String[] options = { "1.Prediction for a year", "2.Prediction for a value" };
+        
+        /**
+        * JComboBox allowing the user to select a government account.
+        */
         JComboBox<String> optionBox = new JComboBox<>(options);
         panel.add(optionBox);
 
 
         panel.add(new JLabel("Enter year or value:"));
 
-            // Δημιουργία panel για το πεδίο
+            // Create a panel for the field
             JPanel inputPanel = new JPanel();
             inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
 
-            // Πρόσθεσε λίγο κενό (μετατόπιση δεξιά)
+            // Add some space (shift right)
             inputPanel.add(Box.createRigidArea(new Dimension(110, 0))); // 30px απόσταση από αριστερά
 
-            // Το ίδιο το πεδίο
+            /**
+            * Text field used for user input (year or target value).
+            */
             JTextField inputField = new JTextField();
             inputField.setMaximumSize(new Dimension(90, 30));
             inputPanel.add(inputField);
 
-            // Πρόσθεσέ το στο κυρίως panel
+            // Add to thw main panel
             panel.add(inputPanel);
-        // Κουμπί πρόβλεψης
+        // Prediction button
             JPanel buttonPanel = new JPanel();
             JButton predictButton = new JButton("Predict");
             JButton clearButton = new JButton("Clear Results"); // clear button
@@ -95,23 +159,39 @@ public class PredictionGUI {
 
             frame.add(panel, BorderLayout.NORTH);
 
-            // TextArea για αποτελέσματα
+            /**
+             * Text area displaying prediction results.
+             */
             JTextArea resultArea = new JTextArea(10, 50);
             resultArea.setEditable(false);
             JScrollPane scrollPane = new JScrollPane(resultArea);
             frame.add(scrollPane, BorderLayout.CENTER);
 
-            // Action για κουμπί
+            /**
+             * Handles prediction execution based on user input.
+             *
+             * <p>
+             * If prediction type is:
+             * <ul>
+             *   <li><b>Year-based</b>: predicts the budget value for a given year</li>
+             *   <li><b>Value-based</b>: estimates when a target value will be reached</li>
+             * </ul>
+             * </p>
+             *
+             * <p>
+             * Displays formatted results or error messages accordingly.
+             * </p>
+             */
             predictButton.addActionListener(e -> {
                 int accountIndex = accountBox.getSelectedIndex();
                 int optionIndex = optionBox.getSelectedIndex();
                 String userInput = inputField.getText();
 
-            Prediction p = new Prediction(); // η κλάση σου
+            Prediction p = new Prediction(); // your class
 
             try {
                 if (optionIndex == 0) {
-                    // Πρόβλεψη για έτος
+                    // Prediction for the year
                     int year = Integer.parseInt(userInput);
                     double predictionValue = p.getValueForGivenYear(years, dapanes[accountIndex], year);
                     DecimalFormat df = new DecimalFormat("#,###.00 €");
@@ -120,7 +200,7 @@ public class PredictionGUI {
                     resultArea.append("Prediction for account '" + accounts[accountIndex] +
                                       "' in year " + year + ": " + formatted + "\n");
                 } else {
-                    // Πρόβλεψη για τιμή
+                    // Prediction for the value
                     double value = Double.parseDouble(userInput);
                     DecimalFormat df = new DecimalFormat("#,###.##");
 
@@ -139,6 +219,9 @@ public class PredictionGUI {
                 JOptionPane.showMessageDialog(frame, "Error: " + ex.getMessage());
             }
         });
+        /**
+         * Clears all displayed prediction results.
+         */
          clearButton.addActionListener(e -> {
             resultArea.setText(""); // Clears all results
         });

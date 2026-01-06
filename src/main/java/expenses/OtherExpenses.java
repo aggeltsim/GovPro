@@ -8,7 +8,13 @@ public class OtherExpenses extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + " includes minor expenses such as" + 
-        " office supplies,minor repairs,references etc ";
+        return getName() + " are amounts of money that the government"
+        + " spends on items that do not fit into the main budget"
+        + " categories, such as salaries, loans, or infrastructure."
+        + " This account tracks miscellaneous costs, such as office"
+        + " supplies, minor repairs, references etc, needed for running"
+        + " government operations, programs, and services. In simple terms,"
+        + " an other expenses account shows all the extra or small"
+        + " government spending that doesn't belong to a specific category. such as";
     }
 }

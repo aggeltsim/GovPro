@@ -8,8 +8,11 @@ public class EmployeeBenefits extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + " is an expense that includes salaries"
-         + ",bonuses,health insurance,food support and paid leaves"
-         + "for the employees";
+        return getName() + " are amounts of money that the government"
+        + " sets aside to pay for things like salaries, pensions, health"
+        + " insurance, and other benefits for public employees. This"
+        + " account tracks how much the government spends to support its"
+        + " workers. In simple terms, an employee benefits account shows"
+        + " the money reserved to pay and take care of people who work for the government.";
     }
 }

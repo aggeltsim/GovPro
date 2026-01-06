@@ -8,9 +8,13 @@ public class TransfersExp extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + " includes the payments the government" 
-        + "makes which do not produce something directly" 
-        + " i.g. expenditures for the protection of the environment" 
-        + "or for information campaigns. ";
+        return getName() + " are amounts of money that the government"
+        + " gives to other organizations, local authorities, or"
+        + " individuals without receiving goods or services in return."
+        + " This can include funding for municipalities, grants to"
+        + " public institutions, or social aid programs. In simple terms,"
+        + " a transfers account shows the money the government spends"
+        + " to support others and help them carry out activities or"
+        + " provide services, without expecting direct payment back.";
     }
 }
