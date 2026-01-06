@@ -40,9 +40,37 @@ Perform statistical analysis by selecting a year and viewing:
 
 - Perform comparative budget analysis by selecting numerator and denominator values to calculate relative percentages.
 
-## Data Visualization
+## Technologies Used
 
-To help users interpret information quickly, GovPro provides visual representations.
+- Java
+
+- JavaFX for the graphical user interface
+
+- Object-Oriented Programming (OOP) principles
+
+- Data binding for efficient UI updates
+
+- Collections (Map) for structured data storage
+
+## Architecture & Data Management
+
+- Budget data is managed through a Map-based data structure, using the year as the key.
+
+- This approach ensures:
+
+  - Fast data access and updates
+
+  - Improved code readability
+
+  - Better organization and scalability
+
+- The project consists of:
+
+  - Multiple Java packages
+
+  - Abstract and concrete classes
+
+  - Modular design supporting maintainability and extensibility
 
 ### **Motto**
 
