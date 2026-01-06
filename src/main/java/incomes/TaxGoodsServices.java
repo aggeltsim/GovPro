@@ -12,7 +12,7 @@ public class TaxGoodsServices extends Taxes {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Taxes. Specifically, a tax"
+        return getName() + " is a form of Taxes. Specifically, a tax"
         + " on goods and services is an extra amount added to the"
         + " price when you buy something, and that money goes to the"
         + " government to help pay for public services";

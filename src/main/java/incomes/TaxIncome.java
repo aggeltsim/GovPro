@@ -10,7 +10,7 @@ public class TaxIncome extends Taxes {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Taxes. Specifically,"
+        return getName() + " is a form of Taxes. Specifically,"
         + " they are amounts of money the government collects from"
         + " individuals or businesses based on the money they earn."
         + " This includes wages, salaries, profits, or other types of"

@@ -10,7 +10,7 @@ public class TrDomesInvestGrants extends Transfers {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Transfers. Specifically, it is"
+        return getName() + " is a form of Transfers. Specifically, it is"
         + " money the government receives from domestic programs that"
         + " support businesses or projects, usually to encourage"
         + " investment or development.";

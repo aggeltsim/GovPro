@@ -10,7 +10,7 @@ public class TrCurrentDomestic extends Transfers {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Transfers. Specifically,"
+        return getName() + " is a form of Transfers. Specifically,"
         + " they are amounts of money the government receives from"
         + " individuals, organizations, or local authorities within"
         + " the country without providing goods or services in return."

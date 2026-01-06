@@ -10,7 +10,7 @@ public class TrForeignEntities extends Transfers {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Transfers. Specifically,"
+        return getName() + " is a form of Transfers. Specifically,"
         + " they are amounts of money the government receives from"
         + " organizations, governments, or institutions outside the"
         + " country. This can include donations, grants, or financial"
