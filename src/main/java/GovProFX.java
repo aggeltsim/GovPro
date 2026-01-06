@@ -876,12 +876,23 @@ private void showExplanation() {
     combo.setMaxWidth(Double.MAX_VALUE);
     combo.setPromptText("Choose account...");
 
-    // Γέμισμα ComboBox
-    combo.getItems().addAll(ObjectsIncomes.createObjectsInc());
+    // Fill ComboBox
+    combo.getItems().addAll(
+    ObjectsIncomes.createObjectsInc().stream()
+        .filter(inc -> {
+            try {
+                int code = Integer.parseInt(inc.getCode());
+                return code >= 100 && code <= 999; 
+            } catch (NumberFormatException ex) {
+                return false;
+            }
+        })
+        .toList()
+    );
     combo.getItems().addAll(ObjectsExpenses.createObjectsExp());
     combo.getItems().addAll(ObjectsEntities.createObjectsEnt());
 
-    // Custom εμφάνιση επιλογών
+    // Options
     combo.setCellFactory(cb -> new ListCell<>() {
         @Override
         protected void updateItem(Object item, boolean empty) {
