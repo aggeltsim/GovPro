@@ -72,9 +72,13 @@ GovPro is a Java-based application designed to process, analyze, and visualize d
 
   - Modular design supporting maintainability and extensibility
 
-### **Motto**
+## Project Status
 
-"Data from the state, insights for all."
+The application is fully implemented and represents the final version of the project, incorporating all planned features and improvements.
+
+### **Team Motto**
+
+GovPro — Data from the State, Insights for All!
 
 ### **Goal**
 
