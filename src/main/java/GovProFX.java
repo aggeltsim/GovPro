@@ -5,17 +5,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import Percentage.percentage.Runner;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 import entities.Entity;
 import expenses.Expenses;
 import incomes.Income;
-
-import java.util.Objects;
-import java.util.stream.Collectors;
-import javafx.scene.web.WebView;
-import javafx.scene.web.WebEngine;
-import javafx.scene.layout.Priority;
-
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.application.Application;
@@ -47,10 +42,13 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -409,6 +407,7 @@ public class GovProFX extends Application {
      */
     protected void showAmendDialog() {
         Stage dialog = new Stage();
+        applyAppIcon(dialog);
         dialog.initModality(Modality.NONE);
         dialog.setTitle("🔧 Amend Budget Entry");
 
@@ -476,6 +475,7 @@ public class GovProFX extends Application {
      */
     private void showPredictDialog() {
     Stage dialog = new Stage();
+    applyAppIcon(dialog);
     dialog.initModality(Modality.NONE);
     dialog.setTitle("📈 Budget Forecasting System");
     Prediction p = new Prediction();    
@@ -636,6 +636,7 @@ public class GovProFX extends Application {
      */
     private void showStatistics() {
     Stage statsStage = new Stage();
+    applyAppIcon(statsStage);
     statsStage.initModality(Modality.NONE);
     statsStage.setTitle("📊 Budget Statistics");
 
@@ -863,6 +864,7 @@ public class GovProFX extends Application {
 private void showExplanation() {
 
     Stage dialog = new Stage();
+    applyAppIcon(dialog);
     dialog.initModality(Modality.NONE);
     dialog.setTitle("📘 Account Explanation");
 
@@ -1011,6 +1013,7 @@ private void showExplanation() {
  */
     private void showCitizenAssistantDialog() {
         Stage stage = new Stage();
+        applyAppIcon(stage);
         stage.setTitle("Citizen Assistant - AI Helper");
 
         WebView browser = new WebView();
@@ -1184,6 +1187,14 @@ private void showExplanation() {
         for (Object[] row : rows) {
             masterData.add(new BudgetEntry(row[0].toString(), row[1].toString(), (BigDecimal) row[2]));
         }
+    }
+        /**
+     * Applies the main application icon to the specified window (stage).
+     *
+     * @param stage the JavaFX Stage to apply the icon to
+     */
+    private void applyAppIcon(Stage stage) {
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/govpro_icon.png")));
     }
     
     /**
