@@ -1,6 +1,13 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
+/**
+ * Provides high-precision statistical analysis of the 2023 Greek State Budget.
+ * This class calculates the percentage distribution of fixed historical expenses 
+ * and incomes, representing each category as a ratio (0.0 to 1.0) relative to 
+ * the annual totals (806.88B for expenses and 798.04B for incomes). 
+ * All calculations use {@link BigDecimal} with 8-decimal precision and 
+ * {@link RoundingMode#HALF_UP} for financial accuracy.
+ */
 public class Budget2023 {
     
     public static BigDecimal[] staticsExp() {
