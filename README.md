@@ -1,29 +1,86 @@
-#GovPro 
+# **GovPro**
 <p style="font-family:Georgia; font-size:20px;">
-<b> GovPro is a Java-based application designed to process, analyze, and present data from the Greek state budget in a clear and accessible way. It aims to make financial information understandable for all users, regardless of technical expertise.
+<b>
 
-# Features
-## Ministry Comparisons
+# 📖Overview 
+GovPro is a Java-based application designed to process, analyze, and visualize data from the Greek state budget in a clear and accessible way. The application aims to transform complex financial information into structured, accessible, and meaningful insights for users, regardless of technical expertise.
 
-GovPro allows users to compare income and expenses across different ministries, offering insights into how public funds are allocated and managed.
+# ✨Features
+## 💶Budget Management
 
-## Regional Statistical Analysis
+- View a centralized dashboard displaying structured state budget data.
 
-The application supports comparisons between different regions of Greece, using various statistical indicators to reveal differences and economic trends.
+- Navigate through budget categories and fields using a clear and intuitive interface.
 
-## Budget History and Forecasting
+- Insert new data and update existing budget values by selecting a specific field and entering a new amount.
 
-Users can explore data from past state budgets and view forecasts for upcoming fiscal years, helping them understand long-term financial patterns.
+- Automatically update budget tables in real time after data modifications.
 
-## Data Visualization
+## 🔍Forecasting & Analysis
 
-To help users interpret information quickly, GovPro provides visual representations.
+- Explore future budget projections by:
 
-### **Motto**
+  - Entering a specific year to view the corresponding projected amount.
 
-"Data from the state, insights for all."
+  - Entering a target amount to calculate the year it is expected to be reached.
 
-### **Goal**
+- Perform statistical analysis by selecting a year and viewing:
+
+  - Revenues and expenses in percentage form.
+
+  - Visual representations through pie charts.
+
+## ⚙️Additional Functionality
+
+- Access a terminology explanation module that provides definitions for financial terms used in the application.
+
+- Interact with an integrated AI assistant to receive guidance and clarifications regarding budget data and system usage.
+
+- View budget allocation for the year 2025, showing how national funds are distributed across government sectors.
+
+- Perform comparative budget analysis by selecting numerator and denominator values to calculate relative percentages.
+
+## ⛏️💻Technologies Used
+
+- Java
+
+- JavaFX for the graphical user interface
+
+- Object-Oriented Programming (OOP) principles
+
+- Data binding for efficient UI updates
+
+- Collections (Map) for structured data storage
+
+## 🏗️Architecture & Data Management
+
+- Budget data is managed through a Map-based data structure, using the year as the key.
+
+- This approach ensures:
+
+  - Fast data access and updates
+
+  - Improved code readability
+
+  - Better organization and scalability
+
+- The project consists of:
+
+  - Multiple Java packages
+
+  - Abstract and concrete classes
+
+  - Modular design supporting maintainability and extensibility
+
+## 🚀Project Status
+
+The application is fully implemented and represents the final version of the project, incorporating all planned features and improvements.
+
+## 💫Team Motto
+
+GovPro — Data from the State, Insights for All!
+
+## 🎯Goal
 
 GovPro is built with the mission of delivering public financial information in the simplest and most transparent form possible—so every citizen, student, researcher, or professional can easily understand how national resources are used.
 </b>
