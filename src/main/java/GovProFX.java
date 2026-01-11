@@ -65,6 +65,8 @@ import javafx.util.Duration;
  *   <li>Editing budget entries</li>
  *   <li>Statistical analysis with charts</li>
  *   <li>Budget forecasting and predictions</li>
+ *  <li>Percentage calculations</li>
+ *    <li>AI-powered citizen assistance</li>
  * </ul>
  * </p>
  *
@@ -130,8 +132,25 @@ public class GovProFX extends Application {
     private ObservableList<BudgetEntry> masterData = FXCollections.observableArrayList();
     private TableView<BudgetEntry> table = new TableView<>();
 
-    // Historical Data for Predictions
+    /**
+     * Array representing the fiscal years for which historical data is available.
+     * <p>Used as the time axis for prediction algorithms.</p>
+     */
     static double[] years = {2021, 2022, 2023, 2024, 2025, 2026};
+    /**
+     * A 2D array containing historical spending data for various ministries and entities.
+     * <p>
+     * <strong>Data Structure:</strong>
+     * <ul>
+     * <li>Rows: Correspond to specific entities (e.g., Presidency, Ministries).</li>
+     * <li>Columns: Correspond to the years defined in the {@link #years} array.</li>
+     * </ul>
+     * </p>
+     * <p>
+     * <strong>Note:</strong> The values represent de-inflated budget amounts in Euros, 
+     * using 2021 as the base year.
+     * </p>
+     */
     static double[][] dapanes = { 
         {3766000, 4097337, 3811641, 4059900, 3974293, 4146883}, 
         {143500000, 134251607, 134030043, 140477275, 147343837, 156551972}, 
@@ -479,7 +498,7 @@ public class GovProFX extends Application {
     dialog.initModality(Modality.NONE);
     dialog.setTitle("📈 Budget Forecasting System");
     Prediction p = new Prediction();    
-    // --- Data ---
+    
     double[][] dapanes = {
         {3766000, 4097337, 3811641, 4059900, 3974293, 4146883},
         {143500000, 134251607, 134030043, 140477275, 147343837, 156551972},

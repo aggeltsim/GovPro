@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -21,11 +20,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 /**
- * The {@code GovProGUI} class represents the main graphical user interface
+ * The {@code GovProGUI} class represents the OLDER graphical user interface
  * of the GovPro Budget System.
  *
  * <p>
- * The application allows users to:
+ * The application only allows users to:
  * <ul>
  *   <li>Read the 2025 State Budget</li>
  *   <li>Amend budget values</li>

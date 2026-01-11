@@ -1,7 +1,20 @@
 import entities.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
+/**
+ * Utility class responsible for initializing and populating the application's 
+ * entities data for the fiscal year 2025.
+ * <p>
+ * This class serves as the primary data orchestrator for the Greek State's 
+ * organizational structure. It maps budgetary data to specialized subclasses 
+ * of the {@link Entity} model, covering:
+ * </p>
+ * <ul>
+ * <li>The Presidency and the Hellenic Parliament</li>
+ * <li>All Government Ministries</li>
+ * <li>The Decentralized Administrations </li>
+ * </ul>
+ */
 
 public class ObjectsEntities {
   public static ArrayList<Entity> createObjectsEnt() {
@@ -223,7 +236,21 @@ public class ObjectsEntities {
         (BigDecimal) data[30][2],
         "2025");
 
-    // Entities List
+    
+    /**
+     * Creates and returns a list of {@link Entity} objects representing 
+     * the major organizational units of the Greek State for 2025.
+     * <p>
+     * Each entity is initialized with its official budget code (e.g., "1001" for 
+     * Presidency), its formal name, and its total allocated budget for 2025 
+     * as defined in the official State Budget.
+     * </p>
+     * * @return An {@link ArrayList} of {@link Entity} objects, including Ministries 
+     * and Decentralized Administrations.
+     * @see Entity
+     * @see RepublicPresidency
+     * @see MinEconomy
+     */
     ArrayList<Entity> ent = new ArrayList<>();
 
     ent.add(repPresidency);
@@ -261,5 +288,6 @@ public class ObjectsEntities {
     // End of Entities List
     return ent;
   }
+
     
 }

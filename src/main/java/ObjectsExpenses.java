@@ -1,6 +1,3 @@
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
 import expenses.AllocatedFunds;
 import expenses.DeptSecurLiabilExp;
 import expenses.EmployeeBenefits;
@@ -16,8 +13,19 @@ import expenses.SocialBenefits;
 import expenses.Subsidies;
 import expenses.TransfersExp;
 import expenses.Valuables;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 
-
+/**
+ * Utility class responsible for initializing and populating the application's 
+ * expense data for the fiscal year 2025.
+ * <p>
+ * This class acts as a data provider that maps raw budgetary data (codes, names, and amounts) 
+ * to specific subclasses of the {@link Expenses} model. It centralizes the 
+ * instantiation of various expense categories such as employee benefits, 
+ * transfers, and loans.
+ * </p>
+ */
 public class ObjectsExpenses {
   public static ArrayList<Expenses> createObjectsExp() {
     Object[][] data = {
