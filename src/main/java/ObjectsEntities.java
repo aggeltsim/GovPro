@@ -1,7 +1,20 @@
 import entities.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
+/**
+ * Utility class responsible for initializing and populating the application's 
+ * entities data for the fiscal year 2025.
+ * <p>
+ * This class serves as the primary data orchestrator for the Greek State's 
+ * organizational structure. It maps budgetary data to specialized subclasses 
+ * of the {@link Entity} model, covering:
+ * </p>
+ * <ul>
+ * <li>The Presidency and the Hellenic Parliament</li>
+ * <li>All Government Ministries</li>
+ * <li>The Decentralized Administrations </li>
+ * </ul>
+ */
 
 public class ObjectsEntities {
   public static ArrayList<Entity> createObjectsEnt() {
@@ -15,13 +28,13 @@ public class ObjectsEntities {
         {"1011", "Ministry of National Defense", new BigDecimal("6130000000")},
         {"1015", "Ministry of Health", new BigDecimal("7177424000")},
         {"1017", "Ministry of Justice", new BigDecimal("650803000")},
-        {"1020", "Ministry of Education, Religious Affairs and", new BigDecimal("6606000000")},
+        {"1020", "Ministry of Education, Religious Affairs", new BigDecimal("6606000000")},
         {"1022", "Ministry of Culture", new BigDecimal("575419000")},
-        {"1024", "Ministry of National Economy and", new BigDecimal("1246518464000")},
+        {"1024", "Ministry of National Economy", new BigDecimal("1246518464000")},
         {"1029", "Ministry of Rural Development and Food", new BigDecimal("1281403000")},
         {"1031", "Ministry of Environment and Energy", new BigDecimal("2341227000")},
         {"1032", "Ministry of Labor and Social Security", new BigDecimal("18678084000")},
-        {"1034", "Ministry of Social Cohesion and", new BigDecimal("3989553000")},
+        {"1034", "Ministry of Social Cohesion", new BigDecimal("3989553000")},
         {"1036", "Ministry of Development", new BigDecimal("818045000")},
         {"1039", "Ministry of Infrastructure and Transport", new BigDecimal("2694810000")},
         {"1041", "Ministry of Shipping and Island Policy", new BigDecimal("651864000")},
@@ -35,7 +48,7 @@ public class ObjectsEntities {
         new BigDecimal("10579000")},
         {"1903", "Decentralized Administration of Epirus-Western Greece", 
         new BigDecimal("9943000")},
-        {"1904", "Decentralized Administration of Peloponnese -", new BigDecimal("14918000")},
+        {"1904", "Decentralized Administration of Peloponnese", new BigDecimal("14918000")},
         {"1905", "Decentralized Administration of the Aegean", new BigDecimal("6188000")},
         {"1906", "Decentralized Administration of Crete", new BigDecimal("6497000")},
         {"1907", "Decentralized Administration of Macedonia - Thrace", new BigDecimal("18376000")}
@@ -223,7 +236,21 @@ public class ObjectsEntities {
         (BigDecimal) data[30][2],
         "2025");
 
-    // Entities List
+    
+    /**
+     * Creates and returns a list of {@link Entity} objects representing 
+     * the major organizational units of the Greek State for 2025.
+     * <p>
+     * Each entity is initialized with its official budget code (e.g., "1001" for 
+     * Presidency), its formal name, and its total allocated budget for 2025 
+     * as defined in the official State Budget.
+     * </p>
+     * * @return An {@link ArrayList} of {@link Entity} objects, including Ministries 
+     * and Decentralized Administrations.
+     * @see Entity
+     * @see RepublicPresidency
+     * @see MinEconomy
+     */
     ArrayList<Entity> ent = new ArrayList<>();
 
     ent.add(repPresidency);
@@ -261,5 +288,6 @@ public class ObjectsEntities {
     // End of Entities List
     return ent;
   }
+
     
 }

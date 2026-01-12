@@ -32,6 +32,8 @@ Alternatively, if you have generated a JAR file:
 * `pom.xml`: Maven configuration and dependency management.
 * `LICENSE`: Apache lisense for the app usage.
 
+![GovPro UML Diagram](Uml_Diagram.png)
+
 ## Usage Instructions
 
 The **GovPro** application provides a multi-window interface for interacting with the Greek State Budget. Follow the steps below to utilize all system features:

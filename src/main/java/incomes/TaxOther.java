@@ -10,14 +10,9 @@ public class TaxOther extends Taxes {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Taxes. Specifically, other"
+        return getName() + " is a form of Taxes. Specifically, other"
         + " taxes are additional charges the government collects on"
         + " specific activities or items—such as fuel, vehicles, or"
         + " certain behaviors—to raise money or guide how people use those things.";
-    }
-
-    @Override
-    public String toString() {
-        return "Account: " + getName() + "\n" + "Amount: " + getAmount();
     }
 }

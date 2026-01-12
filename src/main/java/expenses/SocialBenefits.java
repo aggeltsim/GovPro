@@ -8,8 +8,13 @@ public class SocialBenefits extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + " is an expense that includes support for" 
-        + " problems such as poverty, illiteracy, "
-        + "unemployment and natural disasters";
+        return getName() + " are amounts of money that the government"
+        + " spends to support citizens in need. This includes pensions,"
+        + " unemployment benefits, family allowances, healthcare support,"
+        + " and aid for vulnerable groups. This account tracks the"
+        + " government's spending on programs that help people live"
+        + " safely and with dignity. In simple terms, a social benefits"
+        + " account shows the money the government uses to take care of"
+        + " its citizens and provide financial or social support when needed.";
     }
 }

@@ -10,7 +10,13 @@ public class MinImmigrAsylum extends Entity {
 
     @Override
     public String toExplain() {
-        return getName() + " oversees migration policy, asylum"
-        + " procedures, and refugee reception.";
+        return "The " + getName() + " is the Greek government department"
+        + " responsible for managing migration and asylum issues. It"
+        + " handles asylum applications, supports refugees and migrants,"
+        + " and manages reception and accommodation facilities. It also"
+        + " works to ensure that migration is managed in an organized"
+        + " and lawful way, while respecting human rights and international"
+        + " rules. In simple terms, it is the part of the government that"
+        + " deals with people who come to Greece seeking protection or a better life.";
     }
 }

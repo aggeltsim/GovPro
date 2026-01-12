@@ -10,8 +10,12 @@ public class FixedAssets extends Income {
     
     @Override
     public String toExplain() {
-        return getName() + " This is the money the government receives when"
-        + " it sells, grants, or otherwise allows the use of its"
-        + "  real estate assets.";
+        return getName() + " are amounts of money the government earns"
+        + " from its long-term property or assets, such as selling"
+        + " government buildings, land, vehicles, or equipment that it"
+        + " no longer needs. This account tracks the income the"
+        + " government receives from these assets. In simple terms, a"
+        + " fixed assets (revenue) account shows the money the government"
+        + " makes by using or selling its property and valuable items.";
     }
 }

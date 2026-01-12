@@ -10,9 +10,14 @@ public class SsUnlisted extends SecuritiesShares {
     
     @Override
     public String toExplain() {
-        return getName() + "are a form of Securities Shares."
-        + " Specifically, they are shares of companies that the"
-        + " government owns that are not on the stock market and"
-        + " can not be easily sold. ";
+        return getName() + " are a form of Securities Shares."
+        + " Specifically, they are amounts of money the government"
+        + " invests in companies whose shares are not traded on the"
+        + " stock market. This account tracks the value of these shares"
+        + " and any income, such as dividends, they generate. In simple"
+        + " terms, an unlisted shares account shows the government's"
+        + " investments in private companies, similar to how a person"
+        + " might invest directly in a business instead of buying"
+        + " stock on the stock market. ";
     }
 } 

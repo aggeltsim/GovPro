@@ -1,7 +1,21 @@
 import incomes.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
+/**
+ * Utility class responsible for initializing and populating the application's 
+ * income data for the fiscal year 2025.
+ * <p>
+ * This class functions as a central repository that transforms raw budgetary 
+ * revenue data into specialized {@link Income} objects. It categorizes state 
+ * revenues into several major streams, including:
+ * </p>
+ * <ul>
+ * <li>Direct and Indirect Taxation</li>
+ * <li>Social Contributions and Transfers</li>
+ * <li>Sales of Goods, Services, and Natural Resources</li>
+ * <li>Financial Transactions, Loans, and Derivatives</li>
+ * </ul>
+ */
 public class ObjectsIncomes {
 
   public static ArrayList<Income> createObjectsInc() {
@@ -293,7 +307,21 @@ public class ObjectsIncomes {
         (BigDecimal) data[18][2],
         "2025");
 
-    // Incomes List
+    /**
+     * Creates and returns an exhaustive list of {@link Income} objects based 
+     * on the 2025 State Budget revenue projections.
+     * <p>
+     * The method instantiates concrete subclasses of the Income model (e.g., 
+     * {@link TaxIncome}, {@link SalServices}, {@link TrEU}), ensuring that 
+     * each revenue stream is tracked with its official budget code and 
+     * precise {@link BigDecimal} amount.
+     * </p>
+     * * @return An {@link ArrayList} of {@link Income} objects representing 
+     * all projected state revenue sources for 2025.
+     * @see Income
+     * @see TaxIncome
+     * @see SocialContributions
+     */
     ArrayList<Income> inc = new ArrayList<>();
 
     inc.add(taxGoodsServices);

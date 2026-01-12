@@ -8,8 +8,13 @@ public class Purchases extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + " is an expense account that includes " 
-        + "whatever the government buys, like computers,books or "
-        +"IT support,cleaning services etc";
+        return getName() + " are amounts of money that the government"
+        + " spends to buy things it needs to operate, such as office"
+        + " supplies, equipment, vehicles, or professional services."
+        + " This account tracks the cost of goods and services required"
+        + " for public administration and government programs. In simple"
+        + " terms, a purchases of goods and services account shows the"
+        + " money the government spends to get the items and services it"
+        + " needs to serve citizens.";
     }
 }

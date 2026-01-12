@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -20,12 +19,55 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+/**
+ * The {@code GovProGUI} class represents the OLDER graphical user interface
+ * of the GovPro Budget System.
+ *
+ * <p>
+ * The application only allows users to:
+ * <ul>
+ *   <li>Read the 2025 State Budget</li>
+ *   <li>Amend budget values</li>
+ *   <li>Launch the prediction subsystem</li>
+ *   <li>View budget statistics for selected years</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * The interface is implemented using Java Swing and follows
+ * event-driven programming principles.
+ * </p>
+ *
+ * <p>
+ * Budget data is stored in-memory and processed using {@link BigDecimal}
+ * for financial accuracy.
+ * </p>
+ * @version 1.0
+ */
 public class GovProGUI {
 
+    /**
+     * Entry point of the GovPro application.
+     *
+     * <p>
+     * Launches the GUI on the Event Dispatch Thread (EDT)
+     * to ensure thread-safe Swing operations.
+     * </p>
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(GovProGUI::createAndShowGUI);
     }
 
+    /**
+     * Creates and displays the main GovPro application window.
+     *
+     * <p>
+     * Initializes all UI components, layouts, and action listeners
+     * for the main menu.
+     * </p>
+     */
     private static void createAndShowGUI() {
         JFrame frame = new JFrame("GovPro Budget System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,6 +84,14 @@ public class GovProGUI {
                 "3. Prediction of an account",
                 "4. Budget Statistics for years 2022, 2023, 2024."
         };
+
+        /**
+         * ComboBox containing the main application options.
+         *
+         * <p>
+         * Each option corresponds to a specific budget-related operation.
+         * </p>
+         */
         JComboBox<String> mainMenu = new JComboBox<>(options1);
         mainMenu.setMaximumSize(new Dimension(400, 30));
         frame.add(mainMenu);
@@ -50,6 +100,10 @@ public class GovProGUI {
         nextButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         frame.add(nextButton);
 
+        /**
+         * Text area used to display formatted budget data,
+         * confirmations, and system messages.
+         */
         JTextArea outputArea = new JTextArea(10, 50);
         outputArea.setEditable(false);
         frame.add(new JScrollPane(outputArea));
@@ -62,18 +116,25 @@ public class GovProGUI {
             int choice = mainMenu.getSelectedIndex() + 1;
 
             switch (choice) {
+                /**
+                 * Displays the 2025 State Budget in a formatted tabular layout.
+                 *
+                 * <p>
+                 * Uses a monospaced font to ensure column alignment
+                 * and {@link java.text.NumberFormat} for currency formatting.
+                 * </p>
+                 */
                 case 1 -> {
-    // 1. Ορισμός Monospaced γραμματοσειράς για να ευθυγραμμίζονται οι στήλες
     outputArea.setFont(new Font("Monospaced", Font.PLAIN, 13));
     
     StringBuilder sb = new StringBuilder();
-    // Formatter για χιλιάδες με κόμμα και 2 δεκαδικά (π.χ. 1.234.567,00)
+    // Formatter for thousands with comma and 2 decimal places (eg 1.234.567,00)
     java.text.NumberFormat nf = java.text.NumberFormat.getInstance(java.util.Locale.GERMANY);
 
-    // Ορισμός "καλουπιού" για τις γραμμές: 
-    // %-6s  -> Code (6 χαρακτήρες, αριστερή στοίχιση)
-    // %-55s -> Name (55 χαρακτήρες, αριστερή στοίχιση)
-    // %20s  -> Amount (20 χαρακτήρες, δεξιά στοίχιση)
+    // Definition of "mold" for lines:
+    // %-6s  -> Code (6 characters, left aligned)
+    // %-55s -> Name (55 characters, left aligned)
+    // %20s  -> Amount (20 characters, right aligned)
     String headerFormat = "%-6s | %-55s | %20s%n";
     String lineFormat   = "%-6s | %-55s | %20s%n";
     String divider      = "=".repeat(87) + "\n";
@@ -88,10 +149,10 @@ public class GovProGUI {
         String name = (String) data[i][1];
         java.math.BigDecimal amount = (java.math.BigDecimal) data[i][2];
 
-        // Μορφοποίηση του ποσού
+        // Format the amount
         String formattedAmount = nf.format(amount);
 
-        // Προσθήκη ενδιάμεσων τίτλων για να ξέρουμε τι βλέπουμε
+        // Add intertitles so we know what we're watching
         if (code.equals("21")) {
             sb.append("\n").append(divider).append("   EXPENSES\n").append(divider);
         } else if (code.equals("1001")) {
@@ -100,7 +161,7 @@ public class GovProGUI {
             sb.append("   INCOMES\n").append(subDivider);
         }
 
-        // Αν το όνομα είναι πολύ μεγάλο, το κόβουμε για να μην χαλάσει η στήλη
+        // If the name is too long, we cut it so that the column is not broken.
         if (name.length() > 52) {
             name = name.substring(0, 52) + "...";
         }
@@ -109,13 +170,24 @@ public class GovProGUI {
     }
 
     outputArea.setText(sb.toString());
-    outputArea.setCaretPosition(0); // Επιστροφή στην κορυφή
+    outputArea.setCaretPosition(0); // Back to top
 }
+                /**
+                 * Opens a dialog allowing the user to amend a selected
+                 * budget account value.
+                 *
+                 * <p>
+                 * Updates the underlying data table and displays
+                 * confirmation results.
+                 * </p>
+                 *
+                 * @throws NumberFormatException if input is not a valid number
+                 */
                 case 2 -> {
-    // 1. Δημιουργούμε ένα Panel για το παράθυρο διαλόγου
+    // 1. Create a Panel for the dialog box
     JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5));
     
-    // Dropdown για να διαλέξει ο χρήστης τον κωδικό (παίρνουμε τους κωδικούς από το data[][])
+    // Dropdown for the user to choose the code (we get the codes from data[][])
     String[] codes = new String[data.length - 1];
     for (int i = 1; i < data.length; i++) {
         codes[i - 1] = (String) data[i][0] + " - " + data[i][1];
@@ -129,21 +201,21 @@ public class GovProGUI {
     panel.add(new JLabel("New amount:"));
     panel.add(newValueField);
 
-    // 2. Εμφάνιση του διαλόγου
+    // 2. Show the dialog
     int result = JOptionPane.showConfirmDialog(frame, panel, 
             "Τροποποίηση Προϋπολογισμού", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
     if (result == JOptionPane.OK_OPTION) {
         try {
-            int selectedIndex = codeCombo.getSelectedIndex() + 1; // +1 γιατί το data[0] είναι το header
-            String input = newValueField.getText().replace(",", "."); // Μετατροπή κόμματος σε τελεία για το BigDecimal
+            int selectedIndex = codeCombo.getSelectedIndex() + 1; // +1 because data[0] is the header
+            String input = newValueField.getText().replace(",", "."); // Convert , to . for BigDecimal
             java.math.BigDecimal newVal = new java.math.BigDecimal(input);
 
-            // 3. Ενημέρωση του πίνακα data
+            // 3. Update the data table
             java.math.BigDecimal oldVal = (java.math.BigDecimal) data[selectedIndex][2];
             data[selectedIndex][2] = newVal;
 
-            // 4. Ενημέρωση του Output Area για επιβεβαίωση
+            // 4. Update Output Area for confirmation
             outputArea.setFont(new Font("Consolas", Font.PLAIN, 13));
             outputArea.setText(" Change registered successfully!\n");
             outputArea.append("──────────────────────────────────────────────────\n");
@@ -159,10 +231,30 @@ public class GovProGUI {
         }
     }
 }
+                /**
+                 * Launches the prediction graphical interface.
+                 *
+                 * <p>
+                 * Delegates prediction functionality to {@link PredictionGUI}.
+                 * </p>
+                 */
                 case 3 -> {
                     // Prediction GUI
                     PredictionGUI.createAndShowPredGUI();
                 }
+
+                /**
+                 * Displays budget statistics for selected years.
+                 *
+                 * <p>
+                 * Allows users to:
+                 * <ul>
+                 *   <li>Select a year</li>
+                 *   <li>View income statistics</li>
+                 *   <li>View expense statistics</li>
+                 * </ul>
+                 * </p>
+                 */
                 case 4 -> {
                     //Statistics GUI
                     JFrame statsframe = new JFrame("Budget Statistics Reviewer");
@@ -170,7 +262,7 @@ public class GovProGUI {
                     statsframe.setSize(650, 500);
                     statsframe.setLayout(new BorderLayout());
 
-                    // Panel επιλογών
+                    // Options panel
                     JPanel panel = new JPanel();
                     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
                     panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -239,7 +331,7 @@ public class GovProGUI {
             displayBudget(selectedYear[0], BudgetDataManager.BudgetType.EXPENSE, output);
         });
 
-        // Εμφάνιση παραθύρου
+        // Show window
     statsframe.setLocationRelativeTo(null);
     statsframe.setVisible(true);
 
@@ -253,19 +345,30 @@ public class GovProGUI {
         frame.setLocationRelativeTo(null); 
         frame.setVisible(true);
     }
-
+    /**
+     * Category labels for income statistics.
+     */
     private static final String[] incomeCategories = { "Taxes", "Social Contributions", "Transfers", 
         "Sales of goods and services", "Other Current Income", "Fixed Assets",
         "Debt Securities", "Equity securities and investment fund shares",
         "Currency Liabilities and deposits", "Debt Securities (Liabilities)", 
         "Loans", "Financial Derivatives"};
-
+    /**
+     * Category labels for expense statistics.
+     */
     private static final String[] expenseCategories = { "Employee Benefits", "Social Benefits", "Transfers",
         "Purchases of goods and services", "Subsidies", "Interest", "Other expenses",
         "Credits under distribution", "Fixed Assets", "Valuables", "Loans",
         "Equity securities and investments fund shares", "Debt Securities (Liabilities)", 
         "Loans", "Financial Derivatives"};
 
+    /**
+     * Displays budget statistics for a given year and type.
+     *
+     * @param year   the selected budget year
+     * @param type   the budget type (income or expense)
+     * @param output the text area where results are displayed
+     */
     // ----------- DISPLAY FUNCTION ----------
     private static void displayBudget(int year, BudgetDataManager.BudgetType type, JTextArea output) {
         BigDecimal[] data = BudgetDataManager.getBudgetData(year, type);
@@ -288,11 +391,27 @@ public class GovProGUI {
         output.append("\n");
     }
 
+    /**
+     * Converts a decimal value to a formatted percentage string.
+     *
+     * @param val the decimal value to format
+     * @return percentage string with four decimal places
+     */
     private static String formatPercent(BigDecimal val) {
         BigDecimal percent = val.multiply(new BigDecimal("100"));
         return percent.setScale(4, RoundingMode.HALF_UP).toString();
     }
 
+    /**
+     * Displays a simple prediction dialog window.
+     *
+     * <p>
+     * This method serves as an auxiliary or legacy prediction UI
+     * and demonstrates basic user input handling.
+     * </p>
+     *
+     * @param outputArea the text area used for output messages
+     */
     private static void predictionGUI(JTextArea outputArea) {
         JFrame predFrame = new JFrame("Prediction");
         predFrame.setSize(500, 400);
@@ -343,6 +462,23 @@ public class GovProGUI {
 
         predFrame.setVisible(true);
     }
+
+    /**
+     * In-memory representation of the state budget data.
+     *
+     * <p>
+     * Each row contains:
+     * <ul>
+     *   <li>Budget code</li>
+     *   <li>Account name</li>
+     *   <li>Financial amount as {@link BigDecimal}</li>
+     * </ul>
+     * </p>
+     *
+     * <p>
+     * Index 0 contains column headers.
+     * </p>
+     */
      static Object[][] data = {
         {"Code", "Name", "Amount"}, // 0
         {"11", "Taxes", new BigDecimal("62055000000")}, // 1

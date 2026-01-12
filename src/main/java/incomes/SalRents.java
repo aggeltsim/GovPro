@@ -9,7 +9,11 @@ public class SalRents extends Sales {
 
     @Override
     public String toExplain() {
-        return getName() + " is money the state earns by renting"
-        + " out public buildings, spaces, or equipment.";
+        return getName() + " are amounts of money the government receives"
+        + " from renting out its property, such as buildings, land, or"
+        + " other government-owned spaces. This account tracks the income"
+        + " from these rental agreements. In simple terms, a sales of rents"
+        + " account shows the money the government earns by allowing"
+        + " others to use its property in exchange for rent.";
     }
 }

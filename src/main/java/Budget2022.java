@@ -1,6 +1,13 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
+/**
+ * Provides high-precision statistical analysis of the 2022 Greek State Budget.
+ * This class calculates the percentage distribution of fixed historical expenses 
+ * and incomes, representing each category as a ratio (0.0 to 1.0) relative to 
+ * the annual totals (806.74B for expenses and 796.63B for incomes). 
+ * All calculations use {@link BigDecimal} with 8-decimal precision and 
+ * {@link RoundingMode#HALF_UP} for financial accuracy.
+ */
 public class Budget2022 {
     public static BigDecimal[] staticsExp() {
         BigDecimal expenses2022[] = {new BigDecimal("13610168000"), new BigDecimal("220643000"), new BigDecimal("30583382000"), 

@@ -3,8 +3,8 @@
 Thanks for your interest in contributing!
 
 We welcome contributions that improve the project’s usability, performance, or overall user experience.  
-If you’d like to make the app more user-friendly — for example by adding a graphical interface with **JavaFX** — we’d love to see your ideas!
-The main file that needs your help is GovProGUI.java!
+If you’d like to make the app more user-friendly — for example by adding more vibrant colors or a more advanced AI assistant— we’d love to see your ideas!
+The main file that needs your help is GovProFX.java!
 
 
 ---

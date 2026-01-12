@@ -28,7 +28,7 @@ public class ExpensesFullTest {
         assertEquals(new BigDecimal("5000.00"), af.getAmount());
 
         assertEquals("Account: Health\nAmount: 5000.00", af.toString());
-        assertTrue(af.toExplain().contains("budgeted funds committed by the government"));
+        assertTrue(af.toExplain().contains("money"));
     }
 
     // ===========================
@@ -51,8 +51,8 @@ public class ExpensesFullTest {
         assertEquals(new BigDecimal("2000000.00"), de.getAmount());
 
         assertEquals("Account: Gov Bonds\nAmount: 2000000.00", de.toString());
-        assertTrue(de.toExplain().contains("government bonds or bills"));
-        assertTrue(de.toExplain().contains("cash goes out"));
+        assertTrue(de.toExplain().contains("government owes to others"));
+        
     }
 
     // ===========================
@@ -76,9 +76,6 @@ public class ExpensesFullTest {
 
         assertEquals("Account: Staff Support\nAmount: 180000.00", eb.toString());
         assertTrue(eb.toExplain().contains("salaries"));
-        assertTrue(eb.toExplain().contains("bonuses"));
-        assertTrue(eb.toExplain().contains("health insurance"));
-        assertTrue(eb.toExplain().contains("paid leaves"));
     }
 
     // ===========================
@@ -101,8 +98,8 @@ public class ExpensesFullTest {
         assertEquals(new BigDecimal("7500000"), fa.getAmount());
 
         assertEquals("Account: Machinery\nAmount: 7500000", fa.toString());
-        assertTrue(fa.toExplain().contains("real estate"));
-        assertTrue(fa.toExplain().contains("machinery"));
+        assertTrue(fa.toExplain().contains("buildings"));
+        assertTrue(fa.toExplain().contains("equipment"));
     }
 
     // ===========================
@@ -125,7 +122,7 @@ public class ExpensesFullTest {
         assertEquals(new BigDecimal("15000"), in.getAmount());
 
         assertEquals("Account: Loan Interest\nAmount: 15000", in.toString());
-        assertTrue(in.toExplain().contains("government has to pay"));
+        assertTrue(in.toExplain().contains("government must pay"));
         assertTrue(in.toExplain().contains("lenders"));
     }
 
@@ -149,8 +146,7 @@ public class ExpensesFullTest {
         assertEquals(new BigDecimal("60000"), le.getAmount());
 
         assertEquals("Account: LT Loans\nAmount: 60000", le.toString());
-        assertTrue(le.toExplain().contains("outflow for paying off"));
-        assertTrue(le.toExplain().contains("long-term loans"));
+        assertTrue(le.toExplain().contains("borrowed from banks"));
     }
 
     // ===========================
@@ -173,8 +169,7 @@ public class ExpensesFullTest {
         assertEquals(new BigDecimal("40000"), le.getAmount());
 
         assertEquals("Account: ST Loans\nAmount: 40000", le.toString());
-        assertTrue(le.toExplain().contains("outflow for paying off"));
-        assertTrue(le.toExplain().contains("short-term loans"));
+        assertTrue(le.toExplain().contains("the government has lent to"));
     }
 
     // ===========================
@@ -197,8 +192,8 @@ public class ExpensesFullTest {
         assertEquals(new BigDecimal("130000"), p.getAmount());
 
         assertEquals("Account: Office Supplies\nAmount: 130000", p.toString());
-        assertTrue(p.toExplain().contains("whatever the government buys"));
-        assertTrue(p.toExplain().contains("computers"));
+        assertTrue(p.toExplain().contains("spends to buy"));
+        assertTrue(p.toExplain().contains("equipment"));
     }
 
     // ===========================
@@ -221,9 +216,8 @@ public class ExpensesFullTest {
         assertEquals(new BigDecimal("300000"), sse.getAmount());
 
         assertEquals("Account: Equity Fund\nAmount: 300000", sse.toString());
-        assertTrue(sse.toExplain().contains("investing purposes"));
-        assertTrue(sse.toExplain().contains("equity shares"));
-        assertTrue(sse.toExplain().contains("investment fund units"));
+        assertTrue(sse.toExplain().contains("government has put into"));
+
     }
     //================
     //OtherExpenses
@@ -251,11 +245,8 @@ public class ExpensesFullTest {
 
         // Έλεγχος toExplain με contains για τα βασικά keywords
         String explanation = oe.toExplain();
-        assertTrue(explanation.contains("Minor Expenses"));
-        assertTrue(explanation.contains("minor expenses"));
-        assertTrue(explanation.contains("office supplies"));
-        assertTrue(explanation.contains("minor repairs"));
-        assertTrue(explanation.contains("references"));
+        assertTrue(explanation.contains("tracks miscellaneous costs"));
+ 
     }
 
     // ===========================
@@ -278,9 +269,9 @@ public class ExpensesFullTest {
         assertEquals(new BigDecimal("600000"), sb.getAmount());
 
         assertEquals("Account: Welfare Support\nAmount: 600000", sb.toString());
-        assertTrue(sb.toExplain().contains("support for"));
-        assertTrue(sb.toExplain().contains("poverty"));
-        assertTrue(sb.toExplain().contains("unemployment"));
+        assertTrue(sb.toExplain().contains("support"));
+        assertTrue(sb.toExplain().contains("dignity"));
+        assertTrue(sb.toExplain().contains("social"));
     }
 
     // ===========================
@@ -303,7 +294,7 @@ public class ExpensesFullTest {
         assertEquals(new BigDecimal("450000"), sub.getAmount());
 
         assertEquals("Account: Student Aid\nAmount: 450000", sub.toString());
-        assertTrue(sub.toExplain().contains("aid for families"));
+        assertTrue(sub.toExplain().contains("support businesses, organizations"));
     }
 
     // ===========================
@@ -326,7 +317,7 @@ public class ExpensesFullTest {
         assertEquals(new BigDecimal("550000"), te.getAmount());
 
         assertEquals("Account: Other Transfers\nAmount: 550000", te.toString());
-        assertTrue(te.toExplain().contains("payments"));
+        assertTrue(te.toExplain().contains("activities"));
     }
 
     // ===========================
@@ -349,7 +340,7 @@ public class ExpensesFullTest {
         assertEquals(new BigDecimal("80000"), v.getAmount());
 
         assertEquals("Account: Gold Reserves\nAmount: 80000", v.toString());
-        assertTrue(v.toExplain().contains("assets that are hold"));
-        assertTrue(v.toExplain().contains("cultural reasons"));
+        assertTrue(v.toExplain().contains("gold, silver, jewelry,"));
+
     }
 }

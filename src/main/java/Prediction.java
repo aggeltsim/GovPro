@@ -1,7 +1,21 @@
 import java.util.Scanner;
-
+    /**
+ * The {@code Prediction} class provides statistical tools for financial forecasting 
+ * based on historical budget data (2021-2026).
+ * <p>
+ * It implements <b>Simple Linear Regression</b> using the Ordinary Least Squares (OLS) 
+ * method to estimate future trends and calculate the time required to reach specific 
+ * financial targets.
+ * </p>
+ * * <p><b>Key Features:</b></p>
+ * <ul>
+ * <li>Calculation of future budget values for a given year.</li>
+ * <li>Estimation of the timeline (Month/Year) to achieve a desired budget goal.</li>
+ * <li>Contains legacy console-based prediction methods for testing.</li>
+ * </ul>
+ */
 public class Prediction {
-        // Void μέθοδος predict
+
     public static void main(String[] args) {
         double[][] dapanes = { //this an array with values of main entities from 2021 up until 2026 without inflation 
             {3766000, 4097337, 3811641, 4059900, 3974293, 4146883}, //republic presidency
@@ -18,9 +32,7 @@ public class Prediction {
         };
         double[] years={2021,2022,2023,2024,2025,2026};
         Scanner sc = new Scanner(System.in);
-        //(todo) implement ifs for different user inputs and 
-        //depending on if they want to have a prediction for a year 
-        //or for the value of an amount at a certain year
+        
         
 
         System.out.println("Give me the year you want a prediction for!");
@@ -127,6 +139,17 @@ public class Prediction {
         System.out.println("Prediction for the year: "+targetYear);
         System.out.printf("%,.0f euro%n", predictedY);
     }
+    /**
+     * Calculates the predicted financial value for a specific future year.
+     * <p>
+     * This method uses the <b>Least Squares Linear Regression</b> algorithm 
+     * ($y = a + bx$) to find the trend line of the provided historical data.
+     * </p>
+     * @param x          An array of historical years (independent variable).
+     * @param y          An array of historical financial values (dependent variable).
+     * @param targetYear The year for which the prediction is requested.
+     * @return The predicted amount for the target year, rounded down to the nearest integer.
+     */
     public static double getValueForGivenYear(double[] x, double[] y, int targetYear) {
         int n = x.length;
 
@@ -145,6 +168,18 @@ public class Prediction {
         double predictedY = Math.floor(a + b * targetYear);
         return predictedY;
     }
+    /**
+     * Estimates the exact time (Month and Year) when a specific financial target 
+     * will be reached.
+     * <p>
+     * The method normalizes the year data to increase calculation accuracy and 
+     * then solves the linear regression equation for $x$ given a value $y$.
+     * </p>
+     * * @param x        An array of historical years.
+     * @param y        An array of historical financial values.
+     * @param desiredY The target financial value (budget amount) to reach.
+     * @return A string representation of the estimated date in <b>MM/YYYY</b> format.
+     */
     public static String getYearandMonthforGivenValue(double[] x, double[] y, double desiredY) {
     int n = x.length;
 

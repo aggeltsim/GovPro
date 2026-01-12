@@ -8,8 +8,11 @@ public class Valuables extends Expenses {
     }
     @Override
     public String toExplain() {
-        return getName() + " includes cost for assets that are hold" 
-        +  " for wealth or for cultural reasons" 
-        + "like old coins,crowns, gold reserves etc.";
+        return getName() + " are items of value that the government"
+        + " owns, such as gold, silver, jewelry, or other precious"
+        + " materials. This account tracks the government's possession"
+        + " and management of these items. In simple terms, a valuables"
+        + " account shows the government's property that has significant"
+        + " worth, similar to a person keeping valuable items safe for the future.";
     }
 }

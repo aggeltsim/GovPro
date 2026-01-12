@@ -10,9 +10,12 @@ public class FinancDerivatives extends Income {
 
     @Override
     public String toExplain() {
-        return getName() + " are contracts whose value depends on"
-        + " the price of an underlying asset, interest rate, or"
-        + " index, used by the government for hedging or"
-        + " investment purposes.";
+        return getName() + " are contracts or instruments the government"
+        + " uses to manage financial risks, such as changes in interest"
+        + " rates, exchange rates, or the price of commodities. This"
+        + " account tracks the gains or losses from these contracts. In"
+        + " simple terms, a financial derivatives account shows the"
+        + " government's use of special financial tools to protect"
+        + " its money and budget from unexpected changes in the market.";
     }
 }

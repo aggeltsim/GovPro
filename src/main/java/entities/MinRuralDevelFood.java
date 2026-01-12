@@ -10,6 +10,12 @@ public class MinRuralDevelFood extends Entity {
 
     @Override
     public String toExplain() {
-        return getName() + " supports farmers and ensures safe food production.";
+        return "The " + getName() + " is the Greek government department"
+        + " responsible for farming, agriculture, and food production."
+        + " It supports farmers, develops agricultural policies, and"
+        + " ensures the quality and safety of food. It also works to"
+        + " promote sustainable farming and improve rural communities."
+        + " In simple terms, it is the part of the government that helps"
+        + " farmers, protects the food we eat, and supports life in the countryside.";
     }
 }

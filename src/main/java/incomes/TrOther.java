@@ -9,9 +9,9 @@ public class TrOther extends Transfers {
     }
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Transfers. Specifically,"
+        return getName() + " is a form of Transfers. Specifically, it is"
         + " money the government receives from any other sources not"
-        + " covered by domestic,EU, or foreign transfers, like"
+        + " covered by domestic, EU, or foreign transfers, like"
         + " miscellaneous fees or donations. ";
     }
 }

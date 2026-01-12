@@ -1,6 +1,13 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
+/**
+ * Provides high-precision statistical analysis of the 2024 Greek State Budget.
+ * This class calculates the percentage distribution of fixed historical expenses 
+ * and incomes, representing each category as a ratio (0.0 to 1.0) relative to 
+ * the annual totals (1.108T for expenses and 1.107T for incomes). 
+ * All calculations use {@link BigDecimal} with 8-decimal precision and 
+ * {@link RoundingMode#HALF_UP} for financial accuracy.
+ */
 public class Budget2024 {
     public static BigDecimal[] staticsExp() {
        BigDecimal expenses2024[] = {new BigDecimal("14849625000"), new BigDecimal("410540000"), new BigDecimal("33228722000"), 
@@ -19,7 +26,6 @@ public class Budget2024 {
             return statics2024;
         
         }
-
         public static BigDecimal[] staticsInc() {
             BigDecimal expenses2024[] = {new BigDecimal("56597000000"), new BigDecimal("56000000"), new BigDecimal("7960000000"), 
                                     new BigDecimal("5547000000"), new BigDecimal("2555000000"), new BigDecimal("23000000"), 

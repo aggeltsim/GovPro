@@ -10,7 +10,13 @@ public class HellenicParliament extends Entity {
 
     @Override
     public String toExplain() {
-        return getName() + " is Greece's unicameral legislative body"
-        + " responsible for making laws and overseeing the government.";
+        return "The " + getName() + " is the Greek national legislature,"
+        + " where elected representatives make decisions for the country."
+        + " Its main jobs are to pass laws, approve the budget of the"
+        + " government, control and oversee the government, and represent"
+        + " the people. It also discusses important national issues and"
+        + " ensures that the government acts according to the law. In"
+        + " simple terms, it is the place where Greek laws are made and"
+        + " where the government is held accountable to the citizens.";
     }
 }

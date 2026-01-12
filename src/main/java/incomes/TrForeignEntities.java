@@ -10,8 +10,13 @@ public class TrForeignEntities extends Transfers {
    
     @Override
     public String toExplain() {
-        return getName() + " is a form of  Transfers. Specifically,"
-        + " money the government receives from other countries or"
-        + " international organizations, like aid, loans, or grants.";
+        return getName() + " is a form of Transfers. Specifically,"
+        + " they are amounts of money the government receives from"
+        + " organizations, governments, or institutions outside the"
+        + " country. This can include donations, grants, or financial"
+        + " support for specific programs or projects. In simple terms,"
+        + " a current transfers from foreign entities account"
+        + " shows the money coming to Greece from abroad to help fund"
+        + " government activities or public services.";
     }
 }

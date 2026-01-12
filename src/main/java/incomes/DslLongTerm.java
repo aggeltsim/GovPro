@@ -10,10 +10,13 @@ public class DslLongTerm extends DeptSecurLiabil {
 
     @Override
     public String toExplain() {
-        return getName() + " are a form of Dept Securities (Liabilities)."
-        + " Specifically, they are Long-term debt securities are"
-        + " government-issued financial instruments with a maturity of"
-        + " more than one year, used to finance the long-term"
-        + " borrowing needs of the Greek state.";
+        return getName() + " are amounts of money the government borrows"
+        + " for a long period, usually more than 12 months, by issuing"
+        + " bonds or other debt instruments. This account tracks the"
+        + " money the government receives from investors now and promises"
+        + " to pay back over time with interest. In simple terms, a"
+        + " long-term debt securities account shows the government's"
+        + " long-term borrowing to fund its expenses and investments,"
+        + " similar to taking a long-term loan.";
     }
 }
