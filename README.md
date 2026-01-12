@@ -31,12 +31,15 @@ Alternatively, if you have generated a JAR file:
 * `src/test/java`: Automated JUnit and TestFX test suites.
 * `pom.xml`: Maven configuration and dependency management.
 * `LICENSE`: Apache lisense for the app usage.
+* `UML_Diagram.png`: The visualized UML Diagram of the GovPro App.
+* `CODE_OF_CONDUCT.md` & `CONTRIBUTING.md`: Files dedicated to present our promised pledges and a step by step guide to participate in developing code.  
 
+## UML Diagram
 ![GovPro UML Diagram](Uml_Diagram.png)
 
 ## Usage Instructions
 
-The **GovPro** application provides a multi-window interface for interacting with the Greek State Budget. Follow the steps below to utilize all system features:
+The **GovPro** application provides a multi-window interface for interacting with the Greek State Budget. Follow the steps below to utilize all 5 system features:
 
 ### 1. Navigating the Budget Table
 * **Startup:** After the animated Splash Screen, the main dashboard will appear and immediately see a full list of 2025 budget entries.
@@ -71,10 +74,10 @@ The **GovPro** application provides a multi-window interface for interacting wit
 * **Audio Feedback:** The system provides sound notifications (AudioClips) upon successful completion of tasks or errors.
 * **Transitions:** The interface utilizes `FadeTransitions` for smooth navigation between different modules.
 
-### Key Features (User Perspective)
+### Key Features
 
 * **1. View Budget Table:** A detailed, color-coded display of budget items using `StringBuilder` for high-performance data reporting and memory efficiency.
-* **2. Make Changes (What-if Analysis):** Allows users to modify budget amounts through dialog windows, utilizing `BigDecimal` to ensure absolute financial precision.
+* **2. Make Changes:** Allows users to modify budget amounts through dialog windows, utilizing `BigDecimal` to ensure absolute financial precision.
 * **3. Forecasting Engine:** Employs Linear Regression (Ordinary Least Squares) to predict future spending or estimate the year a specific financial goal will be met.
 * **4. Statistics Dashboard:** Features dynamic Pie Charts and progress bars to visualize the distribution of income and expenses organized by fiscal year (2022–2024).
 * **5. Percentage Calculator:** A standalone tool with a custom CSV loader and robust error handling to calculate and compare percentage ratios between multiple budget codes.
@@ -114,8 +117,6 @@ GovPro follows a **Layered Architecture** pattern to ensure complete separation 
 * **Class Hierarchy:** Organized into 3 packages (Income, Expenses, Entities) using inheritance from "parent" classes for specialized budget sub-classes.
 * **Object Creation (Factory Mechanism):** Raw financial data from 2D `Object[][]` arrays are processed through centralized methods in `ObjectsEntities.java`, `ObjectsIncomes.java`, and `ObjectsExpenses.java` to generate dynamic `ArrayLists`.
 * **Data Lifecycle & Flow:** Implements **Strict Casting** to convert static data into `BigDecimal` objects. Utilizing **Setters** ensures that memory changes reflect immediately across the system. This collection serves as the **"Single Source of Truth"** for both the Forecasting Engine and the Presentation Layer.
-* **Strict Instantiation:** Uses explicit casting (e.g., `(BigDecimal) data[x][2]`) to maintain financial integrity and prevent type-conversion errors.
-
 
 ### 2.2 Logic Layer (Core Processing)
 * **2.2.1 Budget View:** Populates `ObservableList<BudgetEntry>` for the UI. Features **Conditional Styling** (Green for Income, Blue for Entities, Red for Expenses) for immediate visual categorization.
@@ -149,20 +150,17 @@ Despite its robust architectural structure, the current implementation of the sy
 * **3.7 Responsive Design:** The layout relies on `BorderPane` and `Box` containers with fixed sizes. The application lacks full Responsive Design, meaning that on very small screens or extreme window resizing, certain elements (like the table or statistics) may not adjust ideally.
 * **3.8 OS Dependency:** JavaFX utilizes hardware acceleration. On outdated systems, transition performance may exhibit delays or lag.
 
----
 
 ## 4. Risks of Use
 
 ### 4.1 The "Double-Edged Sword" of Data Modification
 The Amendment feature is the most controversial part of the application, oscillating between utility and risk:
 * **Flexibility:** The ability to instantly change amounts is an essential feature, allowing the budget to be adjusted according to user preferences. It is a dynamic planning tool that grants excellent control.
-* **Arbitrariness & Error:** Conversely, this freedom poses a risk as the system lacks a verification mechanism. Users may enter "logical inaccuracies" (incorrect or unrealistic amounts), compromising budget integrity. The line between a valid test change and a catastrophic distortion of information is extremely thin.
+* **Arbitrariness:** Conversely, this freedom poses a risk as the system lacks a verification mechanism. Users may enter "logical inaccuracies" (incorrect or unrealistic amounts), compromising budget integrity. The line between a valid test change and a catastrophic distortion of information is extremely thin.
 * **The "Architectural Isolation" Solution:** This gray area is mitigated by the fact that calculations draw amounts from the original static arrays, ignoring GUI changes. This acts as a critical safety valve, ensuring that long-term estimates are always based on valid and verified historical data. GUI modifications serve as an "added feature" for visual experimentation without altering the core computational engine.
 
 ### 4.2 Inflationary Distortion and the "Illusion of Growth"
 The most significant economic risk arises from processing nominal values. A user might assume a sector is being strengthened because its funding increases, while in reality, due to inflationary trends, it is being downgraded in terms of purchasing power.
-
-
 
 ### 4.3 Linear Simplification of Complex Economic Phenomena
 The use of Simple Linear Regression is a mathematical approach that does not always reflect reality. The algorithm does not account for extraordinary events (pandemics, energy crises, geopolitical changes) that cause exponential shifts or sharp declines.
@@ -176,6 +174,78 @@ The "Black Box" risk lies in the user's tendency to blindly trust results simply
 ### 4.6 Data Range Limitations
 There is a risk of precarious extrapolation. Predictions for 2030 or 2040, based on only 4 years of historical data (2022-2025), are statistically risky as the margin of error increases exponentially the further we move from the actual data range.
 
+
+## 5. AI Interaction and Collaborative Development
+
+The development of the **GovPro** system involved a strategic collaboration between the lead developers and Generative AI (GAI) tools. Rather than outsourcing the creative process, AI was utilized as a "thought-partner" to accelerate refactoring from legacy frameworks to modern architectures and to ensure economic rigor in predictive modeling.
+
+### 5.1 Refactoring and Logic Migration
+The transition from a monolithic Swing interface to a modular JavaFX environment was facilitated by AI-assisted code decomposition.
+* **Method Extraction**: AI was prompted to identify discrete logic blocks within legacy `switch-case` structures and propose independent JavaFX methods such as `showBudget()`, `showAmendDialog()`, `showPredictionWindow()`, and `showStatisticsWindow()`.
+* **UI Modernization**: The collaboration focused on replacing static `JOptionPane` dialogs with more flexible JavaFX `Dialog` or `Alert` components to improve user flow.
+
+### 5.2 Technical Debugging and Dependency Management
+AI was leveraged to resolve environment-specific configuration hurdles and ensure project stability.
+* **Maven Configuration**: Provided AI with existing `pom.xml` snippets to verify the correct implementation of the `javafx-maven-plugin` and ensure the `mainClass` declaration pointed correctly to `GovProFX`.
+* **Namespace Resolution**: AI assisted in verifying `package declarations` across the project structure, such as ensuring `FixedAssetsExp.java` correctly resided within the `expenses` package to prevent compilation errors.
+
+### 5.3 Economic Modeling and Validation
+A key area of human-AI synergy was the integration of economic theory into the software’s predictive engine.
+* **Formula Verification**: Validated the importance of using deflated values in predictive models to avoid biased estimates, especially when data covers multiple years with varying inflation levels.
+* **Formula Adaptation**: Confirmation of the correct type implementation for the Simple Linear Regression model, ensuring compatibility with the diverse data of the 'Single Source of Truth' while adhering to established economic and statistical standards.
+
+### 5.4 Collaborative Development of the Percentage Suite
+The development of the **Percentage Suite** served as a primary example of human-AI synergy, focusing on data integrity and statistical rigorousness.
+* **Thread Integration**: AI assisted in structuring the `PercentageSuite` class to handle asynchronous data loading from CSV files without blocking the main JavaFX thread and enabling simultaneous execution.
+* **Statistical Validation**: AI was utilized to provide a validated implementation for the calculation model, ensuring compatibility with domain standards.
+* **Advanced Exception Handling**: The developer and AI collaborated to implement a robust variety of exceptions. This system was specifically designed to catch and manage a suite of 11 distinct exceptions.
+* **Validation**: This collaboration led to a seamless validation layer where the `PercentageSuite` can now verify calculation integrity across multiple pairs of sumed (or not) budget sub-classes and print the desired percentage.
+
+### 5.5 Quality Assurance through Unit Testing
+The partnership extended to the testing phase, focusing on precision and robustness.
+* **Test Case Generation**: AI assisted in drafting JUnit test cases to verify that the constructor correctly stores attributes like code, name, and amount.
+* **Precision Handling**: Based on AI recommendations and code snippets, the system utilized `BigDecimal` for financial attributes (e.g., `new BigDecimal("1000.00")`) to eliminate the rounding errors inherent in `double` types.
+* **Behavioral Validation**: AI helped verify that getters and setters function correctly and that descriptive methods like `toExplain()` provide human-readable context.
+
+
+## 6. Documentation of Third-Party Licenses
+
+The **GovPro** application utilizes several open-source libraries and frameworks to ensure reliable dependency management. Below is the list of all necessary licenses required for the operation and distribution of the software:
+
+* **OpenJDK (GPL v2 with Classpath Exception)**: Provides the core Java runtime environment and standard libraries (e.g., `java.util`, `java.math.BigDecimal`) used for the application's logic and financial calculations.
+* **OpenJFX / JavaFX (GPL with Classpath Exception)**: The primary framework for the graphical user interface, enabling the use of `Stages`, `Scenes`, and modern UI controls like `TableView` and `ObservableList`.
+* **Apache License 2.0 (Maven & Plugins)**: Governs the use of the `javafx-maven-plugin` and the Maven build system, which automates project lifecycle management and dependency resolution.
+* **JUnit 5 (Eclipse Public License 2.0)**: Utilized for the implementation of the Unit Testing suite (e.g., `testAllocatedFunds`) to ensure code quality and the integrity of the "Single Source of Truth".
+* **Oracle Binary Code License (Legacy Swing/AWT)**: Covers the use of legacy components from the `javax.swing` and `java.awt` packages during the refactoring phase of the prediction modules.
+
+
+## 7. Automated Testing Suite and Unit Testing with JUnit 5
+
+To ensure the reliability and stability of the **GovPro** application, a comprehensive automated testing suite was implemented using the **JUnit 5** framework. These unit tests focus on verifying individual components of the program, ensuring that any refactoring or logic migration does not introduce regressions.
+
+### 7.1 Testing Scope and Objectives
+The primary objective of the testing suite is to validate the integrity of the "Single Source of Truth" by auditing the core data structures and their associated logic. Key focus areas include:
+* **Object Instantiation**: Verifying that the `ObjectFactory` correctly instantiates objects with strict type-casting.
+* **Data Accuracy**: Ensuring that financial attributes using `BigDecimal` maintain precision throughout the program's lifecycle.
+* **Method Behavior**: Validating the output of descriptive methods and the functionality of getters and setters.
+
+### 7.2 Implementation: The `testAllocatedFunds` Case
+A central part of the suite is the `testAllocatedFunds()` method, which serves as a benchmark for the application's data layer.
+* **Constructor Validation**: The test confirms that when an `AllocatedFunds` object is created, the `Code`, `Name`, `Amount`, and `Form` are stored exactly as provided.
+* **State Mutation**: Tests verify that setters correctly update values and that these changes are reflected accurately by the getters.
+* **Human-Readable Context**: The suite includes assertions for the `toExplain()` method, confirming it returns the expected string which validates that the object's purpose is correctly communicated.
+
+### 7.3 Testing for Refactoring Safety
+Since the project involved significant migration from Swing to JavaFX, the JUnit 5 suite acted as a "safety net."
+* **Regression Testing**: By running the full suite after each code change, the developer ensured that logic moved from legacy `switch-case` blocks into new JavaFX methods remained functionally identical.
+* **BigDecimal Integrity**: Specific tests were designed to catch potential errors during the transition from `double` to `BigDecimal`, ensuring that no rounding discrepancies occurred in the budget's final totals.
+
+### 7.4 Test Execution and Build Integration
+The testing process is fully integrated into the project's lifecycle through **Maven**. 
+* **Automated Execution**: Running the command `mvn test` triggers the entire suite, providing immediate feedback on the health of the application.
+* **Test-Driven Development Approach**: The use of `assertEquals` and `assertNotNull` throughout the development process ensured that every new feature met the pre-defined statistical and economic standards before integration into the main branch.
+
+
 ## Final Remarks
 
-In conclusion, the **GovPro** application is a powerful tool for strategic visualization and trend analysis, offering valuable insights into the course of fiscal magnitudes. However, its use is purely explanatory and advisory. Its value lies in its ability to visualize complex data and highlight statistical correlations that often escape a simple reading of accounting tables. It functions best as a **Decision Support System** rather than a platform for deterministic outcomes. The absence of live data stream connections and an automated deflation mechanism makes **human judgment essential** for the final evaluation of results.
+In conclusion, the **GovPro** application is a powerful tool for strategic visualization and trend analysis, offering valuable insights into the course of fiscal magnitudes. However, its use is purely explanatory and advisory. Its value lies in its ability to visualize complex data and highlight statistical correlations that often escape a simple reading of accounting tables. It functions best as a **Decision Support System** rather than a platform for deterministic outcomes. This sofisticatted model makes **human judgment essential** for the final evaluation of results.
