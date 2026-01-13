@@ -150,7 +150,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>GovProFX</mainClass>
+                    <mainClass>GovProFx</mainClass>
                 </configuration>
             </plugin>
              <!-- Javadoc generation -->   
