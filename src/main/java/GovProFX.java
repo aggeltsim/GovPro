@@ -1,9 +1,9 @@
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.NumberFormat;
 import entities.Entity;
 import expenses.Expenses;
 import incomes.Income;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -76,191 +76,219 @@ import javafx.util.Duration;
  */
 public class GovProFx extends Application {
 
-    private AudioClip gameTreasure;
-    private AudioClip gameNotification;
-    private AudioClip startConfirm;
-    private AudioClip instantWin;
-    private AudioClip clearSound;
+  private AudioClip gameTreasure;  
+  private AudioClip gameNotification;
+  private AudioClip startConfirm;
+  private AudioClip instantWin;
+  private AudioClip clearSound;
 
+  /**
+   * Model class representing a single budget record.
+   *
+   * <p>This class is used by the {@link TableView} to display
+   * budget codes, descriptions, and monetary amounts.
+   * </p>
+   */
+  public static class BudgetEntry {
+
+    /** Budget account code. */
+    private String code;
+
+    /** Description of the budget entry. */
+    private String name;
+
+    /** Monetary amount associated with the entry. */
+    private BigDecimal amount;
 
     /**
-     * Model class representing a single budget record.
+     * Constructs a new {@code BudgetEntry}.
      *
-     * <p>
-     * This class is used by the {@link TableView} to display
-     * budget codes, descriptions, and monetary amounts.
-     * </p>
+     * @param code   the account code
+     * @param name   the description of the entry
+     * @param amount the monetary amount
      */
-    public static class BudgetEntry {
-        /** Budget account code */
-        private String code;
-        /** Description of the budget entry */
-        private String name;
-        /** Monetary amount associated with the entry */
-        private BigDecimal amount;
-
-        /**
-         * Constructs a new {@code BudgetEntry}.
-         *
-         * @param code   the account code
-         * @param name   the description of the entry
-         * @param amount the monetary amount
-         */
-        public BudgetEntry(String code, String name, BigDecimal amount) {
-            this.code = code;
-            this.name = name;
-            this.amount = amount;
-        }
-        /** @return the budget account code */
-        public String getCode() { return code; }
-        /** @return the description of the entry */
-        public String getName() { return name; }
-        /** @return the monetary amount */
-        public BigDecimal getAmount() { return amount; }
-         /**
-         * Updates the monetary amount of this entry.
-         *
-         * @param amount the new monetary amount
-         */
-        public void setAmount(BigDecimal amount) { this.amount = amount; }
+    public BudgetEntry(String code, String name, BigDecimal amount) {
+      this.code = code;
+      this.name = name;
+      this.amount = amount;
     }
 
-    private ObservableList<BudgetEntry> masterData = FXCollections.observableArrayList();
-    private TableView<BudgetEntry> table = new TableView<>();
-
-    /**
-     * Array representing the fiscal years for which historical data is available.
-     * <p>Used as the time axis for prediction algorithms.</p>
+    /** Returns the budget account code.
+     * 
+     * @return  the budget account code 
      */
-    static double[] years = {2021, 2022, 2023, 2024, 2025, 2026};
-    /**
-     * A 2D array containing historical spending data for various ministries and entities.
-     * <p>
-     * <strong>Data Structure:</strong>
-     * <ul>
-     * <li>Rows: Correspond to specific entities (e.g., Presidency, Ministries).</li>
-     * <li>Columns: Correspond to the years defined in the {@link #years} array.</li>
-     * </ul>
-     * </p>
-     * <p>
-     * <strong>Note:</strong> The values represent de-inflated budget amounts in Euros, 
-     * using 2021 as the base year.
-     * </p>
-     */
-    static double[][] dapanes = { 
-        {3766000, 4097337, 3811641, 4059900, 3974293, 4146883}, 
-        {143500000, 134251607, 134030043, 140477275, 147343837, 156551972}, 
-        {34251000, 40536272, 36372937, 37886945, 35723136, 38447884}, 
-        {2986769000.0, 2973891093.0, 3172953535.0, 3245029336.0, 3282162880.0, 3487669947.0}, 
-        {288237000, 246668455, 252308235, 357219091, 359936589, 404757288}, 
-        {5495900000.0, 5937190083.0, 5103551488.0, 5362408267.0, 5252784805.0, 5916035799.0}, 
-        {4256596000.0, 4276649036.0, 4651583743.0, 5278434922.0, 6150311996.0, 6568225405.0}, 
-        {533261000, 531100091, 506425467, 547747086, 557774970, 569191096}, 
-        {5605100000.0, 5363728191.0, 5436589608.0, 5733987212.0, 5660668349.0, 5665485468.0}, 
-        {359100000, 383427915, 409992485, 350395832, 493075321, 546993897}, 
-        {747475497000.0, 690153192000.0, 669349030000.0, 919467234000.0, 1068139883000.0, 1438513680000.0} 
-    };
-
-    /**
-     * Entry point of the JavaFX application.
-     *
-     * <p>
-     * Displays a splash screen before loading the main UI.
-     * </p>
-     *
-     * @param primaryStage the primary application stage
-     */   
-    @Override
-    public void start(Stage primaryStage) {
-        start(primaryStage, false); // default behavior: show splash
+    public String getCode() { 
+      return code; 
     }
 
-    /**
-     * Overloaded start method mainly used for testing.
-     *
-     * @param primaryStage the main application stage
-     * @param skipSplash   if {@code true}, skips the splash screen
-     *                     and loads the main UI directly
+    /** Returns the description of the entry.
+     * 
+     * @return the description of the entry
      */
-    public void start(Stage primaryStage, boolean skipSplash) {
-        if (skipSplash) {
-            showMainApp(primaryStage);
-            primaryStage.show();
-            return;
-        }
-        //---- Start Here sound----
-        startConfirm = new AudioClip(getClass().getResource("/sounds/winning-a-coin.wav").toExternalForm());
-        startConfirm.setVolume(0.5);
+    public String getName() { 
+      return name; 
+    }
+        
+    /** Returns the monetary amount.
+     * 
+     * @return the monetary amount 
+     */
+    public BigDecimal getAmount() { 
+      return amount; 
+    }
+    /**
+     * Updates the monetary amount of this entry.
+     *
+     * @param amount the new monetary amount
+     */
 
-        // WARM-UP
-        startConfirm.setVolume(0.0);
-        startConfirm.play();
-        startConfirm.stop();
-        startConfirm.setVolume(0.5);
+    public void setAmount(BigDecimal amount) { 
+      this.amount = amount; 
+    }
+  }
 
-        // ----- Original splash screen code -----
-        Image backgroundImg = new Image(getClass().getResourceAsStream("/images/GovProbackground.png"));
-        BackgroundImage bg = new BackgroundImage(
-                backgroundImg,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
-        );
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/govpro_icon.png")));
+  private ObservableList<BudgetEntry> masterData = FXCollections.observableArrayList();
+  private TableView<BudgetEntry> table = new TableView<>();
 
-        StackPane splashPane = new StackPane();
-        splashPane.setBackground(new Background(bg));
-        splashPane.setPadding(new Insets(20));
+  /**
+   * Array representing the fiscal years for which historical data is available.
+   * 
+   * <p>Used as the time axis for prediction algorithms.</p>
+   */
+  static double[] years = {2021, 2022, 2023, 2024, 2025, 2026};
+  /**
+   * A 2D array containing historical spending data for various ministries and entities.
+   * 
+   * <p><strong>Data Structure:</strong> 
+   * <ul>
+   * <li>Rows: Correspond to specific entities (e.g., Presidency, Ministries).</li>
+   * <li>Columns: Correspond to the years defined in the {@link #years} array.</li>
+   * </ul>
+   * </p>
+   * 
+   * <p><strong>Note:</strong> The values represent de-inflated budget amounts in Euros, 
+   * using 2021 as the base year.
+   * </p>
+   */
+  static double[][] dapanes = { 
+    {3766000, 4097337, 3811641, 4059900, 3974293, 4146883}, 
+    {143500000, 134251607, 134030043, 140477275, 147343837, 156551972}, 
+    {34251000, 40536272, 36372937, 37886945, 35723136, 38447884}, 
+    {2986769000.0, 2973891093.0, 3172953535.0, 3245029336.0, 3282162880.0, 3487669947.0}, 
+    {288237000, 246668455, 252308235, 357219091, 359936589, 404757288}, 
+    {5495900000.0, 5937190083.0, 5103551488.0, 5362408267.0, 5252784805.0, 5916035799.0}, 
+    {4256596000.0, 4276649036.0, 4651583743.0, 5278434922.0, 6150311996.0, 6568225405.0}, 
+    {533261000, 531100091, 506425467, 547747086, 557774970, 569191096}, 
+    {5605100000.0, 5363728191.0, 5436589608.0, 5733987212.0, 5660668349.0, 5665485468.0}, 
+    {359100000, 383427915, 409992485, 350395832, 493075321, 546993897}, 
+    {747475497000.0, 690153192000.0, 669349030000.0, 919467234000.0,
+        1068139883000.0, 1438513680000.0} 
+  };
 
-        Button startButton = new Button("Start Here ▶");
-        startButton.setStyle("""
-            -fx-background-color: #32809aff;
-            -fx-text-fill: white;
-            -fx-font-size: 18px;
-            -fx-padding: 10 25 10 25;
-            -fx-background-radius: 10;
+  /**
+   * Entry point of the JavaFX application.
+   *
+   * <p>Displays a splash screen before loading the main UI.
+   * </p>
+   *
+   * @param primaryStage the primary application stage
+   */   
+  @Override
+  public void start(Stage primaryStage) {
+    start(primaryStage, false); // default behavior: show splash
+  }
+
+  /**
+   * Overloaded start method mainly used for testing.
+   *
+   * @param primaryStage the main application stage
+   * @param skipSplash   if {@code true}, skips the splash screen
+   *                     and loads the main UI directly
+   */
+  public void start(Stage primaryStage, boolean skipSplash) {
+    if (skipSplash) {
+      showMainApp(primaryStage);
+      primaryStage.show();
+      return;
+    }
+    // ---- Start Here sound----
+    startConfirm = 
+        new AudioClip(getClass().getResource("/sounds/winning-a-coin.wav").toExternalForm());
+    startConfirm.setVolume(0.5);
+
+    // WARM-UP
+    startConfirm.setVolume(0.0);
+    startConfirm.play();
+    startConfirm.stop();
+    startConfirm.setVolume(0.5);
+
+    // ----- Original splash screen code -----
+    Image backgroundImg = new Image(getClass().getResourceAsStream("/images/GovProbackground.png"));
+    BackgroundImage bg = new BackgroundImage(
+        backgroundImg,
+        BackgroundRepeat.NO_REPEAT,
+        BackgroundRepeat.NO_REPEAT,
+        BackgroundPosition.CENTER,
+        new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
+    );
+    primaryStage.getIcons().add(
+        new Image(getClass().getResourceAsStream("/images/govpro_icon.png")));
+
+    StackPane splashPane = new StackPane();
+    splashPane.setBackground(new Background(bg));
+    splashPane.setPadding(new Insets(20));
+
+    Button startButton = new Button("Start Here ▶");
+    startButton.setStyle("""
+        -fx-background-color: #32809aff;
+        -fx-text-fill: white;
+        -fx-font-size: 18px;
+        -fx-padding: 10 25 10 25;
+        -fx-background-radius: 10;
         """);
 
-        VBox splashContent = new VBox(20, startButton);
-        splashContent.setAlignment(Pos.CENTER);
-        splashContent.setTranslateY(200);
-        splashPane.getChildren().add(splashContent);
+    VBox splashContent = new VBox(20, startButton);
+    splashContent.setAlignment(Pos.CENTER);
+    splashContent.setTranslateY(200);
+    splashPane.getChildren().add(splashContent);
 
-        Scene splashScene = new Scene(splashPane, 1100, 650);
+    Scene splashScene = new Scene(splashPane, 1100, 650);
 
-        primaryStage.setTitle("🏛️ GovPro Budget System 2025");
-        primaryStage.setScene(splashScene);
-        primaryStage.show();
+    primaryStage.setTitle("🏛️ GovPro Budget System 2025");
+    primaryStage.setScene(splashScene);
+    primaryStage.show();
 
-        startButton.setOnAction(e -> {
-            startConfirm.play();
-            FadeTransition fade = new FadeTransition(Duration.seconds(1.2), splashPane);
-            fade.setFromValue(1.0);
-            fade.setToValue(0.0);
-            fade.setInterpolator(Interpolator.EASE_BOTH);
-            fade.setOnFinished(ev -> showMainApp(primaryStage));
-            fade.play();
-        });
-    }
+    startButton.setOnAction(e -> {
+      startConfirm.play();
+      FadeTransition fade = new FadeTransition(Duration.seconds(1.2), splashPane);
+      fade.setFromValue(1.0);
+      fade.setToValue(0.0);
+      fade.setInterpolator(Interpolator.EASE_BOTH);
+      fade.setOnFinished(ev -> showMainApp(primaryStage));
+      fade.play();
+    });
+  }
     
-    /**
-     * Builds and displays the main user interface of the application.
-     *
-     * <p>
-     * Initializes menus, tables, dialogs, and sound effects.
-     * </p>
-     *
-     * @param primaryStage the primary application stage
-     */
-    protected void showMainApp(Stage primaryStage) {
+  /**
+   * Builds and displays the main user interface of the application.
+   *
+   * <p>Initializes menus, tables, dialogs, and sound effects.
+   * </p>
+   *
+   * @param primaryStage the primary application stage
+   */
+  protected void showMainApp(Stage primaryStage) {
 
-    //-----Sounds----
-    gameNotification = new AudioClip(getClass().getResource("/sounds/game-notification.wav").toExternalForm());
-    gameTreasure = new AudioClip(getClass().getResource("/sounds/game-treasure.wav").toExternalForm());
-    instantWin = new AudioClip(getClass().getResource("/sounds/instant-win.wav").toExternalForm());
+    // -----Sounds----
+    gameNotification = new AudioClip(getClass().getResource(
+        "/sounds/game-notification.wav").toExternalForm());
+    gameTreasure = new AudioClip(getClass().getResource(
+        "/sounds/game-treasure.wav").toExternalForm());
+    instantWin = new AudioClip(getClass().getResource(
+        "/sounds/instant-win.wav").toExternalForm());
     instantWin.setVolume(0.6);
-    clearSound = new AudioClip(getClass().getResource("/sounds/arcade-casino.wav").toExternalForm());
+    clearSound = new AudioClip(getClass().getResource(
+        "/sounds/arcade-casino.wav").toExternalForm());
 
     // Preload for instant playback
     instantWin.setVolume(0.0);
@@ -289,7 +317,8 @@ public class GovProFx extends Application {
     Button btnExplain = createMenuButton("Account Explanation ");
     Button btnCitizen = createMenuButton("AI Assistant");
 
-    menuBox.getChildren().addAll(menuTitle, btnRead, btnAmend, btnPredict, btnStats, btnPercent, btnExplain,btnCitizen);
+    menuBox.getChildren().addAll(
+        menuTitle, btnRead, btnAmend, btnPredict, btnStats, btnPercent, btnExplain, btnCitizen);
 
     setupTable();
     StackPane contentArea = new StackPane(table);
@@ -299,40 +328,41 @@ public class GovProFx extends Application {
     btnAmend.setOnAction(e -> showAmendDialog());
     btnPredict.setOnAction(e -> showPredictDialog());
     btnStats.setOnAction(e -> showStatistics());
-    btnPercent.setOnAction(e -> { new Thread(() -> {
+    btnPercent.setOnAction(e -> { 
+      new Thread(() -> {
         try {
-            Percentage.percentage.Runner.main(new String[0]);
-            gameTreasure.play();
+          Percentage.percentage.Runner.main(new String[0]);
+          gameTreasure.play();
         } catch (Exception ex) {
-            ex.printStackTrace();
+          ex.printStackTrace();
         }
-    }).start();
-});
+      }).start();
+    });
     btnCitizen.setOnAction(e -> {
-    new Thread(() -> {
+      new Thread(() -> {
         
         javafx.application.Platform.runLater(() -> showCitizenAssistantDialog());
-    }).start();
-});
+      }).start();
+    });
     btnRead.setOnAction(e -> {
-        gameTreasure.play();
-        table.setVisible(true);
+      gameTreasure.play();
+      table.setVisible(true);
     });
     btnAmend.setOnAction(e -> {
-        gameTreasure.play();
-        showAmendDialog();
+      gameTreasure.play();
+      showAmendDialog();
     });
     btnPredict.setOnAction(e -> {
-        gameTreasure.play();
-        showPredictDialog();
+      gameTreasure.play();
+      showPredictDialog();
     });
     btnStats.setOnAction(e -> {
-        gameTreasure.play();
-        showStatistics();
+      gameTreasure.play();
+      showStatistics();
     });
     btnExplain.setOnAction(e -> {
-        gameTreasure.play();
-        showExplanation();
+      gameTreasure.play();
+      showExplanation();
     });
 
     BorderPane root = new BorderPane();
@@ -341,180 +371,157 @@ public class GovProFx extends Application {
 
     Scene mainScene = new Scene(root, 1100, 650);
     primaryStage.setScene(mainScene);
-}
+  }
 
-    /**
-     * Configures the budget {@link TableView}.
-     *
-     * <p>
-     * Sets up columns, value formatting, and conditional row styling
-     * based on budget entry categories.
-     * </p>
-     */
-    private void setupTable() {
-        TableColumn<BudgetEntry, String> codeCol = new TableColumn<>("Code");
-        codeCol.setCellValueFactory(new PropertyValueFactory<>("code"));
-        codeCol.setPrefWidth(100);
+  /**
+   * Configures the budget {@link TableView}.
+   *
+   * <p>Sets up columns, value formatting, and conditional row styling
+   * based on budget entry categories.
+   * </p>
+   */
+  private void setupTable() {
+    TableColumn<BudgetEntry, String> codeCol = new TableColumn<>("Code");
+    codeCol.setCellValueFactory(new PropertyValueFactory<>("code"));
+    codeCol.setPrefWidth(100);
 
-        TableColumn<BudgetEntry, String> nameCol = new TableColumn<>("Description");
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        nameCol.setPrefWidth(450);
+    TableColumn<BudgetEntry, String> nameCol = new TableColumn<>("Description");
+    nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+    nameCol.setPrefWidth(450);
 
-        TableColumn<BudgetEntry, BigDecimal> amountCol = new TableColumn<>("Amount (€)");
-        amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        amountCol.setPrefWidth(250);
+    TableColumn<BudgetEntry, BigDecimal> amountCol = new TableColumn<>("Amount (€)");
+    amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
+    amountCol.setPrefWidth(250);
 
-        amountCol.setCellFactory(tc -> new TableCell<>() {
-            @Override
-            protected void updateItem(BigDecimal amount, boolean empty) {
-                super.updateItem(amount, empty);
-                if (empty || amount == null) {
-                    setText(null);
-                    setStyle("");
-                } else {
-                    NumberFormat nf = NumberFormat.getInstance(Locale.GERMANY);
-                    setText(nf.format(amount));
-                    setStyle("-fx-alignment: CENTER-RIGHT; -fx-padding: 0 10 0 0;");
-                }
+    amountCol.setCellFactory(tc -> new TableCell<>() {
+      @Override
+      protected void updateItem(BigDecimal amount, boolean empty) {
+        super.updateItem(amount, empty);
+        if (empty || amount == null) {
+          setText(null);
+          setStyle("");
+        } else {
+          NumberFormat nf = NumberFormat.getInstance(Locale.GERMANY);
+          setText(nf.format(amount));
+          setStyle("-fx-alignment: CENTER-RIGHT; -fx-padding: 0 10 0 0;");
+        }
+      }
+    });
+
+    table.setRowFactory(tv -> new TableRow<BudgetEntry>() {
+      @Override
+      protected void updateItem(BudgetEntry item, boolean empty) {
+        super.updateItem(item, empty);
+        if (item == null || empty) {
+          setStyle("");
+        } else if ("SECTION".equals(item.getCode())) {
+          setStyle("-fx-background-color: #f3f5f5ff; -fx-font-weight: bold;");
+          this.setTextFill(Color.WHITE);
+        } else {
+          try {
+            int codeInt = Integer.parseInt(item.getCode());
+            if (codeInt >= 11 && codeInt <= 571) {
+              setStyle("-fx-background-color: #e8f5e9;"); // Incomes
+            } else if (codeInt >= 1001) {
+              setStyle("-fx-background-color: #e3f2fd;"); // Entities
+            } else {
+              setStyle("-fx-background-color: #ffebee;"); // Expenses
             }
-        });
+          } catch (NumberFormatException ex) {
+            setStyle(""); 
+          }
+        }
+      }
+    });
 
-        table.setRowFactory(tv -> new TableRow<BudgetEntry>() {
-            @Override
-            protected void updateItem(BudgetEntry item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setStyle("");
-                } else if ("SECTION".equals(item.getCode())) {
-                   setStyle("-fx-background-color: #f3f5f5ff; -fx-font-weight: bold;");
-                    this.setTextFill(Color.WHITE);
-                } else {
-                    try {
-                        int codeInt = Integer.parseInt(item.getCode());
-                        if (codeInt >= 11 && codeInt <= 571) {
-                            setStyle("-fx-background-color: #e8f5e9;"); // Incomes
-                        } else if (codeInt >= 1001) {
-                            setStyle("-fx-background-color: #e3f2fd;"); // Entities
-                        } else {
-                            setStyle("-fx-background-color: #ffebee;"); // Expenses
-                        }
-                    } catch (NumberFormatException ex) {
-                        setStyle(""); 
-                    }
-                }
-            }
-        });
+    table.getColumns().clear();
+    table.getColumns().addAll(codeCol, nameCol, amountCol);
+    table.setItems(masterData);
+    table.setPlaceholder(new Label("No data loaded."));
+  }
 
-        table.getColumns().clear();
-        table.getColumns().addAll(codeCol, nameCol, amountCol);
-        table.setItems(masterData);
-        table.setPlaceholder(new Label("No data loaded."));
-    }
-
-    /**
-     * Displays a dialog window that allows the user
-     * to modify existing budget entries.
-     *
-     * <p>
-     * The selected entry is updated in real time
-     * within the table.
-     * </p>
-     */
-    protected void showAmendDialog() {
-        Stage dialog = new Stage();
-        applyAppIcon(dialog);
-        dialog.initModality(Modality.NONE);
-        dialog.setTitle("🔧 Amend Budget Entry");
-
-        VBox layout = new VBox(10);
-        layout.setPadding(new Insets(20));
-
-        ComboBox<String> combo = new ComboBox<>();
-        combo.valueProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                gameNotification.stop();
-                gameNotification.play();
-            }
-        });
-
-        masterData.forEach(entry -> {
-            if (!"SECTION".equals(entry.getCode()))
-                combo.getItems().add(entry.getCode() + " - " + entry.getName());
-        });
-        combo.setMaxWidth(Double.MAX_VALUE);
-        
-        TextField txtNewValue = new TextField();
-        txtNewValue.setPromptText("Enter new amount...");
-
-        Button btnSave = new Button("Commit Changes ✅");
-        btnSave.setMaxWidth(Double.MAX_VALUE);
-        btnSave.setOnAction(e -> {
-            if (instantWin != null) {
-                instantWin.stop(); 
-                instantWin.play();
-            }
-            int idx = combo.getSelectionModel().getSelectedIndex();
-            if (idx >= 0) {
-                try {
-                    BigDecimal val = new BigDecimal(txtNewValue.getText().replace(",", "."));
-                    // Attention: Here we find the correct object based on the code
-                    String selectedCode = combo.getValue().split(" - ")[0];
-                    masterData.stream()
-                        .filter(ent -> ent.getCode().equals(selectedCode))
-                        .findFirst()
-                        .ifPresent(ent -> ent.setAmount(val));
-                    
-                    table.refresh();
-                    dialog.close();
-                } catch (Exception ex) {
-                    txtNewValue.setStyle("-fx-border-color: red;");
-                }
-            }
-        });
-
-        layout.getChildren().addAll(new Label("Select Account:"), combo, new Label("New Amount:"), txtNewValue, btnSave);
-        dialog.setScene(new Scene(layout, 400, 250));
-        dialog.show();
-    }
-
-    /**
-     * Displays the budget forecasting and prediction dialog.
-     *
-     * <p>
-     * Supports:
-     * <ul>
-     *   <li>Predicting budget values for a given year</li>
-     *   <li>Estimating the time when a target value is reached</li>
-     * </ul>
-     * </p>
-     */
-    private void showPredictDialog() {
+  /**
+   * Displays a dialog window that allows the user
+   * to modify existing budget entries.
+   *
+   * <p>The selected entry is updated in real time
+   * within the table.
+   * </p>
+   */
+  protected void showAmendDialog() {
     Stage dialog = new Stage();
     applyAppIcon(dialog);
     dialog.initModality(Modality.NONE);
-    dialog.setTitle("📈 Budget Forecasting System");
-    Prediction p = new Prediction();    
-    
-    double[][] dapanes = {
-        {3766000, 4097337, 3811641, 4059900, 3974293, 4146883},
-        {143500000, 134251607, 134030043, 140477275, 147343837, 156551972},
-        {34251000, 40536272, 36372937, 37886945, 35723136, 38447884},
-        {2986769000L, 2973891093L, 3172953535L, 3245029336L, 3282162880L, 3487669947L},
-        {288237000, 246668455, 252308235, 357219091, 359936589, 404757288},
-        {5495900000L, 5937190083L, 5103551488L, 5362408267L, 5252784805L, 5916035799L},
-        {4256596000L, 4276649036L, 4651583743L, 5278434922L, 6150311996L, 6568225405L},
-        {533261000, 531100091, 506425467, 547747086, 557774970, 569191096},
-        {5605100000L, 5363728191L, 5436589608L, 5733987212L, 5660668349L, 5665485468L},
-        {359100000, 383427915, 409992485, 350395832, 493075321, 546993897},
-        {747475497000L, 690153192000L, 669349030000L, 919467234000L, 1068139883000L, 1438513680000L}
-    };
-    double[] years = {2021, 2022, 2023, 2024, 2025, 2026};
-    String[] entities = {
-        "Presidency of the Republic", "Hellenic Parliament", "Presidency of Governance",
-        "Ministry of Interior", "Ministry of Exterior", "Ministry of Defence",
-        "Ministry of Health", "Ministry of Justice", "Ministry of Education",
-        "Ministry of Sport", "Ministry of Finance"
-    };
+    dialog.setTitle("🔧 Amend Budget Entry");
+
+    VBox layout = new VBox(10);
+    layout.setPadding(new Insets(20));
+
+    ComboBox<String> combo = new ComboBox<>();
+    combo.valueProperty().addListener((obs, oldVal, newVal) -> {
+      if (newVal != null) {
+        gameNotification.stop();
+        gameNotification.play();
+      }
+    });
+
+    masterData.forEach(entry -> {
+      if (!"SECTION".equals(entry.getCode())) {
+        combo.getItems().add(entry.getCode() + " - " + entry.getName());
+      }
+    });
+    combo.setMaxWidth(Double.MAX_VALUE);
+        
+    TextField txtNewValue = new TextField();
+    txtNewValue.setPromptText("Enter new amount...");
+
+    Button btnSave = new Button("Commit Changes ✅");
+    btnSave.setMaxWidth(Double.MAX_VALUE);
+    btnSave.setOnAction(e -> {
+      if (instantWin != null) {
+        instantWin.stop(); 
+        instantWin.play();
+      }
+      int idx = combo.getSelectionModel().getSelectedIndex();
+      if (idx >= 0) {
+        try {
+          BigDecimal val = new BigDecimal(txtNewValue.getText().replace(",", "."));
+          // Attention: Here we find the correct object based on the code
+          String selectedCode = combo.getValue().split(" - ")[0];
+          masterData.stream()
+            .filter(ent -> ent.getCode().equals(selectedCode))
+            .findFirst()
+              .ifPresent(ent -> ent.setAmount(val));
+                    
+          table.refresh();
+          dialog.close();
+        } catch (Exception ex) {
+          txtNewValue.setStyle("-fx-border-color: red;");
+        }
+      }
+    });
+
+    layout.getChildren().addAll(
+        new Label("Select Account:"), combo, new Label("New Amount:"), txtNewValue, btnSave);
+    dialog.setScene(new Scene(layout, 400, 250));
+    dialog.show();
+  }
+
+  /**
+   * Displays the budget forecasting and prediction dialog.
+   *
+   * <p>Supports:
+   * <ul>
+   *   <li>Predicting budget values for a given year</li>
+   *   <li>Estimating the time when a target value is reached</li>
+   * </ul>
+   * </p>
+   */
+  private void showPredictDialog() {
+    Stage dialog = new Stage();
+    applyAppIcon(dialog);
+    dialog.initModality(Modality.NONE);
+    dialog.setTitle("📈 Budget Forecasting System");   
 
     // --- Central Layout ---
     VBox root = new VBox(20);
@@ -524,26 +531,32 @@ public class GovProFx extends Application {
 
     Label headerLabel = new Label("Financial Analytics & Prediction");
     headerLabel.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
-    Separator separator = new Separator();
 
     // --- Select Prediction Type ---
     ComboBox<String> modeBox = new ComboBox<>();
     modeBox.valueProperty().addListener((obs, oldVal, newVal) -> {
-        if (newVal != null) {
-            gameNotification.stop(); // for rapid clicks
-            gameNotification.play();
-        }
+      if (newVal != null) {
+        gameNotification.stop(); // for rapid clicks
+        gameNotification.play();
+      }
     });
-    modeBox.getItems().addAll("📊 Predict Value for Given Year", "🕒 Predict When Value Will Be Reached");
+    modeBox.getItems().addAll(
+        "📊 Predict Value for Given Year", "🕒 Predict When Value Will Be Reached");
     modeBox.setPromptText("Select Prediction Type");
+    String[] entities = {
+        "Presidency of the Republic", "Hellenic Parliament", "Presidency of Governance",
+        "Ministry of Interior", "Ministry of Exterior", "Ministry of Defence",
+        "Ministry of Health", "Ministry of Justice", "Ministry of Education",
+        "Ministry of Sport", "Ministry of Finance"
+    };
 
     // --- Select Ministry ---
     ComboBox<String> comboEntity = new ComboBox<>(FXCollections.observableArrayList(entities));
     comboEntity.valueProperty().addListener((obs, oldVal, newVal) -> {
-        if (newVal != null) {
-            gameNotification.stop();
-            gameNotification.play();
-        }
+      if (newVal != null) {
+        gameNotification.stop();
+        gameNotification.play();
+      }
     });
     comboEntity.setPromptText("Select Ministry/Entity");
 
@@ -573,57 +586,73 @@ public class GovProFx extends Application {
 
     // dynamically changes what is displayed depending on the mode
     modeBox.setOnAction(e -> {
-        dynamicFields.getChildren().clear();
-        if (modeBox.getValue().contains("Value for Given Year")) {
-            dynamicFields.getChildren().addAll(new Label("Target Year:"), txtYear);
-        } else {
-            dynamicFields.getChildren().addAll(new Label("Desired Value (€):"), txtDesiredValue);
-        }
+      dynamicFields.getChildren().clear();
+      if (modeBox.getValue().contains("Value for Given Year")) {
+        dynamicFields.getChildren().addAll(new Label("Target Year:"), txtYear);
+      } else {
+        dynamicFields.getChildren().addAll(new Label("Desired Value (€):"), txtDesiredValue);
+      }
     });
+    Prediction p = new Prediction();
+    double[][] dapanes = {
+        {3766000, 4097337, 3811641, 4059900, 3974293, 4146883},
+        {143500000, 134251607, 134030043, 140477275, 147343837, 156551972},
+        {34251000, 40536272, 36372937, 37886945, 35723136, 38447884},
+        {2986769000L, 2973891093L, 3172953535L, 3245029336L, 3282162880L, 3487669947L},
+        {288237000, 246668455, 252308235, 357219091, 359936589, 404757288},
+        {5495900000L, 5937190083L, 5103551488L, 5362408267L, 5252784805L, 5916035799L},
+        {4256596000L, 4276649036L, 4651583743L, 5278434922L, 6150311996L, 6568225405L},
+        {533261000, 531100091, 506425467, 547747086, 557774970, 569191096},
+        {5605100000L, 5363728191L, 5436589608L, 5733987212L, 5660668349L, 5665485468L},
+        {359100000, 383427915, 409992485, 350395832, 493075321, 546993897},
+        {747475497000L, 690153192000L, 669349030000L, 919467234000L, 1068139883000L, 1438513680000L}
+    };
+    double[] years = {2021, 2022, 2023, 2024, 2025, 2026};
 
     // --- Λογική κουμπιών ---
     btnRun.setOnAction(e -> {
-        // Play reward / action sound
-        if (instantWin != null) {
-            instantWin.stop();
-            instantWin.play();
-        }
-        int idx = comboEntity.getSelectionModel().getSelectedIndex();
-        if (idx < 0 || modeBox.getValue() == null) {
-            resultArea.appendText("Please select a prediction type and an entity.\n");
-            return;
-        }
+      // Play reward / action sound
+      if (instantWin != null) {
+        instantWin.stop();
+        instantWin.play();
+      }
+      int idx = comboEntity.getSelectionModel().getSelectedIndex();
+      if (idx < 0 || modeBox.getValue() == null) {
+        resultArea.appendText("Please select a prediction type and an entity.\n");
+        return;
+      }
 
-        if (modeBox.getValue().contains("Value for Given Year")) {
-            try {
-                int year = Integer.parseInt(txtYear.getText());
-                double predicted = p.getValueForGivenYear(years, dapanes[idx], year);
-                resultArea.appendText(String.format(
-                    "📊 [%s]\nPredicted spending for %d: €%,.2f\n\n",
-                    entities[idx], year, predicted));
-            } catch (NumberFormatException ex) {
-                resultArea.appendText("Invalid year input.Try giving a year (e.g. 2045).\n");
-            }
-        } else {
-            try {
-                double value = Double.parseDouble(txtDesiredValue.getText());
-                String est = p.getYearandMonthforGivenValue(years, dapanes[idx], value);
-                resultArea.appendText(String.format(
-                    "🕒 [%s]\nEstimated time when spending reaches €%,.2f: %s\n\n",
-                    entities[idx], value, est));
-            } catch (NumberFormatException ex) {
-                resultArea.appendText("Invalid value input.Try giving a number (e.g. 4566778.54).\n");
-            }
+      if (modeBox.getValue().contains("Value for Given Year")) {
+        try {
+          int year = Integer.parseInt(txtYear.getText());
+          double predicted = p.getValueForGivenYear(years, dapanes[idx], year);
+          resultArea.appendText(String.format(
+              "📊 [%s]\nPredicted spending for %d: €%,.2f\n\n",
+                      entities[idx], year, predicted));
+        } catch (NumberFormatException ex) {
+          resultArea.appendText("Invalid year input.Try giving a year (e.g. 2045).\n");
         }
+      } else {
+        try {
+          double value = Double.parseDouble(txtDesiredValue.getText());
+          String est = p.getYearandMonthforGivenValue(years, dapanes[idx], value);
+          resultArea.appendText(String.format(
+              "🕒 [%s]\nEstimated time when spending reaches €%,.2f: %s\n\n",
+                      entities[idx], value, est));
+        } catch (NumberFormatException ex) {
+          resultArea.appendText("Invalid value input.Try giving a number (e.g. 4566778.54).\n");
+        }
+      }
     });
 
     btnClear.setOnAction(e -> {
-        resultArea.clear();
-        if (clearSound != null) { 
-            clearSound.stop();
-            clearSound.play();
-        }
+      resultArea.clear();
+      if (clearSound != null) { 
+        clearSound.stop();
+        clearSound.play();
+      }
     });
+    Separator separator = new Separator();
 
     // --- Fitting ---
     VBox formBox = new VBox(15,
@@ -639,17 +668,16 @@ public class GovProFx extends Application {
     Scene scene = new Scene(root);
     dialog.setScene(scene);
     dialog.show();
-    }
+  }
     
-    /**
-     * Displays the statistics dashboard for budget analysis.
-     *
-     * <p>
-     * Includes pie charts, progress bars, and
-     * percentage breakdowns of budget data.
-     * </p>
-     */
-    private void showStatistics() {
+  /**
+   * Displays the statistics dashboard for budget analysis.
+   *
+   * <p>Includes pie charts, progress bars, and
+   * percentage breakdowns of budget data.
+   * </p>
+   */
+  private void showStatistics() {
     Stage statsStage = new Stage();
     applyAppIcon(statsStage);
     statsStage.initModality(Modality.NONE);
@@ -671,10 +699,10 @@ public class GovProFx extends Application {
 
     // Year ComboBox
     yearCombo.valueProperty().addListener((obs, oldVal, newVal) -> {
-        if (newVal != null) {
-            gameNotification.stop();
-            gameNotification.play();
-        }
+      if (newVal != null) {
+        gameNotification.stop();
+        gameNotification.play();
+      }
     });
     yearCombo.getItems().addAll(2022, 2023, 2024);
     yearCombo.getSelectionModel().selectFirst();
@@ -688,10 +716,10 @@ public class GovProFx extends Application {
     ComboBox<String> typeCombo = new ComboBox<>();
     // Type ComboBox (Income / Expense/ Entity)
     typeCombo.valueProperty().addListener((obs, oldVal, newVal) -> {
-        if (newVal != null) {
-            gameNotification.stop();
-            gameNotification.play();
-        }
+      if (newVal != null) {
+        gameNotification.stop();
+        gameNotification.play();
+      }
     });
     typeCombo.getItems().addAll("Income", "Expense");
     typeCombo.getSelectionModel().selectFirst();
@@ -723,7 +751,8 @@ public class GovProFx extends Application {
 
     VBox barsContainer = new VBox(5);
     barsContainer.setPadding(new Insets(10));
-    barsContainer.setStyle("-fx-background-color: #f8f9fa; -fx-border-color: #d0d7de; -fx-border-width: 1;"); 
+    barsContainer.setStyle(
+        "-fx-background-color: #f8f9fa; -fx-border-color: #d0d7de; -fx-border-width: 1;"); 
     ScrollPane barsScroll = new ScrollPane(barsContainer);
     barsScroll.setFitToWidth(true);
     barsScroll.setPrefHeight(300); // height for scroll if there are many accounts
@@ -740,143 +769,158 @@ public class GovProFx extends Application {
 
     // --- Button structure ---
     btnShow.setOnAction(e -> {
-        outputBox.getChildren().clear();
+      outputBox.getChildren().clear();
 
-        if (instantWin != null) {
-            instantWin.stop();
-            instantWin.play();
+      if (instantWin != null) {
+        instantWin.stop();
+        instantWin.play();
+      }
+
+      int year = yearCombo.getValue();
+      BudgetDataManager.BudgetType type = typeCombo.getValue().equals("Income")
+          ? BudgetDataManager.BudgetType.INCOME : BudgetDataManager.BudgetType.EXPENSE;
+
+      BigDecimal[] data = BudgetDataManager.getBudgetData(year, type);
+      if (data == null) {
+        outputBox.getChildren().add(new Label("No data for year " + year));
+        return;
+      }
+
+      String[] categories = type == BudgetDataManager.BudgetType.INCOME 
+          ? new String[]{"Taxes", "Social Contributions", 
+            "Transfers", "Sales of goods and services",
+            "Other Current Income", "Fixed Assets", "Debt Securities", "Equity Securities",
+            "Currency Liabilities", "Debt Securities (Liabilities)", 
+            "Loans", "Financial Derivatives"} :
+          new String[]{"Employee Benefits", "Social Benefits",
+            "Transfers", "Purchases of goods and services",
+            "Subsidies", "Interest", "Other expenses", 
+            "Credits under distribution", "Fixed Assets",
+            "Valuables", "Loans", "Equity Securities", "Debt Securities", 
+            "Loans", "Financial Derivatives"};
+
+      for (int i = 0; i < data.length; i++) {
+        String name = (i < categories.length) ? categories[i] : "Category " + (i + 1);
+        BigDecimal percent = data[i].multiply(
+            new BigDecimal("100")).setScale(2, RoundingMode.HALF_UP);
+
+        Label line = new Label(String.format("%-40s : %6s%%", name, percent));
+        line.setStyle("-fx-font-family: Arial; -fx-font-size: 14;");
+        outputBox.getChildren().add(line);
+      }
+      ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
+
+      for (int i = 0; i < data.length; i++) {
+        String name = (i < categories.length) ? categories[i] : "Category " + (i + 1);
+        BigDecimal percent = data[i].multiply(
+            new BigDecimal("100")).setScale(2, RoundingMode.HALF_UP);
+
+        Label line = new Label(String.format("%-40s : %6s%%", name, percent));
+        line.setStyle("-fx-font-family: Arial; -fx-font-size: 14;");
+        outputBox.getChildren().add(line);
+
+        // Add to PieChart
+        if (data[i].compareTo(BigDecimal.ZERO) > 0) { // avoid zeros
+          pieData.add(new PieChart.Data(name, data[i].doubleValue()));
         }
+      }
 
-        int year = yearCombo.getValue();
-        BudgetDataManager.BudgetType type = typeCombo.getValue().equals("Income") ?
-                BudgetDataManager.BudgetType.INCOME : BudgetDataManager.BudgetType.EXPENSE;
+      // Update of PieChart
+      pieChart.setData(pieData);
 
-        BigDecimal[] data = BudgetDataManager.getBudgetData(year, type);
-        if (data == null) {
-            outputBox.getChildren().add(new Label("No data for year " + year));
-            return;
+      List<BudgetEntry> filtered = new ArrayList<>();
+
+      for (BudgetEntry entry : masterData) {
+        if ("SECTION".equals(entry.getCode())) {
+          continue;
         }
-
-        String[] categories = type == BudgetDataManager.BudgetType.INCOME ?
-                new String[]{"Taxes", "Social Contributions", "Transfers", "Sales of goods and services",
-                        "Other Current Income", "Fixed Assets", "Debt Securities", "Equity Securities",
-                        "Currency Liabilities", "Debt Securities (Liabilities)", "Loans", "Financial Derivatives"} :
-                new String[]{"Employee Benefits", "Social Benefits", "Transfers", "Purchases of goods and services",
-                        "Subsidies", "Interest", "Other expenses", "Credits under distribution", "Fixed Assets",
-                        "Valuables", "Loans", "Equity Securities", "Debt Securities", "Loans", "Financial Derivatives"};
-
-        for (int i = 0; i < data.length; i++) {
-            String name = (i < categories.length) ? categories[i] : "Category " + (i + 1);
-            BigDecimal percent = data[i].multiply(new BigDecimal("100")).setScale(2, RoundingMode.HALF_UP);
-
-            Label line = new Label(String.format("%-40s : %6s%%", name, percent));
-            line.setStyle("-fx-font-family: Arial; -fx-font-size: 14;");
-            outputBox.getChildren().add(line);
-        }
-        ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
-
-        for (int i = 0; i < data.length; i++) {
-            String name = (i < categories.length) ? categories[i] : "Category " + (i + 1);
-            BigDecimal percent = data[i].multiply(new BigDecimal("100")).setScale(2, RoundingMode.HALF_UP);
-
-            Label line = new Label(String.format("%-40s : %6s%%", name, percent));
-            line.setStyle("-fx-font-family: Arial; -fx-font-size: 14;");
-            outputBox.getChildren().add(line);
-
-            // Add to PieChart
-            if (data[i].compareTo(BigDecimal.ZERO) > 0) { // avoid zeros
-                pieData.add(new PieChart.Data(name, data[i].doubleValue()));
-            }
-        }
-
-        // Update of PieChart
-        pieChart.setData(pieData);
-
-        List<BudgetEntry> filtered = new ArrayList<>();
-
-        for (BudgetEntry entry : masterData) {
-            if ("SECTION".equals(entry.getCode())) continue;
             
-            if(typeCombo.getValue().equals("Income")) {
+        if (typeCombo.getValue().equals("Income")) {
                 
-                try {
-                    int codeInt = Integer.parseInt(entry.getCode());
-                    if(codeInt >= 11 && codeInt <= 571) filtered.add(entry); // Income codes
-                } catch (NumberFormatException ex) { }
-            } else { // Expense
-                try {
-                    int codeInt = Integer.parseInt(entry.getCode());
-                    if (codeInt >= 21 && codeInt <= 57) filtered.add(entry);
-                } catch (NumberFormatException ex) { }
+          try {
+            int codeInt = Integer.parseInt(entry.getCode());
+            if (codeInt >= 11 && codeInt <= 571) {
+              filtered.add(entry); // Income codes
             }
+          } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+          }
+        } else { // Expense
+          try {
+            int codeInt = Integer.parseInt(entry.getCode());
+            if (codeInt >= 21 && codeInt <= 57) {
+              filtered.add(entry);
+            }
+          } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+          }
         }
+      }
 
-        // We only filter those accounts that are included in the categories
-        filtered = filtered.stream()
-           .filter(m -> Arrays.asList(categories).contains(m.getName()))
-           .collect(Collectors.toList());
+      // We only filter those accounts that are included in the categories
+      filtered = filtered.stream()
+        .filter(m -> Arrays.asList(categories).contains(m.getName()))
+        .collect(Collectors.toList());
 
-        barsContainer.getChildren().clear();
+      barsContainer.getChildren().clear();
 
-        BigDecimal total = filtered.stream()
-            .map(BudgetEntry::getAmount)
-            .filter(Objects::nonNull)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
+      BigDecimal total = filtered.stream()
+          .map(BudgetEntry::getAmount)
+          .filter(Objects::nonNull)
+          .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        for (BudgetEntry n : filtered) {
-            HBox row = new HBox(10);
-            row.setAlignment(Pos.CENTER_LEFT);
+      for (BudgetEntry n : filtered) {
+        HBox row = new HBox(10);
+        row.setAlignment(Pos.CENTER_LEFT);
 
-            Label lblName = new Label(n.getName());
-            lblName.setPrefWidth(250);
+        Label lblName = new Label(n.getName());
+        lblName.setPrefWidth(250);
 
-            ProgressBar pb = new ProgressBar();
-            double value = total.compareTo(BigDecimal.ZERO) > 0
-                ? n.getAmount().doubleValue() / total.doubleValue()
-                : 0;
-            pb.setProgress(value);
-            pb.setPrefWidth(300);
+        ProgressBar pb = new ProgressBar();
+        double value = total.compareTo(BigDecimal.ZERO) > 0
+            ? n.getAmount().doubleValue() / total.doubleValue()
+            : 0;
+        pb.setProgress(value);
+        pb.setPrefWidth(300);
 
-            Label lblAmount = new Label(String.format("€%,.0f", n.getAmount()));
+        Label lblAmount = new Label(String.format("€%,.0f", n.getAmount()));
 
-            row.getChildren().addAll(lblName, pb, lblAmount);
-            barsContainer.getChildren().add(row);
-            }
+        row.getChildren().addAll(lblName, pb, lblAmount);
+        barsContainer.getChildren().add(row);
+      }
 
 
     });
 
     btnClear.setOnAction(e -> {
-        outputBox.getChildren().clear();
-        if (clearSound != null) { 
-            clearSound.stop();
-            clearSound.play();
-        }
-        pieChart.getData().clear();
+      outputBox.getChildren().clear();
+      if (clearSound != null) { 
+        clearSound.stop();
+        clearSound.play();
+      }
+      pieChart.getData().clear();
 
-        pieChart.setData(FXCollections.observableArrayList());
+      pieChart.setData(FXCollections.observableArrayList());
     });
 
     Scene scene = new Scene(root, 650, 600);
     statsStage.setScene(scene);
     statsStage.show();
-}
+  }
 
-/**
- * Displays an interactive dialog for explaining government budget accounts.
- *
- * <p>
- * The dialog allows the user to select an income, expense, or entity account
- * and view a detailed textual explanation generated through the account's
- * {@code toExplain()} implementation.
- * </p>
- *
- * <p>
- * The explanation is presented using category-specific styling and
- * visual effects to enhance readability and user experience.
- * </p>
- */
-private void showExplanation() {
+  /**
+   * Displays an interactive dialog for explaining government budget accounts.
+   *
+   * <p>The dialog allows the user to select an income, expense, or entity account
+   * and view a detailed textual explanation generated through the account's
+   * {@code toExplain()} implementation.
+   * </p>
+   *
+   * <p>The explanation is presented using category-specific styling and
+   * visual effects to enhance readability and user experience.
+   * </p>
+   */
+  private void showExplanation() {
 
     Stage dialog = new Stage();
     applyAppIcon(dialog);
@@ -888,14 +932,14 @@ private void showExplanation() {
     root.setAlignment(Pos.TOP_CENTER);
     root.setStyle("""
         -fx-background-color: linear-gradient(to bottom right, #ffffff, #e9eef3);
-    """);
+        """);
 
     Label header = new Label("Select an Account to View Explanation");
     header.setStyle("""
         -fx-font-size: 20px;
         -fx-font-weight: bold;
         -fx-text-fill: #2c3e50;
-    """);
+        """);
 
     ComboBox<Object> combo = new ComboBox<>();
     combo.setMaxWidth(Double.MAX_VALUE);
@@ -903,14 +947,14 @@ private void showExplanation() {
 
     // Fill ComboBox
     combo.getItems().addAll(
-    ObjectsIncomes.createObjectsInc().stream()
+        ObjectsIncomes.createObjectsInc().stream()
         .filter(inc -> {
-            try {
-                int code = Integer.parseInt(inc.getCode());
-                return code >= 100 && code <= 999; 
-            } catch (NumberFormatException ex) {
-                return false;
-            }
+          try {
+            int code = Integer.parseInt(inc.getCode());
+            return code >= 100 && code <= 999; 
+          } catch (NumberFormatException ex) {
+            return false;
+          }
         })
         .toList()
     );
@@ -923,13 +967,13 @@ private void showExplanation() {
         protected void updateItem(Object item, boolean empty) {
             super.updateItem(item, empty);
             if (empty || item == null) {
-                setText(null);
+              setText(null);
             } else if (item instanceof Income i) {
-                setText("💰 " + i.getCode() + " - " + i.getName());
+              setText("💰 " + i.getCode() + " - " + i.getName());
             } else if (item instanceof Expenses e) {
-                setText("💸 " + e.getCode() + " - " + e.getName());
+              setText("💸 " + e.getCode() + " - " + e.getName());
             } else if (item instanceof Entity en) {
-                setText("🏛 " + en.getCode() + " - " + en.getName());
+              setText("🏛 " + en.getCode() + " - " + en.getName());
             }
         }
     });
@@ -944,7 +988,7 @@ private void showExplanation() {
         -fx-font-weight: bold;
         -fx-background-radius: 10;
         -fx-padding: 10;
-    """);
+        """);
 
     VBox explanationCard = new VBox(10);
     explanationCard.setPadding(new Insets(20));
@@ -953,7 +997,7 @@ private void showExplanation() {
         -fx-background-radius: 15;
         -fx-border-radius: 15;
         -fx-border-width: 1;
-    """);
+        """);
 
     Label title = new Label();
     title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
@@ -965,50 +1009,50 @@ private void showExplanation() {
     explanationArea.setStyle("""
         -fx-background-color: transparent;
         -fx-font-size: 14px;
-    """);
+        """);
 
     explanationCard.getChildren().addAll(title, explanationArea);
 
     btnExplain.setOnAction(e -> {
-        Object selected = combo.getValue();
-        if (selected == null) return;
+      Object selected = combo.getValue();
+      if (selected == null) {
+        return;
+      }
 
-        gameNotification.play();
+      gameNotification.play();
 
-        explanationCard.setVisible(true);
+      explanationCard.setVisible(true);
 
-        if (selected instanceof Income i) {
-            title.setText("💰 Income Account: " + i.getName());
-            explanationArea.setText(i.toExplain());
-            explanationCard.setStyle("""
-                -fx-background-color: #e8f5e9;
-                -fx-border-color: #66bb6a;
-                -fx-background-radius: 15;
+      if (selected instanceof Income i) {
+        title.setText("💰 Income Account: " + i.getName());
+        explanationArea.setText(i.toExplain());
+        explanationCard.setStyle("""
+            -fx-background-color: #e8f5e9;
+            -fx-border-color: #66bb6a;
+            -fx-background-radius: 15;
             """);
-        }
-        else if (selected instanceof Expenses ex) {
-            title.setText("💸 Expense Account: " + ex.getName());
-            explanationArea.setText(ex.toExplain());
-            explanationCard.setStyle("""
-                -fx-background-color: #ffebee;
-                -fx-border-color: #ef5350;
-                -fx-background-radius: 15;
+      } else if (selected instanceof Expenses ex) {
+        title.setText("💸 Expense Account: " + ex.getName());
+        explanationArea.setText(ex.toExplain());
+        explanationCard.setStyle("""
+            -fx-background-color: #ffebee;
+            -fx-border-color: #ef5350;
+            -fx-background-radius: 15;
             """);
-        }
-        else if (selected instanceof Entity en) {
-            title.setText("🏛 Government Entity: " + en.getName());
-            explanationArea.setText(en.toExplain());
-            explanationCard.setStyle("""
-                -fx-background-color: #e3f2fd;
-                -fx-border-color: #42a5f5;
-                -fx-background-radius: 15;
+      } else if (selected instanceof Entity en) {
+        title.setText("🏛 Government Entity: " + en.getName());
+        explanationArea.setText(en.toExplain());
+        explanationCard.setStyle("""
+            -fx-background-color: #e3f2fd;
+            -fx-border-color: #42a5f5;
+            -fx-background-radius: 15;
             """);
-        }
+      }
 
-        FadeTransition ft = new FadeTransition(Duration.millis(500), explanationCard);
-        ft.setFromValue(0);
-        ft.setToValue(1);
-        ft.play();
+      FadeTransition ft = new FadeTransition(Duration.millis(500), explanationCard);
+      ft.setFromValue(0);
+      ft.setToValue(1);
+      ft.play();
     });
 
     root.getChildren().addAll(header, combo, btnExplain, explanationCard);
@@ -1016,58 +1060,64 @@ private void showExplanation() {
     Scene scene = new Scene(root, 520, 520);
     dialog.setScene(scene);
     dialog.show();
-}
+  }
 
-    /**
- * Displays a dialog window containing an embedded web browser
- * that loads a free AI assistant page (DuckDuckGo AI Chat).
- * <p>
- * The method sets a custom User-Agent to ensure compatibility
- * with modern web pages and uses JavaFX components to build
- * the interface dynamically.
- */
-    private void showCitizenAssistantDialog() {
-        Stage stage = new Stage();
-        applyAppIcon(stage);
-        stage.setTitle("Citizen Assistant - AI Helper");
+  /**
+   * Displays a dialog window containing an embedded web browser
+   * that loads a free AI assistant page (DuckDuckGo AI Chat).
+   * 
+   * <p>The method sets a custom User-Agent to ensure compatibility
+   * with modern web pages and uses JavaFX components to build
+   * the interface dynamically.
+   */
+  private void showCitizenAssistantDialog() {
+    Stage stage = new Stage();
+    applyAppIcon(stage);
+    stage.setTitle("Citizen Assistant - AI Helper");
 
-        WebView browser = new WebView();
-        WebEngine engine = browser.getEngine();
+    WebView browser = new WebView();
+    WebEngine engine = browser.getEngine();
 
-        // 1. Set up the User-Agent to "trick" the website into loading the desktop version correctly
-        engine.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            + "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36");
+    // 1. Set up the User-Agent to "trick" the website into loading the desktop version correctly
+    engine.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        + "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36");
 
-        // 2. Load the AI service (Free, No Login, No API Key required)
-        engine.load("https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&kl=us-en&kad=en_US");
-
-
-        Label infoLabel = new Label("Follow the on-screen instructions to interact with the AI assistant.");
-        infoLabel.setStyle("-fx-padding: 10; -fx-font-weight: bold; -fx-text-fill: #555;");
-
-        // 3. Layout setup - Make the browser take up all available space
-        VBox root = new VBox(infoLabel, browser);
-        VBox.setVgrow(browser, Priority.ALWAYS);
-
-        Scene scene = new Scene(root, 900, 700);
-        stage.setScene(scene);
-        stage.show();
-    }
+    // 2. Load the AI service (Free, No Login, No API Key required)
+    engine.load("https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&kl=us-en&kad=en_US");
 
 
+    Label infoLabel = new Label(
+        "Follow the on-screen instructions to interact with the AI assistant.");
+    infoLabel.setStyle("-fx-padding: 10; -fx-font-weight: bold; -fx-text-fill: #555;");
 
-    private Button createMenuButton(String text) {
-        Button btn = new Button(text);
-        btn.setMaxWidth(Double.MAX_VALUE);
-        btn.setAlignment(Pos.BASELINE_LEFT);
-        btn.setStyle("-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-font-size: 14; -fx-cursor: hand;");
-        btn.setOnMouseEntered(e -> {
-            btn.setStyle("-fx-background-color: #34495e; -fx-text-fill: #ecf0f1; -fx-font-size: 14;");
-            if (gameNotification != null) gameNotification.play();
-        });
-        btn.setOnMouseExited(e ->btn.setStyle("-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-font-size: 14;"));
-        return btn;
-    }
+    // 3. Layout setup - Make the browser take up all available space
+    VBox root = new VBox(infoLabel, browser);
+    VBox.setVgrow(browser, Priority.ALWAYS);
+
+    Scene scene = new Scene(root, 900, 700);
+    stage.setScene(scene);
+    stage.show();
+  }
+
+  private Button createMenuButton(String text) {
+    Button btn = new Button(text);
+    btn.setMaxWidth(Double.MAX_VALUE);
+    btn.setAlignment(Pos.BASELINE_LEFT);
+    btn.setStyle(
+        "-fx-background-color: transparent;"
+        + "-fx-text-fill: #ecf0f1; -fx-font-size: 14; -fx-cursor: hand;");
+    btn.setOnMouseEntered(e -> {
+      btn.setStyle("-fx-background-color:"
+          + " #34495e; -fx-text-fill: #ecf0f1; -fx-font-size: 14;");
+      if (gameNotification != null) {
+        gameNotification.play();
+      }
+    });
+    btn.setOnMouseExited(e ->
+        btn.setStyle("-fx-background-color: transparent;"
+        + " -fx-text-fill: #ecf0f1; -fx-font-size: 14;"));
+    return btn;
+  }
 
     
 
