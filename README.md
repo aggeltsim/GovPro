@@ -2,6 +2,20 @@
 ## *"Data from the state, insights for all."*
 
 **GovPro** is a Java-based application designed to process, analyze, and present data from the Greek state budget in a clear and accessible way. It aims to make financial information understandable for all users, regardless of technical expertise.
+## Menu
+- [Goal & Mission](#goal--mission)
+- [Installation & Execution](#installation--execution)
+- [Repository Structure](#repository-structure)
+- [UML Diagram](#uml-diagram)
+- [Usage Instructions](#usage-instructions)
+  - [Navigating the Budget Table](#1-navigating-the-budget-table)
+  - [Amendments](#2-amendments)
+  - [Forecasting Engine](#3-using-the-forecasting-engine)
+  - [Statistics Dashboard](#4-exploring-the-statistics-dashboard)
+  - [Percentage Calculator Suite](#5-percentage-calculator-suite)
+  - [Multimedia & UI Features](#6-multimedia--ui-features)
+- [Key Features](#key-features)
+- [Technical Report](#technical-report)
 
 ## Goal & Mission
 GovPro is built with the mission of delivering public financial information in the simplest and most transparent form possible—so every citizen, student, researcher, or professional can easily understand how 
@@ -11,7 +25,7 @@ national resources are used.
 
 ### Prerequisites
 * **Java Development Kit (JDK) 17** or higher.
-* **Apache Maven** installed and configured in your system's PATH.
+* **Apache Maven (3.6.0+)** installed and configured in your system's PATH. The maven version used is 3.11.0. 
 
 ### Installation & Compilation
 The project uses **Maven** for build and dependency management. To compile the source code and download necessary libraries (JavaFX, Apache Commons CSV, JUnit), follow these steps:
@@ -22,8 +36,6 @@ The project uses **Maven** for build and dependency management. To compile the s
 ### Execution Instructions
 To launch the application, use the following command:
     `mvn javafx:run`
-Alternatively, if you have generated a JAR file:
-`java -jar target/GovPro.jar`
 
 ## Repository Structure
 * `src/main/java`: Core application logic (Packages: `entities`, `expenses`, `incomes`, `forecasting` and other `.java` classes).
@@ -81,6 +93,9 @@ The **GovPro** application provides a multi-window interface for interacting wit
 * **3. Forecasting Engine:** Employs Linear Regression (Ordinary Least Squares) to predict future spending or estimate the year a specific financial goal will be met.
 * **4. Statistics Dashboard:** Features dynamic Pie Charts and progress bars to visualize the distribution of income and expenses organized by fiscal year (2022–2024).
 * **5. Percentage Calculator:** A standalone tool with a custom CSV loader and robust error handling to calculate and compare percentage ratios between multiple budget codes.
+* **6. AI Assistant:** Provides an interactive, unlimited-access AI assistant directly within the application. Users can ask questions, request explanations, or get guidance on budget data analysis without any restrictions or fees.
+
+
 
 # Technical Report
 ## 1. Functionality
@@ -107,6 +122,10 @@ Displays statistical information for the two largest economic groups of the budg
 
 ### 1.5 Percentage Calculator
 A tool for calculating percentage ratios between one or more budget items. The implementation integrates a custom **Data Loader**, which handles data reading from a CSV resource file and includes a comprehensive exception package (`ArithmeticException`, `FileNotFoundException`, `NullPointerException`, `NumberFormatException`) along with its own JavaFX GUI.
+### 1.6 AI Assistant
+An integrated, intelligent assistant that allows users to interact with the application in real-time. This AI assistant can answer questions, provide explanations about budget items, and even suggest insights if you describe the data. There are **no limits on queries and no fees**, making it a fully accessible tool for learning and getting more comfortable with the budget system.  
+
+
 
 
 ## 2. Architectural Diagram
@@ -124,6 +143,8 @@ GovPro follows a **Layered Architecture** pattern to ensure complete separation 
 * **2.2.3 Forecasting Engine:** Employs **Simple Linear Regression** (y = a + bx) using the least squares method. It performs year normalization (base 2021) to calculate estimated expenditures or target dates.
 * **2.2.4 Statistics Dashboard:** Follows a Centralized Data Management pattern using `HashMaps` for instant retrieval of data (2022-2024). Calculations use `RoundingMode.HALF_UP` with 8-decimal precision. Results are visualized via **Pie Charts** and **Progress Bars**.
 * **2.2.5 Percentage Calculator:** A standalone suite utilizing **Java Streams** and the `reduce` operation for aggregate calculations. It features a custom CSV loader (Apache Commons CSV) and a robust exception handling package.
+* **2.2.6 Citizen AI Assistant:** Opens a dedicated window with an embedded browser to interact with a free, unlimited AI chat service. Users can ask questions, explore budget data, or get guidance on using GovPro. No login or API key is required, and the interface is fully integrated within the application using JavaFX `WebView` for a seamless experience.
+
 
 ### 2.3 Presentation Layer (JavaFX UI)
 * **Framework:** Transitioned from Swing to **JavaFX** for a modern, multi-window architecture using `Stage` and `Scene` objects.

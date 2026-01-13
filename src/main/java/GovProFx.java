@@ -1,6 +1,3 @@
-import entities.Entity;
-import expenses.Expenses;
-import incomes.Income;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
@@ -10,6 +7,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import entities.Entity;
+import expenses.Expenses;
+import incomes.Income;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.application.Application;
@@ -421,11 +422,11 @@ public class GovProFx extends Application {
           try {
             int codeInt = Integer.parseInt(item.getCode());
             if (codeInt >= 11 && codeInt <= 571) {
-              setStyle("-fx-background-color: #e8f5e9;"); // Incomes
+              setStyle("-fx-background-color: #dcfbdf;"); // Incomes
             } else if (codeInt >= 1001) {
               setStyle("-fx-background-color: #e3f2fd;"); // Entities
             } else {
-              setStyle("-fx-background-color: #ffebee;"); // Expenses
+              setStyle("-fx-background-color: #f6d6da;"); // Expenses
             }
           } catch (NumberFormatException ex) {
             setStyle(""); 
