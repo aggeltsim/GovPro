@@ -1,16 +1,15 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import entities.Entity;
+import expenses.Expenses;
+import incomes.Income;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import entities.Entity;
-import expenses.Expenses;
-import incomes.Income;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.application.Application;
@@ -53,13 +52,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
 /**
- * The {@code GovProFX} class represents the main JavaFX application
+ * The {@code GovProFx} class represents the main JavaFX application
  * of the GovPro Budget System.
  *
- * <p>
- * The application provides a graphical user interface for:
+ * <p>The application provides a graphical user interface for:
  * <ul>
  *   <li>Viewing government budget data</li>
  *   <li>Editing budget entries</li>
@@ -70,15 +67,14 @@ import javafx.util.Duration;
  * </ul>
  * </p>
  *
- * <p>
- * JavaFX components such as {@link TableView}, {@link PieChart},
+ * <p>JavaFX components such as {@link TableView}, {@link PieChart},
  * {@link ProgressBar}, and multiple dialog windows are used.
  * Audio feedback is also included to enhance user interaction.
  * </p>
  *
  * @version 1.0
  */
-public class GovProFX extends Application {
+public class GovProFx extends Application {
 
     private AudioClip gameTreasure;
     private AudioClip gameNotification;
