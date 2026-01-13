@@ -7,11 +7,11 @@ import javafx.stage.Stage;
 
 public class SplashScreenTest extends ApplicationTest {
 
-    private GovProFX app;
+    private GovProFx app;
 
      @Override
     public void start(Stage stage) {
-    app = new GovProFX();
+    app = new GovProFx();
     app.start(stage, true); // skip splash for tests
     }
 
