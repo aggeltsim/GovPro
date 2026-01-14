@@ -16,7 +16,7 @@
   - [Multimedia & UI Features](#6-multimedia--ui-features)
 - [Key Features](#key-features)
 - [Technical Report](#technical-report)
-
+    - [Javadoc Documentation](#javadoc-documentation)
 ## Goal & Mission
 GovPro is built with the mission of delivering public financial information in the simplest and most transparent form possible—so every citizen, student, researcher, or professional can easily understand how 
 national resources are used.
@@ -38,7 +38,7 @@ To launch the application, use the following command:
     `mvn javafx:run`
 
 ## Repository Structure
-* `src/main/java`: Core application logic (Packages: `entities`, `expenses`, `incomes`, `forecasting` and other `.java` classes).
+* `src/main/java`: Core application logic (Packages: `entities`, `expenses`, `incomes`, `Percentage` and other `.java` classes).
 * `src/main/resources`: UI assets, sound clips (`.wav`), and the budget database (`liga2025.csv`).
 * `src/test/java`: Automated JUnit and TestFX test suites.
 * `pom.xml`: Maven configuration and dependency management.
@@ -51,20 +51,17 @@ To launch the application, use the following command:
 
 ## Usage Instructions
 
-The **GovPro** application provides a multi-window interface for interacting with the Greek State Budget. Follow the steps below to utilize all 5 system features:
+The **GovPro** application provides a multi-window interface for interacting with the Greek State Budget. Follow the steps below to utilize all 7 system features:
 
 ### 1. Navigating the Budget Table
 * **Startup:** After the animated Splash Screen, the main dashboard will appear and immediately see a full list of 2025 budget entries.
-* **Color Coding:** For quick recognition, rows are highlighted as follows:
-    *  **Green:** Income items.
-    *  **Red:** Expense items.
-    *  **Blue:** State Entities/Ministries.
+
 
 ### 2. Amendments
 * **Modify Data:** Click the **"Make Changes"** button.
 * **Interaction:** A dialog box will prompt you to select an entity and enter a new amount.
 * **Data Integrity:** These changes update the `TableView` and current statistics in real-time. 
-* *Note:* Due to the "Architectural Isolation" design, these changes do not affect the historical forecasting engine, ensuring the predictive core remains anchored to verified data.
+* *Note:* Due to the "Architectural Isolation" design, these changes do not affect the historical forecasting engine, ensuring the predictive core remains anchored to the statical data.
 
 ### 3. Using the Forecasting Engine
 * **Access:** Click the **"Forecasting Engine"** button from the main menu.
@@ -72,28 +69,35 @@ The **GovPro** application provides a multi-window interface for interacting wit
 * **Predicting Time:** Enter a specific monetary goal to estimate the exact year and month that amount will be reached.
 
 ### 4. Exploring the Statistics Dashboard
-* **Visual Analysis:** Clich the **"Statistics Dashboard"** button to see the distribution of funds.
+* **Visual Analysis:** Click the **"Statistics Dashboard"** button to see the distribution of funds.
 * **Yearly Toggle:** Select between the years **2022, 2023, or 2024** to view historical snapshots.
 * **Charts:** The dashboard uses **Pie Charts** for overall distribution and **Progress Bars** for detailed category participation.
 
 ### 5. Percentage Calculator Suite
-* **Additional Instructions** A welcoming window descriding in detail how to use the feature. 
+* **Additional Instructions** A welcoming window describing in detail how to use the feature. 
 * **Comparison:** Enter two or more specific budget codes into the provided text fields.
 * **Calculation:** The tool fetches raw data and calculates the percentage ratio.
 * **History:** All successful calculations are saved in the sidebar for easy comparison during your current session.
 
-### 6. Multimedia & UI Features
-* **Audio Feedback:** The system provides sound notifications (AudioClips) upon successful completion of tasks or errors.
-* **Transitions:** The interface utilizes `FadeTransitions` for smooth navigation between different modules.
+### 6. Viewing Account Explanations
+* **Open the Explanation Window:** Click the **"Account Explanation"** button to explore detailed descriptions of accounts.  
+* **Select an Account:** Use the **dropdown menu** to choose between **Income**, **Expense**, or **Entity** accounts.  
+* **Personalized Display:** Each account type is visually highlighted — *green for Income*, *red for Expenses*, *blue for Entities*.  
+* **View Details:** Press **"Explain Account"** to reveal a styled card with the account’s name and explanation.  
+* **Smooth Animation:** A subtle **fade-in transition** enhances the reading experience as the explanation appears.
+
 
 ### Key Features
 
-* **1. View Budget Table:** A detailed, color-coded display of budget items using `StringBuilder` for high-performance data reporting and memory efficiency.
+* **1. View Budget Table:** A detailed,easily readable display of budget items using `StringBuilder` for high-performance data reporting and memory efficiency.
 * **2. Make Changes:** Allows users to modify budget amounts through dialog windows, utilizing `BigDecimal` to ensure absolute financial precision.
 * **3. Forecasting Engine:** Employs Linear Regression (Ordinary Least Squares) to predict future spending or estimate the year a specific financial goal will be met.
 * **4. Statistics Dashboard:** Features dynamic Pie Charts and progress bars to visualize the distribution of income and expenses organized by fiscal year (2022–2024).
 * **5. Percentage Calculator:** A standalone tool with a custom CSV loader and robust error handling to calculate and compare percentage ratios between multiple budget codes.
-* **6. AI Assistant:** Provides an interactive, unlimited-access AI assistant directly within the application. Users can ask questions, request explanations, or get guidance on budget data analysis without any restrictions or fees.
+* **6. Explanations:** Explains in simple terms what a budget entry actually stands for, employing the proper examples. 
+* **7. AI Assistant:** Provides an interactive, unlimited-access AI assistant directly within the application. Users can ask questions, request explanations, or get guidance on budget data analysis without any restrictions or fees.
+**8. Audio Effects:** Plays funky **sound cues** for each user action, enhancing interactivity and user experience.
+
 
 
 
@@ -122,7 +126,10 @@ Displays statistical information for the two largest economic groups of the budg
 
 ### 1.5 Percentage Calculator
 A tool for calculating percentage ratios between one or more budget items. The implementation integrates a custom **Data Loader**, which handles data reading from a CSV resource file and includes a comprehensive exception package (`ArithmeticException`, `FileNotFoundException`, `NullPointerException`, `NumberFormatException`) along with its own JavaFX GUI.
-### 1.6 AI Assistant
+### 1.6 Account Explanation Viewer
+A dedicated interface for **displaying detailed explanations** of Income, Expense, and Entity accounts.  
+The implementation dynamically loads data from multiple account classes (`ObjectsIncomes`, `ObjectsExpenses`, `ObjectsEntities`) and presents it through a **JavaFX ComboBox** with category-specific styling.
+### 1.7 AI Assistant
 An integrated, intelligent assistant that allows users to interact with the application in real-time. This AI assistant can answer questions, provide explanations about budget items, and even suggest insights if you describe the data. There are **no limits on queries and no fees**, making it a fully accessible tool for learning and getting more comfortable with the budget system.  
 
 
@@ -178,22 +185,19 @@ Despite its robust architectural structure, the current implementation of the sy
 The Amendment feature is the most controversial part of the application, oscillating between utility and risk:
 * **Flexibility:** The ability to instantly change amounts is an essential feature, allowing the budget to be adjusted according to user preferences. It is a dynamic planning tool that grants excellent control.
 * **Arbitrariness:** Conversely, this freedom poses a risk as the system lacks a verification mechanism. Users may enter "logical inaccuracies" (incorrect or unrealistic amounts), compromising budget integrity. The line between a valid test change and a catastrophic distortion of information is extremely thin.
-* **The "Architectural Isolation" Solution:** This gray area is mitigated by the fact that calculations draw amounts from the original static arrays, ignoring GUI changes. This acts as a critical safety valve, ensuring that long-term estimates are always based on valid and verified historical data. GUI modifications serve as an "added feature" for visual experimentation without altering the core computational engine.
+* **The "Architectural Isolation" Solution:** This gray area is mitigated by the fact that calculations draw amounts from the original static arrays, ignoring GUI changes. This acts as a critical safety valve, ensuring that long-term estimates are always based on valid and verified historical data. **GUI modifications serve as an "added feature" for visual experimentation without altering the core computational engine.**
 
-### 4.2 Inflationary Distortion and the "Illusion of Growth"
-The most significant economic risk arises from processing nominal values. A user might assume a sector is being strengthened because its funding increases, while in reality, due to inflationary trends, it is being downgraded in terms of purchasing power.
-
-### 4.3 Linear Simplification of Complex Economic Phenomena
+### 4.2 Linear Simplification of Complex Economic Phenomena
 The use of Simple Linear Regression is a mathematical approach that does not always reflect reality. The algorithm does not account for extraordinary events (pandemics, energy crises, geopolitical changes) that cause exponential shifts or sharp declines.
 
-### 4.4 Technical Instability and "Race Conditions"
+### 4.3 Technical Instability and "Race Conditions"
 Due to Multi-threading in the Percentage Calculator, a latent technical risk exists. Although JavaFX manages the UI Thread, simultaneous access to shared resources without a strict locking mechanism may lead to temporary "freezing" or incorrect result display in the `ListView`.
 
-### 4.5 "Black Box" Effect
+### 4.4 "Black Box" Effect
 The "Black Box" risk lies in the user's tendency to blindly trust results simply because they were "computer-generated," accepting regression outcomes as absolute truth while ignoring the underlying mathematical assumptions.
 
-### 4.6 Data Range Limitations
-There is a risk of precarious extrapolation. Predictions for 2030 or 2040, based on only 4 years of historical data (2022-2025), are statistically risky as the margin of error increases exponentially the further we move from the actual data range.
+### 4.5 Data Range Limitations
+There is a risk of precarious extrapolation. Predictions for 2030 or 2040, based on only 6 years of historical data (2021-2026), are statistically risky as the margin of error increases exponentially the further we move from the actual data range.
 
 
 ## 5. AI Interaction and Collaborative Development
@@ -207,7 +211,7 @@ The transition from a monolithic Swing interface to a modular JavaFX environment
 
 ### 5.2 Technical Debugging and Dependency Management
 AI was leveraged to resolve environment-specific configuration hurdles and ensure project stability.
-* **Maven Configuration**: Provided AI with existing `pom.xml` snippets to verify the correct implementation of the `javafx-maven-plugin` and ensure the `mainClass` declaration pointed correctly to `GovProFX`.
+* **Maven Configuration**: Provided AI with existing `pom.xml` snippets to verify the correct implementation of the `javafx-maven-plugin` and ensure the `mainClass` declaration pointed correctly to `GovProFx`.
 * **Namespace Resolution**: AI assisted in verifying `package declarations` across the project structure, such as ensuring `FixedAssetsExp.java` correctly resided within the `expenses` package to prevent compilation errors.
 
 ### 5.3 Economic Modeling and Validation
@@ -265,7 +269,9 @@ Since the project involved significant migration from Swing to JavaFX, the JUnit
 The testing process is fully integrated into the project's lifecycle through **Maven**. 
 * **Automated Execution**: Running the command `mvn test` triggers the entire suite, providing immediate feedback on the health of the application.
 * **Test-Driven Development Approach**: The use of `assertEquals` and `assertNotNull` throughout the development process ensured that every new feature met the pre-defined statistical and economic standards before integration into the main branch.
-
+### Javadoc Documentation
+The complete API documentation is available in the `docs/` folder.  
+Open [`docs/index.html`](./docs/index.html) locally in your browser to explore all packages, classes, and methods.
 
 ## Final Remarks
 
