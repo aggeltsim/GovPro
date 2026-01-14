@@ -19,14 +19,21 @@ import java.util.ArrayList;
 /**
  * Utility class responsible for initializing and populating the application's 
  * expense data for the fiscal year 2025.
- * <p>
- * This class acts as a data provider that maps raw budgetary data (codes, names, and amounts) 
+ * 
+ * <p>This class acts as a data provider that maps raw budgetary data (codes, names, and amounts) 
  * to specific subclasses of the {@link Expenses} model. It centralizes the 
  * instantiation of various expense categories such as employee benefits, 
  * transfers, and loans.
  * </p>
  */
 public class ObjectsExpenses {
+
+  /**
+   * Creates and returns a list of {@link Expenses} objects representing
+   * public expenditure categories for the year 2025.
+   *
+   * @return an {@link ArrayList} containing all initialized {@link Expenses} objects
+   */
   public static ArrayList<Expenses> createObjectsExp() {
     Object[][] data = {
         {"Code", "Name", "Amount"}, // 0
@@ -146,7 +153,7 @@ public class ObjectsExpenses {
         (BigDecimal) data[14][2],
         "2025");
 
-        // Expenses List
+    // Expenses List
     ArrayList<Expenses> exp = new ArrayList<>();
 
     exp.add(empBenefits);

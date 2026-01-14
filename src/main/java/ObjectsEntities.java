@@ -1,11 +1,41 @@
-import entities.*;
+import entities.DecAdminAegean;
+import entities.DecAdminAttica;
+import entities.DecAdminCrete;
+import entities.DecAdminEpirWMaced;
+import entities.DecAdminMacedThr;
+import entities.DecAdminPelopWGrIon;
+import entities.DecAdminThesCenGr;
+import entities.Entity;
+import entities.GovernPresidency;
+import entities.HellenicParliament;
+import entities.MinCivilProtection;
+import entities.MinClimateCrisis;
+import entities.MinCulture;
+import entities.MinDefense;
+import entities.MinDevelopment;
+import entities.MinDigitalGovern;
+import entities.MinEconomy;
+import entities.MinEducatReligSports;
+import entities.MinEnvirEnergy;
+import entities.MinForeign;
+import entities.MinHealth;
+import entities.MinImmigrAsylum;
+import entities.MinInfrastTransport;
+import entities.MinInterior;
+import entities.MinJustice;
+import entities.MinLaborSocSecurity;
+import entities.MinRuralDevelFood;
+import entities.MinShipIslandPolicy;
+import entities.MinSocCohesFam;
+import entities.MinTourism;
+import entities.RepublicPresidency;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 /**
  * Utility class responsible for initializing and populating the application's 
  * entities data for the fiscal year 2025.
- * <p>
- * This class serves as the primary data orchestrator for the Greek State's 
+ * 
+ * <p>This class serves as the primary data orchestrator for the Greek State's 
  * organizational structure. It maps budgetary data to specialized subclasses 
  * of the {@link Entity} model, covering:
  * </p>
@@ -17,10 +47,17 @@ import java.util.ArrayList;
  */
 
 public class ObjectsEntities {
+
+  /**
+   * Creates and returns a list of {@link Entity} objects representing
+   * Greek state institutions for the year 2025.
+   *
+   * @return an {@link ArrayList} containing all initialized {@link Entity} objects
+   */
   public static ArrayList<Entity> createObjectsEnt() {
     Object[][] data = {
         {"Code", "Name", "Amount"}, // 0
-        {"1001", "Presidency of the Republic", new BigDecimal("4638000")}, //1
+        {"1001", "Presidency of the Republic", new BigDecimal("4638000")}, // 1
         {"1003", "Hellenic Parliament", new BigDecimal("171950000")},
         {"1004", "Presidency of the Government", new BigDecimal("41689000")},
         {"1007", "Ministry of Interior", new BigDecimal("3830276000")},
@@ -236,21 +273,7 @@ public class ObjectsEntities {
         (BigDecimal) data[30][2],
         "2025");
 
-    
-    /**
-     * Creates and returns a list of {@link Entity} objects representing 
-     * the major organizational units of the Greek State for 2025.
-     * <p>
-     * Each entity is initialized with its official budget code (e.g., "1001" for 
-     * Presidency), its formal name, and its total allocated budget for 2025 
-     * as defined in the official State Budget.
-     * </p>
-     * * @return An {@link ArrayList} of {@link Entity} objects, including Ministries 
-     * and Decentralized Administrations.
-     * @see Entity
-     * @see RepublicPresidency
-     * @see MinEconomy
-     */
+
     ArrayList<Entity> ent = new ArrayList<>();
 
     ent.add(repPresidency);
@@ -288,6 +311,4 @@ public class ObjectsEntities {
     // End of Entities List
     return ent;
   }
-
-    
 }
