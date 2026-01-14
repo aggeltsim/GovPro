@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 /**
- * The {@code PredictionGUI} class provides a Swing-based
+ * The {@code PredictionGui} class provides a Swing-based
  * graphical user interface for budget prediction.
  *
  * <p>The application allows users to:
