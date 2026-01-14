@@ -1,0 +1,1281 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GovProFx.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">GovProFx.java</span></div><h1>GovProFx.java</h1><pre class="source lang-java linenums">import entities.Entity;
+import expenses.Expenses;
+import incomes.Income;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
+import javafx.scene.paint.Color;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+/**
+ * The {@code GovProFx} class represents the main JavaFX application
+ * of the GovPro Budget System.
+ *
+ * &lt;p&gt;The application provides a graphical user interface for:
+ * &lt;ul&gt;
+ *   &lt;li&gt;Viewing government budget data&lt;/li&gt;
+ *   &lt;li&gt;Editing budget entries&lt;/li&gt;
+ *   &lt;li&gt;Statistical analysis with charts&lt;/li&gt;
+ *   &lt;li&gt;Budget forecasting and predictions&lt;/li&gt;
+ *  &lt;li&gt;Percentage calculations&lt;/li&gt;
+ *    &lt;li&gt;AI-powered citizen assistance&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;JavaFX components such as {@link TableView}, {@link PieChart},
+ * {@link ProgressBar}, and multiple dialog windows are used.
+ * Audio feedback is also included to enhance user interaction.
+ * &lt;/p&gt;
+ *
+ * @version 1.0
+ */
+<span class="fc" id="L77">public class GovProFx extends Application {</span>
+
+  private AudioClip gameTreasure;  
+  private AudioClip gameNotification;
+  private AudioClip startConfirm;
+  private AudioClip instantWin;
+  private AudioClip clearSound;
+
+  /**
+   * Model class representing a single budget record.
+   *
+   * &lt;p&gt;This class is used by the {@link TableView} to display
+   * budget codes, descriptions, and monetary amounts.
+   * &lt;/p&gt;
+   */
+  public static class BudgetEntry {
+
+    /** Budget account code. */
+    private String code;
+
+    /** Description of the budget entry. */
+    private String name;
+
+    /** Monetary amount associated with the entry. */
+    private BigDecimal amount;
+
+    /**
+     * Constructs a new {@code BudgetEntry}.
+     *
+     * @param code   the account code
+     * @param name   the description of the entry
+     * @param amount the monetary amount
+     */
+<span class="fc" id="L110">    public BudgetEntry(String code, String name, BigDecimal amount) {</span>
+<span class="fc" id="L111">      this.code = code;</span>
+<span class="fc" id="L112">      this.name = name;</span>
+<span class="fc" id="L113">      this.amount = amount;</span>
+<span class="fc" id="L114">    }</span>
+
+    /** Returns the budget account code.
+     * 
+     * @return  the budget account code 
+     */
+    public String getCode() { 
+<span class="fc" id="L121">      return code; </span>
+    }
+
+    /** Returns the description of the entry.
+     * 
+     * @return the description of the entry
+     */
+    public String getName() { 
+<span class="fc" id="L129">      return name; </span>
+    }
+        
+    /** Returns the monetary amount.
+     * 
+     * @return the monetary amount 
+     */
+    public BigDecimal getAmount() { 
+<span class="fc" id="L137">      return amount; </span>
+    }
+    /**
+     * Updates the monetary amount of this entry.
+     *
+     * @param amount the new monetary amount
+     */
+
+    public void setAmount(BigDecimal amount) { 
+<span class="nc" id="L146">      this.amount = amount; </span>
+<span class="nc" id="L147">    }</span>
+  }
+
+<span class="fc" id="L150">  private ObservableList&lt;BudgetEntry&gt; masterData = FXCollections.observableArrayList();</span>
+<span class="fc" id="L151">  private TableView&lt;BudgetEntry&gt; table = new TableView&lt;&gt;();</span>
+
+  /**
+   * Array representing the fiscal years for which historical data is available.
+   * 
+   * &lt;p&gt;Used as the time axis for prediction algorithms.&lt;/p&gt;
+   */
+<span class="fc" id="L158">  static double[] years = {2021, 2022, 2023, 2024, 2025, 2026};</span>
+  /**
+   * A 2D array containing historical spending data for various ministries and entities.
+   * 
+   * &lt;p&gt;&lt;strong&gt;Data Structure:&lt;/strong&gt; 
+   * &lt;ul&gt;
+   * &lt;li&gt;Rows: Correspond to specific entities (e.g., Presidency, Ministries).&lt;/li&gt;
+   * &lt;li&gt;Columns: Correspond to the years defined in the {@link #years} array.&lt;/li&gt;
+   * &lt;/ul&gt;
+   * &lt;/p&gt;
+   * 
+   * &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; The values represent de-inflated budget amounts in Euros, 
+   * using 2021 as the base year.
+   * &lt;/p&gt;
+   */
+<span class="fc" id="L173">  static double[][] dapanes = { </span>
+    {3766000, 4097337, 3811641, 4059900, 3974293, 4146883}, 
+    {143500000, 134251607, 134030043, 140477275, 147343837, 156551972}, 
+    {34251000, 40536272, 36372937, 37886945, 35723136, 38447884}, 
+    {2986769000.0, 2973891093.0, 3172953535.0, 3245029336.0, 3282162880.0, 3487669947.0}, 
+    {288237000, 246668455, 252308235, 357219091, 359936589, 404757288}, 
+    {5495900000.0, 5937190083.0, 5103551488.0, 5362408267.0, 5252784805.0, 5916035799.0}, 
+    {4256596000.0, 4276649036.0, 4651583743.0, 5278434922.0, 6150311996.0, 6568225405.0}, 
+    {533261000, 531100091, 506425467, 547747086, 557774970, 569191096}, 
+    {5605100000.0, 5363728191.0, 5436589608.0, 5733987212.0, 5660668349.0, 5665485468.0}, 
+    {359100000, 383427915, 409992485, 350395832, 493075321, 546993897}, 
+    {747475497000.0, 690153192000.0, 669349030000.0, 919467234000.0,
+        1068139883000.0, 1438513680000.0} 
+  };
+
+  /**
+   * Entry point of the JavaFX application.
+   *
+   * &lt;p&gt;Displays a splash screen before loading the main UI.
+   * &lt;/p&gt;
+   *
+   * @param primaryStage the primary application stage
+   */   
+  @Override
+  public void start(Stage primaryStage) {
+<span class="nc" id="L198">    start(primaryStage, false); // default behavior: show splash</span>
+<span class="nc" id="L199">  }</span>
+
+  /**
+   * Overloaded start method mainly used for testing.
+   *
+   * @param primaryStage the main application stage
+   * @param skipSplash   if {@code true}, skips the splash screen
+   *                     and loads the main UI directly
+   */
+  public void start(Stage primaryStage, boolean skipSplash) {
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">    if (skipSplash) {</span>
+<span class="fc" id="L210">      showMainApp(primaryStage);</span>
+<span class="fc" id="L211">      primaryStage.show();</span>
+<span class="fc" id="L212">      return;</span>
+    }
+    // ---- Start Here sound----
+<span class="nc" id="L215">    startConfirm = </span>
+<span class="nc" id="L216">        new AudioClip(getClass().getResource(&quot;/sounds/winning-a-coin.wav&quot;).toExternalForm());</span>
+<span class="nc" id="L217">    startConfirm.setVolume(0.5);</span>
+
+    // WARM-UP
+<span class="nc" id="L220">    startConfirm.setVolume(0.0);</span>
+<span class="nc" id="L221">    startConfirm.play();</span>
+<span class="nc" id="L222">    startConfirm.stop();</span>
+<span class="nc" id="L223">    startConfirm.setVolume(0.5);</span>
+
+    // ----- Original splash screen code -----
+<span class="nc" id="L226">    Image backgroundImg = new Image(getClass().getResourceAsStream(&quot;/images/GovProbackground.png&quot;));</span>
+<span class="nc" id="L227">    BackgroundImage bg = new BackgroundImage(</span>
+        backgroundImg,
+        BackgroundRepeat.NO_REPEAT,
+        BackgroundRepeat.NO_REPEAT,
+        BackgroundPosition.CENTER,
+        new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false)
+    );
+<span class="nc" id="L234">    primaryStage.getIcons().add(</span>
+<span class="nc" id="L235">        new Image(getClass().getResourceAsStream(&quot;/images/govpro_icon.png&quot;)));</span>
+
+<span class="nc" id="L237">    StackPane splashPane = new StackPane();</span>
+<span class="nc" id="L238">    splashPane.setBackground(new Background(bg));</span>
+<span class="nc" id="L239">    splashPane.setPadding(new Insets(20));</span>
+
+<span class="nc" id="L241">    Button startButton = new Button(&quot;Start Here ▶&quot;);</span>
+<span class="nc" id="L242">    startButton.setStyle(&quot;&quot;&quot;</span>
+        -fx-background-color: #32809aff;
+        -fx-text-fill: white;
+        -fx-font-size: 18px;
+        -fx-padding: 10 25 10 25;
+        -fx-background-radius: 10;
+        &quot;&quot;&quot;);
+
+<span class="nc" id="L250">    VBox splashContent = new VBox(20, startButton);</span>
+<span class="nc" id="L251">    splashContent.setAlignment(Pos.CENTER);</span>
+<span class="nc" id="L252">    splashContent.setTranslateY(200);</span>
+<span class="nc" id="L253">    splashPane.getChildren().add(splashContent);</span>
+
+<span class="nc" id="L255">    Scene splashScene = new Scene(splashPane, 1100, 650);</span>
+
+<span class="nc" id="L257">    primaryStage.setTitle(&quot;🏛️ GovPro Budget System 2025&quot;);</span>
+<span class="nc" id="L258">    primaryStage.setScene(splashScene);</span>
+<span class="nc" id="L259">    primaryStage.show();</span>
+
+<span class="nc" id="L261">    startButton.setOnAction(e -&gt; {</span>
+<span class="nc" id="L262">      startConfirm.play();</span>
+<span class="nc" id="L263">      FadeTransition fade = new FadeTransition(Duration.seconds(1.2), splashPane);</span>
+<span class="nc" id="L264">      fade.setFromValue(1.0);</span>
+<span class="nc" id="L265">      fade.setToValue(0.0);</span>
+<span class="nc" id="L266">      fade.setInterpolator(Interpolator.EASE_BOTH);</span>
+<span class="nc" id="L267">      fade.setOnFinished(ev -&gt; showMainApp(primaryStage));</span>
+<span class="nc" id="L268">      fade.play();</span>
+<span class="nc" id="L269">    });</span>
+<span class="nc" id="L270">  }</span>
+    
+  /**
+   * Builds and displays the main user interface of the application.
+   *
+   * &lt;p&gt;Initializes menus, tables, dialogs, and sound effects.
+   * &lt;/p&gt;
+   *
+   * @param primaryStage the primary application stage
+   */
+  protected void showMainApp(Stage primaryStage) {
+
+    // -----Sounds----
+<span class="fc" id="L283">    gameNotification = new AudioClip(getClass().getResource(</span>
+<span class="fc" id="L284">        &quot;/sounds/game-notification.wav&quot;).toExternalForm());</span>
+<span class="fc" id="L285">    gameTreasure = new AudioClip(getClass().getResource(</span>
+<span class="fc" id="L286">        &quot;/sounds/game-treasure.wav&quot;).toExternalForm());</span>
+<span class="fc" id="L287">    instantWin = new AudioClip(getClass().getResource(</span>
+<span class="fc" id="L288">        &quot;/sounds/instant-win.wav&quot;).toExternalForm());</span>
+<span class="fc" id="L289">    instantWin.setVolume(0.6);</span>
+<span class="fc" id="L290">    clearSound = new AudioClip(getClass().getResource(</span>
+<span class="fc" id="L291">        &quot;/sounds/arcade-casino.wav&quot;).toExternalForm());</span>
+
+    // Preload for instant playback
+<span class="fc" id="L294">    instantWin.setVolume(0.0);</span>
+<span class="fc" id="L295">    instantWin.play();</span>
+<span class="fc" id="L296">    instantWin.stop();</span>
+<span class="fc" id="L297">    instantWin.setVolume(0.6);</span>
+
+
+<span class="fc" id="L300">    initializeData();</span>
+
+<span class="fc" id="L302">    primaryStage.setTitle(&quot;🏛️ GovPro Budget System 2025&quot;);</span>
+
+<span class="fc" id="L304">    VBox menuBox = new VBox(15);</span>
+<span class="fc" id="L305">    menuBox.setPadding(new Insets(20));</span>
+<span class="fc" id="L306">    menuBox.setStyle(&quot;-fx-background-color: #2c3e50;&quot;);</span>
+<span class="fc" id="L307">    menuBox.setPrefWidth(260);</span>
+
+<span class="fc" id="L309">    Label menuTitle = new Label(&quot;MANAGEMENT&quot;);</span>
+<span class="fc" id="L310">    menuTitle.setStyle(&quot;-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16;&quot;);</span>
+
+<span class="fc" id="L312">    Button btnRead = createMenuButton(&quot;View Budget Table&quot;);</span>
+<span class="fc" id="L313">    Button btnAmend = createMenuButton(&quot;Make Changes&quot;);</span>
+<span class="fc" id="L314">    Button btnPredict = createMenuButton(&quot;Forecasting Engine&quot;);</span>
+<span class="fc" id="L315">    Button btnStats = createMenuButton(&quot;Statistics Dashboard&quot;);</span>
+<span class="fc" id="L316">    Button btnPercent = createMenuButton(&quot;Percentage Calculator&quot;);</span>
+<span class="fc" id="L317">    Button btnExplain = createMenuButton(&quot;Account Explanation &quot;);</span>
+<span class="fc" id="L318">    Button btnCitizen = createMenuButton(&quot;AI Assistant&quot;);</span>
+
+<span class="fc" id="L320">    menuBox.getChildren().addAll(</span>
+        menuTitle, btnRead, btnAmend, btnPredict, btnStats, btnPercent, btnExplain, btnCitizen);
+
+<span class="fc" id="L323">    setupTable();</span>
+<span class="fc" id="L324">    StackPane contentArea = new StackPane(table);</span>
+<span class="fc" id="L325">    contentArea.setPadding(new Insets(20));</span>
+
+<span class="pc" id="L327">    btnRead.setOnAction(e -&gt; table.setVisible(true));</span>
+<span class="pc" id="L328">    btnAmend.setOnAction(e -&gt; showAmendDialog());</span>
+<span class="pc" id="L329">    btnPredict.setOnAction(e -&gt; showPredictDialog());</span>
+<span class="pc" id="L330">    btnStats.setOnAction(e -&gt; showStatistics());</span>
+<span class="fc" id="L331">    btnPercent.setOnAction(e -&gt; { </span>
+<span class="nc" id="L332">      new Thread(() -&gt; {</span>
+        try {
+<span class="nc" id="L334">          Percentage.percentage.Runner.main(new String[0]);</span>
+<span class="nc" id="L335">          gameTreasure.play();</span>
+<span class="nc" id="L336">        } catch (Exception ex) {</span>
+<span class="nc" id="L337">          ex.printStackTrace();</span>
+<span class="nc" id="L338">        }</span>
+<span class="nc" id="L339">      }).start();</span>
+<span class="nc" id="L340">    });</span>
+<span class="fc" id="L341">    btnCitizen.setOnAction(e -&gt; {</span>
+<span class="nc" id="L342">      new Thread(() -&gt; {</span>
+        
+<span class="nc" id="L344">        javafx.application.Platform.runLater(() -&gt; showCitizenAssistantDialog());</span>
+<span class="nc" id="L345">      }).start();</span>
+<span class="nc" id="L346">    });</span>
+<span class="fc" id="L347">    btnRead.setOnAction(e -&gt; {</span>
+<span class="nc" id="L348">      gameTreasure.play();</span>
+<span class="nc" id="L349">      table.setVisible(true);</span>
+<span class="nc" id="L350">    });</span>
+<span class="fc" id="L351">    btnAmend.setOnAction(e -&gt; {</span>
+<span class="nc" id="L352">      gameTreasure.play();</span>
+<span class="nc" id="L353">      showAmendDialog();</span>
+<span class="nc" id="L354">    });</span>
+<span class="fc" id="L355">    btnPredict.setOnAction(e -&gt; {</span>
+<span class="nc" id="L356">      gameTreasure.play();</span>
+<span class="nc" id="L357">      showPredictDialog();</span>
+<span class="nc" id="L358">    });</span>
+<span class="fc" id="L359">    btnStats.setOnAction(e -&gt; {</span>
+<span class="nc" id="L360">      gameTreasure.play();</span>
+<span class="nc" id="L361">      showStatistics();</span>
+<span class="nc" id="L362">    });</span>
+<span class="fc" id="L363">    btnExplain.setOnAction(e -&gt; {</span>
+<span class="nc" id="L364">      gameTreasure.play();</span>
+<span class="nc" id="L365">      showExplanation();</span>
+<span class="nc" id="L366">    });</span>
+
+<span class="fc" id="L368">    BorderPane root = new BorderPane();</span>
+<span class="fc" id="L369">    root.setLeft(menuBox);</span>
+<span class="fc" id="L370">    root.setCenter(contentArea);</span>
+
+<span class="fc" id="L372">    Scene mainScene = new Scene(root, 1100, 650);</span>
+<span class="fc" id="L373">    primaryStage.setScene(mainScene);</span>
+<span class="fc" id="L374">  }</span>
+
+  /**
+   * Configures the budget {@link TableView}.
+   *
+   * &lt;p&gt;Sets up columns, value formatting, and conditional row styling
+   * based on budget entry categories.
+   * &lt;/p&gt;
+   */
+  private void setupTable() {
+<span class="fc" id="L384">    TableColumn&lt;BudgetEntry, String&gt; codeCol = new TableColumn&lt;&gt;(&quot;Code&quot;);</span>
+<span class="fc" id="L385">    codeCol.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;code&quot;));</span>
+<span class="fc" id="L386">    codeCol.setPrefWidth(100);</span>
+
+<span class="fc" id="L388">    TableColumn&lt;BudgetEntry, String&gt; nameCol = new TableColumn&lt;&gt;(&quot;Description&quot;);</span>
+<span class="fc" id="L389">    nameCol.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;name&quot;));</span>
+<span class="fc" id="L390">    nameCol.setPrefWidth(450);</span>
+
+<span class="fc" id="L392">    TableColumn&lt;BudgetEntry, BigDecimal&gt; amountCol = new TableColumn&lt;&gt;(&quot;Amount (€)&quot;);</span>
+<span class="fc" id="L393">    amountCol.setCellValueFactory(new PropertyValueFactory&lt;&gt;(&quot;amount&quot;));</span>
+<span class="fc" id="L394">    amountCol.setPrefWidth(250);</span>
+
+<span class="fc" id="L396">    amountCol.setCellFactory(tc -&gt; new TableCell&lt;&gt;() {</span>
+      @Override
+      protected void updateItem(BigDecimal amount, boolean empty) {
+<span class="fc" id="L399">        super.updateItem(amount, empty);</span>
+<span class="fc bfc" id="L400" title="All 4 branches covered.">        if (empty || amount == null) {</span>
+<span class="fc" id="L401">          setText(null);</span>
+<span class="fc" id="L402">          setStyle(&quot;&quot;);</span>
+        } else {
+<span class="fc" id="L404">          NumberFormat nf = NumberFormat.getInstance(Locale.GERMANY);</span>
+<span class="fc" id="L405">          setText(nf.format(amount));</span>
+<span class="fc" id="L406">          setStyle(&quot;-fx-alignment: CENTER-RIGHT; -fx-padding: 0 10 0 0;&quot;);</span>
+        }
+<span class="fc" id="L408">      }</span>
+    });
+
+<span class="fc" id="L411">    table.setRowFactory(tv -&gt; new TableRow&lt;BudgetEntry&gt;() {</span>
+      @Override
+      protected void updateItem(BudgetEntry item, boolean empty) {
+<span class="fc" id="L414">        super.updateItem(item, empty);</span>
+<span class="pc bpc" id="L415" title="1 of 4 branches missed.">        if (item == null || empty) {</span>
+<span class="fc" id="L416">          setStyle(&quot;&quot;);</span>
+<span class="fc bfc" id="L417" title="All 2 branches covered.">        } else if (&quot;SECTION&quot;.equals(item.getCode())) {</span>
+<span class="fc" id="L418">          setStyle(&quot;-fx-background-color: #f3f5f5ff; -fx-font-weight: bold;&quot;);</span>
+<span class="fc" id="L419">          this.setTextFill(Color.WHITE);</span>
+        } else {
+          try {
+<span class="fc" id="L422">            int codeInt = Integer.parseInt(item.getCode());</span>
+<span class="pc bpc" id="L423" title="2 of 4 branches missed.">            if (codeInt &gt;= 11 &amp;&amp; codeInt &lt;= 571) {</span>
+<span class="fc" id="L424">              setStyle(&quot;-fx-background-color: #dcfbdf;&quot;); // Incomes</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">            } else if (codeInt &gt;= 1001) {</span>
+<span class="nc" id="L426">              setStyle(&quot;-fx-background-color: #e3f2fd;&quot;); // Entities</span>
+            } else {
+<span class="nc" id="L428">              setStyle(&quot;-fx-background-color: #f6d6da;&quot;); // Expenses</span>
+            }
+<span class="nc" id="L430">          } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L431">            setStyle(&quot;&quot;); </span>
+<span class="fc" id="L432">          }</span>
+        }
+<span class="fc" id="L434">      }</span>
+    });
+
+<span class="fc" id="L437">    table.getColumns().clear();</span>
+<span class="fc" id="L438">    table.getColumns().addAll(codeCol, nameCol, amountCol);</span>
+<span class="fc" id="L439">    table.setItems(masterData);</span>
+<span class="fc" id="L440">    table.setPlaceholder(new Label(&quot;No data loaded.&quot;));</span>
+<span class="fc" id="L441">  }</span>
+
+  /**
+   * Displays a dialog window that allows the user
+   * to modify existing budget entries.
+   *
+   * &lt;p&gt;The selected entry is updated in real time
+   * within the table.
+   * &lt;/p&gt;
+   */
+  protected void showAmendDialog() {
+<span class="fc" id="L452">    Stage dialog = new Stage();</span>
+<span class="fc" id="L453">    applyAppIcon(dialog);</span>
+<span class="fc" id="L454">    dialog.initModality(Modality.NONE);</span>
+<span class="fc" id="L455">    dialog.setTitle(&quot;🔧 Amend Budget Entry&quot;);</span>
+
+<span class="fc" id="L457">    VBox layout = new VBox(10);</span>
+<span class="fc" id="L458">    layout.setPadding(new Insets(20));</span>
+
+<span class="fc" id="L460">    ComboBox&lt;String&gt; combo = new ComboBox&lt;&gt;();</span>
+<span class="fc" id="L461">    combo.valueProperty().addListener((obs, oldVal, newVal) -&gt; {</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">      if (newVal != null) {</span>
+<span class="nc" id="L463">        gameNotification.stop();</span>
+<span class="nc" id="L464">        gameNotification.play();</span>
+      }
+<span class="nc" id="L466">    });</span>
+
+<span class="fc" id="L468">    masterData.forEach(entry -&gt; {</span>
+<span class="fc bfc" id="L469" title="All 2 branches covered.">      if (!&quot;SECTION&quot;.equals(entry.getCode())) {</span>
+<span class="fc" id="L470">        combo.getItems().add(entry.getCode() + &quot; - &quot; + entry.getName());</span>
+      }
+<span class="fc" id="L472">    });</span>
+<span class="fc" id="L473">    combo.setMaxWidth(Double.MAX_VALUE);</span>
+        
+<span class="fc" id="L475">    TextField txtNewValue = new TextField();</span>
+<span class="fc" id="L476">    txtNewValue.setPromptText(&quot;Enter new amount...&quot;);</span>
+
+<span class="fc" id="L478">    Button btnSave = new Button(&quot;Commit Changes ✅&quot;);</span>
+<span class="fc" id="L479">    btnSave.setMaxWidth(Double.MAX_VALUE);</span>
+<span class="fc" id="L480">    btnSave.setOnAction(e -&gt; {</span>
+<span class="nc bnc" id="L481" title="All 2 branches missed.">      if (instantWin != null) {</span>
+<span class="nc" id="L482">        instantWin.stop(); </span>
+<span class="nc" id="L483">        instantWin.play();</span>
+      }
+<span class="nc" id="L485">      int idx = combo.getSelectionModel().getSelectedIndex();</span>
+<span class="nc bnc" id="L486" title="All 2 branches missed.">      if (idx &gt;= 0) {</span>
+        try {
+<span class="nc" id="L488">          BigDecimal val = new BigDecimal(txtNewValue.getText().replace(&quot;,&quot;, &quot;.&quot;));</span>
+          // Attention: Here we find the correct object based on the code
+<span class="nc" id="L490">          String selectedCode = combo.getValue().split(&quot; - &quot;)[0];</span>
+<span class="nc" id="L491">          masterData.stream()</span>
+<span class="nc" id="L492">            .filter(ent -&gt; ent.getCode().equals(selectedCode))</span>
+<span class="nc" id="L493">            .findFirst()</span>
+<span class="nc" id="L494">              .ifPresent(ent -&gt; ent.setAmount(val));</span>
+                    
+<span class="nc" id="L496">          table.refresh();</span>
+<span class="nc" id="L497">          dialog.close();</span>
+<span class="nc" id="L498">        } catch (Exception ex) {</span>
+<span class="nc" id="L499">          txtNewValue.setStyle(&quot;-fx-border-color: red;&quot;);</span>
+<span class="nc" id="L500">        }</span>
+      }
+<span class="nc" id="L502">    });</span>
+
+<span class="fc" id="L504">    layout.getChildren().addAll(</span>
+        new Label(&quot;Select Account:&quot;), combo, new Label(&quot;New Amount:&quot;), txtNewValue, btnSave);
+<span class="fc" id="L506">    dialog.setScene(new Scene(layout, 400, 250));</span>
+<span class="fc" id="L507">    dialog.show();</span>
+<span class="fc" id="L508">  }</span>
+
+  /**
+   * Displays the budget forecasting and prediction dialog.
+   *
+   * &lt;p&gt;Supports:
+   * &lt;ul&gt;
+   *   &lt;li&gt;Predicting budget values for a given year&lt;/li&gt;
+   *   &lt;li&gt;Estimating the time when a target value is reached&lt;/li&gt;
+   * &lt;/ul&gt;
+   * &lt;/p&gt;
+   */
+  private void showPredictDialog() {
+<span class="nc" id="L521">    Stage dialog = new Stage();</span>
+<span class="nc" id="L522">    applyAppIcon(dialog);</span>
+<span class="nc" id="L523">    dialog.initModality(Modality.NONE);</span>
+<span class="nc" id="L524">    dialog.setTitle(&quot;📈 Budget Forecasting System&quot;);   </span>
+
+    // --- Central Layout ---
+<span class="nc" id="L527">    VBox root = new VBox(20);</span>
+<span class="nc" id="L528">    root.setPadding(new Insets(25));</span>
+<span class="nc" id="L529">    root.setStyle(&quot;-fx-background-color: linear-gradient(to bottom right, #ffffff, #e6e9f0);&quot;);</span>
+<span class="nc" id="L530">    root.setPrefWidth(600);</span>
+
+<span class="nc" id="L532">    Label headerLabel = new Label(&quot;Financial Analytics &amp; Prediction&quot;);</span>
+<span class="nc" id="L533">    headerLabel.setStyle(&quot;-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;&quot;);</span>
+
+    // --- Select Prediction Type ---
+<span class="nc" id="L536">    ComboBox&lt;String&gt; modeBox = new ComboBox&lt;&gt;();</span>
+<span class="nc" id="L537">    modeBox.valueProperty().addListener((obs, oldVal, newVal) -&gt; {</span>
+<span class="nc bnc" id="L538" title="All 2 branches missed.">      if (newVal != null) {</span>
+<span class="nc" id="L539">        gameNotification.stop(); // for rapid clicks</span>
+<span class="nc" id="L540">        gameNotification.play();</span>
+      }
+<span class="nc" id="L542">    });</span>
+<span class="nc" id="L543">    modeBox.getItems().addAll(</span>
+        &quot;📊 Predict Value for Given Year&quot;, &quot;🕒 Predict When Value Will Be Reached&quot;);
+<span class="nc" id="L545">    modeBox.setPromptText(&quot;Select Prediction Type&quot;);</span>
+<span class="nc" id="L546">    String[] entities = {</span>
+        &quot;Presidency of the Republic&quot;, &quot;Hellenic Parliament&quot;, &quot;Presidency of Governance&quot;,
+        &quot;Ministry of Interior&quot;, &quot;Ministry of Exterior&quot;, &quot;Ministry of Defence&quot;,
+        &quot;Ministry of Health&quot;, &quot;Ministry of Justice&quot;, &quot;Ministry of Education&quot;,
+        &quot;Ministry of Sport&quot;, &quot;Ministry of Finance&quot;
+    };
+
+    // --- Select Ministry ---
+<span class="nc" id="L554">    ComboBox&lt;String&gt; comboEntity = new ComboBox&lt;&gt;(FXCollections.observableArrayList(entities));</span>
+<span class="nc" id="L555">    comboEntity.valueProperty().addListener((obs, oldVal, newVal) -&gt; {</span>
+<span class="nc bnc" id="L556" title="All 2 branches missed.">      if (newVal != null) {</span>
+<span class="nc" id="L557">        gameNotification.stop();</span>
+<span class="nc" id="L558">        gameNotification.play();</span>
+      }
+<span class="nc" id="L560">    });</span>
+<span class="nc" id="L561">    comboEntity.setPromptText(&quot;Select Ministry/Entity&quot;);</span>
+
+    // --- Input fields ---
+<span class="nc" id="L564">    TextField txtYear = new TextField();</span>
+<span class="nc" id="L565">    txtYear.setPromptText(&quot;Enter Target Year (e.g. 2028)&quot;);</span>
+
+<span class="nc" id="L567">    TextField txtDesiredValue = new TextField();</span>
+<span class="nc" id="L568">    txtDesiredValue.setPromptText(&quot;Enter Desired Value (€)&quot;);</span>
+
+    // --- Results area ---
+<span class="nc" id="L571">    Label lblResults = new Label(&quot;Results:&quot;);</span>
+<span class="nc" id="L572">    lblResults.setStyle(&quot;-fx-font-size: 16px; -fx-font-weight: bold;&quot;);</span>
+<span class="nc" id="L573">    TextArea resultArea = new TextArea();</span>
+<span class="nc" id="L574">    resultArea.setEditable(false);</span>
+<span class="nc" id="L575">    resultArea.setPrefHeight(200);</span>
+
+    // --- Buttons ---
+<span class="nc" id="L578">    Button btnRun = new Button(&quot;Run Prediction&quot;);</span>
+<span class="nc" id="L579">    Button btnClear = new Button(&quot;Clear Results&quot;);</span>
+<span class="nc" id="L580">    HBox actionButtons = new HBox(10, btnRun, btnClear);</span>
+<span class="nc" id="L581">    actionButtons.setAlignment(Pos.CENTER);</span>
+
+    // --- Containers ---
+<span class="nc" id="L584">    VBox dynamicFields = new VBox(10);</span>
+<span class="nc" id="L585">    dynamicFields.setAlignment(Pos.CENTER_LEFT);</span>
+
+    // dynamically changes what is displayed depending on the mode
+<span class="nc" id="L588">    modeBox.setOnAction(e -&gt; {</span>
+<span class="nc" id="L589">      dynamicFields.getChildren().clear();</span>
+<span class="nc bnc" id="L590" title="All 2 branches missed.">      if (modeBox.getValue().contains(&quot;Value for Given Year&quot;)) {</span>
+<span class="nc" id="L591">        dynamicFields.getChildren().addAll(new Label(&quot;Target Year:&quot;), txtYear);</span>
+      } else {
+<span class="nc" id="L593">        dynamicFields.getChildren().addAll(new Label(&quot;Desired Value (€):&quot;), txtDesiredValue);</span>
+      }
+<span class="nc" id="L595">    });</span>
+<span class="nc" id="L596">    Prediction p = new Prediction();</span>
+<span class="nc" id="L597">    double[][] dapanes = {</span>
+        {3766000, 4097337, 3811641, 4059900, 3974293, 4146883},
+        {143500000, 134251607, 134030043, 140477275, 147343837, 156551972},
+        {34251000, 40536272, 36372937, 37886945, 35723136, 38447884},
+        {2986769000L, 2973891093L, 3172953535L, 3245029336L, 3282162880L, 3487669947L},
+        {288237000, 246668455, 252308235, 357219091, 359936589, 404757288},
+        {5495900000L, 5937190083L, 5103551488L, 5362408267L, 5252784805L, 5916035799L},
+        {4256596000L, 4276649036L, 4651583743L, 5278434922L, 6150311996L, 6568225405L},
+        {533261000, 531100091, 506425467, 547747086, 557774970, 569191096},
+        {5605100000L, 5363728191L, 5436589608L, 5733987212L, 5660668349L, 5665485468L},
+        {359100000, 383427915, 409992485, 350395832, 493075321, 546993897},
+        {747475497000L, 690153192000L, 669349030000L, 919467234000L, 1068139883000L, 1438513680000L}
+    };
+<span class="nc" id="L610">    double[] years = {2021, 2022, 2023, 2024, 2025, 2026};</span>
+
+    // --- Λογική κουμπιών ---
+<span class="nc" id="L613">    btnRun.setOnAction(e -&gt; {</span>
+      // Play reward / action sound
+<span class="nc bnc" id="L615" title="All 2 branches missed.">      if (instantWin != null) {</span>
+<span class="nc" id="L616">        instantWin.stop();</span>
+<span class="nc" id="L617">        instantWin.play();</span>
+      }
+<span class="nc" id="L619">      int idx = comboEntity.getSelectionModel().getSelectedIndex();</span>
+<span class="nc bnc" id="L620" title="All 4 branches missed.">      if (idx &lt; 0 || modeBox.getValue() == null) {</span>
+<span class="nc" id="L621">        resultArea.appendText(&quot;Please select a prediction type and an entity.\n&quot;);</span>
+<span class="nc" id="L622">        return;</span>
+      }
+
+<span class="nc bnc" id="L625" title="All 2 branches missed.">      if (modeBox.getValue().contains(&quot;Value for Given Year&quot;)) {</span>
+        try {
+<span class="nc" id="L627">          int year = Integer.parseInt(txtYear.getText());</span>
+<span class="nc" id="L628">          double predicted = p.getValueForGivenYear(years, dapanes[idx], year);</span>
+<span class="nc" id="L629">          resultArea.appendText(String.format(</span>
+              &quot;📊 [%s]\nPredicted spending for %d: €%,.2f\n\n&quot;,
+<span class="nc" id="L631">                      entities[idx], year, predicted));</span>
+<span class="nc" id="L632">        } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L633">          resultArea.appendText(&quot;Invalid year input.Try giving a year (e.g. 2045).\n&quot;);</span>
+<span class="nc" id="L634">        }</span>
+      } else {
+        try {
+<span class="nc" id="L637">          double value = Double.parseDouble(txtDesiredValue.getText());</span>
+<span class="nc" id="L638">          String est = p.getYearandMonthforGivenValue(years, dapanes[idx], value);</span>
+<span class="nc" id="L639">          resultArea.appendText(String.format(</span>
+              &quot;🕒 [%s]\nEstimated time when spending reaches €%,.2f: %s\n\n&quot;,
+<span class="nc" id="L641">                      entities[idx], value, est));</span>
+<span class="nc" id="L642">        } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L643">          resultArea.appendText(&quot;Invalid value input.Try giving a number (e.g. 4566778.54).\n&quot;);</span>
+<span class="nc" id="L644">        }</span>
+      }
+<span class="nc" id="L646">    });</span>
+
+<span class="nc" id="L648">    btnClear.setOnAction(e -&gt; {</span>
+<span class="nc" id="L649">      resultArea.clear();</span>
+<span class="nc bnc" id="L650" title="All 2 branches missed.">      if (clearSound != null) { </span>
+<span class="nc" id="L651">        clearSound.stop();</span>
+<span class="nc" id="L652">        clearSound.play();</span>
+      }
+<span class="nc" id="L654">    });</span>
+<span class="nc" id="L655">    Separator separator = new Separator();</span>
+
+    // --- Fitting ---
+<span class="nc" id="L658">    VBox formBox = new VBox(15,</span>
+            new Label(&quot;Prediction Type:&quot;), modeBox,
+            new Label(&quot;Select Entity:&quot;), comboEntity,
+            dynamicFields,
+            lblResults, resultArea,
+            actionButtons);
+<span class="nc" id="L664">    formBox.setAlignment(Pos.CENTER_LEFT);</span>
+
+<span class="nc" id="L666">    root.getChildren().addAll(headerLabel, separator, formBox);</span>
+
+<span class="nc" id="L668">    Scene scene = new Scene(root);</span>
+<span class="nc" id="L669">    dialog.setScene(scene);</span>
+<span class="nc" id="L670">    dialog.show();</span>
+<span class="nc" id="L671">  }</span>
+    
+  /**
+   * Displays the statistics dashboard for budget analysis.
+   *
+   * &lt;p&gt;Includes pie charts, progress bars, and
+   * percentage breakdowns of budget data.
+   * &lt;/p&gt;
+   */
+  private void showStatistics() {
+<span class="nc" id="L681">    Stage statsStage = new Stage();</span>
+<span class="nc" id="L682">    applyAppIcon(statsStage);</span>
+<span class="nc" id="L683">    statsStage.initModality(Modality.NONE);</span>
+<span class="nc" id="L684">    statsStage.setTitle(&quot;📊 Budget Statistics&quot;);</span>
+
+<span class="nc" id="L686">    VBox root = new VBox(15);</span>
+<span class="nc" id="L687">    root.setPadding(new Insets(20));</span>
+<span class="nc" id="L688">    root.setStyle(&quot;-fx-background-color: linear-gradient(to bottom right, #ffffff, #e6e9f0);&quot;);</span>
+
+<span class="nc" id="L690">    Label header = new Label(&quot;Government Budget Statistics&quot;);</span>
+<span class="nc" id="L691">    header.setStyle(&quot;-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;&quot;);</span>
+<span class="nc" id="L692">    root.getChildren().add(header);</span>
+
+    // --- Select Year ---
+<span class="nc" id="L695">    HBox yearBox = new HBox(10);</span>
+<span class="nc" id="L696">    yearBox.setAlignment(Pos.CENTER_LEFT);</span>
+<span class="nc" id="L697">    Label yearLabel = new Label(&quot;Select Year:&quot;);</span>
+<span class="nc" id="L698">    ComboBox&lt;Integer&gt; yearCombo = new ComboBox&lt;&gt;();</span>
+
+    // Year ComboBox
+<span class="nc" id="L701">    yearCombo.valueProperty().addListener((obs, oldVal, newVal) -&gt; {</span>
+<span class="nc bnc" id="L702" title="All 2 branches missed.">      if (newVal != null) {</span>
+<span class="nc" id="L703">        gameNotification.stop();</span>
+<span class="nc" id="L704">        gameNotification.play();</span>
+      }
+<span class="nc" id="L706">    });</span>
+<span class="nc" id="L707">    yearCombo.getItems().addAll(2022, 2023, 2024);</span>
+<span class="nc" id="L708">    yearCombo.getSelectionModel().selectFirst();</span>
+<span class="nc" id="L709">    yearBox.getChildren().addAll(yearLabel, yearCombo);</span>
+<span class="nc" id="L710">    root.getChildren().add(yearBox);</span>
+
+    // --- Select Type ---
+<span class="nc" id="L713">    HBox typeBox = new HBox(10);</span>
+<span class="nc" id="L714">    typeBox.setAlignment(Pos.CENTER_LEFT);</span>
+<span class="nc" id="L715">    Label typeLabel = new Label(&quot;Select Type:&quot;);</span>
+<span class="nc" id="L716">    ComboBox&lt;String&gt; typeCombo = new ComboBox&lt;&gt;();</span>
+    // Type ComboBox (Income / Expense/ Entity)
+<span class="nc" id="L718">    typeCombo.valueProperty().addListener((obs, oldVal, newVal) -&gt; {</span>
+<span class="nc bnc" id="L719" title="All 2 branches missed.">      if (newVal != null) {</span>
+<span class="nc" id="L720">        gameNotification.stop();</span>
+<span class="nc" id="L721">        gameNotification.play();</span>
+      }
+<span class="nc" id="L723">    });</span>
+<span class="nc" id="L724">    typeCombo.getItems().addAll(&quot;Income&quot;, &quot;Expense&quot;);</span>
+<span class="nc" id="L725">    typeCombo.getSelectionModel().selectFirst();</span>
+<span class="nc" id="L726">    typeBox.getChildren().addAll(typeLabel, typeCombo);</span>
+<span class="nc" id="L727">    root.getChildren().add(typeBox);</span>
+
+    // --- Results area with Scroll ---
+<span class="nc" id="L730">    ScrollPane scrollPane = new ScrollPane();</span>
+<span class="nc" id="L731">    scrollPane.setFitToWidth(true);</span>
+<span class="nc" id="L732">    scrollPane.setPrefHeight(400);</span>
+
+<span class="nc" id="L734">    VBox outputBox = new VBox(5);</span>
+<span class="nc" id="L735">    outputBox.setPadding(new Insets(10));</span>
+<span class="nc" id="L736">    scrollPane.setContent(outputBox);</span>
+<span class="nc" id="L737">    root.getChildren().add(scrollPane);</span>
+
+    // --- HBox for Charts ---
+<span class="nc" id="L740">    HBox chartsBox = new HBox(20);</span>
+<span class="nc" id="L741">    chartsBox.setPadding(new Insets(10));</span>
+<span class="nc" id="L742">    root.getChildren().add(chartsBox);</span>
+
+    // --- Pie Chart ---
+<span class="nc" id="L745">    PieChart pieChart = new PieChart();</span>
+<span class="nc" id="L746">    pieChart.setTitle(&quot;Budget Distribution (Pie Chart)&quot;);</span>
+<span class="nc" id="L747">    pieChart.setLabelsVisible(true);</span>
+<span class="nc" id="L748">    pieChart.setLegendVisible(true);</span>
+<span class="nc" id="L749">    pieChart.setPrefHeight(300);</span>
+<span class="nc" id="L750">    root.getChildren().add(pieChart);</span>
+
+<span class="nc" id="L752">    VBox barsContainer = new VBox(5);</span>
+<span class="nc" id="L753">    barsContainer.setPadding(new Insets(10));</span>
+<span class="nc" id="L754">    barsContainer.setStyle(</span>
+        &quot;-fx-background-color: #f8f9fa; -fx-border-color: #d0d7de; -fx-border-width: 1;&quot;); 
+<span class="nc" id="L756">    ScrollPane barsScroll = new ScrollPane(barsContainer);</span>
+<span class="nc" id="L757">    barsScroll.setFitToWidth(true);</span>
+<span class="nc" id="L758">    barsScroll.setPrefHeight(300); // height for scroll if there are many accounts</span>
+
+<span class="nc" id="L760">    root.getChildren().add(barsScroll); // add it to the end of the root</span>
+    
+    // --- Buttons ---
+<span class="nc" id="L763">    HBox buttons = new HBox(10);</span>
+<span class="nc" id="L764">    buttons.setAlignment(Pos.CENTER);</span>
+<span class="nc" id="L765">    Button btnShow = new Button(&quot;Show&quot;);</span>
+<span class="nc" id="L766">    Button btnClear = new Button(&quot;Clear&quot;);</span>
+<span class="nc" id="L767">    buttons.getChildren().addAll(btnShow, btnClear);</span>
+<span class="nc" id="L768">    root.getChildren().add(buttons);</span>
+
+    // --- Button structure ---
+<span class="nc" id="L771">    btnShow.setOnAction(e -&gt; {</span>
+<span class="nc" id="L772">      outputBox.getChildren().clear();</span>
+
+<span class="nc bnc" id="L774" title="All 2 branches missed.">      if (instantWin != null) {</span>
+<span class="nc" id="L775">        instantWin.stop();</span>
+<span class="nc" id="L776">        instantWin.play();</span>
+      }
+
+<span class="nc" id="L779">      int year = yearCombo.getValue();</span>
+<span class="nc bnc" id="L780" title="All 2 branches missed.">      BudgetDataManager.BudgetType type = typeCombo.getValue().equals(&quot;Income&quot;)</span>
+<span class="nc" id="L781">          ? BudgetDataManager.BudgetType.INCOME : BudgetDataManager.BudgetType.EXPENSE;</span>
+
+<span class="nc" id="L783">      BigDecimal[] data = BudgetDataManager.getBudgetData(year, type);</span>
+<span class="nc bnc" id="L784" title="All 2 branches missed.">      if (data == null) {</span>
+<span class="nc" id="L785">        outputBox.getChildren().add(new Label(&quot;No data for year &quot; + year));</span>
+<span class="nc" id="L786">        return;</span>
+      }
+
+<span class="nc bnc" id="L789" title="All 2 branches missed.">      String[] categories = type == BudgetDataManager.BudgetType.INCOME </span>
+<span class="nc" id="L790">          ? new String[]{&quot;Taxes&quot;, &quot;Social Contributions&quot;, </span>
+            &quot;Transfers&quot;, &quot;Sales of goods and services&quot;,
+            &quot;Other Current Income&quot;, &quot;Fixed Assets&quot;, &quot;Debt Securities&quot;, &quot;Equity Securities&quot;,
+            &quot;Currency Liabilities&quot;, &quot;Debt Securities (Liabilities)&quot;, 
+            &quot;Loans&quot;, &quot;Financial Derivatives&quot;} :
+<span class="nc" id="L795">          new String[]{&quot;Employee Benefits&quot;, &quot;Social Benefits&quot;,</span>
+            &quot;Transfers&quot;, &quot;Purchases of goods and services&quot;,
+            &quot;Subsidies&quot;, &quot;Interest&quot;, &quot;Other expenses&quot;, 
+            &quot;Credits under distribution&quot;, &quot;Fixed Assets&quot;,
+            &quot;Valuables&quot;, &quot;Loans&quot;, &quot;Equity Securities&quot;, &quot;Debt Securities&quot;, 
+            &quot;Loans&quot;, &quot;Financial Derivatives&quot;};
+
+<span class="nc bnc" id="L802" title="All 2 branches missed.">      for (int i = 0; i &lt; data.length; i++) {</span>
+<span class="nc bnc" id="L803" title="All 2 branches missed.">        String name = (i &lt; categories.length) ? categories[i] : &quot;Category &quot; + (i + 1);</span>
+<span class="nc" id="L804">        BigDecimal percent = data[i].multiply(</span>
+<span class="nc" id="L805">            new BigDecimal(&quot;100&quot;)).setScale(2, RoundingMode.HALF_UP);</span>
+
+<span class="nc" id="L807">        Label line = new Label(String.format(&quot;%-40s : %6s%%&quot;, name, percent));</span>
+<span class="nc" id="L808">        line.setStyle(&quot;-fx-font-family: Arial; -fx-font-size: 14;&quot;);</span>
+<span class="nc" id="L809">        outputBox.getChildren().add(line);</span>
+      }
+<span class="nc" id="L811">      ObservableList&lt;PieChart.Data&gt; pieData = FXCollections.observableArrayList();</span>
+
+<span class="nc bnc" id="L813" title="All 2 branches missed.">      for (int i = 0; i &lt; data.length; i++) {</span>
+<span class="nc bnc" id="L814" title="All 2 branches missed.">        String name = (i &lt; categories.length) ? categories[i] : &quot;Category &quot; + (i + 1);</span>
+<span class="nc" id="L815">        BigDecimal percent = data[i].multiply(</span>
+<span class="nc" id="L816">            new BigDecimal(&quot;100&quot;)).setScale(2, RoundingMode.HALF_UP);</span>
+
+<span class="nc" id="L818">        Label line = new Label(String.format(&quot;%-40s : %6s%%&quot;, name, percent));</span>
+<span class="nc" id="L819">        line.setStyle(&quot;-fx-font-family: Arial; -fx-font-size: 14;&quot;);</span>
+<span class="nc" id="L820">        outputBox.getChildren().add(line);</span>
+
+        // Add to PieChart
+<span class="nc bnc" id="L823" title="All 2 branches missed.">        if (data[i].compareTo(BigDecimal.ZERO) &gt; 0) { // avoid zeros</span>
+<span class="nc" id="L824">          pieData.add(new PieChart.Data(name, data[i].doubleValue()));</span>
+        }
+      }
+
+      // Update of PieChart
+<span class="nc" id="L829">      pieChart.setData(pieData);</span>
+
+<span class="nc" id="L831">      List&lt;BudgetEntry&gt; filtered = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L833" title="All 2 branches missed.">      for (BudgetEntry entry : masterData) {</span>
+<span class="nc bnc" id="L834" title="All 2 branches missed.">        if (&quot;SECTION&quot;.equals(entry.getCode())) {</span>
+<span class="nc" id="L835">          continue;</span>
+        }
+            
+<span class="nc bnc" id="L838" title="All 2 branches missed.">        if (typeCombo.getValue().equals(&quot;Income&quot;)) {</span>
+                
+          try {
+<span class="nc" id="L841">            int codeInt = Integer.parseInt(entry.getCode());</span>
+<span class="nc bnc" id="L842" title="All 4 branches missed.">            if (codeInt &gt;= 11 &amp;&amp; codeInt &lt;= 571) {</span>
+<span class="nc" id="L843">              filtered.add(entry); // Income codes</span>
+            }
+<span class="nc" id="L845">          } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L846">            ex.printStackTrace();</span>
+<span class="nc" id="L847">          }</span>
+        } else { // Expense
+          try {
+<span class="nc" id="L850">            int codeInt = Integer.parseInt(entry.getCode());</span>
+<span class="nc bnc" id="L851" title="All 4 branches missed.">            if (codeInt &gt;= 21 &amp;&amp; codeInt &lt;= 57) {</span>
+<span class="nc" id="L852">              filtered.add(entry);</span>
+            }
+<span class="nc" id="L854">          } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L855">            ex.printStackTrace();</span>
+<span class="nc" id="L856">          }</span>
+        }
+<span class="nc" id="L858">      }</span>
+
+      // We only filter those accounts that are included in the categories
+<span class="nc" id="L861">      filtered = filtered.stream()</span>
+<span class="nc" id="L862">        .filter(m -&gt; Arrays.asList(categories).contains(m.getName()))</span>
+<span class="nc" id="L863">        .collect(Collectors.toList());</span>
+
+<span class="nc" id="L865">      barsContainer.getChildren().clear();</span>
+
+<span class="nc" id="L867">      BigDecimal total = filtered.stream()</span>
+<span class="nc" id="L868">          .map(BudgetEntry::getAmount)</span>
+<span class="nc" id="L869">          .filter(Objects::nonNull)</span>
+<span class="nc" id="L870">          .reduce(BigDecimal.ZERO, BigDecimal::add);</span>
+
+<span class="nc bnc" id="L872" title="All 2 branches missed.">      for (BudgetEntry n : filtered) {</span>
+<span class="nc" id="L873">        HBox row = new HBox(10);</span>
+<span class="nc" id="L874">        row.setAlignment(Pos.CENTER_LEFT);</span>
+
+<span class="nc" id="L876">        Label lblName = new Label(n.getName());</span>
+<span class="nc" id="L877">        lblName.setPrefWidth(250);</span>
+
+<span class="nc" id="L879">        ProgressBar pb = new ProgressBar();</span>
+<span class="nc bnc" id="L880" title="All 2 branches missed.">        double value = total.compareTo(BigDecimal.ZERO) &gt; 0</span>
+<span class="nc" id="L881">            ? n.getAmount().doubleValue() / total.doubleValue()</span>
+<span class="nc" id="L882">            : 0;</span>
+<span class="nc" id="L883">        pb.setProgress(value);</span>
+<span class="nc" id="L884">        pb.setPrefWidth(300);</span>
+
+<span class="nc" id="L886">        Label lblAmount = new Label(String.format(&quot;€%,.0f&quot;, n.getAmount()));</span>
+
+<span class="nc" id="L888">        row.getChildren().addAll(lblName, pb, lblAmount);</span>
+<span class="nc" id="L889">        barsContainer.getChildren().add(row);</span>
+<span class="nc" id="L890">      }</span>
+
+
+<span class="nc" id="L893">    });</span>
+
+<span class="nc" id="L895">    btnClear.setOnAction(e -&gt; {</span>
+<span class="nc" id="L896">      outputBox.getChildren().clear();</span>
+<span class="nc bnc" id="L897" title="All 2 branches missed.">      if (clearSound != null) { </span>
+<span class="nc" id="L898">        clearSound.stop();</span>
+<span class="nc" id="L899">        clearSound.play();</span>
+      }
+<span class="nc" id="L901">      pieChart.getData().clear();</span>
+
+<span class="nc" id="L903">      pieChart.setData(FXCollections.observableArrayList());</span>
+<span class="nc" id="L904">    });</span>
+
+<span class="nc" id="L906">    Scene scene = new Scene(root, 650, 600);</span>
+<span class="nc" id="L907">    statsStage.setScene(scene);</span>
+<span class="nc" id="L908">    statsStage.show();</span>
+<span class="nc" id="L909">  }</span>
+
+  /**
+   * Displays an interactive dialog for explaining government budget accounts.
+   *
+   * &lt;p&gt;The dialog allows the user to select an income, expense, or entity account
+   * and view a detailed textual explanation generated through the account's
+   * {@code toExplain()} implementation.
+   * &lt;/p&gt;
+   *
+   * &lt;p&gt;The explanation is presented using category-specific styling and
+   * visual effects to enhance readability and user experience.
+   * &lt;/p&gt;
+   */
+  private void showExplanation() {
+
+<span class="nc" id="L925">    Stage dialog = new Stage();</span>
+<span class="nc" id="L926">    applyAppIcon(dialog);</span>
+<span class="nc" id="L927">    dialog.initModality(Modality.NONE);</span>
+<span class="nc" id="L928">    dialog.setTitle(&quot;📘 Account Explanation&quot;);</span>
+
+<span class="nc" id="L930">    VBox root = new VBox(18);</span>
+<span class="nc" id="L931">    root.setPadding(new Insets(25));</span>
+<span class="nc" id="L932">    root.setAlignment(Pos.TOP_CENTER);</span>
+<span class="nc" id="L933">    root.setStyle(&quot;&quot;&quot;</span>
+        -fx-background-color: linear-gradient(to bottom right, #ffffff, #e9eef3);
+        &quot;&quot;&quot;);
+
+<span class="nc" id="L937">    Label header = new Label(&quot;Select an Account to View Explanation&quot;);</span>
+<span class="nc" id="L938">    header.setStyle(&quot;&quot;&quot;</span>
+        -fx-font-size: 20px;
+        -fx-font-weight: bold;
+        -fx-text-fill: #2c3e50;
+        &quot;&quot;&quot;);
+
+<span class="nc" id="L944">    ComboBox&lt;Object&gt; combo = new ComboBox&lt;&gt;();</span>
+<span class="nc" id="L945">    combo.setMaxWidth(Double.MAX_VALUE);</span>
+<span class="nc" id="L946">    combo.setPromptText(&quot;Choose account...&quot;);</span>
+
+    // Fill ComboBox
+<span class="nc" id="L949">    combo.getItems().addAll(</span>
+<span class="nc" id="L950">        ObjectsIncomes.createObjectsInc().stream()</span>
+<span class="nc" id="L951">        .filter(inc -&gt; {</span>
+          try {
+<span class="nc" id="L953">            int code = Integer.parseInt(inc.getCode());</span>
+<span class="nc bnc" id="L954" title="All 4 branches missed.">            return code &gt;= 100 &amp;&amp; code &lt;= 999; </span>
+<span class="nc" id="L955">          } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L956">            return false;</span>
+          }
+        })
+<span class="nc" id="L959">        .toList()</span>
+    );
+<span class="nc" id="L961">    combo.getItems().addAll(ObjectsExpenses.createObjectsExp());</span>
+<span class="nc" id="L962">    combo.getItems().addAll(ObjectsEntities.createObjectsEnt());</span>
+
+    // Options
+<span class="nc" id="L965">    combo.setCellFactory(cb -&gt; new ListCell&lt;&gt;() {</span>
+        @Override
+        protected void updateItem(Object item, boolean empty) {
+<span class="nc" id="L968">            super.updateItem(item, empty);</span>
+<span class="nc bnc" id="L969" title="All 4 branches missed.">            if (empty || item == null) {</span>
+<span class="nc" id="L970">              setText(null);</span>
+<span class="nc bnc" id="L971" title="All 2 branches missed.">            } else if (item instanceof Income i) {</span>
+<span class="nc" id="L972">              setText(&quot;💰 &quot; + i.getCode() + &quot; - &quot; + i.getName());</span>
+<span class="nc bnc" id="L973" title="All 2 branches missed.">            } else if (item instanceof Expenses e) {</span>
+<span class="nc" id="L974">              setText(&quot;💸 &quot; + e.getCode() + &quot; - &quot; + e.getName());</span>
+<span class="nc bnc" id="L975" title="All 2 branches missed.">            } else if (item instanceof Entity en) {</span>
+<span class="nc" id="L976">              setText(&quot;🏛 &quot; + en.getCode() + &quot; - &quot; + en.getName());</span>
+            }
+<span class="nc" id="L978">        }</span>
+    });
+<span class="nc" id="L980">    combo.setButtonCell(combo.getCellFactory().call(null));</span>
+
+<span class="nc" id="L982">    Button btnExplain = new Button(&quot;Explain Account&quot;);</span>
+<span class="nc" id="L983">    btnExplain.setMaxWidth(Double.MAX_VALUE);</span>
+<span class="nc" id="L984">    btnExplain.setStyle(&quot;&quot;&quot;</span>
+        -fx-background-color: #32809a;
+        -fx-text-fill: white;
+        -fx-font-size: 14px;
+        -fx-font-weight: bold;
+        -fx-background-radius: 10;
+        -fx-padding: 10;
+        &quot;&quot;&quot;);
+
+<span class="nc" id="L993">    VBox explanationCard = new VBox(10);</span>
+<span class="nc" id="L994">    explanationCard.setPadding(new Insets(20));</span>
+<span class="nc" id="L995">    explanationCard.setVisible(false);</span>
+<span class="nc" id="L996">    explanationCard.setStyle(&quot;&quot;&quot;</span>
+        -fx-background-radius: 15;
+        -fx-border-radius: 15;
+        -fx-border-width: 1;
+        &quot;&quot;&quot;);
+
+<span class="nc" id="L1002">    Label title = new Label();</span>
+<span class="nc" id="L1003">    title.setStyle(&quot;-fx-font-size: 16px; -fx-font-weight: bold;&quot;);</span>
+
+<span class="nc" id="L1005">    TextArea explanationArea = new TextArea();</span>
+<span class="nc" id="L1006">    explanationArea.setEditable(false);</span>
+<span class="nc" id="L1007">    explanationArea.setWrapText(true);</span>
+<span class="nc" id="L1008">    explanationArea.setPrefHeight(220);</span>
+<span class="nc" id="L1009">    explanationArea.setStyle(&quot;&quot;&quot;</span>
+        -fx-background-color: transparent;
+        -fx-font-size: 14px;
+        &quot;&quot;&quot;);
+
+<span class="nc" id="L1014">    explanationCard.getChildren().addAll(title, explanationArea);</span>
+
+<span class="nc" id="L1016">    btnExplain.setOnAction(e -&gt; {</span>
+<span class="nc" id="L1017">      Object selected = combo.getValue();</span>
+<span class="nc bnc" id="L1018" title="All 2 branches missed.">      if (selected == null) {</span>
+<span class="nc" id="L1019">        return;</span>
+      }
+
+<span class="nc" id="L1022">      gameNotification.play();</span>
+
+<span class="nc" id="L1024">      explanationCard.setVisible(true);</span>
+
+<span class="nc bnc" id="L1026" title="All 2 branches missed.">      if (selected instanceof Income i) {</span>
+<span class="nc" id="L1027">        title.setText(&quot;💰 Income Account: &quot; + i.getName());</span>
+<span class="nc" id="L1028">        explanationArea.setText(i.toExplain());</span>
+<span class="nc" id="L1029">        explanationCard.setStyle(&quot;&quot;&quot;</span>
+            -fx-background-color: #e8f5e9;
+            -fx-border-color: #66bb6a;
+            -fx-background-radius: 15;
+            &quot;&quot;&quot;);
+<span class="nc bnc" id="L1034" title="All 2 branches missed.">      } else if (selected instanceof Expenses ex) {</span>
+<span class="nc" id="L1035">        title.setText(&quot;💸 Expense Account: &quot; + ex.getName());</span>
+<span class="nc" id="L1036">        explanationArea.setText(ex.toExplain());</span>
+<span class="nc" id="L1037">        explanationCard.setStyle(&quot;&quot;&quot;</span>
+            -fx-background-color: #ffebee;
+            -fx-border-color: #ef5350;
+            -fx-background-radius: 15;
+            &quot;&quot;&quot;);
+<span class="nc bnc" id="L1042" title="All 2 branches missed.">      } else if (selected instanceof Entity en) {</span>
+<span class="nc" id="L1043">        title.setText(&quot;🏛 Government Entity: &quot; + en.getName());</span>
+<span class="nc" id="L1044">        explanationArea.setText(en.toExplain());</span>
+<span class="nc" id="L1045">        explanationCard.setStyle(&quot;&quot;&quot;</span>
+            -fx-background-color: #e3f2fd;
+            -fx-border-color: #42a5f5;
+            -fx-background-radius: 15;
+            &quot;&quot;&quot;);
+      }
+
+<span class="nc" id="L1052">      FadeTransition ft = new FadeTransition(Duration.millis(500), explanationCard);</span>
+<span class="nc" id="L1053">      ft.setFromValue(0);</span>
+<span class="nc" id="L1054">      ft.setToValue(1);</span>
+<span class="nc" id="L1055">      ft.play();</span>
+<span class="nc" id="L1056">    });</span>
+
+<span class="nc" id="L1058">    root.getChildren().addAll(header, combo, btnExplain, explanationCard);</span>
+
+<span class="nc" id="L1060">    Scene scene = new Scene(root, 520, 520);</span>
+<span class="nc" id="L1061">    dialog.setScene(scene);</span>
+<span class="nc" id="L1062">    dialog.show();</span>
+<span class="nc" id="L1063">  }</span>
+
+  /**
+   * Displays a dialog window containing an embedded web browser
+   * that loads a free AI assistant page (DuckDuckGo AI Chat).
+   * 
+   * &lt;p&gt;The method sets a custom User-Agent to ensure compatibility
+   * with modern web pages and uses JavaFX components to build
+   * the interface dynamically.
+   */
+  private void showCitizenAssistantDialog() {
+<span class="nc" id="L1074">    Stage stage = new Stage();</span>
+<span class="nc" id="L1075">    applyAppIcon(stage);</span>
+<span class="nc" id="L1076">    stage.setTitle(&quot;Citizen Assistant - AI Helper&quot;);</span>
+
+<span class="nc" id="L1078">    WebView browser = new WebView();</span>
+<span class="nc" id="L1079">    WebEngine engine = browser.getEngine();</span>
+
+    // 1. Set up the User-Agent to &quot;trick&quot; the website into loading the desktop version correctly
+<span class="nc" id="L1082">    engine.setUserAgent(&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) &quot;</span>
+        + &quot;AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36&quot;);
+
+    // 2. Load the AI service (Free, No Login, No API Key required)
+<span class="nc" id="L1086">    engine.load(&quot;https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&amp;ia=chat&amp;kl=us-en&amp;kad=en_US&quot;);</span>
+
+
+<span class="nc" id="L1089">    Label infoLabel = new Label(</span>
+        &quot;Follow the on-screen instructions to interact with the AI assistant.&quot;);
+<span class="nc" id="L1091">    infoLabel.setStyle(&quot;-fx-padding: 10; -fx-font-weight: bold; -fx-text-fill: #555;&quot;);</span>
+
+    // 3. Layout setup - Make the browser take up all available space
+<span class="nc" id="L1094">    VBox root = new VBox(infoLabel, browser);</span>
+<span class="nc" id="L1095">    VBox.setVgrow(browser, Priority.ALWAYS);</span>
+
+<span class="nc" id="L1097">    Scene scene = new Scene(root, 900, 700);</span>
+<span class="nc" id="L1098">    stage.setScene(scene);</span>
+<span class="nc" id="L1099">    stage.show();</span>
+<span class="nc" id="L1100">  }</span>
+
+  private Button createMenuButton(String text) {
+<span class="fc" id="L1103">    Button btn = new Button(text);</span>
+<span class="fc" id="L1104">    btn.setMaxWidth(Double.MAX_VALUE);</span>
+<span class="fc" id="L1105">    btn.setAlignment(Pos.BASELINE_LEFT);</span>
+<span class="fc" id="L1106">    btn.setStyle(</span>
+        &quot;-fx-background-color: transparent;&quot;
+        + &quot;-fx-text-fill: #ecf0f1; -fx-font-size: 14; -fx-cursor: hand;&quot;);
+<span class="fc" id="L1109">    btn.setOnMouseEntered(e -&gt; {</span>
+<span class="nc" id="L1110">      btn.setStyle(&quot;-fx-background-color:&quot;</span>
+          + &quot; #34495e; -fx-text-fill: #ecf0f1; -fx-font-size: 14;&quot;);
+<span class="nc bnc" id="L1112" title="All 2 branches missed.">      if (gameNotification != null) {</span>
+<span class="nc" id="L1113">        gameNotification.play();</span>
+      }
+<span class="nc" id="L1115">    });</span>
+<span class="fc" id="L1116">    btn.setOnMouseExited(e -&gt;</span>
+<span class="nc" id="L1117">        btn.setStyle(&quot;-fx-background-color: transparent;&quot;</span>
+        + &quot; -fx-text-fill: #ecf0f1; -fx-font-size: 14;&quot;));
+<span class="fc" id="L1119">    return btn;</span>
+  }
+
+  /**
+   * Initializes all budget data including incomes,
+   * expenses, and government entities.
+   *
+   * &lt;p&gt;Data are stored in the {@link #masterData} collection.
+   * &lt;/p&gt;
+   */
+  private void initializeData() {
+<span class="fc" id="L1130">    masterData.add(new BudgetEntry(&quot;SECTION&quot;, &quot;REVENUE &amp; INCOMES&quot;, null));</span>
+<span class="fc" id="L1131">    Object[][] rawIncomes = {</span>
+      {&quot;11&quot;, &quot;Taxes&quot;, new BigDecimal(&quot;62055000000&quot;)}, // 1
+        {&quot;111&quot;, &quot;Taxes on Services and Products&quot;, new BigDecimal(&quot;33667000000&quot;)},
+        {&quot;112&quot;, &quot;Taxes and Duties on Imports&quot;, new BigDecimal(&quot;362000000&quot;)},
+        {&quot;113&quot;, &quot;Regular Property Taxes&quot;, new BigDecimal(&quot;2353000000&quot;)},
+        {&quot;114&quot;, &quot;Other Production Taxes&quot;, new BigDecimal(&quot;355000000&quot;)},
+        {&quot;115&quot;, &quot;Income Tax&quot;, new BigDecimal(&quot;23719000000&quot;)},
+        {&quot;116&quot;, &quot;Capital Taxes&quot;, new BigDecimal(&quot;232000000&quot;)},
+        {&quot;119&quot;, &quot;Other Current Taxes&quot;, new BigDecimal(&quot;1367000000&quot;)},
+        {&quot;12&quot;, &quot;Social Contributions&quot;, new BigDecimal(&quot;60000000&quot;)},
+        {&quot;122&quot;, &quot;Other Social Contributions&quot;, new BigDecimal(&quot;60000000&quot;)},
+        {&quot;13&quot;, &quot;Transfers&quot;, new BigDecimal(&quot;8131000000&quot;)},
+        {&quot;131&quot;, &quot;Current Domestic Transfers&quot;, new BigDecimal(&quot;322000000&quot;)},
+        {&quot;132&quot;, &quot;Current Transfers from Organizations and Member States&quot;, 
+        new BigDecimal(&quot;15000000&quot;)},
+        {&quot;133&quot;, &quot;Current Transfers from Foreign Entities&quot;, new BigDecimal(&quot;8000000&quot;)},
+        {&quot;134&quot;, &quot;Domestic Investment Grants&quot;, new BigDecimal(&quot;35000000&quot;)},
+        {&quot;135&quot;, &quot;Investment Grants from the EU&quot;, new BigDecimal(&quot;7645000000&quot;)},
+        {&quot;139&quot;, &quot;Other Capital Transfers&quot;, new BigDecimal(&quot;106000000&quot;)},
+        {&quot;14&quot;, &quot;Sales of Goods and Services&quot;, new BigDecimal(&quot;2405000000&quot;)},
+        {&quot;141&quot;, &quot;Goods Sales&quot;, new BigDecimal(&quot;2000000&quot;)},
+        {&quot;142&quot;, &quot;Provision of Services&quot;, new BigDecimal(&quot;338000000&quot;)},
+        {&quot;143&quot;, &quot;Rents&quot;, new BigDecimal(&quot;1418000000&quot;)},
+        {&quot;144&quot;, &quot;Supplies&quot;, new BigDecimal(&quot;445000000&quot;)},
+        {&quot;145&quot;, &quot;Administrative Fees&quot;, new BigDecimal(&quot;199000000&quot;)},
+        {&quot;149&quot;, &quot;Other Sales&quot;, new BigDecimal(&quot;3000000&quot;)},
+        {&quot;15&quot;, &quot;Other Current Income&quot;, new BigDecimal(&quot;2775000000&quot;)},
+        {&quot;151&quot;, &quot;Interest Income&quot;, new BigDecimal(&quot;588000000&quot;)},
+        {&quot;152&quot;, &quot;Distributed Corporate Income&quot;, new BigDecimal(&quot;356000000&quot;)},
+        {&quot;153&quot;, &quot;Natural Resource Rents&quot;, new BigDecimal(&quot;75000000&quot;)},
+        {&quot;156&quot;, &quot;Fines, Penalties and Assessments&quot;, new BigDecimal(&quot;1102000000&quot;)},
+        {&quot;159&quot;, &quot;Expense Reimbursements&quot;, new BigDecimal(&quot;654000000&quot;)},
+        {&quot;31&quot;, &quot;Fixed Assets&quot;, new BigDecimal(&quot;37000000&quot;)},
+        {&quot;311&quot;, &quot;Buildings and Related Infrastructure&quot;, new BigDecimal(&quot;37000000&quot;)},
+        {&quot;43&quot;, &quot;Debt Securities&quot;, new BigDecimal(&quot;11000000&quot;)},
+        {&quot;432&quot;, &quot;Long-term Debt Securities&quot;, new BigDecimal(&quot;11000000&quot;)},
+        {&quot;44&quot;, &quot;Loans&quot;, new BigDecimal(&quot;20000000&quot;)},
+        {&quot;442&quot;, &quot;Long-term Loans&quot;, new BigDecimal(&quot;20000000&quot;)},
+        {&quot;45&quot;, &quot;Equity and Investment Fund Shares&quot;, new BigDecimal(&quot;467000000&quot;)},
+        {&quot;451&quot;, &quot;Listed Shares&quot;, new BigDecimal(&quot;239000000&quot;)},
+        {&quot;452&quot;, &quot;Unlisted Shares&quot;, new BigDecimal(&quot;228000000&quot;)},
+        {&quot;52&quot;, &quot;Currency and Deposit Liabilities&quot;, new BigDecimal(&quot;66000000&quot;)},
+        {&quot;521&quot;, &quot;Currency in Circulation Liabilities&quot;, new BigDecimal(&quot;66000000&quot;)},
+        {&quot;53&quot;, &quot;Debt Securities (Liabilities)&quot;, new BigDecimal(&quot;25973000000&quot;)},
+        {&quot;531&quot;, &quot;Short-term Debt Securities&quot;, new BigDecimal(&quot;17000000000&quot;)},
+        {&quot;532&quot;, &quot;Long-term Debt Securities&quot;, new BigDecimal(&quot;8973000000&quot;)},
+        {&quot;54&quot;, &quot;Loans&quot;, new BigDecimal(&quot;1202027000000&quot;)},
+        {&quot;541&quot;, &quot;Short-term Loans&quot;, new BigDecimal(&quot;1200000000000&quot;)},
+        {&quot;542&quot;, &quot;Long-term Loans&quot;, new BigDecimal(&quot;2027000000&quot;)},
+        {&quot;57&quot;, &quot;Financial Derivatives&quot;, new BigDecimal(&quot;800000000&quot;)},
+        {&quot;571&quot;, &quot;Financial Derivatives&quot;, new BigDecimal(&quot;800000000&quot;)}
+        };
+<span class="fc" id="L1183">    addRows(rawIncomes);</span>
+
+<span class="fc" id="L1185">    masterData.add(new BudgetEntry(&quot;SECTION&quot;, &quot;PUBLIC EXPENDITURES&quot;, null));</span>
+<span class="fc" id="L1186">    Object[][] rawExpenses = {</span>
+        {&quot;21&quot;, &quot;Employee Benefits&quot;, new BigDecimal(&quot;14889199000&quot;)}, // 1
+        {&quot;22&quot;, &quot;Social Benefits&quot;, new BigDecimal(&quot;425136000&quot;)},
+        {&quot;23&quot;, &quot;Transfers&quot;, new BigDecimal(&quot;34741365000&quot;)},
+        {&quot;24&quot;, &quot;Purchases of Goods and Services&quot;, new BigDecimal(&quot;2039542000&quot;)},
+        {&quot;25&quot;, &quot;Subsidies&quot;, new BigDecimal(&quot;80630000&quot;)},
+        {&quot;26&quot;, &quot;Interest&quot;, new BigDecimal(&quot;7701101000&quot;)},
+        {&quot;27&quot;, &quot;Other Expenses&quot;, new BigDecimal(&quot;101553000&quot;)},
+        {&quot;29&quot;, &quot;Credits Under Allocation&quot;, new BigDecimal(&quot;17283053000&quot;)},
+        {&quot;31&quot;, &quot;Fixed Assets&quot;, new BigDecimal(&quot;2609600000&quot;)},
+        {&quot;33&quot;, &quot;Valuables&quot;, new BigDecimal(&quot;85000&quot;)},
+        {&quot;44&quot;, &quot;Short-Term Loans&quot;, new BigDecimal(&quot;3741000000&quot;)},
+        {&quot;45&quot;, &quot;Equity and Investment Fund Shares&quot;, new BigDecimal(&quot;1755112000&quot;)},
+        {&quot;53&quot;, &quot;Debt Securities (Liabilities)&quot;, new BigDecimal(&quot;19375000000&quot;)},
+        {&quot;54&quot;, &quot;Long-Term Loans&quot;, new BigDecimal(&quot;1203165130000&quot;)}
+        };
+<span class="fc" id="L1202">    addRows(rawExpenses);</span>
+
+<span class="fc" id="L1204">    masterData.add(new BudgetEntry(&quot;SECTION&quot;, &quot;GOVERNMENT ENTITIES&quot;, null));</span>
+<span class="fc" id="L1205">    Object[][] rawEntities = {</span>
+        {&quot;1001&quot;, &quot;Presidency of the Republic&quot;, new BigDecimal(&quot;4638000&quot;)}, // 1
+        {&quot;1003&quot;, &quot;Hellenic Parliament&quot;, new BigDecimal(&quot;171950000&quot;)},
+        {&quot;1004&quot;, &quot;Presidency of the Government&quot;, new BigDecimal(&quot;41689000&quot;)},
+        {&quot;1007&quot;, &quot;Ministry of Interior&quot;, new BigDecimal(&quot;3830276000&quot;)},
+        {&quot;1009&quot;, &quot;Ministry of Foreign Affairs&quot;, new BigDecimal(&quot;420237000&quot;)},
+        {&quot;1011&quot;, &quot;Ministry of National Defense&quot;, new BigDecimal(&quot;6130000000&quot;)},
+        {&quot;1015&quot;, &quot;Ministry of Health&quot;, new BigDecimal(&quot;7177424000&quot;)},
+        {&quot;1017&quot;, &quot;Ministry of Justice&quot;, new BigDecimal(&quot;650803000&quot;)},
+        {&quot;1020&quot;, &quot;Ministry of Education, Religious Affairs&quot;, new BigDecimal(&quot;6606000000&quot;)},
+        {&quot;1022&quot;, &quot;Ministry of Culture&quot;, new BigDecimal(&quot;575419000&quot;)},
+        {&quot;1024&quot;, &quot;Ministry of National Economy&quot;, new BigDecimal(&quot;1246518464000&quot;)},
+        {&quot;1029&quot;, &quot;Ministry of Rural Development and Food&quot;, new BigDecimal(&quot;1281403000&quot;)},
+        {&quot;1031&quot;, &quot;Ministry of Environment and Energy&quot;, new BigDecimal(&quot;2341227000&quot;)},
+        {&quot;1032&quot;, &quot;Ministry of Labor and Social Security&quot;, new BigDecimal(&quot;18678084000&quot;)},
+        {&quot;1034&quot;, &quot;Ministry of Social Cohesion&quot;, new BigDecimal(&quot;3989553000&quot;)},
+        {&quot;1036&quot;, &quot;Ministry of Development&quot;, new BigDecimal(&quot;818045000&quot;)},
+        {&quot;1039&quot;, &quot;Ministry of Infrastructure and Transport&quot;, new BigDecimal(&quot;2694810000&quot;)},
+        {&quot;1041&quot;, &quot;Ministry of Shipping and Island Policy&quot;, new BigDecimal(&quot;651864000&quot;)},
+        {&quot;1045&quot;, &quot;Ministry of Tourism&quot;, new BigDecimal(&quot;189293000&quot;)},
+        {&quot;1053&quot;, &quot;Ministry of Digital Governance&quot;, new BigDecimal(&quot;1073928000&quot;)},
+        {&quot;1055&quot;, &quot;Ministry of Migration and Asylum&quot;, new BigDecimal(&quot;475871000&quot;)},
+        {&quot;1057&quot;, &quot;Ministry of Citizen Protection&quot;, new BigDecimal(&quot;2285820000&quot;)},
+        {&quot;1060&quot;, &quot;Ministry of Climate Crisis and Civil Protection&quot;, new BigDecimal(&quot;1221116000&quot;)},
+        {&quot;1901&quot;, &quot;Decentralized Administration of Attica&quot;, new BigDecimal(&quot;13091000&quot;)},
+        {&quot;1902&quot;, &quot;Decentralized Administration of Thessaly-Central Greece&quot;, 
+        new BigDecimal(&quot;10579000&quot;)},
+        {&quot;1903&quot;, &quot;Decentralized Administration of Epirus-Western Greece&quot;, 
+        new BigDecimal(&quot;9943000&quot;)},
+        {&quot;1904&quot;, &quot;Decentralized Administration of Peloponnese&quot;, new BigDecimal(&quot;14918000&quot;)},
+        {&quot;1905&quot;, &quot;Decentralized Administration of the Aegean&quot;, new BigDecimal(&quot;6188000&quot;)},
+        {&quot;1906&quot;, &quot;Decentralized Administration of Crete&quot;, new BigDecimal(&quot;6497000&quot;)},
+        {&quot;1907&quot;, &quot;Decentralized Administration of Macedonia - Thrace&quot;, new BigDecimal(&quot;18376000&quot;)}
+        };
+<span class="fc" id="L1239">    addRows(rawEntities);</span>
+<span class="fc" id="L1240">  }</span>
+
+  /**
+   * Adds multiple budget entries to the data collection.
+   *
+   * @param rows a 2D array containing
+   *             [code, description, amount]
+   */
+  private void addRows(Object[][] rows) {
+<span class="fc bfc" id="L1249" title="All 2 branches covered.">    for (Object[] row : rows) {</span>
+<span class="fc" id="L1250">      masterData.add(new BudgetEntry(row[0].toString(), row[1].toString(), (BigDecimal) row[2]));</span>
+    }
+<span class="fc" id="L1252">  }</span>
+        
+  /**
+   * Applies the main application icon to the specified window (stage).
+   *
+   * @param stage the JavaFX Stage to apply the icon to
+   */
+  private void applyAppIcon(Stage stage) {
+<span class="fc" id="L1260">    stage.getIcons().add(new Image(getClass().getResourceAsStream(&quot;/images/govpro_icon.png&quot;)));</span>
+<span class="fc" id="L1261">  }</span>
+    
+  /**
+   * Returns the complete list of budget data.
+   *
+   * @return an {@link ObservableList} of {@link BudgetEntry}
+   */
+  public ObservableList&lt;BudgetEntry&gt; getMasterData() {
+<span class="nc" id="L1269">    return masterData;</span>
+  }
+
+  /**
+   * Launches the GovPro Budget System application.
+   *
+   * @param args command-line arguments
+   */
+  public static void main(String[] args) {
+<span class="nc" id="L1278">    launch(args);</span>
+<span class="nc" id="L1279">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

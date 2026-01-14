@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ObjectsIncomes.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">ObjectsIncomes.java</span></div><h1>ObjectsIncomes.java</h1><pre class="source lang-java linenums">import incomes.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+/**
+ * Utility class responsible for initializing and populating the application's 
+ * income data for the fiscal year 2025.
+ * &lt;p&gt;
+ * This class functions as a central repository that transforms raw budgetary 
+ * revenue data into specialized {@link Income} objects. It categorizes state 
+ * revenues into several major streams, including:
+ * &lt;/p&gt;
+ * &lt;ul&gt;
+ * &lt;li&gt;Direct and Indirect Taxation&lt;/li&gt;
+ * &lt;li&gt;Social Contributions and Transfers&lt;/li&gt;
+ * &lt;li&gt;Sales of Goods, Services, and Natural Resources&lt;/li&gt;
+ * &lt;li&gt;Financial Transactions, Loans, and Derivatives&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+<span class="nc" id="L19">public class ObjectsIncomes {</span>
+
+  public static ArrayList&lt;Income&gt; createObjectsInc() {
+
+<span class="nc" id="L23">    Object[][] data = {</span>
+        {&quot;Code&quot;, &quot;Name&quot;, &quot;Amount&quot;}, // 0
+        {&quot;11&quot;, &quot;Taxes&quot;, new BigDecimal(&quot;62055000000&quot;)}, // 1
+        {&quot;111&quot;, &quot;Taxes on Services and Products&quot;, new BigDecimal(&quot;33667000000&quot;)},
+        {&quot;112&quot;, &quot;Taxes and Duties on Imports&quot;, new BigDecimal(&quot;362000000&quot;)},
+        {&quot;113&quot;, &quot;Regular Property Taxes&quot;, new BigDecimal(&quot;2353000000&quot;)},
+        {&quot;114&quot;, &quot;Other Production Taxes&quot;, new BigDecimal(&quot;355000000&quot;)},
+        {&quot;115&quot;, &quot;Income Tax&quot;, new BigDecimal(&quot;23719000000&quot;)},
+        {&quot;116&quot;, &quot;Capital Taxes&quot;, new BigDecimal(&quot;232000000&quot;)},
+        {&quot;119&quot;, &quot;Other Current Taxes&quot;, new BigDecimal(&quot;1367000000&quot;)},
+        {&quot;12&quot;, &quot;Social Contributions&quot;, new BigDecimal(&quot;60000000&quot;)},
+        {&quot;122&quot;, &quot;Other Social Contributions&quot;, new BigDecimal(&quot;60000000&quot;)},
+        {&quot;13&quot;, &quot;Transfers&quot;, new BigDecimal(&quot;8131000000&quot;)},
+        {&quot;131&quot;, &quot;Current Domestic Transfers&quot;, new BigDecimal(&quot;322000000&quot;)},
+        {&quot;132&quot;, &quot;Current Transfers from Organizations and Member States&quot;, 
+        new BigDecimal(&quot;15000000&quot;)},
+        {&quot;133&quot;, &quot;Current Transfers from Foreign Entities&quot;, new BigDecimal(&quot;8000000&quot;)},
+        {&quot;134&quot;, &quot;Domestic Investment Grants&quot;, new BigDecimal(&quot;35000000&quot;)},
+        {&quot;135&quot;, &quot;Investment Grants from the EU&quot;, new BigDecimal(&quot;7645000000&quot;)},
+        {&quot;139&quot;, &quot;Other Capital Transfers&quot;, new BigDecimal(&quot;106000000&quot;)},
+        {&quot;14&quot;, &quot;Sales of Goods and Services&quot;, new BigDecimal(&quot;2405000000&quot;)},
+        {&quot;141&quot;, &quot;Goods Sales&quot;, new BigDecimal(&quot;2000000&quot;)},
+        {&quot;142&quot;, &quot;Provision of Services&quot;, new BigDecimal(&quot;338000000&quot;)},
+        {&quot;143&quot;, &quot;Rents&quot;, new BigDecimal(&quot;1418000000&quot;)},
+        {&quot;144&quot;, &quot;Supplies&quot;, new BigDecimal(&quot;445000000&quot;)},
+        {&quot;145&quot;, &quot;Administrative Fees&quot;, new BigDecimal(&quot;199000000&quot;)},
+        {&quot;149&quot;, &quot;Other Sales&quot;, new BigDecimal(&quot;3000000&quot;)},
+        {&quot;15&quot;, &quot;Other Current Income&quot;, new BigDecimal(&quot;2775000000&quot;)},
+        {&quot;151&quot;, &quot;Interest Income&quot;, new BigDecimal(&quot;588000000&quot;)},
+        {&quot;152&quot;, &quot;Distributed Corporate Income&quot;, new BigDecimal(&quot;356000000&quot;)},
+        {&quot;153&quot;, &quot;Natural Resource Rents&quot;, new BigDecimal(&quot;75000000&quot;)},
+        {&quot;156&quot;, &quot;Fines, Penalties and Assessments&quot;, new BigDecimal(&quot;1102000000&quot;)},
+        {&quot;159&quot;, &quot;Expense Reimbursements&quot;, new BigDecimal(&quot;654000000&quot;)},
+        {&quot;31&quot;, &quot;Fixed Assets&quot;, new BigDecimal(&quot;37000000&quot;)},
+        {&quot;311&quot;, &quot;Buildings and Related Infrastructure&quot;, new BigDecimal(&quot;37000000&quot;)},
+        {&quot;43&quot;, &quot;Debt Securities&quot;, new BigDecimal(&quot;11000000&quot;)},
+        {&quot;432&quot;, &quot;Long-term Debt Securities&quot;, new BigDecimal(&quot;11000000&quot;)},
+        {&quot;44&quot;, &quot;Loans&quot;, new BigDecimal(&quot;20000000&quot;)},
+        {&quot;442&quot;, &quot;Long-term Loans&quot;, new BigDecimal(&quot;20000000&quot;)},
+        {&quot;45&quot;, &quot;Equity and Investment Fund Shares&quot;, new BigDecimal(&quot;467000000&quot;)},
+        {&quot;451&quot;, &quot;Listed Shares&quot;, new BigDecimal(&quot;239000000&quot;)},
+        {&quot;452&quot;, &quot;Unlisted Shares&quot;, new BigDecimal(&quot;228000000&quot;)},
+        {&quot;52&quot;, &quot;Currency and Deposit Liabilities&quot;, new BigDecimal(&quot;66000000&quot;)},
+        {&quot;521&quot;, &quot;Currency in Circulation Liabilities&quot;, new BigDecimal(&quot;66000000&quot;)},
+        {&quot;53&quot;, &quot;Debt Securities (Liabilities)&quot;, new BigDecimal(&quot;25973000000&quot;)},
+        {&quot;531&quot;, &quot;Short-term Debt Securities&quot;, new BigDecimal(&quot;17000000000&quot;)},
+        {&quot;532&quot;, &quot;Long-term Debt Securities&quot;, new BigDecimal(&quot;8973000000&quot;)},
+        {&quot;54&quot;, &quot;Loans&quot;, new BigDecimal(&quot;1202027000000&quot;)},
+        {&quot;541&quot;, &quot;Short-term Loans&quot;, new BigDecimal(&quot;1200000000000&quot;)},
+        {&quot;542&quot;, &quot;Long-term Loans&quot;, new BigDecimal(&quot;2027000000&quot;)},
+        {&quot;57&quot;, &quot;Financial Derivatives&quot;, new BigDecimal(&quot;800000000&quot;)},
+        {&quot;571&quot;, &quot;Financial Derivatives&quot;, new BigDecimal(&quot;800000000&quot;)}
+    };
+        
+    // Make objects of Taxes
+<span class="nc" id="L78">    var  taxGoodsServices = new TaxGoodsServices(</span>
+        (String) data[2][0],      // Κωδικός
+        (String) data[2][1],      // Ονομασία
+        (BigDecimal) data[2][2],  // Ποσό
+        &quot;2025&quot;); // Έτος             // Taxes on Goods and Services
+        
+<span class="nc" id="L84">    var taxDuties = new TaxDutiesOnImports(</span>
+        (String) data[3][0],      // Κωδικός
+        (String) data[3][1],      // Ονομασία
+        (BigDecimal) data[3][2],  // Ποσό
+        &quot;2025&quot;); // Έτος      // Taxes and duties on imports
+    
+<span class="nc" id="L90">    var taxRegular = new TaxRegularRealEstate(</span>
+        (String) data[4][0],     // Κωδικός
+        (String) data[4][1],      // Ονομασία
+        (BigDecimal) data[4][2],  // Ποσό
+        &quot;2025&quot;); // Έτος       // Property taxes
+    
+<span class="nc" id="L96">    var taxProduction = new TaxProduction(</span>
+        (String) data[5][0],      // Κωδικός
+        (String) data[5][1],      // Ονομασία
+        (BigDecimal) data[5][2],  // Ποσό
+        &quot;2025&quot;); // Έτος     // Other taxes on production
+    
+<span class="nc" id="L102">    var taxIncome = new TaxIncome(</span>
+        (String) data[6][0],      // Κωδικός
+        (String) data[6][1],      // Ονομασία
+        (BigDecimal) data[6][2],  // Ποσό
+        &quot;2025&quot;); // Έτος      // Income taxes
+    
+<span class="nc" id="L108">    var taxCapital = new TaxCapital((String) data[7][0],      // Κωδικός</span>
+        (String) data[7][1],      // Ονομασία
+        (BigDecimal) data[7][2],  // Ποσό
+        &quot;2025&quot;);  // Capital taxes
+    
+<span class="nc" id="L113">    var taxOther = new TaxOther((String) data[8][0],      // Κωδικός</span>
+        (String) data[8][1],      // Ονομασία
+        (BigDecimal) data[8][2],  // Ποσό
+        &quot;2025&quot;);  // Other current taxes
+    
+    // Make objects of Sales
+    
+<span class="nc" id="L120">    var salGoods = new SalGoods(</span>
+        (String) data[19][0], // &quot;141&quot;
+        (String) data[19][1],
+        (BigDecimal) data[19][2],
+        &quot;2025&quot;);
+    
+<span class="nc" id="L126">    var salServices = new SalServices(</span>
+        (String) data[20][0], // &quot;142&quot;
+        (String) data[20][1],
+        (BigDecimal) data[20][2],
+        &quot;2025&quot;);
+    
+<span class="nc" id="L132">    var salRents = new SalRents(</span>
+        (String) data[21][0], // &quot;143&quot;
+        (String) data[21][1],
+        (BigDecimal) data[21][2],
+        &quot;2025&quot;);
+    
+<span class="nc" id="L138">    var salCommissions = new SalCommissions(</span>
+        (String) data[22][0], // &quot;144&quot;
+        (String) data[22][1],
+        (BigDecimal) data[22][2],
+        &quot;2025&quot;);
+    
+<span class="nc" id="L144">    var salAdmin = new SalAdministFees(</span>
+        (String) data[23][0], // &quot;145&quot;
+        (String) data[23][1],
+        (BigDecimal) data[23][2],
+        &quot;2025&quot;);
+    
+<span class="nc" id="L150">    var salOther = new SalOther(</span>
+        (String) data[24][0], // &quot;149&quot;
+        (String) data[24][1],
+        (BigDecimal) data[24][2],
+        &quot;2025&quot;);
+    
+    // Make objects of Other Current Income
+    
+<span class="nc" id="L158">    var ociInterest = new OciInterest(</span>
+        (String) data[26][0], // &quot;151&quot;
+        (String) data[26][1],
+        (BigDecimal) data[26][2],
+        &quot;2025&quot;);
+    
+<span class="nc" id="L164">    var ociCorpInc = new OciCorporateDistribInc(</span>
+        (String) data[27][0], // &quot;152&quot;
+        (String) data[27][1],
+        (BigDecimal) data[27][2],
+        &quot;2025&quot;);
+    
+<span class="nc" id="L170">    var ociNatRent = new OciNaturalResourceRent(</span>
+        (String) data[28][0], // &quot;153&quot;
+        (String) data[28][1],
+        (BigDecimal) data[28][2],
+        &quot;2025&quot;);
+    
+<span class="nc" id="L176">    var ociFines = new OciFinesPenaltiesAssessments(</span>
+        (String) data[29][0], // &quot;156&quot;
+        (String) data[29][1],
+        (BigDecimal) data[29][2],
+        &quot;2025&quot;);
+    
+<span class="nc" id="L182">    var ociReimb = new OciReimbursements(</span>
+        (String) data[30][0], // &quot;159&quot;
+        (String) data[30][1],
+        (BigDecimal) data[30][2],
+        &quot;2025&quot;);
+    
+    // Make object of social contributions
+    
+<span class="nc" id="L190">    var socContr = new SocialContributions(</span>
+        (String) data[11][0], 
+        (String) data[11][1],
+        (BigDecimal) data[11][2],
+        &quot;2025&quot;);
+    
+    // Make Object for Fixed Assets
+    
+<span class="nc" id="L198">    var faBuildings = new FixedAssets(</span>
+        (String) data[33][0], // &quot;159&quot;
+        (String) data[33][1],
+        (BigDecimal) data[33][2],
+        &quot;2025&quot;);
+    
+    // Make object for Dept Securities
+    
+<span class="nc" id="L206">    var dsLongTerm = new DeptSecurities(</span>
+        (String) data[35][0], 
+        (String) data[35][1],
+        (BigDecimal) data[35][2],
+        &quot;2025&quot;);
+    
+    // Make object for Loans with code 44
+    
+<span class="nc" id="L214">    var loanLongTerm1 = new LoansInc44(</span>
+        (String) data[36][0], // &quot;156&quot;
+        (String) data[36][1],
+        (BigDecimal) data[36][2],
+        &quot;2025&quot;);
+       
+    // Make objects for Equity and Investment Fund Shares
+    
+<span class="nc" id="L222">    var secListed = new SsListed(</span>
+        (String) data[38][0], 
+        (String) data[38][1],
+        (BigDecimal) data[38][2],
+        &quot;2025&quot;);
+    
+<span class="nc" id="L228">    var secUnlisted = new SsUnlisted(</span>
+        (String) data[39][0], 
+        (String) data[39][1],
+        (BigDecimal) data[39][2],
+        &quot;2025&quot;);
+    
+    // make object for circulation
+     
+<span class="nc" id="L236">    var lcdInCirculation = new LiabilitiesCurrenDepos(</span>
+        (String) data[41][0], 
+        (String) data[41][1],
+        (BigDecimal) data[41][2],
+        &quot;2025&quot;);
+    
+<span class="nc" id="L242">    var dsShort = new DslShortTerm(</span>
+        (String) data[43][0], 
+        (String) data[43][1],
+        (BigDecimal) data[43][2],
+        &quot;2025&quot;);
+    
+<span class="nc" id="L248">    var dsLong = new DslLongTerm(</span>
+        (String) data[44][0], 
+        (String) data[44][1],
+        (BigDecimal) data[44][2],
+        &quot;2025&quot;);
+    
+<span class="nc" id="L254">    var loanShort = new LShortTerm(// Incomes form short-term internal loans</span>
+        (String) data[46][0], 
+        (String) data[46][1],
+        (BigDecimal) data[46][2],
+        &quot;2025&quot;);
+      
+    
+<span class="nc" id="L261">    var loanLong = new LLongTermL2(// Incomes from long-term external loans</span>
+        (String) data[46][0], 
+        (String) data[46][1],
+        (BigDecimal) data[46][2],
+        &quot;2025&quot;);  
+    
+<span class="nc" id="L267">    var finDerivatives = new FinancDerivatives(</span>
+        (String) data[49][0], 
+        (String) data[49][1],
+        (BigDecimal) data[49][2],
+        &quot;2025&quot;);
+
+    // Make objects for Transfers
+<span class="nc" id="L274">    var trCurrent = new TrCurrentDomestic(</span>
+        (String) data[13][0],
+        (String) data[13][1],
+        (BigDecimal) data[13][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L280">    var trEu = new TrEU(</span>
+        (String) data[14][0],
+        (String) data[14][1],
+        (BigDecimal) data[14][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L286">    var trForeign = new TrForeignEntities(</span>
+        (String) data[15][0],
+        (String) data[15][1],
+        (BigDecimal) data[15][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L292">    var trDomInvest = new TrDomesInvestGrants(</span>
+        (String) data[16][0],
+        (String) data[16][1],
+        (BigDecimal) data[16][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L298">    var trEuInvest = new TrEUInvestGrants(</span>
+        (String) data[17][0],
+        (String) data[17][1],
+        (BigDecimal) data[17][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L304">    var trOther = new TrOther(</span>
+        (String) data[18][0],
+        (String) data[18][1],
+        (BigDecimal) data[18][2],
+        &quot;2025&quot;);
+
+    /**
+     * Creates and returns an exhaustive list of {@link Income} objects based 
+     * on the 2025 State Budget revenue projections.
+     * &lt;p&gt;
+     * The method instantiates concrete subclasses of the Income model (e.g., 
+     * {@link TaxIncome}, {@link SalServices}, {@link TrEU}), ensuring that 
+     * each revenue stream is tracked with its official budget code and 
+     * precise {@link BigDecimal} amount.
+     * &lt;/p&gt;
+     * * @return An {@link ArrayList} of {@link Income} objects representing 
+     * all projected state revenue sources for 2025.
+     * @see Income
+     * @see TaxIncome
+     * @see SocialContributions
+     */
+<span class="nc" id="L325">    ArrayList&lt;Income&gt; inc = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L327">    inc.add(taxGoodsServices);</span>
+<span class="nc" id="L328">    inc.add(taxDuties);</span>
+<span class="nc" id="L329">    inc.add(taxRegular);</span>
+<span class="nc" id="L330">    inc.add(taxProduction);</span>
+<span class="nc" id="L331">    inc.add(taxIncome);</span>
+<span class="nc" id="L332">    inc.add(taxCapital);</span>
+<span class="nc" id="L333">    inc.add(taxOther);</span>
+<span class="nc" id="L334">    inc.add(socContr);</span>
+<span class="nc" id="L335">    inc.add(trCurrent);</span>
+<span class="nc" id="L336">    inc.add(trEu);</span>
+<span class="nc" id="L337">    inc.add(trForeign);</span>
+<span class="nc" id="L338">    inc.add(trDomInvest);</span>
+<span class="nc" id="L339">    inc.add(trEuInvest);</span>
+<span class="nc" id="L340">    inc.add(trOther);</span>
+<span class="nc" id="L341">    inc.add(salGoods);</span>
+<span class="nc" id="L342">    inc.add(salServices);</span>
+<span class="nc" id="L343">    inc.add(salRents);</span>
+<span class="nc" id="L344">    inc.add(salCommissions);</span>
+<span class="nc" id="L345">    inc.add(salAdmin);</span>
+<span class="nc" id="L346">    inc.add(salOther);</span>
+<span class="nc" id="L347">    inc.add(ociInterest);</span>
+<span class="nc" id="L348">    inc.add(ociCorpInc);</span>
+<span class="nc" id="L349">    inc.add(ociNatRent);</span>
+<span class="nc" id="L350">    inc.add(ociFines);</span>
+<span class="nc" id="L351">    inc.add(ociReimb);</span>
+<span class="nc" id="L352">    inc.add(faBuildings);</span>
+<span class="nc" id="L353">    inc.add(dsLongTerm);</span>
+<span class="nc" id="L354">    inc.add(loanLongTerm1);</span>
+<span class="nc" id="L355">    inc.add(secListed);</span>
+<span class="nc" id="L356">    inc.add(secUnlisted);</span>
+<span class="nc" id="L357">    inc.add(lcdInCirculation);</span>
+<span class="nc" id="L358">    inc.add(dsShort);</span>
+<span class="nc" id="L359">    inc.add(dsLong);</span>
+<span class="nc" id="L360">    inc.add(loanShort);</span>
+<span class="nc" id="L361">    inc.add(loanLong);</span>
+<span class="nc" id="L362">    inc.add(finDerivatives);</span>
+        
+
+    // End of Incomes List
+<span class="nc" id="L366">    return inc;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

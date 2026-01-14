@@ -289,15 +289,18 @@ The testing process is fully integrated into the project's lifecycle through **M
 ### Javadoc Documentation
 The complete API documentation is available in the `docs/` folder in .html version.  
 In order to see the full documentation (private methods included) you need to clone this repository locally and run mvn `javadoc:javadoc -Dshow=private`.
-For all the other access modifiers (default,public,protected) click [here](https://aggeltsim.github.io/GovPro/index.html) to see the documentation.
+
+For all the other access modifiers (default,public,protected) **click [here](https://aggeltsim.github.io/GovPro/index.html) to see the documentation.**
 
 ## Final Remarks of the technical report 
 
 In conclusion, the **GovPro** application is a powerful tool for strategic visualization and trend analysis, offering valuable insights into the course of fiscal magnitudes. However, its use is purely explanatory and advisory. Its value lies in its ability to visualize complex data and highlight statistical correlations that often escape a simple reading of accounting tables. It functions best as a **Decision Support System** rather than a platform for deterministic outcomes. This sofisticatted model makes **human judgment essential** for the final evaluation of results.
 ---
-[↑ Back to Menu](#govpro-budget-system-2025)
+
 # Presentation in Greek 
-View the presentation in Greek [here](./docs/GovTrackers.pdf)
+View the presentation in Greek [here](./docs/GovTrackers.pdf).
 
 # Promotional Video
 Press [here](https://drive.google.com/file/d/1bQ74hfVXukIS4BhCCUMN2q90MEWRLCem/view?usp=drivesdk) to see the promotional video for GovPro.
+
+[↑ Back to Menu](#govpro-budget-system-2025)

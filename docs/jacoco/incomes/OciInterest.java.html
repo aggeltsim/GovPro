@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OciInterest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">incomes</a> &gt; <span class="el_source">OciInterest.java</span></div><h1>OciInterest.java</h1><pre class="source lang-java linenums">package incomes;
+
+import java.math.BigDecimal;
+public class OciInterest extends OtherCurIncome {
+
+    public OciInterest(String code, String name, BigDecimal amount, String form) {
+<span class="fc" id="L7">        super(code, name, amount, form);</span>
+<span class="fc" id="L8">    }</span>
+
+    @Override
+    public String toExplain() {
+<span class="fc" id="L12">        return getName() + &quot; is money the government earns from lending&quot;</span>
+        + &quot; funds, deposits, or other investments. This account tracks&quot;
+        + &quot; the income the government receives as interest over time.&quot;
+        + &quot; In simple terms, an interest (revenue) account shows the&quot;
+        + &quot; money the government makes from lending or investing money,&quot;
+        + &quot; similar to the interest a person earns from a bank savings account.&quot;;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

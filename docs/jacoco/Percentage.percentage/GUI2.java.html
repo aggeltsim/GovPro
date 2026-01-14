@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GUI2.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">Percentage.percentage</a> &gt; <span class="el_source">GUI2.java</span></div><h1>GUI2.java</h1><pre class="source lang-java linenums">package Percentage.percentage;
+
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class GUI2 {
+    private GUI1 gui;
+
+<span class="nc" id="L13">    public GUI2(GUI1 gui) { this.gui = gui; }</span>
+
+    public void setupContextMenu() {
+<span class="nc" id="L16">        ContextMenu menu = new ContextMenu();</span>
+<span class="nc" id="L17">        MenuItem itemA = new MenuItem(&quot;Add to Numerator (A)&quot;);</span>
+<span class="nc" id="L18">        MenuItem itemB = new MenuItem(&quot;Add to Base (B)&quot;);</span>
+<span class="nc" id="L19">        itemA.setOnAction(e -&gt; addSelectedToField(gui.codeAField));</span>
+<span class="nc" id="L20">        itemB.setOnAction(e -&gt; addSelectedToField(gui.codeBField));</span>
+<span class="nc" id="L21">        menu.getItems().addAll(itemA, itemB);</span>
+<span class="nc" id="L22">        gui.csvDisplayArea.setContextMenu(menu);</span>
+<span class="nc" id="L23">    }</span>
+
+    private void addSelectedToField(TextField field) {
+<span class="nc" id="L26">        String selected = gui.csvDisplayArea.getSelectedText();</span>
+<span class="nc bnc" id="L27" title="All 4 branches missed.">        if (selected == null || selected.isEmpty()) return;</span>
+<span class="nc" id="L28">        String codes = Arrays.stream(selected.split(&quot;\n&quot;)).map(line -&gt; line.split(&quot;,&quot;)[0].trim()).collect(Collectors.joining(&quot;, &quot;));</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        field.setText(field.getText().isEmpty() ? codes : field.getText() + &quot;, &quot; + codes);</span>
+<span class="nc" id="L30">    }</span>
+
+    public void setupKeyboardEvents() {
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        gui.codeAField.setOnKeyPressed(e -&gt; { if(e.getCode() == KeyCode.ENTER) processCalculation(); });</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        gui.codeBField.setOnKeyPressed(e -&gt; { if(e.getCode() == KeyCode.ENTER) processCalculation(); });</span>
+<span class="nc" id="L35">    }</span>
+
+    public void showInstructions() {
+<span class="nc" id="L38">        Alert alert = new Alert(Alert.AlertType.INFORMATION);</span>
+<span class="nc" id="L39">        alert.setTitle(&quot;Budget User Guide&quot;);</span>
+<span class="nc" id="L40">        alert.setHeaderText(&quot;Welcome to the State 'Percentage' Analyzer!&quot;);</span>
+        
+<span class="nc" id="L42">        TextArea area = new TextArea(</span>
+            &quot;Here you can see how Greece's money is distributed for 2025!\n\n&quot; +
+            &quot;HOW IT WORKS:\n&quot; +
+            &quot;1. View the list: Each line is a part of the state chain (e.g., Taxes, Health, Defense).\n&quot; +
+            &quot;2. Pick 'ingredients': Select codes from the text with your mouse, right-click, and they are automatically entered into the field you chose.\n&quot; +
+            &quot;3. Compare: In field (A) put the part of the chain you are interested in and in (B) the 'grand total' you want to compare it with.\n\n&quot; +
+            &quot;💡 EXAMPLE:\n&quot; +
+            &quot;If you put the Health code (1015) in the Numerator (A) and the total Taxes code (11) in the Base (B), &quot; +
+            &quot;you will find out what percentage of our taxes is spent on hospitals.\n\n&quot; +
+            &quot;Press ENTER and the application will explain everything like a game!&quot;
+        );
+<span class="nc" id="L53">        area.setWrapText(true);</span>
+<span class="nc" id="L54">        area.setEditable(false);</span>
+<span class="nc" id="L55">        area.setPrefSize(700, 420);</span>
+<span class="nc" id="L56">        alert.getDialogPane().setContent(area);</span>
+<span class="nc" id="L57">        alert.getDialogPane().setMinWidth(700);</span>
+<span class="nc" id="L58">        alert.getDialogPane().setMinHeight(420);</span>
+<span class="nc" id="L59">        alert.showAndWait();</span>
+<span class="nc" id="L60">    }</span>
+
+    public void processCalculation() {
+    try {
+<span class="nc" id="L64">        String rawA = gui.codeAField.getText().trim();</span>
+<span class="nc" id="L65">        String rawB = gui.codeBField.getText().trim();</span>
+
+        // 1. check for empty fields
+<span class="nc bnc" id="L68" title="All 4 branches missed.">        if (rawA.isEmpty() || rawB.isEmpty()) {</span>
+<span class="nc" id="L69">            throw new IllegalArgumentException(&quot;Please enter codes to perform the calculation!&quot;);</span>
+        }
+
+<span class="nc" id="L72">        List&lt;String&gt; codesA = parse(rawA);</span>
+<span class="nc" id="L73">        List&lt;String&gt; codesB = parse(rawB);</span>
+
+        // 2. check for duplicates (e.g. 11, 11)
+<span class="nc" id="L76">        checkForDuplicates(codesA, &quot;Numerator (A)&quot;);</span>
+<span class="nc" id="L77">        checkForDuplicates(codesB, &quot;Base (B)&quot;);</span>
+
+        // 3. check for Identity (A and B are identical)
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        if (new HashSet&lt;&gt;(codesA).equals(new HashSet&lt;&gt;(codesB))) {</span>
+<span class="nc" id="L81">            throw new IllegalArgumentException(&quot;Fields A and B contain the same codes. The result will be 100%, which doesn't make sense for analysis.&quot;);</span>
+        }
+
+        // 4. check for Sub-codes
+<span class="nc" id="L85">        checkForSubCodes(codesA, &quot;Numerator (A)&quot;);</span>
+<span class="nc" id="L86">        checkForSubCodes(codesB, &quot;Base (B)&quot;);</span>
+
+        // 5. check for existence of codes in CSV
+<span class="nc" id="L89">        validateCodesExist(codesA);</span>
+<span class="nc" id="L90">        validateCodesExist(codesB);</span>
+
+<span class="nc" id="L92">        BigDecimal sumA = codesA.stream().map(gui.amounts::get).reduce(BigDecimal.ZERO, BigDecimal::add);</span>
+<span class="nc" id="L93">        BigDecimal sumB = codesB.stream().map(gui.amounts::get).reduce(BigDecimal.ZERO, BigDecimal::add);</span>
+
+        // 6. check for Division by Zero
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (sumB.compareTo(BigDecimal.ZERO) == 0) {</span>
+<span class="nc" id="L97">            throw new ArithmeticException(&quot;The amount in the Base (B) is zero. Division is impossible!&quot;);</span>
+        }
+
+        // 7. check for A &gt; B (Confirmation)
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        if (sumA.compareTo(sumB) &gt; 0) {</span>
+<span class="nc" id="L102">            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);</span>
+<span class="nc" id="L103">            confirm.setTitle(&quot;Confirmation&quot;);</span>
+<span class="nc" id="L104">            confirm.setHeaderText(null);</span>
+<span class="nc" id="L105">            TextArea confirmArea = new TextArea(</span>
+                &quot;Attention: The Numerator is larger than the Base. The percentage will exceed 100%. Continue?&quot;);
+<span class="nc" id="L107">            confirmArea.setWrapText(true);</span>
+<span class="nc" id="L108">            confirmArea.setEditable(false);</span>
+<span class="nc" id="L109">            confirmArea.setPrefSize(560, 120);</span>
+<span class="nc" id="L110">            confirm.getDialogPane().setContent(confirmArea);</span>
+<span class="nc" id="L111">            confirm.getDialogPane().setMinWidth(560);</span>
+<span class="nc" id="L112">            confirm.getDialogPane().setMinHeight(140);</span>
+<span class="nc" id="L113">            confirm.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">            if (confirm.showAndWait().get() == ButtonType.NO) return;</span>
+        }
+
+        // 8. Calculate and Show Percentage
+<span class="nc" id="L118">        BigDecimal perc = gui.calculator.calculatePercentage(</span>
+<span class="nc" id="L119">            codesA.stream().map(gui.amounts::get).collect(Collectors.toList()),</span>
+<span class="nc" id="L120">            codesB.stream().map(gui.amounts::get).collect(Collectors.toList())</span>
+        );
+
+<span class="nc" id="L123">        String formatted = String.format(&quot;%.2f&quot;, perc) + &quot; %&quot;;</span>
+<span class="nc" id="L124">        gui.resultLabel.setText(&quot;Result: &quot; + formatted);</span>
+<span class="nc" id="L125">        gui.historyItems.add(0, formatted + &quot; (&quot; + rawA + &quot; / &quot; + rawB + &quot;)&quot;);</span>
+
+<span class="nc" id="L127">        showSimpleExplanation(codesA, sumA, codesB, sumB, formatted);</span>
+
+<span class="nc" id="L129">    } catch (Exception ex) {</span>
+<span class="nc" id="L130">        showErrorDialog(&quot;Error&quot;, ex);</span>
+<span class="nc" id="L131">    }</span>
+<span class="nc" id="L132">}</span>
+
+// --- Additional Check Methods ---
+private void showErrorDialog(String title, Exception ex) {
+<span class="nc" id="L136">    Alert alert = new Alert(Alert.AlertType.ERROR);</span>
+<span class="nc" id="L137">    alert.setTitle(title);</span>
+<span class="nc" id="L138">    alert.setHeaderText(null);</span>
+
+<span class="nc bnc" id="L140" title="All 2 branches missed.">    String content = (ex.getMessage() != null) ? ex.getMessage() : &quot;An unknown error occurred.&quot;;</span>
+
+<span class="nc" id="L142">    TextArea area = new TextArea(content);</span>
+<span class="nc" id="L143">    area.setWrapText(true);</span>
+<span class="nc" id="L144">    area.setEditable(false);</span>
+    
+<span class="nc" id="L146">    area.setPrefSize(450, 150); </span>
+
+<span class="nc" id="L148">    alert.getDialogPane().setContent(area);</span>
+<span class="nc" id="L149">    alert.showAndWait();</span>
+<span class="nc" id="L150">}</span>
+    
+private void checkForDuplicates(List&lt;String&gt; codes, String fieldName) {
+<span class="nc" id="L153">    Set&lt;String&gt; set = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">    for (String c : codes) {</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">        if (!set.add(c)) {</span>
+<span class="nc" id="L156">            throw new IllegalArgumentException(&quot;The code '&quot; + c + &quot;' appears twice in the &quot; + fieldName + &quot; field.&quot;);</span>
+        }
+<span class="nc" id="L158">    }</span>
+<span class="nc" id="L159">}</span>
+
+private void checkForSubCodes(List&lt;String&gt; codes, String fieldName) {
+<span class="nc bnc" id="L162" title="All 2 branches missed.">    for (String c1 : codes) {</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        for (String c2 : codes) {</span>
+<span class="nc bnc" id="L164" title="All 6 branches missed.">            if (!c1.equals(c2) &amp;&amp; (c1.startsWith(c2) || c2.startsWith(c1))) {</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">                String parent = c1.length() &lt; c2.length() ? c1 : c2;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">                String child = c1.length() &lt; c2.length() ? c2 : c1;</span>
+<span class="nc" id="L167">                throw new IllegalArgumentException(&quot;Logic Error in &quot; + fieldName + &quot; field:\n&quot; +</span>
+                    &quot;The code '&quot; + child + &quot;' is already included within code '&quot; + parent + &quot;'.\n&quot; +
+                    &quot;If you add both, the amount will be double-counted!&quot;);
+            }
+<span class="nc" id="L171">        }</span>
+<span class="nc" id="L172">    }</span>
+<span class="nc" id="L173">}</span>
+
+private void validateCodesExist(List&lt;String&gt; codes) {
+<span class="nc bnc" id="L176" title="All 2 branches missed.">    for (String c : codes) {</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        if (!gui.amounts.containsKey(c)) {</span>
+<span class="nc" id="L178">            throw new NoSuchElementException(&quot;The code '&quot; + c + &quot;' does not exist in the 2025 data.&quot;);</span>
+        }
+<span class="nc" id="L180">    }</span>
+<span class="nc" id="L181">}</span>
+
+private void showSimpleExplanation(List&lt;String&gt; cA, BigDecimal sA, List&lt;String&gt; cB, BigDecimal sB, String res) {
+<span class="nc" id="L184">    String namesA = cA.stream().map(gui.loader::getName).collect(Collectors.joining(&quot; and &quot;));</span>
+<span class="nc" id="L185">    String namesB = cB.stream().map(gui.loader::getName).collect(Collectors.joining(&quot; and &quot;));</span>
+
+    // Reformat numbers using English locale
+<span class="nc" id="L188">    java.text.NumberFormat formatter = java.text.NumberFormat.getInstance(java.util.Locale.ENGLISH);</span>
+<span class="nc" id="L189">    String formattedSumA = formatter.format(sA);</span>
+<span class="nc" id="L190">    String formattedSumB = formatter.format(sB);</span>
+
+<span class="nc" id="L192">    Alert info = new Alert(Alert.AlertType.INFORMATION);</span>
+<span class="nc" id="L193">    info.setTitle(&quot;What does this number mean?&quot;);</span>
+<span class="nc" id="L194">    info.setHeaderText(null);</span>
+
+<span class="nc" id="L196">     TextArea text = new TextArea(</span>
+        &quot;Let's see what we discovered about the 2025 Budget:\n\n&quot; +
+        &quot;Imagine that all the money the state collects from the items [&quot; + namesB + &quot;] &quot; +
+        &quot;is a big pie worth &quot; + formattedSumB + &quot; €.\n\n&quot; +
+        &quot;You chose to look at a slice of this pie, which are the items [&quot; + namesA + &quot;], &quot; +
+        &quot;with a value of &quot; + formattedSumA + &quot; €.\n\n&quot; +
+        &quot;The verdict:\n&quot; +
+        &quot;The slice you chose takes up &quot; + res + &quot; of the total pie. &quot; +
+        &quot;To put it simply, if the pie had 100 equal slices, the items you are examining &quot; +
+<span class="nc" id="L205">        &quot;would be approximately &quot; + String.format(&quot;%.1f&quot;, Double.parseDouble(res.replace(&quot;%&quot;,&quot;&quot;).replace(&quot;,&quot;,&quot;.&quot;).trim())) + &quot; slices.\n\n&quot; +</span>
+        &quot;It's like saying that for every 100€ in the 'denominator basket', &quot; +
+<span class="nc" id="L207">        &quot;the &quot; + String.format(&quot;%.2f&quot;, sA.divide(sB, 4, RoundingMode.HALF_UP).multiply(new BigDecimal(100))) + &quot;€ goes to the numerator.&quot;</span>
+    );
+    
+<span class="nc" id="L210">    text.setWrapText(true); </span>
+<span class="nc" id="L211">    text.setEditable(false); </span>
+<span class="nc" id="L212">    text.setPrefSize(600, 320);</span>
+<span class="nc" id="L213">    info.getDialogPane().setContent(text);</span>
+<span class="nc" id="L214">    info.getDialogPane().setMinWidth(600);</span>
+<span class="nc" id="L215">    info.getDialogPane().setMinHeight(320);</span>
+<span class="nc" id="L216">    info.showAndWait();</span>
+<span class="nc" id="L217">}</span>
+    private List&lt;String&gt; parse(String s) {
+<span class="nc bnc" id="L219" title="All 2 branches missed.">        return Arrays.stream(s.split(&quot;,&quot;)).map(String::trim).filter(i -&gt; !i.isEmpty()).collect(Collectors.toList());</span>
+    }
+
+    public void loadCsvToDisplay() {
+<span class="nc" id="L223">        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(</span>
+<span class="nc" id="L224">                getClass().getClassLoader().getResourceAsStream(Loader.CSV_FILE), java.nio.charset.StandardCharsets.UTF_8))) {</span>
+<span class="nc" id="L225">            br.readLine(); StringBuilder sb = new StringBuilder(); String line;</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">            while ((line = br.readLine()) != null) sb.append(line).append(&quot;\n&quot;);</span>
+<span class="nc" id="L227">            gui.resultLabel.setWrapText(true);</span>
+<span class="nc" id="L228">            gui.csvDisplayArea.setText(sb.toString());</span>
+<span class="nc" id="L229">        } catch (Exception e) { e.printStackTrace(); }</span>
+<span class="nc" id="L230">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SecuritySharesExp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">expenses</a> &gt; <span class="el_source">SecuritySharesExp.java</span></div><h1>SecuritySharesExp.java</h1><pre class="source lang-java linenums">package expenses;
+
+import java.math.BigDecimal;
+
+public class SecuritySharesExp extends Expenses {
+    public SecuritySharesExp(String code,String name,BigDecimal amount,String form) {
+<span class="fc" id="L7">        super(code, name, amount, form);</span>
+<span class="fc" id="L8">    }</span>
+    @Override
+    public String toExplain() {
+<span class="fc" id="L11">        return getName() + &quot; are amounts of money that the government&quot;</span>
+        + &quot; invests in stocks, shares, or investment funds. This account&quot;
+        + &quot; tracks the value of these investments and any income or&quot;
+        + &quot; dividends they generate. In simple terms, it is the part of&quot;
+        + &quot; the government budget that shows the money the government&quot;
+        + &quot; has put into companies or investment funds, with the goal&quot;
+        + &quot; of earning returns or profits over time—similar to how a&quot;
+        + &quot; person might invest money to grow their savings.&quot;;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

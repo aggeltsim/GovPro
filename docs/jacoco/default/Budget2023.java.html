@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Budget2023.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Budget2023.java</span></div><h1>Budget2023.java</h1><pre class="source lang-java linenums">import java.math.BigDecimal;
+import java.math.RoundingMode;
+/**
+ * Provides high-precision statistical analysis of the 2023 Greek State Budget.
+ * This class calculates the percentage distribution of fixed historical expenses 
+ * and incomes, representing each category as a ratio (0.0 to 1.0) relative to 
+ * the annual totals (806.88B for expenses and 798.04B for incomes). 
+ * All calculations use {@link BigDecimal} with 8-decimal precision and 
+ * {@link RoundingMode#HALF_UP} for financial accuracy.
+ */
+<span class="nc" id="L11">public class Budget2023 {</span>
+    
+    public static BigDecimal[] staticsExp() {
+<span class="nc" id="L14">       BigDecimal expenses2023[] = {new BigDecimal(&quot;13795795000&quot;), new BigDecimal(&quot;397439000&quot;), new BigDecimal(&quot;32475557000&quot;), </span>
+                                    new BigDecimal(&quot;1540686000&quot;), new BigDecimal(&quot;80300000&quot;), new BigDecimal(&quot;5851155000&quot;), 
+                                    new BigDecimal(&quot;81257000&quot;), new BigDecimal(&quot;15117638000&quot;), new BigDecimal(&quot;2530934000&quot;), 
+                                    new BigDecimal(&quot;62000&quot;), new BigDecimal(&quot;3394000000&quot;), new BigDecimal(&quot;1058240000&quot;), 
+                                    new BigDecimal(&quot;27924000000&quot;), new BigDecimal(&quot;702631130000&quot;), new BigDecimal(&quot;0&quot;)};
+<span class="nc" id="L19">            final BigDecimal totalExp = new BigDecimal(&quot;806878193000&quot;);</span>
+<span class="nc" id="L20">            BigDecimal[] statics2023 = new BigDecimal[15];</span>
+<span class="nc bnc" id="L21" title="All 2 branches missed.">            for (int i = 0; i &lt; expenses2023.length; i++) {</span>
+<span class="nc" id="L22">               statics2023[i] = BigDecimal.ZERO;</span>
+            }
+<span class="nc bnc" id="L24" title="All 2 branches missed.">            for (int i = 0; i &lt; expenses2023.length; i++) {</span>
+<span class="nc" id="L25">                statics2023[i] = expenses2023[i].divide(totalExp, 8, RoundingMode.HALF_UP); </span>
+            }
+<span class="nc" id="L27">            return statics2023;</span>
+        }
+
+        public static BigDecimal[] staticsInc() { 
+<span class="nc" id="L31">            BigDecimal incomes2023[] = {new BigDecimal(&quot;51579000000&quot;), new BigDecimal(&quot;55000000&quot;), new BigDecimal(&quot;7953000000&quot;), </span>
+                                    new BigDecimal(&quot;2405000000&quot;), new BigDecimal(&quot;1869000000&quot;), new BigDecimal(&quot;24000000&quot;), 
+                                    new BigDecimal(&quot;23000000&quot;), new BigDecimal(&quot;387000000&quot;), new BigDecimal(&quot;44000000&quot;), 
+                                    new BigDecimal(&quot;31554000000&quot;), new BigDecimal(&quot;701846000000&quot;), new BigDecimal(&quot;300000000&quot;)};
+<span class="nc" id="L35">            final BigDecimal totalInc = new BigDecimal(&quot;798039000000&quot;);</span>
+<span class="nc" id="L36">            BigDecimal[] statics2023 = new BigDecimal[12];</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">            for (int i = 0; i &lt; incomes2023.length; i++) {</span>
+<span class="nc" id="L38">               statics2023[i] = BigDecimal.ZERO;</span>
+            }
+<span class="nc bnc" id="L40" title="All 2 branches missed.">            for (int i = 0; i &lt; incomes2023.length; i++) {</span>
+<span class="nc" id="L41">                statics2023[i] = incomes2023[i].divide(totalInc, 8, RoundingMode.HALF_UP); </span>
+            }
+<span class="nc" id="L43">            return statics2023;</span>
+        
+        }
+        
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

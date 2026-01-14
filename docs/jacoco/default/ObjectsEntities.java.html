@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ObjectsEntities.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">ObjectsEntities.java</span></div><h1>ObjectsEntities.java</h1><pre class="source lang-java linenums">import entities.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+/**
+ * Utility class responsible for initializing and populating the application's 
+ * entities data for the fiscal year 2025.
+ * &lt;p&gt;
+ * This class serves as the primary data orchestrator for the Greek State's 
+ * organizational structure. It maps budgetary data to specialized subclasses 
+ * of the {@link Entity} model, covering:
+ * &lt;/p&gt;
+ * &lt;ul&gt;
+ * &lt;li&gt;The Presidency and the Hellenic Parliament&lt;/li&gt;
+ * &lt;li&gt;All Government Ministries&lt;/li&gt;
+ * &lt;li&gt;The Decentralized Administrations &lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+
+<span class="nc" id="L19">public class ObjectsEntities {</span>
+  public static ArrayList&lt;Entity&gt; createObjectsEnt() {
+<span class="nc" id="L21">    Object[][] data = {</span>
+        {&quot;Code&quot;, &quot;Name&quot;, &quot;Amount&quot;}, // 0
+        {&quot;1001&quot;, &quot;Presidency of the Republic&quot;, new BigDecimal(&quot;4638000&quot;)}, //1
+        {&quot;1003&quot;, &quot;Hellenic Parliament&quot;, new BigDecimal(&quot;171950000&quot;)},
+        {&quot;1004&quot;, &quot;Presidency of the Government&quot;, new BigDecimal(&quot;41689000&quot;)},
+        {&quot;1007&quot;, &quot;Ministry of Interior&quot;, new BigDecimal(&quot;3830276000&quot;)},
+        {&quot;1009&quot;, &quot;Ministry of Foreign Affairs&quot;, new BigDecimal(&quot;420237000&quot;)},
+        {&quot;1011&quot;, &quot;Ministry of National Defense&quot;, new BigDecimal(&quot;6130000000&quot;)},
+        {&quot;1015&quot;, &quot;Ministry of Health&quot;, new BigDecimal(&quot;7177424000&quot;)},
+        {&quot;1017&quot;, &quot;Ministry of Justice&quot;, new BigDecimal(&quot;650803000&quot;)},
+        {&quot;1020&quot;, &quot;Ministry of Education, Religious Affairs&quot;, new BigDecimal(&quot;6606000000&quot;)},
+        {&quot;1022&quot;, &quot;Ministry of Culture&quot;, new BigDecimal(&quot;575419000&quot;)},
+        {&quot;1024&quot;, &quot;Ministry of National Economy&quot;, new BigDecimal(&quot;1246518464000&quot;)},
+        {&quot;1029&quot;, &quot;Ministry of Rural Development and Food&quot;, new BigDecimal(&quot;1281403000&quot;)},
+        {&quot;1031&quot;, &quot;Ministry of Environment and Energy&quot;, new BigDecimal(&quot;2341227000&quot;)},
+        {&quot;1032&quot;, &quot;Ministry of Labor and Social Security&quot;, new BigDecimal(&quot;18678084000&quot;)},
+        {&quot;1034&quot;, &quot;Ministry of Social Cohesion&quot;, new BigDecimal(&quot;3989553000&quot;)},
+        {&quot;1036&quot;, &quot;Ministry of Development&quot;, new BigDecimal(&quot;818045000&quot;)},
+        {&quot;1039&quot;, &quot;Ministry of Infrastructure and Transport&quot;, new BigDecimal(&quot;2694810000&quot;)},
+        {&quot;1041&quot;, &quot;Ministry of Shipping and Island Policy&quot;, new BigDecimal(&quot;651864000&quot;)},
+        {&quot;1045&quot;, &quot;Ministry of Tourism&quot;, new BigDecimal(&quot;189293000&quot;)},
+        {&quot;1053&quot;, &quot;Ministry of Digital Governance&quot;, new BigDecimal(&quot;1073928000&quot;)},
+        {&quot;1055&quot;, &quot;Ministry of Migration and Asylum&quot;, new BigDecimal(&quot;475871000&quot;)},
+        {&quot;1057&quot;, &quot;Ministry of Citizen Protection&quot;, new BigDecimal(&quot;2285820000&quot;)},
+        {&quot;1060&quot;, &quot;Ministry of Climate Crisis and Civil Protection&quot;, new BigDecimal(&quot;1221116000&quot;)},
+        {&quot;1901&quot;, &quot;Decentralized Administration of Attica&quot;, new BigDecimal(&quot;13091000&quot;)},
+        {&quot;1902&quot;, &quot;Decentralized Administration of Thessaly-Central Greece&quot;, 
+        new BigDecimal(&quot;10579000&quot;)},
+        {&quot;1903&quot;, &quot;Decentralized Administration of Epirus-Western Greece&quot;, 
+        new BigDecimal(&quot;9943000&quot;)},
+        {&quot;1904&quot;, &quot;Decentralized Administration of Peloponnese&quot;, new BigDecimal(&quot;14918000&quot;)},
+        {&quot;1905&quot;, &quot;Decentralized Administration of the Aegean&quot;, new BigDecimal(&quot;6188000&quot;)},
+        {&quot;1906&quot;, &quot;Decentralized Administration of Crete&quot;, new BigDecimal(&quot;6497000&quot;)},
+        {&quot;1907&quot;, &quot;Decentralized Administration of Macedonia - Thrace&quot;, new BigDecimal(&quot;18376000&quot;)}
+    };
+    // Make Object for Entities (Ministries, Presidency, Parliament and Administration)
+<span class="nc" id="L57">    var repPresidency = new RepublicPresidency(</span>
+        (String) data[1][0], // &quot;1001&quot;
+        (String) data[1][1],
+        (BigDecimal) data[1][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L63">    var helPar = new HellenicParliament(</span>
+        (String) data[2][0], // &quot;1003&quot;
+        (String) data[2][1],
+        (BigDecimal) data[2][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L69">    var govPre = new GovernPresidency(</span>
+        (String) data[3][0], // &quot;1004&quot;
+        (String) data[3][1],
+        (BigDecimal) data[3][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L75">    var minInterior = new MinInterior(</span>
+        (String) data[4][0], // &quot;1007&quot;
+        (String) data[4][1],
+        (BigDecimal) data[4][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L81">    var minForeign = new MinForeign(</span>
+        (String) data[5][0], // &quot;1009&quot;
+        (String) data[5][1],
+        (BigDecimal) data[5][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L87">    var minDefense = new MinDefense(</span>
+        (String) data[6][0], // &quot;1011&quot;
+        (String) data[6][1],
+        (BigDecimal) data[6][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L93">    var minHealth = new MinHealth(</span>
+        (String) data[7][0], // &quot;1015&quot;
+        (String) data[7][1],
+        (BigDecimal) data[7][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L99">    var minJustice = new MinJustice(</span>
+        (String) data[8][0], // &quot;1017&quot;
+        (String) data[8][1],
+        (BigDecimal) data[8][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L105">    var minEducatReligSports = new MinEducatReligSports(</span>
+        (String) data[9][0], // &quot;1020&quot;
+        (String) data[9][1],
+        (BigDecimal) data[9][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L111">    var minCulture = new MinCulture(</span>
+        (String) data[10][0], // &quot;1022&quot;
+        (String) data[10][1],
+        (BigDecimal) data[10][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L117">    var minEconomy = new MinEconomy(</span>
+        (String) data[11][0], // &quot;1024&quot;
+        (String) data[11][1],
+        (BigDecimal) data[11][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L123">    var minRuralDevelFood = new MinRuralDevelFood(</span>
+        (String) data[12][0], // &quot;1029&quot;
+        (String) data[12][1],
+        (BigDecimal) data[12][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L129">    var minEnvirEnergy = new MinEnvirEnergy(</span>
+        (String) data[13][0], // &quot;1031&quot;
+        (String) data[13][1],
+        (BigDecimal) data[13][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L135">    var minLaborSocSecurity = new MinLaborSocSecurity(</span>
+        (String) data[14][0], // &quot;1032&quot;
+        (String) data[14][1],
+        (BigDecimal) data[14][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L141">    var minSocCohesionFam = new MinSocCohesFam(</span>
+        (String) data[15][0], // &quot;1034&quot;
+        (String) data[15][1],
+        (BigDecimal) data[15][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L147">    var minDevelopment = new MinDevelopment(</span>
+        (String) data[16][0], // &quot;1036&quot;
+        (String) data[16][1],
+        (BigDecimal) data[16][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L153">    var minInfrTransp = new MinInfrastTransport(</span>
+        (String) data[17][0], // &quot;1039&quot;
+        (String) data[17][1],
+        (BigDecimal) data[17][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L159">    var minShipIslandPolicy = new MinShipIslandPolicy(</span>
+        (String) data[18][0], // &quot;1041&quot;
+        (String) data[18][1],
+        (BigDecimal) data[18][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L165">    var minTourism = new MinTourism(</span>
+        (String) data[19][0], // &quot;1045&quot;
+        (String) data[19][1],
+        (BigDecimal) data[19][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L171">    var minDigitalGov = new MinDigitalGovern(</span>
+        (String) data[20][0], // &quot;1053&quot;
+        (String) data[20][1],
+        (BigDecimal) data[20][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L177">    var minImmigrAsylum = new MinImmigrAsylum(</span>
+        (String) data[21][0], // &quot;1055&quot;
+        (String) data[21][1],
+        (BigDecimal) data[21][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L183">    var minCivilProtect = new MinCivilProtection(</span>
+        (String) data[22][0], // &quot;1057&quot;
+        (String) data[22][1],
+        (BigDecimal) data[22][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L189">    var minClimaCrisis = new MinClimateCrisis(</span>
+        (String) data[23][0], // &quot;1060&quot;
+        (String) data[23][1],
+        (BigDecimal) data[23][2],
+        &quot;2025&quot;);
+
+    // ==== DECENTRALIZED ADMINISTRATIONS ====
+
+<span class="nc" id="L197">    var decAdmAttica = new DecAdminAttica(</span>
+        (String) data[24][0], // &quot;1901&quot;
+        (String) data[24][1],
+        (BigDecimal) data[24][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L203">    var decAdminThesCenGr = new DecAdminThesCenGr(</span>
+        (String) data[25][0], // &quot;1902&quot;
+        (String) data[25][1],
+        (BigDecimal) data[25][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L209">    var decAdmEpirWestMac = new DecAdminEpirWMaced(</span>
+        (String) data[26][0], // &quot;1903&quot;
+        (String) data[26][1],
+        (BigDecimal) data[26][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L215">    var decAdminPelopWestGreeceIonio = new DecAdminPelopWGrIon(</span>
+        (String) data[27][0], // &quot;1904&quot;
+        (String) data[27][1],
+        (BigDecimal) data[27][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L221">    var decAdmAegean = new DecAdminAegean(</span>
+        (String) data[28][0], // &quot;1905&quot;
+        (String) data[28][1],
+        (BigDecimal) data[28][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L227">    var decAdmCrete = new DecAdminCrete(</span>
+        (String) data[29][0], // &quot;1906&quot;
+        (String) data[29][1],
+        (BigDecimal) data[29][2],
+        &quot;2025&quot;);
+
+<span class="nc" id="L233">    var decAdmMacedThr = new DecAdminMacedThr(</span>
+        (String) data[30][0], // &quot;1907&quot;
+        (String) data[30][1],
+        (BigDecimal) data[30][2],
+        &quot;2025&quot;);
+
+    
+    /**
+     * Creates and returns a list of {@link Entity} objects representing 
+     * the major organizational units of the Greek State for 2025.
+     * &lt;p&gt;
+     * Each entity is initialized with its official budget code (e.g., &quot;1001&quot; for 
+     * Presidency), its formal name, and its total allocated budget for 2025 
+     * as defined in the official State Budget.
+     * &lt;/p&gt;
+     * * @return An {@link ArrayList} of {@link Entity} objects, including Ministries 
+     * and Decentralized Administrations.
+     * @see Entity
+     * @see RepublicPresidency
+     * @see MinEconomy
+     */
+<span class="nc" id="L254">    ArrayList&lt;Entity&gt; ent = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L256">    ent.add(repPresidency);</span>
+<span class="nc" id="L257">    ent.add(helPar);</span>
+<span class="nc" id="L258">    ent.add(govPre);</span>
+<span class="nc" id="L259">    ent.add(minCivilProtect);</span>
+<span class="nc" id="L260">    ent.add(minClimaCrisis);</span>
+<span class="nc" id="L261">    ent.add(minCulture);</span>
+<span class="nc" id="L262">    ent.add(minDefense);</span>
+<span class="nc" id="L263">    ent.add(minDevelopment);</span>
+<span class="nc" id="L264">    ent.add(minDigitalGov);</span>
+<span class="nc" id="L265">    ent.add(minEconomy);</span>
+<span class="nc" id="L266">    ent.add(minEducatReligSports);</span>
+<span class="nc" id="L267">    ent.add(minEnvirEnergy);</span>
+<span class="nc" id="L268">    ent.add(minForeign);</span>
+<span class="nc" id="L269">    ent.add(minHealth);</span>
+<span class="nc" id="L270">    ent.add(minImmigrAsylum);</span>
+<span class="nc" id="L271">    ent.add(minInfrTransp);</span>
+<span class="nc" id="L272">    ent.add(minInterior);</span>
+<span class="nc" id="L273">    ent.add(minJustice);</span>
+<span class="nc" id="L274">    ent.add(minLaborSocSecurity);</span>
+<span class="nc" id="L275">    ent.add(minRuralDevelFood);</span>
+<span class="nc" id="L276">    ent.add(minShipIslandPolicy);</span>
+<span class="nc" id="L277">    ent.add(minSocCohesionFam);</span>
+<span class="nc" id="L278">    ent.add(minTourism);</span>
+<span class="nc" id="L279">    ent.add(decAdmAegean);</span>
+<span class="nc" id="L280">    ent.add(decAdmAttica);</span>
+<span class="nc" id="L281">    ent.add(decAdmCrete);</span>
+<span class="nc" id="L282">    ent.add(decAdmEpirWestMac);</span>
+<span class="nc" id="L283">    ent.add(decAdmMacedThr);</span>
+<span class="nc" id="L284">    ent.add(decAdminPelopWestGreeceIonio);</span>
+<span class="nc" id="L285">    ent.add(decAdminThesCenGr);</span>
+      
+
+    // End of Entities List
+<span class="nc" id="L289">    return ent;</span>
+  }
+
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
