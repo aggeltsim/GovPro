@@ -1,3 +1,6 @@
+import entities.Entity;
+import expenses.Expenses;
+import incomes.Income;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
@@ -7,10 +10,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import entities.Entity;
-import expenses.Expenses;
-import incomes.Income;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.application.Application;
@@ -1120,21 +1119,17 @@ public class GovProFx extends Application {
     return btn;
   }
 
-    
-
-
-    /**
-     * Initializes all budget data including incomes,
-     * expenses, and government entities.
-     *
-     * <p>
-     * Data are stored in the {@link #masterData} collection.
-     * </p>
-     */
-    private void initializeData() {
-        masterData.add(new BudgetEntry("SECTION", "REVENUE & INCOMES", null));
-        Object[][] rawIncomes = {
-            {"11", "Taxes", new BigDecimal("62055000000")}, // 1
+  /**
+   * Initializes all budget data including incomes,
+   * expenses, and government entities.
+   *
+   * <p>Data are stored in the {@link #masterData} collection.
+   * </p>
+   */
+  private void initializeData() {
+    masterData.add(new BudgetEntry("SECTION", "REVENUE & INCOMES", null));
+    Object[][] rawIncomes = {
+      {"11", "Taxes", new BigDecimal("62055000000")}, // 1
         {"111", "Taxes on Services and Products", new BigDecimal("33667000000")},
         {"112", "Taxes and Duties on Imports", new BigDecimal("362000000")},
         {"113", "Regular Property Taxes", new BigDecimal("2353000000")},
@@ -1185,10 +1180,10 @@ public class GovProFx extends Application {
         {"57", "Financial Derivatives", new BigDecimal("800000000")},
         {"571", "Financial Derivatives", new BigDecimal("800000000")}
         };
-        addRows(rawIncomes);
+    addRows(rawIncomes);
 
-        masterData.add(new BudgetEntry("SECTION", "PUBLIC EXPENDITURES", null));
-        Object[][] rawExpenses = {
+    masterData.add(new BudgetEntry("SECTION", "PUBLIC EXPENDITURES", null));
+    Object[][] rawExpenses = {
         {"21", "Employee Benefits", new BigDecimal("14889199000")}, // 1
         {"22", "Social Benefits", new BigDecimal("425136000")},
         {"23", "Transfers", new BigDecimal("34741365000")},
@@ -1204,11 +1199,11 @@ public class GovProFx extends Application {
         {"53", "Debt Securities (Liabilities)", new BigDecimal("19375000000")},
         {"54", "Long-Term Loans", new BigDecimal("1203165130000")}
         };
-        addRows(rawExpenses);
+    addRows(rawExpenses);
 
-        masterData.add(new BudgetEntry("SECTION", "GOVERNMENT ENTITIES", null));
-        Object[][] rawEntities = {
-        {"1001", "Presidency of the Republic", new BigDecimal("4638000")}, //1
+    masterData.add(new BudgetEntry("SECTION", "GOVERNMENT ENTITIES", null));
+    Object[][] rawEntities = {
+        {"1001", "Presidency of the Republic", new BigDecimal("4638000")}, // 1
         {"1003", "Hellenic Parliament", new BigDecimal("171950000")},
         {"1004", "Presidency of the Government", new BigDecimal("41689000")},
         {"1007", "Ministry of Interior", new BigDecimal("3830276000")},
@@ -1241,44 +1236,45 @@ public class GovProFx extends Application {
         {"1906", "Decentralized Administration of Crete", new BigDecimal("6497000")},
         {"1907", "Decentralized Administration of Macedonia - Thrace", new BigDecimal("18376000")}
         };
-        addRows(rawEntities);
-    }
+    addRows(rawEntities);
+  }
 
-    /**
-     * Adds multiple budget entries to the data collection.
-     *
-     * @param rows a 2D array containing
-     *             [code, description, amount]
-     */
-    private void addRows(Object[][] rows) {
-        for (Object[] row : rows) {
-            masterData.add(new BudgetEntry(row[0].toString(), row[1].toString(), (BigDecimal) row[2]));
-        }
+  /**
+   * Adds multiple budget entries to the data collection.
+   *
+   * @param rows a 2D array containing
+   *             [code, description, amount]
+   */
+  private void addRows(Object[][] rows) {
+    for (Object[] row : rows) {
+      masterData.add(new BudgetEntry(row[0].toString(), row[1].toString(), (BigDecimal) row[2]));
     }
-        /**
-     * Applies the main application icon to the specified window (stage).
-     *
-     * @param stage the JavaFX Stage to apply the icon to
-     */
-    private void applyAppIcon(Stage stage) {
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/govpro_icon.png")));
-    }
+  }
+        
+  /**
+   * Applies the main application icon to the specified window (stage).
+   *
+   * @param stage the JavaFX Stage to apply the icon to
+   */
+  private void applyAppIcon(Stage stage) {
+    stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/govpro_icon.png")));
+  }
     
-    /**
-     * Returns the complete list of budget data.
-     *
-     * @return an {@link ObservableList} of {@link BudgetEntry}
-     */
-    public ObservableList<BudgetEntry> getMasterData() {
-        return masterData;
-    }
+  /**
+   * Returns the complete list of budget data.
+   *
+   * @return an {@link ObservableList} of {@link BudgetEntry}
+   */
+  public ObservableList<BudgetEntry> getMasterData() {
+    return masterData;
+  }
 
-    /**
-     * Launches the GovPro Budget System application.
-     *
-     * @param args command-line arguments
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
+  /**
+   * Launches the GovPro Budget System application.
+   *
+   * @param args command-line arguments
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
 }
