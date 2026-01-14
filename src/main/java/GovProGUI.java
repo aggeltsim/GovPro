@@ -23,8 +23,7 @@ import javax.swing.SwingUtilities;
  * The {@code GovProGUI} class represents the OLDER graphical user interface
  * of the GovPro Budget System.
  *
- * <p>
- * The application only allows users to:
+ * <p>The application only allows users to:
  * <ul>
  *   <li>Read the 2025 State Budget</li>
  *   <li>Amend budget values</li>
@@ -33,89 +32,85 @@ import javax.swing.SwingUtilities;
  * </ul>
  * </p>
  *
- * <p>
- * The interface is implemented using Java Swing and follows
+ * <p>The interface is implemented using Java Swing and follows
  * event-driven programming principles.
  * </p>
  *
- * <p>
- * Budget data is stored in-memory and processed using {@link BigDecimal}
+ * <p>Budget data is stored in-memory and processed using {@link BigDecimal}
  * for financial accuracy.
  * </p>
+ * 
  * @version 1.0
  */
-public class GovProGUI {
+public class GovProGui {
+
+  /**
+   * Entry point of the GovPro application.
+   *
+   * <p>Launches the GUI on the Event Dispatch Thread (EDT)
+   * to ensure thread-safe Swing operations.
+   * </p>
+   *
+   * @param args command-line arguments (not used)
+   */
+  public static void main(String[] args) {
+    SwingUtilities.invokeLater(GovProGui::createAndShowGUI);
+  }
+
+  /**
+   * Creates and displays the main GovPro application window.
+   *
+   * <p>Initializes all UI components, layouts, and action listeners
+   * for the main menu.
+   * </p>
+   */
+  private static void createAndShowGUI() {
+    JFrame frame = new JFrame("GovPro Budget System");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setSize(600, 500);
+    frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+
+    JLabel mainLabel = new JLabel("What do you want GovPro to do?");
+    mainLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    frame.add(mainLabel);
+
+    String[] options1 = {
+        "1. Reading of the 2025 State Budget",
+        "2. Amendment of the 2025 State Budget",
+        "3. Prediction of an account",
+        "4. Budget Statistics for years 2022, 2023, 2024."
+    };
 
     /**
-     * Entry point of the GovPro application.
+     * ComboBox containing the main application options.
      *
-     * <p>
-     * Launches the GUI on the Event Dispatch Thread (EDT)
-     * to ensure thread-safe Swing operations.
+     * <p>Each option corresponds to a specific budget-related operation.
      * </p>
-     *
-     * @param args command-line arguments (not used)
      */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(GovProGUI::createAndShowGUI);
-    }
+    JComboBox<String> mainMenu = new JComboBox<>(options1);
+    mainMenu.setMaximumSize(new Dimension(400, 30));
+    frame.add(mainMenu);
+
+    JButton nextButton = new JButton("Next");
+    nextButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+    frame.add(nextButton);
 
     /**
-     * Creates and displays the main GovPro application window.
-     *
-     * <p>
-     * Initializes all UI components, layouts, and action listeners
-     * for the main menu.
-     * </p>
+     * Text area used to display formatted budget data,
+     * confirmations, and system messages.
      */
-    private static void createAndShowGUI() {
-        JFrame frame = new JFrame("GovPro Budget System");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 500);
-        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+    JTextArea outputArea = new JTextArea(10, 50);
+    outputArea.setEditable(false);
+    frame.add(new JScrollPane(outputArea));
 
-        JLabel mainLabel = new JLabel("What do you want GovPro to do?");
-        mainLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        frame.add(mainLabel);
+    JPanel statsPanel = new JPanel();
+    statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
+    statsPanel.setVisible(false); // αρχικά κρυφό
 
-        String[] options1 = {
-                "1. Reading of the 2025 State Budget",
-                "2. Amendment of the 2025 State Budget",
-                "3. Prediction of an account",
-                "4. Budget Statistics for years 2022, 2023, 2024."
-        };
+    nextButton.addActionListener(e -> {
+        int choice = mainMenu.getSelectedIndex() + 1;
 
-        /**
-         * ComboBox containing the main application options.
-         *
-         * <p>
-         * Each option corresponds to a specific budget-related operation.
-         * </p>
-         */
-        JComboBox<String> mainMenu = new JComboBox<>(options1);
-        mainMenu.setMaximumSize(new Dimension(400, 30));
-        frame.add(mainMenu);
-
-        JButton nextButton = new JButton("Next");
-        nextButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        frame.add(nextButton);
-
-        /**
-         * Text area used to display formatted budget data,
-         * confirmations, and system messages.
-         */
-        JTextArea outputArea = new JTextArea(10, 50);
-        outputArea.setEditable(false);
-        frame.add(new JScrollPane(outputArea));
-
-        JPanel statsPanel = new JPanel();
-        statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
-        statsPanel.setVisible(false); // αρχικά κρυφό
-
-        nextButton.addActionListener(e -> {
-            int choice = mainMenu.getSelectedIndex() + 1;
-
-            switch (choice) {
+        switch (choice) {
                 /**
                  * Displays the 2025 State Budget in a formatted tabular layout.
                  *
