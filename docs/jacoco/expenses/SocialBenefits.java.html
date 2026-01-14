@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SocialBenefits.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">expenses</a> &gt; <span class="el_source">SocialBenefits.java</span></div><h1>SocialBenefits.java</h1><pre class="source lang-java linenums">package expenses;
+
+import java.math.BigDecimal;
+
+public class SocialBenefits extends Expenses {
+    public SocialBenefits(String code,String name,BigDecimal amount,String form) {
+<span class="fc" id="L7">        super(code, name, amount, form);</span>
+<span class="fc" id="L8">    }</span>
+    @Override
+    public String toExplain() {
+<span class="fc" id="L11">        return getName() + &quot; are amounts of money that the government&quot;</span>
+        + &quot; spends to support citizens in need. This includes pensions,&quot;
+        + &quot; unemployment benefits, family allowances, healthcare support,&quot;
+        + &quot; and aid for vulnerable groups. This account tracks the&quot;
+        + &quot; government's spending on programs that help people live&quot;
+        + &quot; safely and with dignity. In simple terms, a social benefits&quot;
+        + &quot; account shows the money the government uses to take care of&quot;
+        + &quot; its citizens and provide financial or social support when needed.&quot;;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

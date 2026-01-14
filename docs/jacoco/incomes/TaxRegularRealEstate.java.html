@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TaxRegularRealEstate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">incomes</a> &gt; <span class="el_source">TaxRegularRealEstate.java</span></div><h1>TaxRegularRealEstate.java</h1><pre class="source lang-java linenums">package incomes;
+
+import java.math.BigDecimal;
+
+public class TaxRegularRealEstate extends Taxes {
+    
+    public TaxRegularRealEstate(String code, String name, BigDecimal amount, String form) {
+<span class="fc" id="L8">        super(code, name, amount, form);</span>
+<span class="fc" id="L9">    }</span>
+   
+    @Override
+    public String toExplain() {
+<span class="fc" id="L13">        return getName() + &quot; is a form of Taxes. Specifically,&quot;</span>
+        + &quot; property tax on real estate is a tax homeowners pay based&quot;
+        + &quot; on the value of their land and buildings, which helps fund&quot;
+        + &quot; local services like schools and roads.&quot;;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

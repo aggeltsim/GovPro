@@ -18,6 +18,9 @@
 - [Key Features](#key-features)
 - [Technical Report](#technical-report)
     - [Javadoc Documentation](#javadoc-documentation)
+    - [Test Results](#test-results)
+- [Presentation in Greek](#presentation-in-greek)
+- [Promotional Video](#promotional-video)
 ## Goal & Mission
 GovPro is built with the mission of delivering public financial information in the simplest and most transparent form possible—so every citizen, student, researcher, or professional can easily understand how 
 national resources are used.
@@ -285,11 +288,19 @@ The testing process is fully integrated into the project's lifecycle through **M
 * **Test-Driven Development Approach**: The use of `assertEquals` and `assertNotNull` throughout the development process ensured that every new feature met the pre-defined statistical and economic standards before integration into the main branch.
 ### Javadoc Documentation
 The complete API documentation is available in the `docs/` folder in .html version.  
-In order to see the full documentation you need to clone this repository locally.
-Open [`docs/index.html`](./docs/index.html) locally in your browser to explore all packages, classes, and methods.
+In order to see the full documentation (private methods included) you need to clone this repository locally and run mvn `javadoc:javadoc -Dshow=private`.
 
-## Final Remarks
+For all the other access modifiers (default,public,protected) **click [here](https://aggeltsim.github.io/GovPro/index.html) to see the documentation.**
+
+## Final Remarks of the technical report 
 
 In conclusion, the **GovPro** application is a powerful tool for strategic visualization and trend analysis, offering valuable insights into the course of fiscal magnitudes. However, its use is purely explanatory and advisory. Its value lies in its ability to visualize complex data and highlight statistical correlations that often escape a simple reading of accounting tables. It functions best as a **Decision Support System** rather than a platform for deterministic outcomes. This sofisticatted model makes **human judgment essential** for the final evaluation of results.
 ---
+
+# Presentation in Greek 
+View the presentation in Greek [here](./docs/GovTrackers.pdf).
+
+# Promotional Video
+Press [here](https://drive.google.com/file/d/1bQ74hfVXukIS4BhCCUMN2q90MEWRLCem/view?usp=drivesdk) to see the promotional video for GovPro.
+
 [↑ Back to Menu](#govpro-budget-system-2025)

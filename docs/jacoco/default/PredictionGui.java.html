@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PredictionGui.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">PredictionGui.java</span></div><h1>PredictionGui.java</h1><pre class="source lang-java linenums">import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.text.DecimalFormat;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+/**
+ * The {@code PredictionGui} class provides a Swing-based
+ * graphical user interface for budget prediction.
+ *
+ * &lt;p&gt;The application allows users to:
+ * &lt;ul&gt;
+ *   &lt;li&gt;Select a government account&lt;/li&gt;
+ *   &lt;li&gt;Choose a prediction mode (by year or by value)&lt;/li&gt;
+ *   &lt;li&gt;Display forecast results using historical data&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;The predictions are computed using the {@link Prediction} class
+ * and are based on historical spending data from 2021 to 2026.
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;This class uses Java Swing components such as {@link JFrame},
+ * {@link JComboBox}, {@link JTextField}, and {@link JTextArea}.
+ * &lt;/p&gt;
+ *
+ * @version 1.0
+ */
+<span class="nc" id="L40">public class PredictionGui {</span>
+
+  /**
+   * Sample historical spending data for government entities.
+   *
+   * &lt;p&gt;Each row represents an entity, while each column corresponds
+   * to a year from 2021 to 2026 (without inflation adjustment).
+   * &lt;/p&gt;
+   */
+<span class="nc" id="L49">  static double[][] dapanes = { // this an array </span>
+    // with values of main entities from 2021 up until 2026 without inflation 
+    {3766000, 4097337, 3811641, 4059900, 3974293, 4146883}, // republic presidency
+    {143500000, 134251607, 134030043, 140477275, 147343837, 156551972}, // hellenic parliament 
+    {34251000, 40536272, 36372937, 37886945, 35723136, 38447884}, // governance presidency
+    {2986769000L, 2973891093L, 3172953535L, 3245029336L, 3282162880L, 3487669947L}, // interior
+    {288237000, 246668455, 252308235, 357219091, 359936589, 404757288}, // exterior
+    {5495900000L, 5937190083L, 5103551488L, 5362408267L, 5252784805L, 5916035799L}, // defence
+    {4256596000L, 4276649036L, 4651583743L, 5278434922L, 6150311996L, 6568225405L}, // health
+    {533261000, 531100091, 506425467, 547747086, 557774970, 569191096}, // justice
+    {5605100000L, 5363728191L, 5436589608L, 5733987212L, 5660668349L, 5665485468L}, // education
+    {359100000, 383427915, 409992485, 350395832, 493075321, 546993897}, // sport
+    {747475497000L, 690153192000L, 669349030000L, 919467234000L,
+        1068139883000L, 1438513680000L} // finance
+  };
+
+  /**
+   * Array of years corresponding to the historical data.
+   */    
+<span class="nc" id="L68">  static double[] years = {2021, 2022, 2023, 2024, 2025, 2026};</span>
+
+  /**
+   * Application entry point.
+   *
+   * &lt;p&gt;Launches the Swing GUI on the Event Dispatch Thread (EDT)
+   * using {@link SwingUtilities#invokeLater(Runnable)}.
+   * &lt;/p&gt;
+   *
+   * @param args command-line arguments
+   */
+  public static void main(String[] args) {
+<span class="nc" id="L80">    SwingUtilities.invokeLater(() -&gt; createAndShowPredGui());</span>
+<span class="nc" id="L81">  }</span>
+
+  /**
+   * Creates and displays the Prediction graphical user interface.
+   *
+   * &lt;p&gt;Initializes all Swing components, layouts, and event listeners.
+   * &lt;/p&gt;
+   */
+  public static void createAndShowPredGui() {
+<span class="nc" id="L90">    JFrame frame = new JFrame(&quot;Prediction App&quot;);</span>
+<span class="nc" id="L91">    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);</span>
+<span class="nc" id="L92">    frame.setSize(600, 450);</span>
+<span class="nc" id="L93">    frame.setLayout(new BorderLayout());</span>
+
+    // Options panel
+<span class="nc" id="L96">    JPanel panel = new JPanel();</span>
+<span class="nc" id="L97">    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));</span>
+<span class="nc" id="L98">    panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));</span>
+
+    // Account selection
+<span class="nc" id="L101">    panel.add(new JLabel(&quot;Choose an account:&quot;));</span>
+<span class="nc" id="L102">    String[] accounts = {</span>
+      &quot;1.Republic Presidency&quot;, &quot;2.Hellenic Parliament&quot;, &quot;3.Governmental Presidency&quot;,
+      &quot;4.Ministry of Interior&quot;, &quot;5.Ministry of Exterior&quot;, &quot;6.Ministry of Health&quot;,
+      &quot;7.Ministry of Justice&quot;, &quot;8.Ministry of Education&quot;, &quot;9.Ministry of Sport&quot;, 
+      &quot;10.Ministry of Finance&quot;
+    };
+
+    /*
+     * JComboBox allowing the user to select a government account.
+     */
+<span class="nc" id="L112">    JComboBox&lt;String&gt; accountBox = new JComboBox&lt;&gt;(accounts);</span>
+<span class="nc" id="L113">    panel.add(accountBox);</span>
+
+<span class="nc" id="L115">    panel.add(Box.createRigidArea(new Dimension(0, 10)));</span>
+
+<span class="nc" id="L117">    panel.add(new JLabel(&quot;Choose prediction type:&quot;));</span>
+<span class="nc" id="L118">    String[] options = { &quot;1.Prediction for a year&quot;, &quot;2.Prediction for a value&quot; };</span>
+        
+    /*
+     * JComboBox allowing the user to select a government account.
+     */
+<span class="nc" id="L123">    JComboBox&lt;String&gt; optionBox = new JComboBox&lt;&gt;(options);</span>
+<span class="nc" id="L124">    panel.add(optionBox);</span>
+
+
+<span class="nc" id="L127">    panel.add(new JLabel(&quot;Enter year or value:&quot;));</span>
+
+    // Create a panel for the field
+<span class="nc" id="L130">    JPanel inputPanel = new JPanel();</span>
+<span class="nc" id="L131">    inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));</span>
+
+    // Add some space (shift right)
+<span class="nc" id="L134">    inputPanel.add(Box.createRigidArea(new Dimension(110, 0))); // 30px distance from left</span>
+
+    /*
+     * Text field used for user input (year or target value).
+     */
+<span class="nc" id="L139">    JTextField inputField = new JTextField();</span>
+<span class="nc" id="L140">    inputField.setMaximumSize(new Dimension(90, 30));</span>
+<span class="nc" id="L141">    inputPanel.add(inputField);</span>
+
+    // Add to thw main panel
+<span class="nc" id="L144">    panel.add(inputPanel);</span>
+    // Prediction button
+<span class="nc" id="L146">    JPanel buttonPanel = new JPanel();</span>
+<span class="nc" id="L147">    JButton predictButton = new JButton(&quot;Predict&quot;);</span>
+<span class="nc" id="L148">    JButton clearButton = new JButton(&quot;Clear Results&quot;); // clear button</span>
+<span class="nc" id="L149">    buttonPanel.add(predictButton);</span>
+<span class="nc" id="L150">    buttonPanel.add(clearButton); // add to panel</span>
+<span class="nc" id="L151">    panel.add(buttonPanel);</span>
+
+<span class="nc" id="L153">    frame.add(panel, BorderLayout.NORTH);</span>
+
+    /*
+     * Text area displaying prediction results.
+     */
+<span class="nc" id="L158">    JTextArea resultArea = new JTextArea(10, 50);</span>
+<span class="nc" id="L159">    resultArea.setEditable(false);</span>
+<span class="nc" id="L160">    JScrollPane scrollPane = new JScrollPane(resultArea);</span>
+<span class="nc" id="L161">    frame.add(scrollPane, BorderLayout.CENTER);</span>
+
+    /*
+     * Handles prediction execution based on user input.
+     * If prediction type is:
+     *  Year-based: predicts the budget value for a given year
+     *  Value-based: estimates when a target value will be reached
+     *
+     * Displays formatted results or error messages accordingly.
+     * 
+     */
+<span class="nc" id="L172">    predictButton.addActionListener(e -&gt; {</span>
+<span class="nc" id="L173">      int accountIndex = accountBox.getSelectedIndex();</span>
+<span class="nc" id="L174">      int optionIndex = optionBox.getSelectedIndex();</span>
+<span class="nc" id="L175">      String userInput = inputField.getText();</span>
+
+<span class="nc" id="L177">      Prediction p = new Prediction(); // your class</span>
+
+      try {
+<span class="nc bnc" id="L180" title="All 2 branches missed.">        if (optionIndex == 0) {</span>
+          // Prediction for the year
+<span class="nc" id="L182">          int year = Integer.parseInt(userInput);</span>
+<span class="nc" id="L183">          double predictionValue = p.getValueForGivenYear(years, dapanes[accountIndex], year);</span>
+<span class="nc" id="L184">          DecimalFormat df = new DecimalFormat(&quot;#,###.00 €&quot;);</span>
+<span class="nc" id="L185">          String formatted = df.format(predictionValue);</span>
+
+<span class="nc" id="L187">          resultArea.append(&quot;Prediction for account '&quot; + accounts[accountIndex] </span>
+              + &quot;' in year &quot; + year + &quot;: &quot; + formatted + &quot;\n&quot;);
+<span class="nc" id="L189">        } else {</span>
+          // Prediction for the value
+<span class="nc" id="L191">          double value = Double.parseDouble(userInput);</span>
+<span class="nc" id="L192">          DecimalFormat df = new DecimalFormat(&quot;#,###.##&quot;);</span>
+
+<span class="nc" id="L194">          String predictedYearandMonth = p.getYearandMonthforGivenValue(</span>
+              years, dapanes[accountIndex], value);
+<span class="nc" id="L196">          resultArea.append(&quot;Prediction for account &quot;</span>
+                + accounts[accountIndex] 
+                + &quot; to have value:&quot; 
+<span class="nc" id="L199">                + df.format(value) </span>
+                + &quot; is &quot; + predictedYearandMonth 
+                + &quot;\n&quot;);
+        }
+<span class="nc" id="L203">      } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L204">        JOptionPane.showMessageDialog(frame, &quot;Please enter a valid number!&quot;);</span>
+<span class="nc" id="L205">      } catch (Exception ex) {</span>
+<span class="nc" id="L206">        JOptionPane.showMessageDialog(frame, &quot;Error: &quot; + ex.getMessage());</span>
+<span class="nc" id="L207">      }</span>
+<span class="nc" id="L208">    });</span>
+    
+    /*
+     * Clears all displayed prediction results.
+     */
+<span class="nc" id="L213">    clearButton.addActionListener(e -&gt; {</span>
+<span class="nc" id="L214">      resultArea.setText(&quot;&quot;); // Clears all results</span>
+<span class="nc" id="L215">    });</span>
+
+<span class="nc" id="L217">    frame.setVisible(true);</span>
+<span class="nc" id="L218">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

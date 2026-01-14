@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MinJustice.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">entities</a> &gt; <span class="el_source">MinJustice.java</span></div><h1>MinJustice.java</h1><pre class="source lang-java linenums">package entities;
+
+import java.math.BigDecimal;
+
+public class MinJustice extends Entity {
+
+    public MinJustice(String code, String name, BigDecimal amount, String form) {
+<span class="fc" id="L8">        super(code, name, amount, form);</span>
+<span class="fc" id="L9">    }</span>
+
+    @Override
+    public String toExplain() {
+<span class="fc" id="L13">        return &quot;The &quot; + getName() + &quot; is the Greek government department&quot;</span>
+        + &quot; responsible for the justice system. It oversees courts,&quot;
+        + &quot; prisons, and legal services, and works to ensure that laws&quot;
+        + &quot; are applied fairly and efficiently. It supports judges and&quot;
+        + &quot; legal professionals, protects citizens' rights, and helps&quot;
+        + &quot; improve access to justice. In simple terms, it is the part&quot;
+        + &quot; of the government that makes sure justice is delivered and&quot;
+        + &quot; the rule of law is respected.&quot;;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

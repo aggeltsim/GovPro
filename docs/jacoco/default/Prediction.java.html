@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Prediction.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">Prediction.java</span></div><h1>Prediction.java</h1><pre class="source lang-java linenums">import java.util.Scanner;
+    
+/**
+ * The {@code Prediction} class provides statistical tools for financial forecasting 
+ * based on historical budget data (2021-2026).
+ * 
+ * &lt;p&gt;It implements &lt;b&gt;Simple Linear Regression&lt;/b&gt; using the Ordinary Least Squares (OLS) 
+ * method to estimate future trends and calculate the time required to reach specific 
+ * financial targets.
+ * &lt;/p&gt;
+ * 
+ * &lt;p&gt;&lt;b&gt;Key Features:&lt;/b&gt;&lt;/p&gt;
+ *  &lt;ul&gt;
+ *   &lt;li&gt;Calculation of future budget values for a given year.&lt;/li&gt;
+ *   &lt;li&gt;Estimation of the timeline (Month/Year) to achieve a desired budget goal.&lt;/li&gt;
+ *   &lt;li&gt;Contains legacy console-based prediction methods for testing.&lt;/li&gt;
+ *  &lt;/ul&gt;
+ */
+<span class="fc" id="L19">public class Prediction {</span>
+
+  /**
+   * Entry point of the program.
+   * 
+   * &lt;p&gt;This method initializes an array of government expenditures for various entities 
+   * from 2021 to 2026 and prompts the user for input to make predictions. 
+   * It demonstrates the use of the {@link #predict(double[], double[], double)} method 
+   * by asking the user for:
+   * &lt;ul&gt;
+   *     &lt;li&gt;a year to predict values for,&lt;/li&gt;
+   *     &lt;li&gt;a target value for the Republic Presidency to make a prediction.&lt;/li&gt;
+   * &lt;/ul&gt;
+   * The method reads user input using a {@link java.util.Scanner} and then calls 
+   * the {@code predict} method with the provided inputs.
+   *&lt;/p&gt;
+   *
+   *  @param args command-line arguments (not used)
+   * @see #predict(double[], double[], double)
+   */
+  public static void main(String[] args) {
+<span class="nc" id="L40">    double[][] dapanes = { // this an array with values</span>
+      // of main entities from 2021 up until 2026 without inflation 
+      {3766000, 4097337, 3811641, 4059900, 3974293, 4146883}, // republic presidency
+      {143500000, 134251607, 134030043, 140477275, 147343837, 156551972}, // hellenic parliament 
+      {34251000, 40536272, 36372937, 37886945, 35723136, 38447884}, // governance presidency
+      {2986769000L, 2973891093L, 3172953535L, 3245029336L, 3282162880L, 3487669947L}, // interior
+      {288237000, 246668455, 252308235, 357219091, 359936589, 404757288}, // exterior
+      {5495900000L, 5937190083L, 5103551488L, 5362408267L, 5252784805L, 5916035799L}, // defence
+      {4256596000L, 4276649036L, 4651583743L, 5278434922L, 6150311996L, 6568225405L}, // health
+      {533261000, 531100091, 506425467, 547747086, 557774970, 569191096}, // justice
+      {5605100000L, 5363728191L, 5436589608L, 5733987212L, 5660668349L, 5665485468L}, // education
+      {359100000, 383427915, 409992485, 350395832, 493075321, 546993897}, // sport
+      {747475497000L, 690153192000L, 669349030000L, 919467234000L,
+        1068139883000L, 1438513680000L} // finance
+    };
+<span class="nc" id="L55">    double[] years = {2021, 2022, 2023, 2024, 2025, 2026};</span>
+<span class="nc" id="L56">    Scanner sc = new Scanner(System.in);</span>
+        
+<span class="nc" id="L58">    System.out.println(&quot;Give me the year you want a prediction for!&quot;);</span>
+<span class="nc" id="L59">    int a = sc.nextInt();</span>
+<span class="nc" id="L60">    predict(years, dapanes[0], a);</span>
+<span class="nc" id="L61">    System.out.println(&quot;Give me the value you want the republic presidency to have!&quot;);</span>
+<span class="nc" id="L62">    double b = sc.nextDouble();</span>
+<span class="nc" id="L63">    predict(years, dapanes[0], b);</span>
+<span class="nc" id="L64">  }</span>
+
+  /**
+   * Performs a linear prediction using least squares regression.
+   * 
+   * &lt;p&gt;Calculates the linear equation y = a + b·x from the given data, prints the equation,
+   * predicts y for a target year, and estimates the time period corresponding to a given y-value.
+   *&lt;/p&gt;
+   *
+   * @param x array of independent values (e.g., years)
+   * @param y array of dependent values (e.g., expenditures)
+   * @param targetYear year to predict the value for
+   * @param desiredY target y-value to find the corresponding time period
+   */
+  public static void predict(double[] x, double[] y, int targetYear, double desiredY) {
+<span class="nc" id="L79">    int n = x.length;</span>
+
+    // Finding a and b
+<span class="nc" id="L82">    double sumX = 0;</span>
+<span class="nc" id="L83">    double sumY = 0;</span>
+<span class="nc" id="L84">    double sumXy = 0;</span>
+<span class="nc" id="L85">    double sumX2 = 0;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">    for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L87">      sumX += x[i];</span>
+<span class="nc" id="L88">      sumY += y[i];</span>
+<span class="nc" id="L89">      sumXy += x[i] * y[i];</span>
+<span class="nc" id="L90">      sumX2 += x[i] * x[i];</span>
+    }
+
+<span class="nc" id="L93">    double b = (n * sumXy - sumX * sumY) / (n * sumX2 - sumX * sumX);</span>
+<span class="nc" id="L94">    double a = (sumY - b * sumX) / n;</span>
+
+<span class="nc" id="L96">    System.out.printf(&quot;The equation used for the prediction is&quot;</span>
+<span class="nc" id="L97">        + &quot;: y = %.4f + %.4f·x\n&quot;, a, b);</span>
+
+    // Prediction for the year marked as targeted
+<span class="nc" id="L100">    double predictedY = Math.floor(a + b * targetYear);</span>
+<span class="nc" id="L101">    System.out.println(&quot;Prediction for the year &quot; + targetYear);</span>
+<span class="nc" id="L102">    System.out.printf(&quot;%,.0f euro%n&quot;, predictedY);</span>
+    // Find x for given y
+<span class="nc" id="L104">    double estimatedX = (desiredY - a) / b;</span>
+
+    // Transform in year + month
+<span class="nc" id="L107">    int yearPart = (int) estimatedX;</span>
+<span class="nc" id="L108">    double decimalPart = estimatedX - yearPart;</span>
+<span class="nc" id="L109">    int monthPart = (int) Math.round(decimalPart * 12);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">    if (monthPart == 0) {</span>
+<span class="nc" id="L111">      monthPart = 1;</span>
+    }
+<span class="nc bnc" id="L113" title="All 2 branches missed.">    if (monthPart &gt; 12) {</span>
+<span class="nc" id="L114">      monthPart = 12;</span>
+    }
+
+<span class="nc" id="L117">    System.out.printf(&quot;For the given value&quot;</span>
+        + &quot;, the corresponding time period in (MM/YYYY form) is:&quot; 
+        + &quot;  &quot; + monthPart + &quot;/&quot; + yearPart);
+<span class="nc" id="L120">  }</span>
+  
+  /**
+   * Estimates the independent variable corresponding to a given dependent value
+   * using linear regression (least squares method) and prints it in month/year format.
+   * Calculates the linear equation y = a + b·x from the provided data arrays,
+   * prints the equation, and computes the x-value corresponding to {@code desiredY}.
+   * 
+   * @param x array of independent values (e.g., years)
+   * @param y array of dependent values (e.g., expenditures)
+   * @param desiredY the y-value for which the corresponding time period is estimated
+   */
+  public static void predict(double[] x, double[] y, double desiredY) {
+<span class="nc" id="L133">    int n = x.length;</span>
+
+    // Find a and b through minimum squares formula
+<span class="nc" id="L136">    double sumX = 0;</span>
+<span class="nc" id="L137">    double sumY = 0;</span>
+<span class="nc" id="L138">    double sumXy = 0;</span>
+<span class="nc" id="L139">    double sumX2 = 0;</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">    for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L141">      sumX += x[i];</span>
+<span class="nc" id="L142">      sumY += y[i];</span>
+<span class="nc" id="L143">      sumXy += x[i] * y[i];</span>
+<span class="nc" id="L144">      sumX2 += x[i] * x[i];</span>
+    }
+
+<span class="nc" id="L147">    double b = (n * sumXy - sumX * sumY) / (n * sumX2 - sumX * sumX);</span>
+<span class="nc" id="L148">    double a = (sumY - b * sumX) / n;</span>
+
+<span class="nc" id="L150">    System.out.printf(&quot;The equation used is: y = %.4f + %.4f·x\n&quot;, a, b);</span>
+
+    // Find x for given y
+<span class="nc" id="L153">    double estimatedX = (desiredY - a) / b;</span>
+
+    // Transform in year + month
+<span class="nc" id="L156">    int yearPart = (int) estimatedX;</span>
+<span class="nc" id="L157">    double decimalPart = estimatedX - yearPart;</span>
+<span class="nc" id="L158">    int monthPart = (int) Math.round(decimalPart * 12);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">    if (monthPart == 0) {</span>
+<span class="nc" id="L160">      monthPart = 1;</span>
+    }
+<span class="nc bnc" id="L162" title="All 2 branches missed.">    if (monthPart &gt; 12) {</span>
+<span class="nc" id="L163">      monthPart = 12;</span>
+    }
+
+<span class="nc" id="L166">    System.out.printf(&quot;For y = %.4f, the corresponding time period&quot;</span>
+<span class="nc" id="L167">        + &quot; (in MM/YYYY form) is: %d/%d\n&quot;, desiredY, monthPart, yearPart);</span>
+<span class="nc" id="L168">  }</span>
+  /**
+   * Predicts the dependent value for a given target year using linear regression.
+   * Calculates the linear equation y = a + b·x from the provided data arrays,
+   * prints the equation, and predicts the y-value for the specified target year.
+   *
+   * @param x array of independent values (e.g., years)
+   * @param y array of dependent values (e.g., expenditures)
+   * @param targetYear the year for which the prediction is made
+   */
+
+  public static void predict(double[] x, double[] y, int targetYear) {
+<span class="nc" id="L180">    int n = x.length;</span>
+
+    // Find a and b through minimum squares formula
+<span class="nc" id="L183">    double sumX = 0;</span>
+<span class="nc" id="L184">    double sumY = 0;</span>
+<span class="nc" id="L185">    double sumXy = 0;</span>
+<span class="nc" id="L186">    double sumX2 = 0;</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">    for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L188">      sumX += x[i];</span>
+<span class="nc" id="L189">      sumY += y[i];</span>
+<span class="nc" id="L190">      sumXy += x[i] * y[i];</span>
+<span class="nc" id="L191">      sumX2 += x[i] * x[i];</span>
+    }
+
+<span class="nc" id="L194">    double b = (n * sumXy - sumX * sumY) / (n * sumX2 - sumX * sumX);</span>
+<span class="nc" id="L195">    double a = (sumY - b * sumX) / n;</span>
+
+<span class="nc" id="L197">    System.out.printf(&quot;The used equation is: y = %.4f + %.4f·x\n&quot;, a, b);</span>
+
+    // Predict for the year marked as targeted
+<span class="nc" id="L200">    double predictedY = Math.floor(a + b * targetYear);</span>
+        
+<span class="nc" id="L202">    System.out.println(&quot;Prediction for the year: &quot; + targetYear);</span>
+<span class="nc" id="L203">    System.out.printf(&quot;%,.0f euro%n&quot;, predictedY);</span>
+<span class="nc" id="L204">  }</span>
+    
+  /**
+   * Calculates the predicted financial value for a specific future year.
+   *
+   *  &lt;p&gt;This method uses the &lt;b&gt;Least Squares Linear Regression&lt;/b&gt; algorithm 
+   * ($y = a + bx$) to find the trend line of the provided historical data.
+   * &lt;/p&gt;
+   * 
+   * @param x          An array of historical years (independent variable).
+   * @param y          An array of historical financial values (dependent variable).
+   * @param targetYear The year for which the prediction is requested.
+   * @return The predicted amount for the target year, rounded down to the nearest integer.
+   */
+  
+  public static double getValueForGivenYear(double[] x, double[] y, int targetYear) {
+<span class="fc" id="L220">    int n = x.length;</span>
+
+    // Find a and b through minimum squares formula
+<span class="fc" id="L223">    double sumX = 0;</span>
+<span class="fc" id="L224">    double sumY = 0;</span>
+<span class="fc" id="L225">    double sumXy = 0;</span>
+<span class="fc" id="L226">    double sumX2 = 0;</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">    for (int i = 0; i &lt; n; i++) {</span>
+<span class="fc" id="L228">      sumX += x[i];</span>
+<span class="fc" id="L229">      sumY += y[i];</span>
+<span class="fc" id="L230">      sumXy += x[i] * y[i];</span>
+<span class="fc" id="L231">      sumX2 += x[i] * x[i];</span>
+    }
+
+<span class="fc" id="L234">    double b = (n * sumXy - sumX * sumY) / (n * sumX2 - sumX * sumX);</span>
+<span class="fc" id="L235">    double a = (sumY - b * sumX) / n;</span>
+    // Predict for the year marked as targeted
+<span class="fc" id="L237">    double predictedY = Math.floor(a + b * targetYear);</span>
+<span class="fc" id="L238">    return predictedY;</span>
+  }
+    
+  /**
+   * Estimates the exact time (Month and Year) when a specific financial target 
+   * will be reached.
+   *
+   *  &lt;p&gt;The method normalizes the year data to increase calculation accuracy and 
+   * then solves the linear regression equation for $x$ given a value $y$.
+   * &lt;/p&gt;
+   * 
+   * @param x        An array of historical years.
+   * @param y        An array of historical financial values.
+   * @param desiredY The target financial value (budget amount) to reach.
+   * @return A string representation of the estimated date in &lt;b&gt;MM/YYYY&lt;/b&gt; format.
+   */
+  public static String getYearandMonthforGivenValue(double[] x, double[] y, double desiredY) {
+<span class="nc" id="L255">    int n = x.length;</span>
+
+    // normalize years to start from 0 (2021 -&gt; 0, 2022 -&gt; 1, ...)
+<span class="nc" id="L258">    double[] relX = new double[n];</span>
+<span class="nc" id="L259">    double base = x[0];</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">    for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L261">      relX[i] = x[i] - base;</span>
+    }
+
+    // least squares
+<span class="nc" id="L265">    double sumX = 0;</span>
+<span class="nc" id="L266">    double sumY = 0;</span>
+<span class="nc" id="L267">    double sumXy = 0;</span>
+<span class="nc" id="L268">    double sumX2 = 0;</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">    for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L270">      sumX += relX[i];</span>
+<span class="nc" id="L271">      sumY += y[i];</span>
+<span class="nc" id="L272">      sumXy += relX[i] * y[i];</span>
+<span class="nc" id="L273">      sumX2 += relX[i] * relX[i];</span>
+    }
+
+<span class="nc" id="L276">    double b = (n * sumXy - sumX * sumY) / (n * sumX2 - sumX * sumX);</span>
+<span class="nc" id="L277">    double a = (sumY - b * sumX) / n;</span>
+
+    // estimate relative year (starting from 0)
+<span class="nc" id="L280">    double estimatedRelX = (desiredY - a) / b;</span>
+
+    // convert back to actual year
+<span class="nc" id="L283">    double estimatedX = base + estimatedRelX;</span>
+
+    // transform decimal part into month
+<span class="nc" id="L286">    int yearPart = (int) estimatedX;</span>
+<span class="nc" id="L287">    double decimalPart = estimatedX - yearPart;</span>
+<span class="nc" id="L288">    int monthPart = (int) Math.round(decimalPart * 12);</span>
+<span class="nc bnc" id="L289" title="All 2 branches missed.">    if (monthPart == 0) {</span>
+<span class="nc" id="L290">      monthPart = 1;</span>
+    }
+<span class="nc bnc" id="L292" title="All 2 branches missed.">    if (monthPart &gt; 12) {</span>
+<span class="nc" id="L293">      monthPart = 12;</span>
+    }
+
+<span class="nc" id="L296">    return monthPart + &quot;/&quot; + yearPart;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

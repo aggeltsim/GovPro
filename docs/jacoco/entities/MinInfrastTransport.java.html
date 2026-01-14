@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MinInfrastTransport.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">entities</a> &gt; <span class="el_source">MinInfrastTransport.java</span></div><h1>MinInfrastTransport.java</h1><pre class="source lang-java linenums">package entities;
+
+import java.math.BigDecimal;
+
+public class MinInfrastTransport extends Entity {
+
+    public MinInfrastTransport(String code, String name, BigDecimal amount, String form) {
+<span class="fc" id="L8">        super(code, name, amount, form);</span>
+<span class="fc" id="L9">    }</span>
+
+    @Override
+    public String toExplain() {
+<span class="fc" id="L13">        return &quot;The &quot; + getName() + &quot; is the Greek government department&quot;</span>
+        + &quot; responsible for building and maintaining the country's&quot;
+        + &quot; infrastructure and transport systems. It plans and oversees&quot;
+        + &quot; roads, bridges, railways, ports, and airports, and sets rules&quot;
+        + &quot; for public transport and traffic safety. It also works to&quot;
+        + &quot; improve mobility and connectivity for people and businesses.&quot;
+        + &quot; In simple terms, it is the part of the government that makes&quot;
+        + &quot; sure people and goods can move safely and efficiently across the country.&quot;;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

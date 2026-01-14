@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GovProGui.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">GovProGui.java</span></div><h1>GovProGui.java</h1><pre class="source lang-java linenums">import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
+/**
+ * The {@code GovProGui} class represents the OLDER graphical user interface
+ * of the GovPro Budget System.
+ *
+ * &lt;p&gt;The application only allows users to:
+ * &lt;ul&gt;
+ *   &lt;li&gt;Read the 2025 State Budget&lt;/li&gt;
+ *   &lt;li&gt;Amend budget values&lt;/li&gt;
+ *   &lt;li&gt;Launch the prediction subsystem&lt;/li&gt;
+ *   &lt;li&gt;View budget statistics for selected years&lt;/li&gt;
+ * &lt;/ul&gt;
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;The interface is implemented using Java Swing and follows
+ * event-driven programming principles.
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;Budget data is stored in-memory and processed using {@link BigDecimal}
+ * for financial accuracy.
+ * &lt;/p&gt;
+ * 
+ * @version 1.0
+ */
+<span class="nc" id="L45">public class GovProGui {</span>
+
+  /**
+   * Entry point of the GovPro application.
+   *
+   * &lt;p&gt;Launches the GUI on the Event Dispatch Thread (EDT)
+   * to ensure thread-safe Swing operations.
+   * &lt;/p&gt;
+   *
+   * @param args command-line arguments (not used)
+   */
+  public static void main(String[] args) {
+<span class="nc" id="L57">    SwingUtilities.invokeLater(GovProGui::createAndShowGui);</span>
+<span class="nc" id="L58">  }</span>
+
+  /**
+   * Creates and displays the main GovPro application window.
+   *
+   * &lt;p&gt;Initializes all UI components, layouts, and action listeners
+   * for the main menu.
+   * &lt;/p&gt;
+   */
+  private static void createAndShowGui() {
+<span class="nc" id="L68">    JFrame frame = new JFrame(&quot;GovPro Budget System&quot;);</span>
+<span class="nc" id="L69">    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L70">    frame.setSize(600, 500);</span>
+<span class="nc" id="L71">    frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));</span>
+
+<span class="nc" id="L73">    JLabel mainLabel = new JLabel(&quot;What do you want GovPro to do?&quot;);</span>
+<span class="nc" id="L74">    mainLabel.setAlignmentX(Component.CENTER_ALIGNMENT);</span>
+<span class="nc" id="L75">    frame.add(mainLabel);</span>
+
+<span class="nc" id="L77">    String[] options1 = {</span>
+        &quot;1. Reading of the 2025 State Budget&quot;,
+        &quot;2. Amendment of the 2025 State Budget&quot;,
+        &quot;3. Prediction of an account&quot;,
+        &quot;4. Budget Statistics for years 2022, 2023, 2024.&quot;
+    };
+
+    /*
+     * ComboBox containing the main application options.
+     *
+     * Each option corresponds to a specific budget-related operation.
+     * 
+     */
+<span class="nc" id="L90">    JComboBox&lt;String&gt; mainMenu = new JComboBox&lt;&gt;(options1);</span>
+<span class="nc" id="L91">    mainMenu.setMaximumSize(new Dimension(400, 30));</span>
+<span class="nc" id="L92">    frame.add(mainMenu);</span>
+
+<span class="nc" id="L94">    JButton nextButton = new JButton(&quot;Next&quot;);</span>
+<span class="nc" id="L95">    nextButton.setAlignmentX(Component.CENTER_ALIGNMENT);</span>
+<span class="nc" id="L96">    frame.add(nextButton);</span>
+
+    /*
+     * Text area used to display formatted budget data,
+     * confirmations, and system messages.
+     */
+<span class="nc" id="L102">    JTextArea outputArea = new JTextArea(10, 50);</span>
+<span class="nc" id="L103">    outputArea.setEditable(false);</span>
+<span class="nc" id="L104">    frame.add(new JScrollPane(outputArea));</span>
+
+<span class="nc" id="L106">    JPanel statsPanel = new JPanel();</span>
+<span class="nc" id="L107">    statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));</span>
+<span class="nc" id="L108">    statsPanel.setVisible(false); </span>
+
+<span class="nc" id="L110">    nextButton.addActionListener(e -&gt; {</span>
+<span class="nc" id="L111">      int choice = mainMenu.getSelectedIndex() + 1;</span>
+
+<span class="nc bnc" id="L113" title="All 5 branches missed.">      switch (choice) {</span>
+      /*
+       * Displays the 2025 State Budget in a formatted tabular layout.
+       *
+       * 
+       * Uses a monospaced font to ensure column alignment
+       * and {@link java.text.NumberFormat} for currency formatting.
+       *
+       */
+        case 1 -&gt; {
+<span class="nc" id="L123">          outputArea.setFont(new Font(&quot;Monospaced&quot;, Font.PLAIN, 13));</span>
+    
+<span class="nc" id="L125">          StringBuilder sb = new StringBuilder();</span>
+
+          // Definition of &quot;mold&quot; for lines:
+          // %-6s  -&gt; Code (6 characters, left aligned)
+          // %-55s -&gt; Name (55 characters, left aligned)
+          // %20s  -&gt; Amount (20 characters, right aligned)
+<span class="nc" id="L131">          String headerFormat = &quot;%-6s | %-55s | %20s%n&quot;;</span>
+<span class="nc" id="L132">          String divider      = &quot;=&quot;.repeat(87) + &quot;\n&quot;;</span>
+
+<span class="nc" id="L134">          sb.append(divider);</span>
+<span class="nc" id="L135">          sb.append(String.format(headerFormat, &quot;CODE&quot;, &quot;ACCOUNT DESCRIPTION&quot;, &quot;AMOUNT (€)&quot;));</span>
+<span class="nc" id="L136">          sb.append(divider);</span>
+          // Formatter for thousands with comma and 2 decimal places (eg 1.234.567,00)
+<span class="nc" id="L138">          java.text.NumberFormat nf = java.text.NumberFormat.getInstance(java.util.Locale.GERMANY);</span>
+
+<span class="nc bnc" id="L140" title="All 2 branches missed.">          for (int i = 1; i &lt; data.length; i++) {</span>
+<span class="nc" id="L141">            String code = (String) data[i][0];</span>
+<span class="nc" id="L142">            String name = (String) data[i][1];</span>
+<span class="nc" id="L143">            java.math.BigDecimal amount = (java.math.BigDecimal) data[i][2];</span>
+
+            // Format the amount
+<span class="nc" id="L146">            String formattedAmount = nf.format(amount);</span>
+
+<span class="nc" id="L148">            String subDivider   = &quot;-&quot;.repeat(87) + &quot;\n&quot;;</span>
+
+            // Add intertitles so we know what we're watching
+<span class="nc bnc" id="L151" title="All 2 branches missed.">            if (code.equals(&quot;21&quot;)) {</span>
+<span class="nc" id="L152">              sb.append(&quot;\n&quot;).append(divider).append(&quot;   EXPENSES\n&quot;).append(divider);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">            } else if (code.equals(&quot;1001&quot;)) {</span>
+<span class="nc" id="L154">              sb.append(&quot;\n&quot;).append(divider).append(&quot;   ENTITIES / MINISTRIES\n&quot;).append(divider);</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">            } else if (i == 1) {</span>
+<span class="nc" id="L156">              sb.append(&quot;   INCOMES\n&quot;).append(subDivider);</span>
+            }
+
+            // If the name is too long, we cut it so that the column is not broken.
+<span class="nc bnc" id="L160" title="All 2 branches missed.">            if (name.length() &gt; 52) {</span>
+<span class="nc" id="L161">              name = name.substring(0, 52) + &quot;...&quot;;</span>
+            }
+<span class="nc" id="L163">            String lineFormat   = &quot;%-6s | %-55s | %20s%n&quot;;</span>
+
+<span class="nc" id="L165">            sb.append(String.format(lineFormat, code, name, formattedAmount));</span>
+          }
+
+<span class="nc" id="L168">          outputArea.setText(sb.toString());</span>
+<span class="nc" id="L169">          outputArea.setCaretPosition(0); // Back to top</span>
+<span class="nc" id="L170">        }</span>
+        /*
+         * Opens a dialog allowing the user to amend a selected
+         * budget account value.
+         *
+         * Updates the underlying data table and displays
+         * confirmation results.
+         * 
+         *
+         * throws NumberFormatException if input is not a valid number
+         */
+        case 2 -&gt; {
+          // 1. Create a Panel for the dialog box
+<span class="nc" id="L183">          JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5));</span>
+          
+          // Dropdown for the user to choose the code (we get the codes from data[][])
+<span class="nc" id="L186">          String[] codes = new String[data.length - 1];</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">          for (int i = 1; i &lt; data.length; i++) {</span>
+<span class="nc" id="L188">            codes[i - 1] = (String) data[i][0] + &quot; - &quot; + data[i][1];</span>
+          }
+<span class="nc" id="L190">          JComboBox&lt;String&gt; codeCombo = new JComboBox&lt;&gt;(codes);</span>
+    
+<span class="nc" id="L192">          JTextField newValueField = new JTextField();</span>
+    
+<span class="nc" id="L194">          panel.add(new JLabel(&quot;Choose an account to ammend:&quot;));</span>
+<span class="nc" id="L195">          panel.add(codeCombo);</span>
+<span class="nc" id="L196">          panel.add(new JLabel(&quot;New amount:&quot;));</span>
+<span class="nc" id="L197">          panel.add(newValueField);</span>
+
+          // 2. Show the dialog
+<span class="nc" id="L200">          int result = JOptionPane.showConfirmDialog(frame, panel, </span>
+              &quot;Τροποποίηση Προϋπολογισμού&quot;, 
+              JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            
+<span class="nc bnc" id="L204" title="All 2 branches missed.">          if (result == JOptionPane.OK_OPTION) {</span>
+            try {
+<span class="nc" id="L206">              int selectedIndex = codeCombo.getSelectedIndex() + 1; // +1 because </span>
+              // data[0] is the header
+<span class="nc" id="L208">              String input = newValueField.getText().replace(&quot;,&quot;, &quot;.&quot;); // Convert,</span>
+              //  to . for BigDecimal
+<span class="nc" id="L210">              java.math.BigDecimal newVal = new java.math.BigDecimal(input);</span>
+
+              // 3. Update the data table
+<span class="nc" id="L213">              data[selectedIndex][2] = newVal;</span>
+
+<span class="nc" id="L215">              java.math.BigDecimal oldVal = (java.math.BigDecimal) data[selectedIndex][2];</span>
+              // 4. Update Output Area for confirmation
+<span class="nc" id="L217">              outputArea.setFont(new Font(&quot;Consolas&quot;, Font.PLAIN, 13));</span>
+<span class="nc" id="L218">              outputArea.setText(&quot; Change registered successfully!\n&quot;);</span>
+<span class="nc" id="L219">              outputArea.append(&quot;──────────────────────────────────────────────────\n&quot;);</span>
+<span class="nc" id="L220">              outputArea.append(String.format(&quot;Account: %s\n&quot;, data[selectedIndex][1]));</span>
+<span class="nc" id="L221">              outputArea.append(String.format(&quot;Old Value:  %,.2f €\n&quot;, oldVal));</span>
+<span class="nc" id="L222">              outputArea.append(String.format(&quot;New Value:    %,.2f €\n&quot;, newVal));</span>
+<span class="nc" id="L223">              outputArea.append(&quot;──────────────────────────────────────────────────\n&quot;);</span>
+<span class="nc" id="L224">              outputArea.append(&quot; Choose '1.Reading' to see the new budget table.&quot;);</span>
+
+<span class="nc" id="L226">            } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L227">              JOptionPane.showMessageDialog(frame, &quot;Error: Please give a valid number.&quot;, </span>
+                    &quot;Input Error&quot;, JOptionPane.ERROR_MESSAGE);
+<span class="nc" id="L229">            }</span>
+          }
+<span class="nc" id="L231">        }</span>
+        /*
+         * Launches the prediction graphical interface.
+         *
+         * Delegates prediction functionality to {@link PredictionGUI}.
+         * 
+         */
+        case 3 -&gt; {
+          // Prediction GUI
+<span class="nc" id="L240">          PredictionGui.createAndShowPredGui();</span>
+<span class="nc" id="L241">        }</span>
+
+        /*
+         * Displays budget statistics for selected years.
+         *
+         * Allows users to:
+         * Select a year,
+         * View income statistics,
+         * View expense statistics
+         * 
+         */
+        case 4 -&gt; {
+          // Statistics GUI
+<span class="nc" id="L254">          JFrame statsframe = new JFrame(&quot;Budget Statistics Reviewer&quot;);</span>
+<span class="nc" id="L255">          statsframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);</span>
+<span class="nc" id="L256">          statsframe.setSize(650, 500);</span>
+<span class="nc" id="L257">          statsframe.setLayout(new BorderLayout());</span>
+
+          // Options panel
+<span class="nc" id="L260">          JPanel panel = new JPanel();</span>
+<span class="nc" id="L261">          panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));</span>
+<span class="nc" id="L262">          panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));</span>
+
+<span class="nc" id="L264">          JLabel title = new JLabel(&quot;Government Budget Statistics&quot;);</span>
+<span class="nc" id="L265">          title.setAlignmentX(Component.CENTER_ALIGNMENT);</span>
+<span class="nc" id="L266">          title.setFont(new Font(&quot;Arial&quot;, Font.BOLD, 18));</span>
+<span class="nc" id="L267">          panel.add(title);</span>
+<span class="nc" id="L268">          panel.add(Box.createRigidArea(new Dimension(0, 15)));</span>
+
+          // Row: Year Buttons
+<span class="nc" id="L271">          JPanel yearPanel = new JPanel();</span>
+<span class="nc" id="L272">          JButton y2022 = new JButton(&quot;2022&quot;);</span>
+<span class="nc" id="L273">          JButton y2023 = new JButton(&quot;2023&quot;);</span>
+<span class="nc" id="L274">          JButton y2024 = new JButton(&quot;2024&quot;);</span>
+<span class="nc" id="L275">          yearPanel.add(y2022);</span>
+<span class="nc" id="L276">          yearPanel.add(y2023);</span>
+<span class="nc" id="L277">          yearPanel.add(y2024);</span>
+<span class="nc" id="L278">          panel.add(yearPanel);</span>
+
+          // Row: Income/Expense Buttons
+<span class="nc" id="L281">          JPanel typePanel = new JPanel();</span>
+<span class="nc" id="L282">          JButton incButton = new JButton(&quot;Show Incomes&quot;);</span>
+<span class="nc" id="L283">          JButton expButton = new JButton(&quot;Show Expenses&quot;);</span>
+<span class="nc" id="L284">          JButton clearButton = new JButton(&quot;Clear Output&quot;);</span>
+<span class="nc" id="L285">          typePanel.add(incButton);</span>
+<span class="nc" id="L286">          typePanel.add(expButton);</span>
+<span class="nc" id="L287">          typePanel.add(clearButton);</span>
+<span class="nc" id="L288">          panel.add(typePanel);</span>
+
+<span class="nc" id="L290">          statsframe.add(panel, BorderLayout.NORTH);</span>
+
+          // ----------- TEXT AREA -------------
+<span class="nc" id="L293">          JTextArea output = new JTextArea(15, 50);</span>
+<span class="nc" id="L294">          output.setEditable(false);</span>
+<span class="nc" id="L295">          output.setFont(new Font(&quot;Consolas&quot;, Font.PLAIN, 14));</span>
+<span class="nc" id="L296">          JScrollPane scroll = new JScrollPane(output);</span>
+<span class="nc" id="L297">          statsframe.add(scroll, BorderLayout.CENTER);</span>
+
+          // ----------- STATE VARIABLES ---------
+<span class="nc" id="L300">          final int[] selectedYear = {2022};</span>
+
+          // ----------- BUTTON ACTIONS -----------
+
+          // Year selection
+<span class="nc" id="L305">          y2022.addActionListener(ev -&gt; {</span>
+<span class="nc" id="L306">            selectedYear[0] = 2022;</span>
+<span class="nc" id="L307">            output.append(&quot;Selected year: 2022\n&quot;);</span>
+<span class="nc" id="L308">          });</span>
+<span class="nc" id="L309">          y2023.addActionListener(ev -&gt; {</span>
+<span class="nc" id="L310">            selectedYear[0] = 2023;</span>
+<span class="nc" id="L311">            output.append(&quot;Selected year: 2023\n&quot;);</span>
+<span class="nc" id="L312">          });</span>
+<span class="nc" id="L313">          y2024.addActionListener(ev -&gt; {</span>
+<span class="nc" id="L314">            selectedYear[0] = 2024;</span>
+<span class="nc" id="L315">            output.append(&quot;Selected year: 2024\n&quot;);</span>
+<span class="nc" id="L316">          });</span>
+
+          // Show Incomes
+<span class="nc" id="L319">          incButton.addActionListener(ev -&gt; {</span>
+<span class="nc" id="L320">            displayBudget(selectedYear[0], BudgetDataManager.BudgetType.INCOME, output);</span>
+<span class="nc" id="L321">          });</span>
+
+          // Show Expenses
+<span class="nc" id="L324">          expButton.addActionListener(ev -&gt; {</span>
+<span class="nc" id="L325">            displayBudget(selectedYear[0], BudgetDataManager.BudgetType.EXPENSE, output);</span>
+<span class="nc" id="L326">          });</span>
+
+          // Show window
+<span class="nc" id="L329">          statsframe.setLocationRelativeTo(null);</span>
+<span class="nc" id="L330">          statsframe.setVisible(true);</span>
+
+          // Clear output
+<span class="nc" id="L333">          clearButton.addActionListener(ev -&gt; output.setText(&quot;&quot;));</span>
+
+        
+<span class="nc" id="L336">        }</span>
+        default -&gt; 
+<span class="nc" id="L338">            System.out.println(&quot;No action corresponds here&quot;);</span>
+      }
+<span class="nc" id="L340">    });</span>
+<span class="nc" id="L341">    frame.setLocationRelativeTo(null); </span>
+<span class="nc" id="L342">    frame.setVisible(true);</span>
+<span class="nc" id="L343">  }</span>
+  /*
+   * Category labels for income statistics.
+   */
+
+<span class="nc" id="L348">  private static final String[] incomeCategories = { &quot;Taxes&quot;, &quot;Social Contributions&quot;, &quot;Transfers&quot;, </span>
+    &quot;Sales of goods and services&quot;, &quot;Other Current Income&quot;, &quot;Fixed Assets&quot;,
+    &quot;Debt Securities&quot;, &quot;Equity securities and investment fund shares&quot;,
+    &quot;Currency Liabilities and deposits&quot;, &quot;Debt Securities (Liabilities)&quot;, 
+    &quot;Loans&quot;, &quot;Financial Derivatives&quot;};
+  /*
+   * Category labels for expense statistics.
+   */
+
+<span class="nc" id="L357">  private static final String[] expenseCategories = { &quot;Employee Benefits&quot;, &quot;Social Benefits&quot;,</span>
+    &quot;Transfers&quot;, &quot;Purchases of goods and services&quot;, &quot;Subsidies&quot;, &quot;Interest&quot;, &quot;Other expenses&quot;,
+    &quot;Credits under distribution&quot;, &quot;Fixed Assets&quot;, &quot;Valuables&quot;, &quot;Loans&quot;,
+    &quot;Equity securities and investments fund shares&quot;, &quot;Debt Securities (Liabilities)&quot;, 
+    &quot;Loans&quot;, &quot;Financial Derivatives&quot;};
+
+  /**
+   * Displays budget statistics for a given year and type.
+   *
+   * @param year   the selected budget year
+   * @param type   the budget type (income or expense)
+   * @param output the text area where results are displayed
+   */ 
+  // ----------- DISPLAY FUNCTION ----------
+  private static void displayBudget(
+        int year, BudgetDataManager.BudgetType type, JTextArea output) {
+<span class="nc" id="L373">    BigDecimal[] data = BudgetDataManager.getBudgetData(year, type);</span>
+<span class="nc bnc" id="L374" title="All 2 branches missed.">    if (data == null) {</span>
+<span class="nc" id="L375">      output.append(&quot;No data for year &quot; + year + &quot;\n&quot;);</span>
+<span class="nc" id="L376">      return;</span>
+    }
+
+<span class="nc" id="L379">    output.append(&quot;\n--- &quot; + year </span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">        + &quot; &quot; + (type == BudgetDataManager.BudgetType.INCOME ? &quot;INCOMES&quot; : &quot;EXPENSES&quot;) + &quot; ---\n&quot;);</span>
+
+<span class="nc bnc" id="L382" title="All 2 branches missed.">    String[] categories = (type == BudgetDataManager.BudgetType.INCOME) </span>
+<span class="nc" id="L383">        ? incomeCategories : expenseCategories;</span>
+
+<span class="nc bnc" id="L385" title="All 2 branches missed.">    for (int i = 0; i &lt; data.length; i++) {</span>
+<span class="nc bnc" id="L386" title="All 2 branches missed.">      if (data[i] != null) {</span>
+<span class="nc bnc" id="L387" title="All 2 branches missed.">        String name = (i &lt; categories.length) ? categories[i] : &quot;Category &quot; + (i + 1);</span>
+<span class="nc" id="L388">        output.append(name + &quot;: &quot; + formatPercent(data[i]) + &quot;%\n&quot;);</span>
+      }
+    }
+
+<span class="nc" id="L392">    output.append(&quot;\n&quot;);</span>
+<span class="nc" id="L393">  }</span>
+
+  /**
+   * Converts a decimal value to a formatted percentage string.
+   *
+   * @param val the decimal value to format
+   * @return percentage string with four decimal places
+   */
+  private static String formatPercent(BigDecimal val) {
+<span class="nc" id="L402">    BigDecimal percent = val.multiply(new BigDecimal(&quot;100&quot;));</span>
+<span class="nc" id="L403">    return percent.setScale(4, RoundingMode.HALF_UP).toString();</span>
+  }
+
+  /**
+   * Displays a simple prediction dialog window.
+   *
+   * &lt;p&gt;This method serves as an auxiliary or legacy prediction UI
+   * and demonstrates basic user input handling.
+   * &lt;/p&gt;
+   *
+   * @param outputArea the text area used for output messages
+   */
+  private static void predictionGui(JTextArea outputArea) {
+<span class="nc" id="L416">    JFrame predFrame = new JFrame(&quot;Prediction&quot;);</span>
+<span class="nc" id="L417">    predFrame.setSize(500, 400);</span>
+<span class="nc" id="L418">    predFrame.setLayout(new BoxLayout(predFrame.getContentPane(), BoxLayout.Y_AXIS));</span>
+
+<span class="nc" id="L420">    JLabel label = new JLabel(&quot;Choose account for prediction:&quot;);</span>
+<span class="nc" id="L421">    predFrame.add(label);</span>
+
+<span class="nc" id="L423">    String[] accounts = {</span>
+      &quot;Republic Presidency&quot;, &quot;Hellenic Parliament&quot;, &quot;Governmental Presidency&quot;,
+      &quot;Ministry of Interior&quot;, &quot;Ministry of Exterior&quot;, &quot;Ministry of Health&quot;,
+      &quot;Ministry of Justice&quot;, &quot;Ministry of Education&quot;, &quot;Ministry of Sport&quot;,
+      &quot;Ministry of Finance&quot;
+    };
+<span class="nc" id="L429">    JComboBox&lt;String&gt; accountBox = new JComboBox&lt;&gt;(accounts);</span>
+<span class="nc" id="L430">    accountBox.setMaximumSize(new Dimension(400, 30));</span>
+<span class="nc" id="L431">    predFrame.add(accountBox);</span>
+
+<span class="nc" id="L433">    JLabel choiceLabel = new JLabel(&quot;1. Predict by Year  2. Predict by Value&quot;);</span>
+<span class="nc" id="L434">    predFrame.add(choiceLabel);</span>
+
+<span class="nc" id="L436">    JTextField choiceField = new JTextField();</span>
+<span class="nc" id="L437">    choiceField.setMaximumSize(new Dimension(200, 30));</span>
+<span class="nc" id="L438">    predFrame.add(choiceField);</span>
+
+<span class="nc" id="L440">    JLabel inputLabel = new JLabel(&quot;Enter the year or value:&quot;);</span>
+<span class="nc" id="L441">    predFrame.add(inputLabel);</span>
+
+<span class="nc" id="L443">    JTextField inputField = new JTextField();</span>
+<span class="nc" id="L444">    inputField.setMaximumSize(new Dimension(200, 30));</span>
+<span class="nc" id="L445">    predFrame.add(inputField);</span>
+
+<span class="nc" id="L447">    JButton predictButton = new JButton(&quot;Predict&quot;);</span>
+<span class="nc" id="L448">    predFrame.add(predictButton);</span>
+
+<span class="nc" id="L450">    predictButton.addActionListener(e -&gt; {</span>
+      try {
+<span class="nc" id="L452">        int choice = Integer.parseInt(choiceField.getText());</span>
+<span class="nc" id="L453">        double inputVal = Double.parseDouble(inputField.getText());</span>
+        // TODO: call your Prediction class method
+<span class="nc" id="L455">        outputArea.append(&quot;Prediction result for account &quot; </span>
+<span class="nc" id="L456">            + (accountBox.getSelectedIndex() + 1) + &quot;: &quot; + inputVal + &quot;\n&quot;);</span>
+<span class="nc" id="L457">        JOptionPane.showMessageDialog(predFrame, &quot;Prediction completed!&quot;);</span>
+<span class="nc" id="L458">      } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L459">        JOptionPane.showMessageDialog(predFrame, &quot;Please enter valid numbers!&quot;);</span>
+<span class="nc" id="L460">      }</span>
+<span class="nc" id="L461">    });</span>
+
+<span class="nc" id="L463">    predFrame.setVisible(true);</span>
+<span class="nc" id="L464">  }</span>
+
+  /**
+   * In-memory representation of the state budget data.
+   *
+   * &lt;p&gt;Each row contains:
+   * &lt;ul&gt;
+   *   &lt;li&gt;Budget code&lt;/li&gt;
+   *   &lt;li&gt;Account name&lt;/li&gt;
+   *   &lt;li&gt;Financial amount as {@link BigDecimal}&lt;/li&gt;
+   * &lt;/ul&gt;
+   * &lt;/p&gt;
+   *
+   * &lt;p&gt;Index 0 contains column headers.
+   * &lt;/p&gt;
+   */
+<span class="nc" id="L480">  static Object[][] data = {</span>
+    {&quot;Code&quot;, &quot;Name&quot;, &quot;Amount&quot;}, // 0
+    {&quot;11&quot;, &quot;Taxes&quot;, new BigDecimal(&quot;62055000000&quot;)}, // 1
+    {&quot;111&quot;, &quot;Taxes on Services and Products&quot;, new BigDecimal(&quot;33667000000&quot;)},
+    {&quot;112&quot;, &quot;Taxes and Duties on Imports&quot;, new BigDecimal(&quot;362000000&quot;)},
+    {&quot;113&quot;, &quot;Regular Property Taxes&quot;, new BigDecimal(&quot;2353000000&quot;)},
+    {&quot;114&quot;, &quot;Other Production Taxes&quot;, new BigDecimal(&quot;355000000&quot;)},
+    {&quot;115&quot;, &quot;Income Tax&quot;, new BigDecimal(&quot;23719000000&quot;)},
+    {&quot;116&quot;, &quot;Capital Taxes&quot;, new BigDecimal(&quot;232000000&quot;)},
+    {&quot;119&quot;, &quot;Other Current Taxes&quot;, new BigDecimal(&quot;1367000000&quot;)},
+    {&quot;12&quot;, &quot;Social Contributions&quot;, new BigDecimal(&quot;60000000&quot;)},
+    {&quot;122&quot;, &quot;Other Social Contributions&quot;, new BigDecimal(&quot;60000000&quot;)},
+    {&quot;13&quot;, &quot;Transfers&quot;, new BigDecimal(&quot;8131000000&quot;)},
+    {&quot;131&quot;, &quot;Current Domestic Transfers&quot;, new BigDecimal(&quot;322000000&quot;)},
+    {&quot;132&quot;, &quot;Current Transfers from Organizations and Member States&quot;, 
+     new BigDecimal(&quot;15000000&quot;)},
+    {&quot;133&quot;, &quot;Current Transfers from Foreign Entities&quot;, new BigDecimal(&quot;8000000&quot;)},
+    {&quot;134&quot;, &quot;Domestic Investment Grants&quot;, new BigDecimal(&quot;35000000&quot;)},
+    {&quot;135&quot;, &quot;Investment Grants from the EU&quot;, new BigDecimal(&quot;7645000000&quot;)},
+    {&quot;139&quot;, &quot;Other Capital Transfers&quot;, new BigDecimal(&quot;106000000&quot;)},
+    {&quot;14&quot;, &quot;Sales of Goods and Services&quot;, new BigDecimal(&quot;2405000000&quot;)},
+    {&quot;141&quot;, &quot;Goods Sales&quot;, new BigDecimal(&quot;2000000&quot;)},
+    {&quot;142&quot;, &quot;Provision of Services&quot;, new BigDecimal(&quot;338000000&quot;)},
+    {&quot;143&quot;, &quot;Rents&quot;, new BigDecimal(&quot;1418000000&quot;)},
+    {&quot;144&quot;, &quot;Supplies&quot;, new BigDecimal(&quot;445000000&quot;)},
+    {&quot;145&quot;, &quot;Administrative Fees&quot;, new BigDecimal(&quot;199000000&quot;)},
+    {&quot;149&quot;, &quot;Other Sales&quot;, new BigDecimal(&quot;3000000&quot;)},
+    {&quot;15&quot;, &quot;Other Current Income&quot;, new BigDecimal(&quot;2775000000&quot;)},
+    {&quot;151&quot;, &quot;Interest Income&quot;, new BigDecimal(&quot;588000000&quot;)},
+    {&quot;152&quot;, &quot;Distributed Corporate Income&quot;, new BigDecimal(&quot;356000000&quot;)},
+    {&quot;153&quot;, &quot;Natural Resource Rents&quot;, new BigDecimal(&quot;75000000&quot;)},
+    {&quot;156&quot;, &quot;Fines, Penalties and Assessments&quot;, new BigDecimal(&quot;1102000000&quot;)},
+    {&quot;159&quot;, &quot;Expense Reimbursements&quot;, new BigDecimal(&quot;654000000&quot;)},
+    {&quot;31&quot;, &quot;Fixed Assets&quot;, new BigDecimal(&quot;37000000&quot;)},
+    {&quot;311&quot;, &quot;Buildings and Related Infrastructure&quot;, new BigDecimal(&quot;37000000&quot;)},
+    {&quot;43&quot;, &quot;Debt Securities&quot;, new BigDecimal(&quot;11000000&quot;)},
+    {&quot;432&quot;, &quot;Long-term Debt Securities&quot;, new BigDecimal(&quot;11000000&quot;)},
+    {&quot;44&quot;, &quot;Loans&quot;, new BigDecimal(&quot;20000000&quot;)},
+    {&quot;442&quot;, &quot;Long-term Loans&quot;, new BigDecimal(&quot;20000000&quot;)},
+    {&quot;45&quot;, &quot;Equity and Investment Fund Shares&quot;, new BigDecimal(&quot;467000000&quot;)},
+    {&quot;451&quot;, &quot;Listed Shares&quot;, new BigDecimal(&quot;239000000&quot;)},
+    {&quot;452&quot;, &quot;Unlisted Shares&quot;, new BigDecimal(&quot;228000000&quot;)},
+    {&quot;52&quot;, &quot;Currency and Deposit Liabilities&quot;, new BigDecimal(&quot;66000000&quot;)},
+    {&quot;521&quot;, &quot;Currency in Circulation Liabilities&quot;, new BigDecimal(&quot;66000000&quot;)},
+    {&quot;53&quot;, &quot;Debt Securities (Liabilities)&quot;, new BigDecimal(&quot;25973000000&quot;)},
+    {&quot;531&quot;, &quot;Short-term Debt Securities&quot;, new BigDecimal(&quot;17000000000&quot;)},
+    {&quot;532&quot;, &quot;Long-term Debt Securities&quot;, new BigDecimal(&quot;8973000000&quot;)},
+    {&quot;54&quot;, &quot;Loans&quot;, new BigDecimal(&quot;1202027000000&quot;)},
+    {&quot;541&quot;, &quot;Short-term Loans&quot;, new BigDecimal(&quot;1200000000000&quot;)},
+    {&quot;542&quot;, &quot;Long-term Loans&quot;, new BigDecimal(&quot;2027000000&quot;)},
+    {&quot;57&quot;, &quot;Financial Derivatives&quot;, new BigDecimal(&quot;800000000&quot;)},
+    {&quot;571&quot;, &quot;Financial Derivatives&quot;, new BigDecimal(&quot;800000000&quot;)},
+    {&quot;21&quot;, &quot;Employee Benefits&quot;, new BigDecimal(&quot;14889199000&quot;)},
+    {&quot;22&quot;, &quot;Social Benefits&quot;, new BigDecimal(&quot;425136000&quot;)},
+    {&quot;23&quot;, &quot;Transfers&quot;, new BigDecimal(&quot;34741365000&quot;)},
+    {&quot;24&quot;, &quot;Purchases of Goods and Services&quot;, new BigDecimal(&quot;2039542000&quot;)},
+    {&quot;25&quot;, &quot;Subsidies&quot;, new BigDecimal(&quot;80630000&quot;)},
+    {&quot;26&quot;, &quot;Interest&quot;, new BigDecimal(&quot;7701101000&quot;)},
+    {&quot;27&quot;, &quot;Other Expenses&quot;, new BigDecimal(&quot;101553000&quot;)},
+    {&quot;29&quot;, &quot;Credits Under Allocation&quot;, new BigDecimal(&quot;17283053000&quot;)},
+    {&quot;31&quot;, &quot;Fixed Assets&quot;, new BigDecimal(&quot;2609600000&quot;)},
+    {&quot;33&quot;, &quot;Valuables&quot;, new BigDecimal(&quot;85000&quot;)},
+    {&quot;44&quot;, &quot;Long-Term Loans&quot;, new BigDecimal(&quot;3741000000&quot;)},
+    {&quot;45&quot;, &quot;Equity and Investment Fund Shares&quot;, new BigDecimal(&quot;1755112000&quot;)},
+    {&quot;53&quot;, &quot;Debt Securities (Liabilities)&quot;, new BigDecimal(&quot;19375000000&quot;)},
+    {&quot;54&quot;, &quot;Short-Term Loans&quot;, new BigDecimal(&quot;1203165130000&quot;)},
+    {&quot;1001&quot;, &quot;Presidency of the Republic&quot;, new BigDecimal(&quot;4638000&quot;)},
+    {&quot;1003&quot;, &quot;Hellenic Parliament&quot;, new BigDecimal(&quot;171950000&quot;)},
+    {&quot;1004&quot;, &quot;Presidency of the Government&quot;, new BigDecimal(&quot;41689000&quot;)},
+    {&quot;1007&quot;, &quot;Ministry of Interior&quot;, new BigDecimal(&quot;3830276000&quot;)},
+    {&quot;1009&quot;, &quot;Ministry of Foreign Affairs&quot;, new BigDecimal(&quot;420237000&quot;)},
+    {&quot;1011&quot;, &quot;Ministry of National Defense&quot;, new BigDecimal(&quot;6130000000&quot;)},
+    {&quot;1015&quot;, &quot;Ministry of Health&quot;, new BigDecimal(&quot;7177424000&quot;)},
+    {&quot;1017&quot;, &quot;Ministry of Justice&quot;, new BigDecimal(&quot;650803000&quot;)},
+    {&quot;1020&quot;, &quot;Ministry of Education, Religious Affairs and&quot;, new BigDecimal(&quot;6606000000&quot;)},
+    {&quot;1022&quot;, &quot;Ministry of Culture&quot;, new BigDecimal(&quot;575419000&quot;)},
+    {&quot;1024&quot;, &quot;Ministry of National Economy and&quot;, new BigDecimal(&quot;1246518464000&quot;)},
+    {&quot;1029&quot;, &quot;Ministry of Rural Development and Food&quot;, new BigDecimal(&quot;1281403000&quot;)},
+    {&quot;1031&quot;, &quot;Ministry of Environment and Energy&quot;, new BigDecimal(&quot;2341227000&quot;)},
+    {&quot;1032&quot;, &quot;Ministry of Labor and Social Security&quot;, new BigDecimal(&quot;18678084000&quot;)},
+    {&quot;1034&quot;, &quot;Ministry of Social Cohesion and&quot;, new BigDecimal(&quot;3989553000&quot;)},
+    {&quot;1036&quot;, &quot;Ministry of Development&quot;, new BigDecimal(&quot;818045000&quot;)},
+    {&quot;1039&quot;, &quot;Ministry of Infrastructure and Transport&quot;, new BigDecimal(&quot;2694810000&quot;)},
+    {&quot;1041&quot;, &quot;Ministry of Shipping and Island Policy&quot;, new BigDecimal(&quot;651864000&quot;)},
+    {&quot;1045&quot;, &quot;Ministry of Tourism&quot;, new BigDecimal(&quot;189293000&quot;)},
+    {&quot;1053&quot;, &quot;Ministry of Digital Governance&quot;, new BigDecimal(&quot;1073928000&quot;)},
+    {&quot;1055&quot;, &quot;Ministry of Migration and Asylum&quot;, new BigDecimal(&quot;475871000&quot;)},
+    {&quot;1057&quot;, &quot;Ministry of Citizen Protection&quot;, new BigDecimal(&quot;2285820000&quot;)},
+    {&quot;1060&quot;, &quot;Ministry of Climate Crisis and Civil Protection&quot;, new BigDecimal(&quot;1221116000&quot;)},
+    {&quot;1901&quot;, &quot;Decentralized Administration of Attica&quot;, new BigDecimal(&quot;13091000&quot;)},
+    {&quot;1902&quot;, &quot;Decentralized Administration of Thessaly-Central Greece&quot;, 
+     new BigDecimal(&quot;10579000&quot;)},
+    {&quot;1903&quot;, &quot;Decentralized Administration of Epirus-Western Greece&quot;, 
+     new BigDecimal(&quot;9943000&quot;)},
+    {&quot;1904&quot;, &quot;Decentralized Administration of Peloponnese -&quot;, new BigDecimal(&quot;14918000&quot;)},
+    {&quot;1905&quot;, &quot;Decentralized Administration of the Aegean&quot;, new BigDecimal(&quot;6188000&quot;)},
+    {&quot;1906&quot;, &quot;Decentralized Administration of Crete&quot;, new BigDecimal(&quot;6497000&quot;)},
+    {&quot;1907&quot;, &quot;Decentralized Administration of Macedonia - Thrace&quot;, new BigDecimal(&quot;18376000&quot;)}
+  };
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

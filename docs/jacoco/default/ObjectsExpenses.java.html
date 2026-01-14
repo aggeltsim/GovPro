@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ObjectsExpenses.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">ObjectsExpenses.java</span></div><h1>ObjectsExpenses.java</h1><pre class="source lang-java linenums">import expenses.AllocatedFunds;
+import expenses.DeptSecurLiabilExp;
+import expenses.EmployeeBenefits;
+import expenses.Expenses;
+import expenses.FixedAssetsExp;
+import expenses.Interests;
+import expenses.LoansExp44;
+import expenses.LoansExp54;
+import expenses.OtherExpenses;
+import expenses.Purchases;
+import expenses.SecuritySharesExp;
+import expenses.SocialBenefits;
+import expenses.Subsidies;
+import expenses.TransfersExp;
+import expenses.Valuables;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+
+/**
+ * Utility class responsible for initializing and populating the application's 
+ * expense data for the fiscal year 2025.
+ * &lt;p&gt;
+ * This class acts as a data provider that maps raw budgetary data (codes, names, and amounts) 
+ * to specific subclasses of the {@link Expenses} model. It centralizes the 
+ * instantiation of various expense categories such as employee benefits, 
+ * transfers, and loans.
+ * &lt;/p&gt;
+ */
+<span class="nc" id="L29">public class ObjectsExpenses {</span>
+  public static ArrayList&lt;Expenses&gt; createObjectsExp() {
+<span class="nc" id="L31">    Object[][] data = {</span>
+        {&quot;Code&quot;, &quot;Name&quot;, &quot;Amount&quot;}, // 0
+        {&quot;21&quot;, &quot;Employee Benefits&quot;, new BigDecimal(&quot;14889199000&quot;)}, // 1
+        {&quot;22&quot;, &quot;Social Benefits&quot;, new BigDecimal(&quot;425136000&quot;)},
+        {&quot;23&quot;, &quot;Transfers&quot;, new BigDecimal(&quot;34741365000&quot;)},
+        {&quot;24&quot;, &quot;Purchases of Goods and Services&quot;, new BigDecimal(&quot;2039542000&quot;)},
+        {&quot;25&quot;, &quot;Subsidies&quot;, new BigDecimal(&quot;80630000&quot;)},
+        {&quot;26&quot;, &quot;Interest&quot;, new BigDecimal(&quot;7701101000&quot;)},
+        {&quot;27&quot;, &quot;Other Expenses&quot;, new BigDecimal(&quot;101553000&quot;)},
+        {&quot;29&quot;, &quot;Credits Under Allocation&quot;, new BigDecimal(&quot;17283053000&quot;)},
+        {&quot;31&quot;, &quot;Fixed Assets&quot;, new BigDecimal(&quot;2609600000&quot;)},
+        {&quot;33&quot;, &quot;Valuables&quot;, new BigDecimal(&quot;85000&quot;)},
+        {&quot;44&quot;, &quot;Loans&quot;, new BigDecimal(&quot;3741000000&quot;)},
+        {&quot;45&quot;, &quot;Equity and Investment Fund Shares&quot;, new BigDecimal(&quot;1755112000&quot;)},
+        {&quot;53&quot;, &quot;Debt Securities (Liabilities)&quot;, new BigDecimal(&quot;19375000000&quot;)},
+        {&quot;54&quot;, &quot;Long-Term Loans&quot;, new BigDecimal(&quot;1203165130000&quot;)}
+    };
+
+    // Make Expenses objects
+
+    // Employee Benefits
+<span class="nc" id="L52">    var empBenefits = new EmployeeBenefits(</span>
+        (String) data[1][0], // &quot;21&quot;
+        (String) data[1][1],
+        (BigDecimal) data[1][2],
+        &quot;2025&quot;);
+
+    // Social Benefits
+<span class="nc" id="L59">    var socialBenefits = new SocialBenefits(</span>
+        (String) data[2][0], // &quot;22&quot;
+        (String) data[2][1],
+        (BigDecimal) data[2][2],
+        &quot;2025&quot;);
+
+    // Transfers
+<span class="nc" id="L66">    var transfers = new TransfersExp(</span>
+        (String) data[3][0], // &quot;23&quot;
+        (String) data[3][1],
+        (BigDecimal) data[3][2],
+        &quot;2025&quot;);
+
+    // Purchases of Goods and Services
+<span class="nc" id="L73">    var purchases = new Purchases(</span>
+        (String) data[4][0], // &quot;24&quot;
+        (String) data[4][1],
+        (BigDecimal) data[4][2],
+        &quot;2025&quot;);
+
+    // Subsidies
+<span class="nc" id="L80">    var subsidies = new Subsidies(</span>
+        (String) data[5][0], // &quot;25&quot;
+        (String) data[5][1],
+        (BigDecimal) data[5][2],
+        &quot;2025&quot;);
+
+    // Interests
+<span class="nc" id="L87">    var interests = new Interests(</span>
+        (String) data[6][0], // &quot;26&quot;
+        (String) data[6][1],
+        (BigDecimal) data[6][2],
+        &quot;2025&quot;);
+
+    // Other Expenses
+<span class="nc" id="L94">    var othExpenses = new OtherExpenses(</span>
+        (String) data[7][0], // &quot;27&quot;
+        (String) data[7][1],
+        (BigDecimal) data[7][2],
+        &quot;2025&quot;);
+
+    // Credits Under Allocation
+<span class="nc" id="L101">    var allocFunds = new AllocatedFunds(</span>
+        (String) data[8][0], // &quot;29&quot;
+        (String) data[8][1],
+        (BigDecimal) data[8][2],
+        &quot;2025&quot;);
+
+    // Fixed Assets
+<span class="nc" id="L108">    var fixAssets = new FixedAssetsExp(</span>
+        (String) data[9][0], // &quot;31&quot;
+        (String) data[9][1],
+        (BigDecimal) data[9][2],
+        &quot;2025&quot;);
+
+    // Valuables
+<span class="nc" id="L115">    var valuables = new Valuables(</span>
+        (String) data[10][0], // &quot;33&quot;
+        (String) data[10][1],
+        (BigDecimal) data[10][2],
+        &quot;2025&quot;);
+
+    // Loans (code 44)
+<span class="nc" id="L122">    var loanExp44 = new LoansExp44(</span>
+        (String) data[11][0], // &quot;44&quot;
+        (String) data[11][1],
+        (BigDecimal) data[11][2],
+        &quot;2025&quot;);
+
+    // Equity and Investment Fund Shares
+<span class="nc" id="L129">    var secShares = new SecuritySharesExp(</span>
+        (String) data[12][0], // &quot;45&quot;
+        (String) data[12][1],
+        (BigDecimal) data[12][2],
+        &quot;2025&quot;);
+
+    // Debt Securities (Liabilities)
+<span class="nc" id="L136">    var deptSecurLiabil = new DeptSecurLiabilExp(</span>
+        (String) data[13][0], // &quot;53&quot;
+        (String) data[13][1],
+        (BigDecimal) data[13][2],
+        &quot;2025&quot;);
+
+    // Loans (code 54)
+<span class="nc" id="L143">    var loanExp54 = new LoansExp54(</span>
+        (String) data[14][0], // &quot;54&quot;
+        (String) data[14][1],
+        (BigDecimal) data[14][2],
+        &quot;2025&quot;);
+
+        // Expenses List
+<span class="nc" id="L150">    ArrayList&lt;Expenses&gt; exp = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L152">    exp.add(empBenefits);</span>
+<span class="nc" id="L153">    exp.add(socialBenefits);</span>
+<span class="nc" id="L154">    exp.add(transfers);</span>
+<span class="nc" id="L155">    exp.add(purchases);</span>
+<span class="nc" id="L156">    exp.add(subsidies);</span>
+<span class="nc" id="L157">    exp.add(interests);</span>
+<span class="nc" id="L158">    exp.add(othExpenses);</span>
+<span class="nc" id="L159">    exp.add(allocFunds);</span>
+<span class="nc" id="L160">    exp.add(fixAssets);</span>
+<span class="nc" id="L161">    exp.add(valuables);</span>
+<span class="nc" id="L162">    exp.add(loanExp44);</span>
+<span class="nc" id="L163">    exp.add(secShares);</span>
+<span class="nc" id="L164">    exp.add(deptSecurLiabil);</span>
+<span class="nc" id="L165">    exp.add(loanExp54);</span>
+      
+    // End of Expenses List
+<span class="nc" id="L168">    return exp;</span>
+  }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BudgetDataManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">BudgetDataManager.java</span></div><h1>BudgetDataManager.java</h1><pre class="source lang-java linenums">import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * The {@code BudgetDataManager} class is responsible for managing
+ * and providing access to government budget statistics.
+ *
+ * &lt;p&gt;It stores pre-calculated budget data for multiple years and
+ * distinguishes between income and expense statistics.
+ * &lt;/p&gt;
+ *
+ * &lt;p&gt;Budget data is represented as percentages of total amounts
+ * using {@link BigDecimal} for high-precision financial calculations.
+ * &lt;/p&gt;
+ */
+<span class="nc" id="L18">public class BudgetDataManager {</span>
+
+  /**
+   * Defines the type of budget data requested.
+   */
+<span class="nc" id="L23">  public enum BudgetType { INCOME, EXPENSE }</span>
+    
+  /**
+   * Stores income statistics mapped by year.
+   *
+   * &lt;p&gt;Each entry contains an array of {@link BigDecimal} values
+   * representing percentage contributions per income category.
+   * &lt;/p&gt;
+   */
+<span class="nc" id="L32">  private static final Map&lt;Integer, BigDecimal[]&gt; incomeMap = new HashMap&lt;&gt;();</span>
+    
+  /**
+   * Stores expense statistics mapped by year.
+   *
+   * &lt;p&gt;Each entry contains an array of {@link BigDecimal} values
+   * representing percentage contributions per expense category.
+   * &lt;/p&gt;
+   */
+<span class="nc" id="L41">  private static final Map&lt;Integer, BigDecimal[]&gt; expenseMap = new HashMap&lt;&gt;();</span>
+
+  /*
+   * Loads and initializes budget statistics for supported years.
+   *
+   * Data is retrieved from year-specific budget classes
+   * such as Budget2022, Budget2023 and Budget2024.
+   */
+  static {
+    // Load year 2022
+<span class="nc" id="L51">    incomeMap.put(2022, Budget2022.staticsInc());</span>
+<span class="nc" id="L52">    expenseMap.put(2022, Budget2022.staticsExp());</span>
+
+    // Load year 2023
+<span class="nc" id="L55">    incomeMap.put(2023, Budget2023.staticsInc());</span>
+<span class="nc" id="L56">    expenseMap.put(2023, Budget2023.staticsExp());</span>
+
+    // Load year 2024
+<span class="nc" id="L59">    incomeMap.put(2024, Budget2024.staticsInc());</span>
+<span class="nc" id="L60">    expenseMap.put(2024, Budget2024.staticsExp());</span>
+<span class="nc" id="L61">  }</span>
+
+  /**
+   * Computes normalized budget statistics.
+   *
+   * &lt;p&gt;Each value is divided by the total amount to produce
+   * a percentage-based representation.
+   * &lt;/p&gt;
+   *
+   * @param values array of raw budget values
+   * @param total  total amount used for normalization
+   * @return an array of percentage values with scale 8
+   */
+  private static BigDecimal[] computeStatics(BigDecimal[] values, BigDecimal total) {
+<span class="nc" id="L75">    BigDecimal[] stats = new BigDecimal[values.length];</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">    for (int i = 0; i &lt; values.length; i++) {</span>
+<span class="nc" id="L77">      stats[i] = values[i].divide(total, 8, RoundingMode.HALF_UP); // υπολογισμός μόνο μια φορά</span>
+    }
+<span class="nc" id="L79">    return stats;</span>
+  }
+
+  /**
+   * Returns budget statistics for a given year and budget type.
+   *
+   * @param year the requested budget year
+   * @param type the type of budget data (income or expense)
+   * @return an array of {@link BigDecimal} percentage values,
+   *         or {@code null} if no data exists for the given year
+   */
+  public static BigDecimal[] getBudgetData(int year, BudgetType type) {
+<span class="nc bnc" id="L91" title="All 2 branches missed.">    if (type == BudgetType.INCOME) {</span>
+<span class="nc" id="L92">      return incomeMap.get(year);</span>
+    } else {
+<span class="nc" id="L94">      return expenseMap.get(year);</span>
+    }
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

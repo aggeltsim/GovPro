@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="el"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MinClimateCrisis.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">GovPro</a> &gt; <a href="index.source.html" class="el_package">entities</a> &gt; <span class="el_source">MinClimateCrisis.java</span></div><h1>MinClimateCrisis.java</h1><pre class="source lang-java linenums">package entities;
+
+import java.math.BigDecimal;
+
+public class MinClimateCrisis extends Entity {
+
+    public MinClimateCrisis(String code, String name, BigDecimal amount, String form) {
+<span class="fc" id="L8">        super(code, name, amount, form);</span>
+<span class="fc" id="L9">    }</span>
+
+    @Override
+    public String toExplain() {
+<span class="fc" id="L13">        return &quot;The &quot; + getName() + &quot; is a Greek government department&quot;</span>
+        + &quot; that focuses on keeping people safe from natural disasters&quot;
+        + &quot; and climate-related risks. It plans and coordinates emergency&quot;
+        + &quot; responses to floods, fires, storms, and other dangers, and&quot;
+        + &quot; works to prevent or reduce their impact. It also develops&quot;
+        + &quot; policies to deal with climate change and protect the&quot;
+        + &quot; environment. In simple terms, it is the part of the government&quot;
+        + &quot; that helps protect citizens and the country from disasters&quot;
+        + &quot; and the effects of climate change.&quot;;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
