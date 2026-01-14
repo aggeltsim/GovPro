@@ -13,7 +13,8 @@
   - [Forecasting Engine](#3-using-the-forecasting-engine)
   - [Statistics Dashboard](#4-exploring-the-statistics-dashboard)
   - [Percentage Calculator Suite](#5-percentage-calculator-suite)
-  - [Multimedia & UI Features](#6-multimedia--ui-features)
+  - [Viewing Account Explanations](#6-viewing-account-explanations)
+  - [Citizen Assistant - AI Helper](#7-citizen-assistant---ai-helper)
 - [Key Features](#key-features)
 - [Technical Report](#technical-report)
     - [Javadoc Documentation](#javadoc-documentation)
@@ -21,21 +22,25 @@
 GovPro is built with the mission of delivering public financial information in the simplest and most transparent form possible—so every citizen, student, researcher, or professional can easily understand how 
 national resources are used.
 
+
 ## Installation & Execution
 
 ### Prerequisites
-* **Java Development Kit (JDK) 17** or higher.
-* **Apache Maven (3.6.0+)** installed and configured in your system's PATH. The maven version used is 3.11.0. 
+* **Java Development Kit (JDK) 17** or higher. (Download it from [here](https://www.oracle.com/java/technologies/downloads/))
+* **Apache Maven (3.6.0+)** installed and configured in your system's PATH. The maven version used is 3.11.0. (Download it from [here](https://archive.apache.org/dist/maven/maven-3/3.8.0/binaries/))
+* **Git** (Download it from [here](https://git-scm.com/downloads))
 
 ### Installation & Compilation
 The project uses **Maven** for build and dependency management. To compile the source code and download necessary libraries (JavaFX, Apache Commons CSV, JUnit), follow these steps:
-1. Open a terminal/command prompt in the project's root directory.
-2. Run the following command:
+1. Open your **terminal** 
+2. Run the following command to **download** the project: git clone `https://github.com/aggeltsim/govpro.git`
+3. Run the following command:
    `mvn clean install`
 
 ### Execution Instructions
 To launch the application, use the following command:
     `mvn javafx:run`
+
 
 ## Repository Structure
 * `src/main/java`: Core application logic (Packages: `entities`, `expenses`, `incomes`, `Percentage` and other `.java` classes).
@@ -45,6 +50,7 @@ To launch the application, use the following command:
 * `LICENSE`: Apache lisense for the app usage.
 * `UML_Diagram.png`: The visualized UML Diagram of the GovPro App.
 * `CODE_OF_CONDUCT.md` & `CONTRIBUTING.md`: Files dedicated to present our promised pledges and a step by step guide to participate in developing code.  
+* `SECURITY.md`:File that calls users to report security issues and informs about further actions. 
 
 ## UML Diagram
 ![GovPro UML Diagram](Uml_Diagram.png)
@@ -85,6 +91,13 @@ The **GovPro** application provides a multi-window interface for interacting wit
 * **Personalized Display:** Each account type is visually highlighted — *green for Income*, *red for Expenses*, *blue for Entities*.  
 * **View Details:** Press **"Explain Account"** to reveal a styled card with the account’s name and explanation.  
 * **Smooth Animation:** A subtle **fade-in transition** enhances the reading experience as the explanation appears.
+### 7. Citizen Assistant - AI Helper
+* **Launch the Assistant:** Select the **"Citizen Assistant"** feature to open a dedicated support window powered by artificial intelligence.
+* **Integrated Web Interface:** The tool utilizes a built-in **WebView browser**, allowing you to interact directly with the AI service without leaving the application.
+* **Privacy-First AI:** Connected via **DuckDuckGo AI Chat**, providing an experience that requires no login, no API keys, and ensures no personal data is tracked.
+* **Optimized Desktop View:** By using a custom **User-Agent**, the interface loads the desktop version of the chat for full functionality and better usability.
+* **Full-Scale Layout:** The window is designed with a **900x700 resolution**, offering ample space for reading instructions and chatting with the AI assistant simultaneously.
+
 
 
 ### Key Features
@@ -96,8 +109,9 @@ The **GovPro** application provides a multi-window interface for interacting wit
 * **5. Percentage Calculator:** A standalone tool with a custom CSV loader and robust error handling to calculate and compare percentage ratios between multiple budget codes.
 * **6. Explanations:** Explains in simple terms what a budget entry actually stands for, employing the proper examples. 
 * **7. AI Assistant:** Provides an interactive, unlimited-access AI assistant directly within the application. Users can ask questions, request explanations, or get guidance on budget data analysis without any restrictions or fees.
-**8. Audio Effects:** Plays funky **sound cues** for each user action, enhancing interactivity and user experience.
-
+* **8. Audio Effects:** Plays funky **sound cues** for each user action, enhancing interactivity and user experience.
+---
+[↑ Back to Menu](#govpro-budget-system-2025)
 
 
 
@@ -270,9 +284,12 @@ The testing process is fully integrated into the project's lifecycle through **M
 * **Automated Execution**: Running the command `mvn test` triggers the entire suite, providing immediate feedback on the health of the application.
 * **Test-Driven Development Approach**: The use of `assertEquals` and `assertNotNull` throughout the development process ensured that every new feature met the pre-defined statistical and economic standards before integration into the main branch.
 ### Javadoc Documentation
-The complete API documentation is available in the `docs/` folder.  
+The complete API documentation is available in the `docs/` folder in .html version.  
+In order to see the full documentation you need to clone this repository locally.
 Open [`docs/index.html`](./docs/index.html) locally in your browser to explore all packages, classes, and methods.
 
 ## Final Remarks
 
 In conclusion, the **GovPro** application is a powerful tool for strategic visualization and trend analysis, offering valuable insights into the course of fiscal magnitudes. However, its use is purely explanatory and advisory. Its value lies in its ability to visualize complex data and highlight statistical correlations that often escape a simple reading of accounting tables. It functions best as a **Decision Support System** rather than a platform for deterministic outcomes. This sofisticatted model makes **human judgment essential** for the final evaluation of results.
+---
+[↑ Back to Menu](#govpro-budget-system-2025)
