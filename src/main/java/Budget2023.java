@@ -8,40 +8,65 @@ import java.math.RoundingMode;
  * All calculations use {@link BigDecimal} with 8-decimal precision and 
  * {@link RoundingMode#HALF_UP} for financial accuracy.
  */
-public class Budget2023 {
-    
-    public static BigDecimal[] staticsExp() {
-       BigDecimal expenses2023[] = {new BigDecimal("13795795000"), new BigDecimal("397439000"), new BigDecimal("32475557000"), 
-                                    new BigDecimal("1540686000"), new BigDecimal("80300000"), new BigDecimal("5851155000"), 
-                                    new BigDecimal("81257000"), new BigDecimal("15117638000"), new BigDecimal("2530934000"), 
-                                    new BigDecimal("62000"), new BigDecimal("3394000000"), new BigDecimal("1058240000"), 
-                                    new BigDecimal("27924000000"), new BigDecimal("702631130000"), new BigDecimal("0")};
-            final BigDecimal totalExp = new BigDecimal("806878193000");
-            BigDecimal[] statics2023 = new BigDecimal[15];
-            for (int i = 0; i < expenses2023.length; i++) {
-               statics2023[i] = BigDecimal.ZERO;
-            }
-            for (int i = 0; i < expenses2023.length; i++) {
-                statics2023[i] = expenses2023[i].divide(totalExp, 8, RoundingMode.HALF_UP); 
-            }
-            return statics2023;
-        }
 
-        public static BigDecimal[] staticsInc() { 
-            BigDecimal incomes2023[] = {new BigDecimal("51579000000"), new BigDecimal("55000000"), new BigDecimal("7953000000"), 
-                                    new BigDecimal("2405000000"), new BigDecimal("1869000000"), new BigDecimal("24000000"), 
-                                    new BigDecimal("23000000"), new BigDecimal("387000000"), new BigDecimal("44000000"), 
-                                    new BigDecimal("31554000000"), new BigDecimal("701846000000"), new BigDecimal("300000000")};
-            final BigDecimal totalInc = new BigDecimal("798039000000");
-            BigDecimal[] statics2023 = new BigDecimal[12];
-            for (int i = 0; i < incomes2023.length; i++) {
-               statics2023[i] = BigDecimal.ZERO;
-            }
-            for (int i = 0; i < incomes2023.length; i++) {
-                statics2023[i] = incomes2023[i].divide(totalInc, 8, RoundingMode.HALF_UP); 
-            }
-            return statics2023;
-        
-        }
-        
+public class Budget2023 {
+  /**
+   * Calculates and returns the relative distribution of expense categories
+   * for the year 2023 based on the total public expenditure.
+   *
+   * <p>Each element in the returned array represents the proportion of a specific
+   * expense category relative to the total expenses and is calculated using
+   * {@link BigDecimal} division with rounding applied.
+   * </p>
+   *
+   * @return a {@link BigDecimal} array containing the normalized expense values
+   */
+    
+  public static BigDecimal[] staticsExp() {
+    BigDecimal[] expenses2023 = {new BigDecimal("13795795000"), new BigDecimal("397439000"), 
+        new BigDecimal("32475557000"), new BigDecimal("1540686000"), 
+        new BigDecimal("80300000"), new BigDecimal("5851155000"), new BigDecimal("81257000"), 
+        new BigDecimal("15117638000"), new BigDecimal("2530934000"), new BigDecimal("62000"), 
+        new BigDecimal("3394000000"), new BigDecimal("1058240000"), new BigDecimal("27924000000"), 
+        new BigDecimal("702631130000"), new BigDecimal("0")};
+    final BigDecimal totalExp = new BigDecimal("806878193000");
+    BigDecimal[] statics2023 = new BigDecimal[15];
+    for (int i = 0; i < expenses2023.length; i++) {
+      statics2023[i] = BigDecimal.ZERO;
+    }
+    for (int i = 0; i < expenses2023.length; i++) {
+      statics2023[i] = expenses2023[i].divide(totalExp, 8, RoundingMode.HALF_UP); 
+    }
+    return statics2023;
+  }
+
+  /**
+   * Computes the relative distribution of income categories for the year 2023
+   * based on the total projected public revenue.
+   *
+   * <p>Each element of the returned array represents the proportion of a specific
+   * income category relative to the total income. The values are calculated
+   * using {@link BigDecimal} division with a scale of 8 decimal places and
+   * {@link RoundingMode#HALF_UP} rounding to ensure numerical accuracy.
+   * </p>
+   *
+   * @return a {@link BigDecimal} array containing the normalized income values
+   *         for all income categories in 2023
+   */
+  public static BigDecimal[] staticsInc() { 
+    BigDecimal[] incomes2023 = {new BigDecimal("51579000000"), new BigDecimal("55000000"), 
+        new BigDecimal("7953000000"), new BigDecimal("2405000000"), 
+        new BigDecimal("1869000000"), new BigDecimal("24000000"), new BigDecimal("23000000"), 
+        new BigDecimal("387000000"), new BigDecimal("44000000"), new BigDecimal("31554000000"), 
+        new BigDecimal("701846000000"), new BigDecimal("300000000")};
+    final BigDecimal totalInc = new BigDecimal("798039000000");
+    BigDecimal[] statics2023 = new BigDecimal[12];
+    for (int i = 0; i < incomes2023.length; i++) {
+      statics2023[i] = BigDecimal.ZERO;
+    }
+    for (int i = 0; i < incomes2023.length; i++) {
+      statics2023[i] = incomes2023[i].divide(totalInc, 8, RoundingMode.HALF_UP); 
+    }
+    return statics2023;    
+  }      
 }

@@ -1,11 +1,48 @@
-import incomes.*;
+import incomes.DeptSecurities;
+import incomes.DslLongTerm;
+import incomes.DslShortTerm;
+import incomes.FinancDerivatives;
+import incomes.FixedAssets;
+import incomes.Income;
+import incomes.LLongTermL2;
+import incomes.LShortTerm;
+import incomes.LiabilitiesCurrenDepos;
+import incomes.LoansInc44;
+import incomes.OciCorporateDistribInc;
+import incomes.OciFinesPenaltiesAssessments;
+import incomes.OciInterest;
+import incomes.OciNaturalResourceRent;
+import incomes.OciReimbursements;
+import incomes.SalAdministFees;
+import incomes.SalCommissions;
+import incomes.SalGoods;
+import incomes.SalOther;
+import incomes.SalRents;
+import incomes.SalServices;
+import incomes.SocialContributions;
+import incomes.SsListed;
+import incomes.SsUnlisted;
+import incomes.TaxCapital;
+import incomes.TaxDutiesOnImports;
+import incomes.TaxGoodsServices;
+import incomes.TaxIncome;
+import incomes.TaxOther;
+import incomes.TaxProduction;
+import incomes.TaxRegularRealEstate;
+import incomes.TrCurrentDomestic;
+import incomes.TrDomesInvestGrants;
+import incomes.TrEU;
+import incomes.TrEUInvestGrants;
+import incomes.TrForeignEntities;
+import incomes.TrOther;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+
 /**
  * Utility class responsible for initializing and populating the application's 
  * income data for the fiscal year 2025.
- * <p>
- * This class functions as a central repository that transforms raw budgetary 
+ * 
+ * <p>This class functions as a central repository that transforms raw budgetary 
  * revenue data into specialized {@link Income} objects. It categorizes state 
  * revenues into several major streams, including:
  * </p>
@@ -18,6 +55,21 @@ import java.util.ArrayList;
  */
 public class ObjectsIncomes {
 
+  /**
+   * Creates and returns an exhaustive list of {@link Income} objects based 
+   * on the 2025 State Budget revenue projections.
+   * 
+   * <p>The method instantiates concrete subclasses of the Income model (e.g., 
+   * {@link TaxIncome}, {@link SalServices}, {@link TrEU}), ensuring that 
+   * each revenue stream is tracked with its official budget code and 
+   * precise {@link BigDecimal} amount.
+   * </p>
+   * 
+   * @return An {@link ArrayList} of {@link Income} 
+   * @see Income
+   * @see TaxIncome
+   * @see SocialContributions
+   */
   public static ArrayList<Income> createObjectsInc() {
 
     Object[][] data = {
@@ -76,43 +128,43 @@ public class ObjectsIncomes {
         
     // Make objects of Taxes
     var  taxGoodsServices = new TaxGoodsServices(
-        (String) data[2][0],      // Κωδικός
-        (String) data[2][1],      // Ονομασία
-        (BigDecimal) data[2][2],  // Ποσό
-        "2025"); // Έτος             // Taxes on Goods and Services
+        (String) data[2][0],      
+        (String) data[2][1],      
+        (BigDecimal) data[2][2],  
+        "2025");             // Taxes on Goods and Services
         
     var taxDuties = new TaxDutiesOnImports(
-        (String) data[3][0],      // Κωδικός
-        (String) data[3][1],      // Ονομασία
-        (BigDecimal) data[3][2],  // Ποσό
-        "2025"); // Έτος      // Taxes and duties on imports
+        (String) data[3][0],      
+        (String) data[3][1],      
+        (BigDecimal) data[3][2],  
+        "2025");      // Taxes and duties on imports
     
     var taxRegular = new TaxRegularRealEstate(
-        (String) data[4][0],     // Κωδικός
-        (String) data[4][1],      // Ονομασία
-        (BigDecimal) data[4][2],  // Ποσό
-        "2025"); // Έτος       // Property taxes
+        (String) data[4][0],     
+        (String) data[4][1],      
+        (BigDecimal) data[4][2],  
+        "2025");       // Property taxes
     
     var taxProduction = new TaxProduction(
-        (String) data[5][0],      // Κωδικός
-        (String) data[5][1],      // Ονομασία
-        (BigDecimal) data[5][2],  // Ποσό
-        "2025"); // Έτος     // Other taxes on production
+        (String) data[5][0],      
+        (String) data[5][1],      
+        (BigDecimal) data[5][2], 
+        "2025");      // Other taxes on production
     
     var taxIncome = new TaxIncome(
-        (String) data[6][0],      // Κωδικός
-        (String) data[6][1],      // Ονομασία
-        (BigDecimal) data[6][2],  // Ποσό
-        "2025"); // Έτος      // Income taxes
+        (String) data[6][0],      
+        (String) data[6][1],     
+        (BigDecimal) data[6][2],  
+        "2025");       // Income taxes
     
-    var taxCapital = new TaxCapital((String) data[7][0],      // Κωδικός
-        (String) data[7][1],      // Ονομασία
-        (BigDecimal) data[7][2],  // Ποσό
+    var taxCapital = new TaxCapital((String) data[7][0], 
+        (String) data[7][1],      
+        (BigDecimal) data[7][2], 
         "2025");  // Capital taxes
     
-    var taxOther = new TaxOther((String) data[8][0],      // Κωδικός
-        (String) data[8][1],      // Ονομασία
-        (BigDecimal) data[8][2],  // Ποσό
+    var taxOther = new TaxOther((String) data[8][0],    
+        (String) data[8][1],     
+        (BigDecimal) data[8][2],  
         "2025");  // Other current taxes
     
     // Make objects of Sales
@@ -307,21 +359,6 @@ public class ObjectsIncomes {
         (BigDecimal) data[18][2],
         "2025");
 
-    /**
-     * Creates and returns an exhaustive list of {@link Income} objects based 
-     * on the 2025 State Budget revenue projections.
-     * <p>
-     * The method instantiates concrete subclasses of the Income model (e.g., 
-     * {@link TaxIncome}, {@link SalServices}, {@link TrEU}), ensuring that 
-     * each revenue stream is tracked with its official budget code and 
-     * precise {@link BigDecimal} amount.
-     * </p>
-     * * @return An {@link ArrayList} of {@link Income} objects representing 
-     * all projected state revenue sources for 2025.
-     * @see Income
-     * @see TaxIncome
-     * @see SocialContributions
-     */
     ArrayList<Income> inc = new ArrayList<>();
 
     inc.add(taxGoodsServices);
