@@ -36,8 +36,9 @@ national resources are used.
 ### Installation & Compilation
 The project uses **Maven** for build and dependency management. To compile the source code and download necessary libraries (JavaFX, Apache Commons CSV, JUnit), follow these steps:
 1. Open your **terminal** 
-2. Run the following command to **download** the project: git clone `https://github.com/aggeltsim/govpro.git`
-3. Run the following command:
+2. Run the following command to **download** the project: `git clone https://github.com/aggeltsim/govpro.git`
+3. Then: `cd GovPro`
+4. And finally:
    `mvn clean install`
 
 ### Execution Instructions
@@ -56,7 +57,7 @@ To launch the application, use the following command:
 * `SECURITY.md`:File that calls users to report security issues and informs about further actions. 
 
 ## UML Diagram
-![GovPro UML Diagram](Uml_Diagram.png)
+![GovPro UML Diagram](docs/images/Uml_Diagram.png)
 
 ## Usage Instructions
 
@@ -286,11 +287,18 @@ Since the project involved significant migration from Swing to JavaFX, the JUnit
 The testing process is fully integrated into the project's lifecycle through **Maven**. 
 * **Automated Execution**: Running the command `mvn test` triggers the entire suite, providing immediate feedback on the health of the application.
 * **Test-Driven Development Approach**: The use of `assertEquals` and `assertNotNull` throughout the development process ensured that every new feature met the pre-defined statistical and economic standards before integration into the main branch.
-### Javadoc Documentation
+## Javadoc Documentation
 The complete API documentation is available in the `docs/` folder in .html version.  
 In order to see the full documentation (private methods included) you need to clone this repository locally and run mvn `javadoc:javadoc -Dshow=private`.
 
 For all the other access modifiers (default,public,protected) **click [here](https://aggeltsim.github.io/GovPro/index.html) to see the documentation.**
+
+## Test Results
+Here you can see a screenshot of the jacoco report
+![JaCoCo Report:](docs/images/JaCoCo.png)
+You can see the full index.html code in `docs/jacoco`.
+If you want to run the test by yourself we suggest you run `mvn clean verify`
+and then follow the path `target/site/index.html`
 
 ## Final Remarks of the technical report 
 
