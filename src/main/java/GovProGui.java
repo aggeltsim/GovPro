@@ -237,7 +237,7 @@ public class GovProGui {
          */
         case 3 -> {
           // Prediction GUI
-          PredictionGUI.createAndShowPredGUI();
+          PredictionGui.createAndShowPredGui();
         }
 
         /*
