@@ -1,6 +1,3 @@
-import entities.Entity;
-import expenses.Expenses;
-import incomes.Income;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
@@ -10,6 +7,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import entities.Entity;
+import expenses.Expenses;
+import incomes.Income;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.application.Application;
@@ -805,7 +806,7 @@ public class GovProFx extends Application {
             new BigDecimal("100")).setScale(2, RoundingMode.HALF_UP);
 
         Label line = new Label(String.format("%-40s : %6s%%", name, percent));
-        line.setStyle("-fx-font-family: Arial; -fx-font-size: 14;");
+        line.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
         outputBox.getChildren().add(line);
       }
       ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList();
@@ -816,7 +817,7 @@ public class GovProFx extends Application {
             new BigDecimal("100")).setScale(2, RoundingMode.HALF_UP);
 
         Label line = new Label(String.format("%-40s : %6s%%", name, percent));
-        line.setStyle("-fx-font-family: Arial; -fx-font-size: 14;");
+        line.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
         outputBox.getChildren().add(line);
 
         // Add to PieChart
